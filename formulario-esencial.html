@@ -1489,6 +1489,7 @@
     document.getElementById('mob-label').textContent = LABELS[n - 1];
     document.getElementById('mob-fill').style.width = (n / TOTAL * 100) + '%';
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (n === TOTAL) buildReview();
   }
 
   /* ── Validation helpers ── */

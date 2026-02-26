@@ -1428,6 +1428,7 @@
         Eliminar
       </button>
     </div>
+    <p class="form-error dest-card-err" style="margin:0 0 12px;">Completa todos los campos obligatorios de este destino.</p>
     <div class="repeat-card-body space-y-4">
       <div>
         <label class="form-label">Ciudad o destino <span class="req">*</span></label>
@@ -1671,6 +1672,7 @@
     document.getElementById('mob-label').textContent = LABELS[n - 1];
     document.getElementById('mob-fill').style.width = (n / TOTAL * 100) + '%';
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (n === TOTAL) buildReview();
   }
 
   /* ── Validation helpers ── */
@@ -1818,13 +1820,16 @@
         ok = false;
       } else {
         destinos.forEach(card => {
+          let cardOk = true;
           ['.dest-ciudad', '.dest-actividades', '.dest-aloj-calle',
            '.dest-aloj-colonia', '.dest-aloj-delegacion',
            '.dest-aloj-ciudad', '.dest-aloj-estado', '.dest-aloj-cp',
            '.dest-fecha-desde', '.dest-fecha-hasta'].forEach(sel => {
             const el = card.querySelector(sel);
-            if (el && !el.value.trim()) { el.classList.add('error'); ok = false; }
+            if (el && !el.value.trim()) { el.classList.add('error'); cardOk = false; ok = false; }
           });
+          const cardErr = card.querySelector('.dest-card-err');
+          if (cardErr) cardErr.classList.toggle('show', !cardOk);
         });
       }
     }
