@@ -1901,8 +1901,7 @@
       current = n + 1;
       showStep(current);
     } else {
-      const _email = encodeURIComponent(document.getElementById('v-email')?.value?.trim() || '');
-      window.location.href = '/checkout?plan=completo' + (_email ? '&email=' + _email : '');
+      submitToAPI();
     }
   }
   function goPrev(n) {
