@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "functions": {
     "api/stripe-webhook.js": {
       "maxDuration": 30
@@ -6,6 +7,7 @@
   },
   "rewrites": [
     { "source": "/api/submit", "destination": "/api/submit.js" },
-    { "source": "/api/stripe-webhook", "destination": "/api/stripe-webhook.js" }
+    { "source": "/api/stripe-webhook", "destination": "/api/stripe-webhook.js" },
+    { "source": "/checkout", "destination": "/checkout.html" }
   ]
 }
