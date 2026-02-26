@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Aviso de Privacidad | Carta Invitación México</title>
+  <meta name="description" content="Conoce cómo Carta Invitación México recopila, usa y protege tus datos personales. Tus datos se transmiten de forma segura (HTTPS) y los pagos se procesan con Stripe.">
+  <link rel="canonical" href="https://cartadeinvitacionmexico.com/privacidad">
+  <meta property="og:title" content="Aviso de Privacidad | Carta Invitación México">
+  <meta property="og:description" content="Política de privacidad y tratamiento de datos personales del servicio de cartas de invitación a México.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cartadeinvitacionmexico.com/privacidad">
+  <meta name="twitter:card" content="summary">
+  <meta name="robots" content="noindex, follow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              50:'#EDF0F8',100:'#C5D0EC',200:'#9BAFD9',
+              300:'#7090C6',400:'#4A6FA5',500:'#3A5A8E',
+              600:'#2D5499',700:'#1B3566',800:'#132648',900:'#0C1830',
+            },
+            gold: {
+              100:'#F5EEC8',200:'#E8D080',300:'#D9BC5C',
+              400:'#C9A84C',500:'#B08930',600:'#8B6A1E',
+            }
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"','Georgia','serif'],
+            sans: ['"DM Sans"','system-ui','sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --c-navy:  #1B3566;
+      --c-navy2: #132648;
+      --c-navy3: #0C1830;
+      --c-mid:   #4A6FA5;
+      --c-gold:  #C9A84C;
+      --c-gold2: #D9BC5C;
+      --c-cream: #FAF8F4;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      overflow-x: hidden;
+      color: var(--c-navy);
+      background: #fff;
+    }
+    .heading-display {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .gold-rule {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--c-gold), transparent);
+      opacity: 0.4;
+    }
+    .nav-link {
+      color: #3A5A8E;
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: color 0.15s ease;
+      padding: 6px 0;
+    }
+    .nav-link:hover { color: var(--c-gold); }
+    .nav-link:focus-visible { outline: 2px solid var(--c-gold); border-radius: 3px; }
+    .btn-gold {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--c-gold);
+      color: var(--c-navy);
+      font-weight: 700;
+      border-radius: 12px;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+      min-height: 44px;
+      padding: 0 1.25rem;
+    }
+    .btn-gold:hover {
+      background: var(--c-gold2);
+      box-shadow: 0 6px 28px rgba(201,168,76,0.42);
+      transform: translateY(-2px);
+    }
+    .btn-gold:focus-visible { outline: 3px solid var(--c-gold2); outline-offset: 3px; }
+    .footer-link {
+      color: rgba(255,255,255,0.45);
+      font-size: 0.875rem;
+      transition: color 0.15s ease;
+    }
+    .footer-link:hover { color: rgba(255,255,255,0.9); }
+    .footer-link:focus-visible { outline: 2px solid var(--c-gold); border-radius: 3px; }
+    /* Legal content styles */
+    .legal-content h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--c-navy);
+      margin-top: 2.25rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(27,53,102,0.1);
+      letter-spacing: -0.01em;
+    }
+    .legal-content p {
+      font-size: 0.9375rem;
+      line-height: 1.78;
+      color: #374151;
+      margin-bottom: 1rem;
+    }
+    .legal-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1rem 0;
+    }
+    .legal-content ul li {
+      font-size: 0.9375rem;
+      line-height: 1.78;
+      color: #374151;
+      padding-left: 1.25rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+    }
+    .legal-content ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.65em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--c-gold);
+    }
+    .legal-content a {
+      color: var(--c-gold);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .legal-content a:hover { text-decoration: underline; }
+    .legal-content strong { color: var(--c-navy); font-weight: 600; }
+    .info-box {
+      background: rgba(201,168,76,0.07);
+      border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .info-box p { margin-bottom: 0; color: #4B5563; }
+    /* TOC */
+    .toc-link {
+      display: block;
+      font-size: 0.875rem;
+      color: rgba(27,53,102,0.55);
+      padding: 0.3rem 0;
+      transition: color 0.15s ease;
+      text-decoration: none;
+    }
+    .toc-link:hover { color: var(--c-gold); }
+    /* Rights table */
+    .rights-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+    .rights-table th {
+      text-align: left;
+      padding: 0.65rem 1rem;
+      background: rgba(27,53,102,0.04);
+      color: var(--c-navy);
+      font-weight: 600;
+      border-bottom: 1px solid rgba(27,53,102,0.1);
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .rights-table td {
+      padding: 0.65rem 1rem;
+      color: #374151;
+      border-bottom: 1px solid rgba(27,53,102,0.06);
+      line-height: 1.6;
+    }
+    .rights-table tr:last-child td { border-bottom: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both; }
+    .d1 { animation-delay: 0.06s; }
+    .d2 { animation-delay: 0.14s; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Aviso de Privacidad",
+    "description": "Política de privacidad y tratamiento de datos personales del servicio de cartas de invitación formal para quienes visitan México.",
+    "url": "https://cartadeinvitacionmexico.com/privacidad",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Carta Invitación México",
+      "url": "https://cartadeinvitacionmexico.com"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://cartadeinvitacionmexico.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Aviso de Privacidad", "item": "https://cartadeinvitacionmexico.com/privacidad" }
+      ]
+    }
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- ════════════════════════════════════════
+     HEADER
+════════════════════════════════════════ -->
+<header id="top" class="sticky top-0 z-50 bg-white"
+  style="border-bottom:1px solid rgba(27,53,102,0.08);box-shadow:0 1px 14px rgba(27,53,102,0.06);">
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-20"
+       aria-label="Navegación principal">
+
+    <a href="/" aria-label="Carta Invitación México — Inicio" class="flex-shrink-0">
+      <img src="brand_assets/logos/concept-1-el-sello.svg"
+           alt="Carta Invitación México"
+           height="44" class="h-14 w-auto">
+    </a>
+
+    <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0">
+      <li><a href="/#como-funciona" class="nav-link">¿Cómo funciona?</a></li>
+      <li><a href="/#planes"        class="nav-link">Planes y Precios</a></li>
+      <li><a href="/#resenas"       class="nav-link">Reseñas</a></li>
+      <li><a href="/#faq"           class="nav-link">FAQ</a></li>
+      <li><a href="/articulos"      class="nav-link">Publicaciones</a></li>
+    </ul>
+
+    <a href="/#planes" class="btn-gold hidden sm:inline-flex gap-2 text-sm">
+      Crear mi carta
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+
+  </nav>
+</header>
+
+<main style="overflow-x:hidden;">
+
+<!-- ════════════════════════════════════════
+     PAGE HERO
+════════════════════════════════════════ -->
+<section class="py-14 px-4 sm:px-6" style="background:var(--c-navy);position:relative;overflow:hidden;">
+  <!-- Decorative rings -->
+  <div style="position:absolute;right:-80px;top:-80px;width:360px;height:360px;border-radius:50%;border:1px solid rgba(201,168,76,0.08);pointer-events:none;"></div>
+  <div style="position:absolute;right:-120px;top:-120px;width:480px;height:480px;border-radius:50%;border:1px solid rgba(201,168,76,0.05);pointer-events:none;"></div>
+
+  <div class="max-w-3xl mx-auto relative">
+    <!-- Breadcrumb -->
+    <nav aria-label="Ruta de navegación" class="mb-5">
+      <ol class="flex items-center gap-2 list-none p-0 m-0" style="font-size:0.8125rem;">
+        <li><a href="/" style="color:rgba(255,255,255,0.45);transition:color 0.15s;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Inicio</a></li>
+        <li style="color:rgba(255,255,255,0.2);">/</li>
+        <li style="color:rgba(255,255,255,0.65);">Aviso de Privacidad</li>
+      </ol>
+    </nav>
+
+    <span class="fade-up d1" style="display:block;font-size:0.6875rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--c-gold);margin-bottom:0.75rem;">Legal</span>
+
+    <h1 class="fade-up d1 heading-display text-3xl md:text-4xl font-semibold mb-4" style="color:#fff;">
+      Aviso de Privacidad
+    </h1>
+    <p class="fade-up d2" style="color:rgba(255,255,255,0.55);font-size:0.9375rem;line-height:1.7;max-width:36rem;">
+      Última actualización: 17 de enero de 2025. Este aviso describe cómo recopilamos, usamos y protegemos tus datos personales.
+    </p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     CONTENT
+════════════════════════════════════════ -->
+<section class="py-16 px-4 sm:px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+
+      <!-- Sidebar TOC (desktop) -->
+      <aside class="hidden lg:block lg:col-span-1" aria-label="Tabla de contenidos">
+        <div class="sticky top-24">
+          <p style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--c-gold);margin-bottom:1rem;">Contenido</p>
+          <nav>
+            <a href="#responsable"    class="toc-link">1. Responsable</a>
+            <a href="#datos"          class="toc-link">2. Datos que recopilamos</a>
+            <a href="#finalidad"      class="toc-link">3. Finalidad del tratamiento</a>
+            <a href="#base-legal"     class="toc-link">4. Base legal</a>
+            <a href="#destinatarios"  class="toc-link">5. Destinatarios</a>
+            <a href="#conservacion"   class="toc-link">6. Conservación de datos</a>
+            <a href="#seguridad"      class="toc-link">7. Seguridad</a>
+            <a href="#derechos"       class="toc-link">8. Tus derechos</a>
+            <a href="#cookies"        class="toc-link">9. Cookies</a>
+            <a href="#cambios"        class="toc-link">10. Cambios en esta política</a>
+            <a href="#contacto-priv"  class="toc-link">11. Contacto</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <article class="lg:col-span-3 legal-content">
+
+        <div class="info-box mb-8">
+          <p>Este Aviso de Privacidad describe cómo <strong>cartadeinvitacionmexico.com</strong> recopila, utiliza y protege tus datos personales cuando utilizas nuestro servicio. Al utilizar el sitio y/o contratar el servicio, aceptas las prácticas descritas en este documento.</p>
+        </div>
+
+        <!-- 1 -->
+        <h2 id="responsable">1. Responsable del tratamiento de datos</h2>
+        <p>El responsable del tratamiento de los datos personales recabados a través de este sitio web es:</p>
+        <ul>
+          <li><strong>Nombre comercial:</strong> Carta Invitación México</li>
+          <li><strong>Sitio web:</strong> cartadeinvitacionmexico.com</li>
+          <li><strong>Correo de contacto:</strong> <a href="mailto:hola@cartadeinvitacionmexico.com">hola@cartadeinvitacionmexico.com</a></li>
+        </ul>
+
+        <!-- 2 -->
+        <h2 id="datos">2. Datos que recopilamos</h2>
+        <p>Para la prestación del servicio de generación de cartas de invitación, recopilamos los datos que el usuario proporciona en el formulario de solicitud. Estos pueden incluir:</p>
+        <ul>
+          <li>Nombre completo del solicitante (y de los acompañantes, si aplica)</li>
+          <li>Número de pasaporte o documento de identidad</li>
+          <li>Nacionalidad y país de residencia</li>
+          <li>Fechas de entrada y salida del territorio mexicano</li>
+          <li>Información sobre vuelos (número de vuelo, aerolínea, escalas)</li>
+          <li>Información sobre alojamiento(s) (nombre del hotel o dirección)</li>
+          <li>Correo electrónico para la entrega del documento</li>
+        </ul>
+        <p>No recopilamos datos sensibles (salud, religión, filiación política, biométricos, etc.).</p>
+        <p>Adicionalmente, a través del sitio web podemos recopilar de forma automática datos técnicos de navegación como la dirección IP, tipo de navegador y páginas visitadas, con fines estadísticos y de mejora del servicio.</p>
+
+        <!-- 3 -->
+        <h2 id="finalidad">3. Finalidad del tratamiento</h2>
+        <p>Los datos personales recopilados se utilizan exclusivamente para:</p>
+        <ul>
+          <li><strong>Generar la carta de invitación en formato PDF</strong> personalizada con los datos del usuario.</li>
+          <li><strong>Enviar el documento</strong> al correo electrónico proporcionado.</li>
+          <li><strong>Gestionar el pago</strong> a través del procesador Stripe.</li>
+          <li><strong>Atender solicitudes de soporte</strong> o modificaciones del documento.</li>
+          <li><strong>Mejorar el servicio</strong> mediante análisis estadístico anónimo del uso del sitio.</li>
+        </ul>
+        <p>No utilizamos tus datos para marketing directo ni los compartimos con terceros con fines comerciales.</p>
+
+        <!-- 4 -->
+        <h2 id="base-legal">4. Base legal del tratamiento</h2>
+        <p>El tratamiento de tus datos se realiza bajo las siguientes bases legales:</p>
+        <ul>
+          <li><strong>Ejecución de un contrato:</strong> El tratamiento es necesario para prestar el servicio que el usuario ha solicitado y pagado.</li>
+          <li><strong>Consentimiento:</strong> Al completar el formulario y aceptar este aviso, el usuario consiente el tratamiento de sus datos para las finalidades indicadas.</li>
+          <li><strong>Interés legítimo:</strong> Para la mejora del servicio y la prevención del fraude.</li>
+        </ul>
+
+        <!-- 5 -->
+        <h2 id="destinatarios">5. Destinatarios de los datos</h2>
+        <p>Para la prestación del servicio, algunos de tus datos pueden ser compartidos con los siguientes proveedores tecnológicos de confianza, únicamente en la medida necesaria para cumplir con la finalidad indicada:</p>
+        <ul>
+          <li><strong>Typeform:</strong> Plataforma de formularios utilizada para la recopilación de datos de viaje. Tus respuestas son procesadas a través de su infraestructura segura.</li>
+          <li><strong>Stripe:</strong> Procesador de pagos internacional con certificación PCI DSS nivel 1. Los pagos se procesan exclusivamente a través de Stripe. <strong>No almacenamos ni tenemos acceso a tus datos de tarjeta de crédito.</strong></li>
+        </ul>
+        <p>Estos proveedores actúan como encargados del tratamiento y están sujetos a sus propias políticas de privacidad y a las regulaciones aplicables en materia de protección de datos.</p>
+
+        <!-- 6 -->
+        <h2 id="conservacion">6. Conservación de los datos</h2>
+        <p>Los datos personales facilitados para la generación del documento se conservan durante el tiempo necesario para:</p>
+        <ul>
+          <li>Gestionar solicitudes de modificación o soporte relacionadas con la compra.</li>
+          <li>Cumplir con obligaciones legales y contables aplicables.</li>
+        </ul>
+        <p>Una vez que los datos ya no sean necesarios para las finalidades indicadas, serán eliminados o anonimizados de forma segura. Como referencia general, los datos asociados a una transacción pueden conservarse hasta <strong>2 años</strong> desde la fecha de la compra, salvo obligación legal que requiera un plazo distinto.</p>
+
+        <!-- 7 -->
+        <h2 id="seguridad">7. Seguridad de los datos</h2>
+
+        <div class="info-box">
+          <p>Todos los datos del formulario se transmiten de forma segura mediante <strong>cifrado HTTPS</strong>. Los pagos se procesan exclusivamente a través de <strong>Stripe</strong>, uno de los procesadores de pagos más seguros del mundo. <strong>No almacenamos datos de tarjetas de crédito</strong> en nuestros sistemas.</p>
+        </div>
+
+        <p>Aplicamos medidas técnicas y organizativas razonables para proteger tus datos personales frente a accesos no autorizados, pérdida, destrucción o divulgación indebida. Sin embargo, ninguna transmisión de datos por internet puede garantizarse como 100% segura.</p>
+
+        <!-- 8 -->
+        <h2 id="derechos">8. Tus derechos</h2>
+        <p>Como titular de tus datos personales, tienes derecho a:</p>
+
+        <div style="overflow-x:auto;margin-bottom:1rem;">
+          <table class="rights-table">
+            <thead>
+              <tr>
+                <th>Derecho</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Acceso</strong></td>
+                <td>Conocer qué datos personales tuyos tratamos y cómo los usamos.</td>
+              </tr>
+              <tr>
+                <td><strong>Rectificación</strong></td>
+                <td>Solicitar la corrección de datos inexactos o incompletos.</td>
+              </tr>
+              <tr>
+                <td><strong>Supresión</strong></td>
+                <td>Pedir la eliminación de tus datos cuando ya no sean necesarios para la finalidad para la que fueron recabados.</td>
+              </tr>
+              <tr>
+                <td><strong>Oposición</strong></td>
+                <td>Oponerte al tratamiento de tus datos en determinadas circunstancias.</td>
+              </tr>
+              <tr>
+                <td><strong>Portabilidad</strong></td>
+                <td>Recibir tus datos en un formato estructurado y de uso común.</td>
+              </tr>
+              <tr>
+                <td><strong>Limitación</strong></td>
+                <td>Solicitar que suspendamos el tratamiento de tus datos en ciertos supuestos.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Para ejercer cualquiera de estos derechos, envíanos un correo a <a href="mailto:hola@cartadeinvitacionmexico.com">hola@cartadeinvitacionmexico.com</a> indicando el derecho que deseas ejercer y los datos necesarios para identificarte. Atenderemos tu solicitud en un plazo máximo de <strong>30 días hábiles</strong>.</p>
+
+        <!-- 9 -->
+        <h2 id="cookies">9. Cookies y tecnologías de seguimiento</h2>
+        <p>Nuestro sitio web puede utilizar cookies propias y de terceros con las siguientes finalidades:</p>
+        <ul>
+          <li><strong>Cookies técnicas:</strong> Necesarias para el funcionamiento básico del sitio. No pueden desactivarse.</li>
+          <li><strong>Cookies analíticas:</strong> Nos permiten medir el tráfico y el comportamiento de los usuarios de forma anónima para mejorar el servicio (por ejemplo, Google Analytics).</li>
+        </ul>
+        <p>Puedes gestionar o desactivar las cookies desde la configuración de tu navegador. Ten en cuenta que desactivar ciertas cookies puede afectar al funcionamiento del sitio.</p>
+
+        <!-- 10 -->
+        <h2 id="cambios">10. Cambios en este Aviso de Privacidad</h2>
+        <p>La Empresa se reserva el derecho de actualizar este Aviso de Privacidad en cualquier momento, por ejemplo, para adaptarse a cambios legales o mejoras en el servicio. Los cambios se publicarán en esta misma página con indicación de la fecha de la última actualización. Te recomendamos revisar este aviso periódicamente.</p>
+        <p>El uso continuado del servicio tras la publicación de cambios implica la aceptación de los mismos.</p>
+
+        <!-- 11 -->
+        <h2 id="contacto-priv">11. Contacto</h2>
+        <p>Para cualquier consulta, solicitud o reclamación relacionada con el tratamiento de tus datos personales, puedes contactarnos a través de:</p>
+        <ul>
+          <li>Correo electrónico: <a href="mailto:hola@cartadeinvitacionmexico.com">hola@cartadeinvitacionmexico.com</a></li>
+          <li>Sitio web: <a href="https://cartadeinvitacionmexico.com">cartadeinvitacionmexico.com</a></li>
+        </ul>
+        <p>Nos comprometemos a dar respuesta a tu solicitud en el menor tiempo posible y siempre dentro de los plazos establecidos por la normativa aplicable.</p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer style="background:var(--c-navy3);" aria-labelledby="footer-label">
+  <h2 id="footer-label" class="sr-only">Pie de página</h2>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-16 pb-8">
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-14">
+
+      <!-- Brand -->
+      <div class="md:col-span-2">
+        <a href="/" aria-label="Carta Invitación México — Inicio" class="inline-block mb-5">
+          <img src="brand_assets/logos/concept-1-el-sello-white.svg"
+               alt="Carta Invitación México" height="48" class="h-14 w-auto">
+        </a>
+        <p class="text-sm mb-5 max-w-xs" style="color:rgba(255,255,255,0.4);line-height:1.75;">
+          Carta de invitación profesional para quienes visitan México. Documento formal listo para presentar ante la autoridad migratoria.
+        </p>
+        <p class="text-xs max-w-xs" style="color:rgba(255,255,255,0.22);line-height:1.7;">
+          Documento informativo. No constituye asesoría legal ni garantiza la entrada al país.
+        </p>
+      </div>
+
+      <!-- Sitio -->
+      <nav aria-label="Páginas principales">
+        <h3 class="text-xs font-semibold uppercase tracking-widest mb-5"
+            style="color:var(--c-gold);letter-spacing:0.12em;">Sitio</h3>
+        <ul class="space-y-3 list-none p-0 m-0">
+          <li><a href="/"                    class="footer-link">Inicio</a></li>
+          <li><a href="/sobre-nosotros"       class="footer-link">Sobre Nosotros</a></li>
+          <li><a href="/preguntas-frecuentes" class="footer-link">Preguntas Frecuentes</a></li>
+          <li><a href="/articulos"            class="footer-link">Publicaciones</a></li>
+          <li><a href="/contacto"             class="footer-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <!-- Legal -->
+      <nav aria-label="Páginas legales">
+        <h3 class="text-xs font-semibold uppercase tracking-widest mb-5"
+            style="color:var(--c-gold);letter-spacing:0.12em;">Legal</h3>
+        <ul class="space-y-3 list-none p-0 m-0">
+          <li><a href="/terminos"   class="footer-link">Términos y Condiciones</a></li>
+          <li><a href="/privacidad" class="footer-link" aria-current="page" style="color:var(--c-gold);">Política de Privacidad</a></li>
+          <li><a href="/reembolso"  class="footer-link">Política de Reembolso</a></li>
+          <li><a href="https://www.gob.mx/sre/documentos/carta-invitacion"
+                 class="footer-link" target="_blank" rel="noopener noreferrer">
+            Secretaría de Relaciones Exteriores&nbsp;↗
+          </a></li>
+        </ul>
+      </nav>
+
+    </div>
+
+    <div class="gold-rule mb-8"></div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p style="color:rgba(255,255,255,0.22);font-size:0.8125rem;">
+        © 2024 cartadeinvitacionmexico.com — Todos los derechos reservados.
+      </p>
+      <div class="flex items-center gap-3">
+        <span style="color:rgba(255,255,255,0.2);font-size:0.8125rem;">Idioma:</span>
+        <a href="/" class="text-xs font-bold px-3 py-1 rounded-full"
+           style="background:rgba(201,168,76,0.14);color:var(--c-gold);border:1px solid rgba(201,168,76,0.2);">ES</a>
+        <a href="/en" class="text-xs font-medium px-3 py-1 rounded-full footer-link">EN</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>

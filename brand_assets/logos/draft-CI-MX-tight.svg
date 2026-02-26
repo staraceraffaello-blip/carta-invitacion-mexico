@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" role="img" aria-labelledby="cimx-tight-title">
+  <title id="cimx-tight-title">CI MX — Draft Tight</title>
+
+  <!-- Outer navy frame -->
+  <rect x="2" y="2" width="136" height="136" fill="none" stroke="#1B3566" stroke-width="3"/>
+  <!-- Inner gold accent frame -->
+  <rect x="8" y="8" width="124" height="124" fill="none" stroke="#C9A84C" stroke-width="0.8"/>
+
+  <!-- Corner gold accents -->
+  <g fill="#C9A84C">
+    <!-- NW -->
+    <rect x="8"     y="8"     width="14"  height="1.5"/>
+    <rect x="8"     y="8"     width="1.5" height="14"/>
+    <!-- NE -->
+    <rect x="118"   y="8"     width="14"  height="1.5"/>
+    <rect x="130.5" y="8"     width="1.5" height="14"/>
+    <!-- SW -->
+    <rect x="8"     y="130.5" width="14"  height="1.5"/>
+    <rect x="8"     y="118"   width="1.5" height="14"/>
+    <!-- SE -->
+    <rect x="118"   y="130.5" width="14"  height="1.5"/>
+    <rect x="130.5" y="118"   width="1.5" height="14"/>
+  </g>
+
+  <!-- CI — 3px from inner top border (baseline = inner_top + cap_height + 3 = 8+24+3 = 35) -->
+  <text x="76" y="35"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="34" font-weight="700"
+        fill="#1B3566"
+        letter-spacing="12">CI</text>
+
+  <!-- Gold separator rule — midpoint between CI bottom and MX top -->
+  <line x1="20" y1="70" x2="120" y2="70" stroke="#C9A84C" stroke-width="0.9" opacity="0.6"/>
+
+  <!-- MX — 3px from inner bottom border (baseline = inner_bottom - 3 = 132-3 = 129) -->
+  <text x="76" y="129"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="34" font-weight="700"
+        fill="#C9A84C"
+        letter-spacing="12">MX</text>
+</svg>

@@ -1,0 +1,17 @@
+# Development screenshots (temporary working files)
+temporary screenshots/
+
+# Dependencies
+node_modules/
+
+# Environment variables (never commit secrets)
+.env
+.env.local
+.env.production
+
+# Vercel
+.vercel
+
+# OS files
+.DS_Store
+Thumbs.db

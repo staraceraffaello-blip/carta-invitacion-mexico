@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 92" role="img" aria-labelledby="va-title">
+  <title id="va-title">Carta Invitación México — Variante A: El Sello Notarial</title>
+
+  <!-- === ICON: Notarial Medallion Seal === -->
+  <!-- Navy disc base -->
+  <circle cx="46" cy="46" r="40" fill="#1B3566"/>
+  <!-- Outermost gold ring -->
+  <circle cx="46" cy="46" r="38.5" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
+
+  <!-- 12 long radial ticks (every 30°) r=29→r=37 (y=17→y=9 from center 46) -->
+  <g stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round">
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(0,46,46)"/>
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(30,46,46)"/>
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(60,46,46)"/>
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(90,46,46)"/>
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(120,46,46)"/>
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(150,46,46)"/>
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(180,46,46)"/>
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(210,46,46)"/>
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(240,46,46)"/>
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(270,46,46)"/>
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(300,46,46)"/>
+    <line x1="46" y1="17" x2="46" y2="9" transform="rotate(330,46,46)"/>
+  </g>
+
+  <!-- 12 short radial ticks (every 30°, offset 15°) r=33→r=37 (y=13→y=9) -->
+  <g stroke="#C9A84C" stroke-width="0.8" stroke-linecap="round" opacity="0.65">
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(15,46,46)"/>
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(45,46,46)"/>
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(75,46,46)"/>
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(105,46,46)"/>
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(135,46,46)"/>
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(165,46,46)"/>
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(195,46,46)"/>
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(225,46,46)"/>
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(255,46,46)"/>
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(285,46,46)"/>
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(315,46,46)"/>
+    <line x1="46" y1="13" x2="46" y2="9" transform="rotate(345,46,46)"/>
+  </g>
+
+  <!-- Inner ring at r=27 -->
+  <circle cx="46" cy="46" r="27" fill="none" stroke="#C9A84C" stroke-width="1"/>
+  <!-- Innermost decorative ring at r=22 -->
+  <circle cx="46" cy="46" r="22" fill="none" stroke="#C9A84C" stroke-width="0.5" opacity="0.5"/>
+
+  <!-- Cardinal diamond accents on inner ring r=27 -->
+  <!-- N:(46,19)  S:(46,73)  E:(73,46)  W:(19,46) -->
+  <g fill="#C9A84C" opacity="0.85">
+    <polygon points="46,17.5 47.5,19 46,20.5 44.5,19"/>
+    <polygon points="46,71.5 47.5,73 46,74.5 44.5,73"/>
+    <polygon points="71.5,46 73,44.5 74.5,46 73,47.5"/>
+    <polygon points="17.5,46 19,44.5 20.5,46 19,47.5"/>
+  </g>
+
+  <!-- CI Monogram -->
+  <text x="46" y="53"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="20" font-weight="700"
+        fill="#C9A84C"
+        letter-spacing="1">CI</text>
+
+  <!-- === WORDMARK === -->
+  <text x="102" y="35"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="22" font-weight="700"
+        fill="#1B3566"
+        letter-spacing="-0.4">Carta Invitación</text>
+  <rect x="102" y="43" width="220" height="1.2" fill="#C9A84C" opacity="0.75"/>
+  <text x="103" y="60"
+        font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif"
+        font-size="11" font-weight="600"
+        fill="#4A6FA5"
+        letter-spacing="6">MÉXICO</text>
+</svg>

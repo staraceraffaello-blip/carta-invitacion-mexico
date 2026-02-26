@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Publicaciones — Guías sobre migración y carta de invitación a México</title>
+  <meta name="description" content="Guías y recursos sobre carta de invitación, requisitos migratorios y todo lo que necesitas saber para entrar a México como turista.">
+  <link rel="canonical" href="https://cartadeinvitacionmexico.com/articulos">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 50:'#EDF0F8',100:'#C5D0EC',200:'#9BAFD9',300:'#7090C6',400:'#4A6FA5',500:'#3A5A8E',600:'#2D5499',700:'#1B3566',800:'#132648',900:'#0C1830' },
+            gold: { 100:'#F5EEC8',200:'#E8D080',300:'#D9BC5C',400:'#C9A84C',500:'#B08930',600:'#8B6A1E' }
+          },
+          fontFamily: { display:['"Cormorant Garamond"','Georgia','serif'], sans:['"DM Sans"','system-ui','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { --c-navy:#1B3566; --c-navy2:#132648; --c-navy3:#0C1830; --c-mid:#4A6FA5; --c-gold:#C9A84C; --c-gold2:#D9BC5C; --c-cream:#FAF8F4; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family:'DM Sans',system-ui,sans-serif; overflow-x:hidden; color:var(--c-navy); background:#fff; }
+    .grain { position:relative; }
+    .grain::after { content:''; position:absolute; inset:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); opacity:0.038; pointer-events:none; z-index:1; mix-blend-mode:overlay; }
+    .grain > * { position:relative; z-index:2; }
+    .gold-rule { height:1px; background:linear-gradient(to right,transparent,var(--c-gold),transparent); opacity:0.4; }
+    .lift { transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.28s ease; }
+    .lift:hover { transform:translateY(-5px); box-shadow:0 24px 56px rgba(27,53,102,0.13),0 6px 20px rgba(27,53,102,0.07); }
+    .btn-gold { display:inline-flex; align-items:center; justify-content:center; background:var(--c-gold); color:var(--c-navy); font-weight:700; border-radius:12px; transition:background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease; min-height:52px; padding:0 2rem; }
+    .btn-gold:hover { background:var(--c-gold2); box-shadow:0 6px 28px rgba(201,168,76,0.42); transform:translateY(-2px); }
+    .btn-gold:focus-visible { outline:3px solid var(--c-gold2); outline-offset:3px; }
+    .nav-link { color:#3A5A8E; font-weight:500; font-size:0.875rem; transition:color 0.15s ease; padding:6px 0; }
+    .nav-link:hover { color:var(--c-gold); }
+    .nav-link.active { color:var(--c-gold); }
+    .section-label { font-size:0.6875rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--c-gold); display:block; margin-bottom:0.75rem; }
+    .heading-display { font-family:'Cormorant Garamond',Georgia,serif; letter-spacing:-0.02em; line-height:1.1; color:var(--c-navy); }
+    .card-title-link { color:var(--c-navy); transition:color 0.15s ease; }
+    .card-title-link:hover { color:var(--c-gold); }
+    .footer-link { color:rgba(255,255,255,0.45); font-size:0.875rem; transition:color 0.15s ease; }
+    .footer-link:hover { color:#fff; }
+    .category-badge { display:inline-block; font-size:0.6875rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:3px 10px; border-radius:999px; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+    .fade-up { animation:fadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both; }
+    .d1{animation-delay:0.05s} .d2{animation-delay:0.12s} .d3{animation-delay:0.19s}
+    .d4{animation-delay:0.26s} .d5{animation-delay:0.33s} .d6{animation-delay:0.40s}
+    .d7{animation-delay:0.47s} .d8{animation-delay:0.54s} .d9{animation-delay:0.61s}
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="top" class="sticky top-0 z-50 bg-white" style="border-bottom:1px solid rgba(27,53,102,0.08);box-shadow:0 1px 14px rgba(27,53,102,0.06);">
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-20" aria-label="Navegación principal">
+    <a href="/" aria-label="Carta Invitación México — Inicio" class="flex-shrink-0">
+      <img src="brand_assets/logos/concept-1-el-sello.svg" alt="Carta Invitación México" height="44" class="h-14 w-auto">
+    </a>
+    <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0">
+      <li><a href="/#como-funciona" class="nav-link">¿Cómo funciona?</a></li>
+      <li><a href="/#planes"        class="nav-link">Planes y Precios</a></li>
+      <li><a href="/#resenas"       class="nav-link">Reseñas</a></li>
+      <li><a href="/#faq"           class="nav-link">FAQ</a></li>
+      <li><a href="/articulos"      class="nav-link active">Publicaciones</a></li>
+    </ul>
+    <a href="/#planes" class="btn-gold hidden sm:inline-flex gap-2 text-sm" style="min-height:44px;padding:0 1.25rem;font-size:0.875rem;">
+      Crear mi carta
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </nav>
+</header>
+
+<main style="overflow-x:hidden;">
+
+  <!-- HERO -->
+  <section class="grain py-16 px-4 sm:px-6" style="background:var(--c-navy);">
+    <div class="max-w-6xl mx-auto text-center">
+      <span class="section-label fade-up d1">Guías y recursos</span>
+      <h1 class="heading-display text-4xl md:text-5xl font-semibold text-white mb-4 fade-up d2">Publicaciones</h1>
+      <p class="text-base max-w-xl mx-auto fade-up d3" style="color:rgba(255,255,255,0.55);line-height:1.75;">
+        Todo lo que necesitas saber sobre carta de invitación, migración y el ingreso turístico a México.
+      </p>
+    </div>
+  </section>
+
+  <!-- ARTICLES GRID -->
+  <section class="py-16 px-4 sm:px-6" style="background:var(--c-cream);">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Artículo 1 -->
+        <article class="lift rounded-2xl overflow-hidden bg-white fade-up d1" style="box-shadow:0 2px 18px rgba(27,53,102,0.06);" itemscope itemtype="https://schema.org/Article">
+          <div style="position:relative;overflow:hidden;height:188px;">
+            <img src="https://placehold.co/420x188/1B3566/C9A84C?text=Carta+de+Invitación"
+                 alt="Guía sobre la carta de invitación a México" loading="lazy" width="420" height="188"
+                 style="width:100%;height:100%;object-fit:cover;" itemprop="image">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(27,53,102,0.5),transparent);"></div>
+          </div>
+          <div class="p-6">
+            <span class="category-badge mb-3" style="background:rgba(201,168,76,0.12);color:var(--c-gold);">Guía</span>
+            <h2 class="font-bold text-base mb-2 leading-snug" style="color:var(--c-navy);" itemprop="headline">
+              <a href="/articulos/carta-invitacion-mexico" class="card-title-link" itemprop="url">
+                ¿Qué es una carta de invitación a México y para qué sirve?
+              </a>
+            </h2>
+            <p class="text-sm mb-4" style="color:#6B7280;line-height:1.65;" itemprop="description">
+              Todo lo que debes saber sobre este documento y qué información debe incluir.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs" style="color:#9BAFD9;">8 min de lectura</span>
+              <a href="/articulos/carta-invitacion-mexico" class="text-sm font-semibold" style="color:var(--c-gold);">Leer artículo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Artículo 2 -->
+        <article class="lift rounded-2xl overflow-hidden bg-white fade-up d2" style="box-shadow:0 2px 18px rgba(27,53,102,0.06);" itemscope itemtype="https://schema.org/Article">
+          <div style="position:relative;overflow:hidden;height:188px;">
+            <img src="https://placehold.co/420x188/2D5499/E8D080?text=Venezolanos+en+México"
+                 alt="Carta de invitación a México para venezolanos" loading="lazy" width="420" height="188"
+                 style="width:100%;height:100%;object-fit:cover;" itemprop="image">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(27,53,102,0.5),transparent);"></div>
+          </div>
+          <div class="p-6">
+            <span class="category-badge mb-3" style="background:rgba(201,168,76,0.12);color:var(--c-gold);">Por Nacionalidad</span>
+            <h2 class="font-bold text-base mb-2 leading-snug" style="color:var(--c-navy);" itemprop="headline">
+              <a href="/articulos/carta-invitacion-mexico-venezolanos" class="card-title-link" itemprop="url">
+                Venezolanos viajando a México: carta de invitación, FMM y más requisitos
+              </a>
+            </h2>
+            <p class="text-sm mb-4" style="color:#6B7280;line-height:1.65;" itemprop="description">
+              Requisitos específicos y consejos para venezolanos que planean viajar a México.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs" style="color:#9BAFD9;">9 min de lectura</span>
+              <a href="/articulos/carta-invitacion-mexico-venezolanos" class="text-sm font-semibold" style="color:var(--c-gold);">Leer artículo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Artículo 3 -->
+        <article class="lift rounded-2xl overflow-hidden bg-white fade-up d3" style="box-shadow:0 2px 18px rgba(27,53,102,0.06);" itemscope itemtype="https://schema.org/Article">
+          <div style="position:relative;overflow:hidden;height:188px;">
+            <img src="https://placehold.co/420x188/162B4D/D9BC5C?text=Migración+México"
+                 alt="Documentos que pide migración México" loading="lazy" width="420" height="188"
+                 style="width:100%;height:100%;object-fit:cover;" itemprop="image">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(27,53,102,0.5),transparent);"></div>
+          </div>
+          <div class="p-6">
+            <span class="category-badge mb-3" style="background:rgba(201,168,76,0.12);color:var(--c-gold);">Requisitos</span>
+            <h2 class="font-bold text-base mb-2 leading-snug" style="color:var(--c-navy);" itemprop="headline">
+              <a href="/articulos/documentos-migracion-mexico" class="card-title-link" itemprop="url">
+                ¿Te pueden negar la entrada a México? Lo que debes saber sobre migración
+              </a>
+            </h2>
+            <p class="text-sm mb-4" style="color:#6B7280;line-height:1.65;" itemprop="description">
+              Lista completa de documentos en el filtro migratorio para turistas internacionales.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs" style="color:#9BAFD9;">7 min de lectura</span>
+              <a href="/articulos/documentos-migracion-mexico" class="text-sm font-semibold" style="color:var(--c-gold);">Leer artículo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Artículo 4 -->
+        <article class="lift rounded-2xl overflow-hidden bg-white fade-up d4" style="box-shadow:0 2px 18px rgba(27,53,102,0.06);" itemscope itemtype="https://schema.org/Article">
+          <div style="position:relative;overflow:hidden;height:188px;">
+            <img src="https://placehold.co/420x188/1B3566/C9A84C?text=Dinero+en+México"
+                 alt="Cuánto dinero llevar para entrar a México" loading="lazy" width="420" height="188"
+                 style="width:100%;height:100%;object-fit:cover;" itemprop="image">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(27,53,102,0.5),transparent);"></div>
+          </div>
+          <div class="p-6">
+            <span class="category-badge mb-3" style="background:rgba(201,168,76,0.12);color:var(--c-gold);">Guía</span>
+            <h2 class="font-bold text-base mb-2 leading-snug" style="color:var(--c-navy);" itemprop="headline">
+              <a href="/articulos/cuanto-dinero-llevar-mexico" class="card-title-link" itemprop="url">
+                ¿Cuánto dinero debes llevar para entrar a México como turista?
+              </a>
+            </h2>
+            <p class="text-sm mb-4" style="color:#6B7280;line-height:1.65;" itemprop="description">
+              Solvencia económica: el requisito vago que más rechazos genera. Qué pide migración realmente y cómo demostrarlo.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs" style="color:#9BAFD9;">7 min de lectura</span>
+              <a href="/articulos/cuanto-dinero-llevar-mexico" class="text-sm font-semibold" style="color:var(--c-gold);">Leer artículo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Artículo 5 -->
+        <article class="lift rounded-2xl overflow-hidden bg-white fade-up d5" style="box-shadow:0 2px 18px rgba(27,53,102,0.06);" itemscope itemtype="https://schema.org/Article">
+          <div style="position:relative;overflow:hidden;height:188px;">
+            <img src="https://placehold.co/420x188/2D5499/E8D080?text=Redactar+Carta"
+                 alt="Cómo redactar una carta de invitación para México" loading="lazy" width="420" height="188"
+                 style="width:100%;height:100%;object-fit:cover;" itemprop="image">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(27,53,102,0.5),transparent);"></div>
+          </div>
+          <div class="p-6">
+            <span class="category-badge mb-3" style="background:rgba(201,168,76,0.12);color:var(--c-gold);">Guía</span>
+            <h2 class="font-bold text-base mb-2 leading-snug" style="color:var(--c-navy);" itemprop="headline">
+              <a href="/articulos/como-redactar-carta-invitacion" class="card-title-link" itemprop="url">
+                Cómo redactar una carta de invitación para México: qué debe incluir y errores que te harán rechazar
+              </a>
+            </h2>
+            <p class="text-sm mb-4" style="color:#6B7280;line-height:1.65;" itemprop="description">
+              Los campos obligatorios, qué pasa si falta algo, y por qué una carta genérica puede trabajar en tu contra.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs" style="color:#9BAFD9;">8 min de lectura</span>
+              <a href="/articulos/como-redactar-carta-invitacion" class="text-sm font-semibold" style="color:var(--c-gold);">Leer artículo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Artículo 6 -->
+        <article class="lift rounded-2xl overflow-hidden bg-white fade-up d6" style="box-shadow:0 2px 18px rgba(27,53,102,0.06);" itemscope itemtype="https://schema.org/Article">
+          <div style="position:relative;overflow:hidden;height:188px;">
+            <img src="https://placehold.co/420x188/162B4D/D9BC5C?text=Colombianos+INM"
+                 alt="Preregistro INM para colombianos" loading="lazy" width="420" height="188"
+                 style="width:100%;height:100%;object-fit:cover;" itemprop="image">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(27,53,102,0.5),transparent);"></div>
+          </div>
+          <div class="p-6">
+            <span class="category-badge mb-3" style="background:rgba(201,168,76,0.12);color:var(--c-gold);">Por Nacionalidad</span>
+            <h2 class="font-bold text-base mb-2 leading-snug" style="color:var(--c-navy);" itemprop="headline">
+              <a href="/articulos/preregistro-inm-colombianos" class="card-title-link" itemprop="url">
+                Preregistro INM para colombianos: cómo hacerlo paso a paso
+              </a>
+            </h2>
+            <p class="text-sm mb-4" style="color:#6B7280;line-height:1.65;" itemprop="description">
+              El trámite obligatorio que muchos colombianos no saben que existe — y que causa rechazos evitables.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs" style="color:#9BAFD9;">9 min de lectura</span>
+              <a href="/articulos/preregistro-inm-colombianos" class="text-sm font-semibold" style="color:var(--c-gold);">Leer artículo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Artículo 7 -->
+        <article class="lift rounded-2xl overflow-hidden bg-white fade-up d7" style="box-shadow:0 2px 18px rgba(27,53,102,0.06);" itemscope itemtype="https://schema.org/Article">
+          <div style="position:relative;overflow:hidden;height:188px;">
+            <img src="https://placehold.co/420x188/1B3566/C9A84C?text=Notarización"
+                 alt="Carta de invitación para México notariada" loading="lazy" width="420" height="188"
+                 style="width:100%;height:100%;object-fit:cover;" itemprop="image">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(27,53,102,0.5),transparent);"></div>
+          </div>
+          <div class="p-6">
+            <span class="category-badge mb-3" style="background:rgba(201,168,76,0.12);color:var(--c-gold);">Mitos</span>
+            <h2 class="font-bold text-base mb-2 leading-snug" style="color:var(--c-navy);" itemprop="headline">
+              <a href="/articulos/carta-invitacion-notariada" class="card-title-link" itemprop="url">
+                ¿La carta de invitación para México debe ir notariada? La verdad
+              </a>
+            </h2>
+            <p class="text-sm mb-4" style="color:#6B7280;line-height:1.65;" itemprop="description">
+              Muchos servicios cobran extra por notarización. Te explicamos qué dice el INM al respecto.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs" style="color:#9BAFD9;">6 min de lectura</span>
+              <a href="/articulos/carta-invitacion-notariada" class="text-sm font-semibold" style="color:var(--c-gold);">Leer artículo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Artículo 8 -->
+        <article class="lift rounded-2xl overflow-hidden bg-white fade-up d8" style="box-shadow:0 2px 18px rgba(27,53,102,0.06);" itemscope itemtype="https://schema.org/Article">
+          <div style="position:relative;overflow:hidden;height:188px;">
+            <img src="https://placehold.co/420x188/2D5499/E8D080?text=Peruanos+México"
+                 alt="Peruanos visa para México 2025" loading="lazy" width="420" height="188"
+                 style="width:100%;height:100%;object-fit:cover;" itemprop="image">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(27,53,102,0.5),transparent);"></div>
+          </div>
+          <div class="p-6">
+            <span class="category-badge mb-3" style="background:rgba(201,168,76,0.12);color:var(--c-gold);">Por Nacionalidad</span>
+            <h2 class="font-bold text-base mb-2 leading-snug" style="color:var(--c-navy);" itemprop="headline">
+              <a href="/articulos/peruanos-visa-mexico-2025" class="card-title-link" itemprop="url">
+                Peruanos: ¿necesitan visa para México en 2025? Quiénes están exentos y qué llevar
+              </a>
+            </h2>
+            <p class="text-sm mb-4" style="color:#6B7280;line-height:1.65;" itemprop="description">
+              Desde abril 2024 cambió todo. Qué aplica para ti dependiendo de tus visas activas.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs" style="color:#9BAFD9;">7 min de lectura</span>
+              <a href="/articulos/peruanos-visa-mexico-2025" class="text-sm font-semibold" style="color:var(--c-gold);">Leer artículo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Artículo 9 -->
+        <article class="lift rounded-2xl overflow-hidden bg-white fade-up d9" style="box-shadow:0 2px 18px rgba(27,53,102,0.06);" itemscope itemtype="https://schema.org/Article">
+          <div style="position:relative;overflow:hidden;height:188px;">
+            <img src="https://placehold.co/420x188/162B4D/D9BC5C?text=Preguntas+Migración"
+                 alt="Preguntas de migración México a turistas" loading="lazy" width="420" height="188"
+                 style="width:100%;height:100%;object-fit:cover;" itemprop="image">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(27,53,102,0.5),transparent);"></div>
+          </div>
+          <div class="p-6">
+            <span class="category-badge mb-3" style="background:rgba(201,168,76,0.12);color:var(--c-gold);">Requisitos</span>
+            <h2 class="font-bold text-base mb-2 leading-snug" style="color:var(--c-navy);" itemprop="headline">
+              <a href="/articulos/preguntas-migracion-mexico" class="card-title-link" itemprop="url">
+                Qué preguntas hace migración México a los turistas y cómo debes responderlas
+              </a>
+            </h2>
+            <p class="text-sm mb-4" style="color:#6B7280;line-height:1.65;" itemprop="description">
+              Las preguntas más frecuentes en el filtro migratorio y qué respuestas generan menos problemas.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs" style="color:#9BAFD9;">8 min de lectura</span>
+              <a href="/articulos/preguntas-migracion-mexico" class="text-sm font-semibold" style="color:var(--c-gold);">Leer artículo →</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="grain py-16 px-4 sm:px-6" style="background:var(--c-navy);">
+    <div class="max-w-2xl mx-auto text-center">
+      <span class="section-label">Listo para viajar</span>
+      <h2 class="heading-display text-3xl md:text-4xl font-semibold text-white mb-4">
+        Obtén tu carta de invitación en minutos
+      </h2>
+      <p class="text-sm mb-8" style="color:rgba(255,255,255,0.55);line-height:1.75;">
+        Documento formal, listo para presentar en migración. Desde $5 USD.
+      </p>
+      <a href="/#planes" class="btn-gold gap-2">
+        Crear mi carta
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer style="background:var(--c-navy3);" aria-labelledby="footer-label">
+  <h2 id="footer-label" class="sr-only">Pie de página</h2>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-16 pb-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-14">
+      <div class="md:col-span-2">
+        <a href="/" aria-label="Carta Invitación México — Inicio" class="inline-block mb-5">
+          <img src="brand_assets/logos/concept-1-el-sello-white.svg" alt="Carta Invitación México" height="48" class="h-14 w-auto">
+        </a>
+        <p class="text-sm mb-5 max-w-xs" style="color:rgba(255,255,255,0.4);line-height:1.75;">
+          Carta de invitación profesional para quienes visitan México. Documento formal listo para presentar ante la autoridad migratoria.
+        </p>
+        <p class="text-xs max-w-xs" style="color:rgba(255,255,255,0.22);line-height:1.7;">
+          Documento informativo. No constituye asesoría legal ni garantiza la entrada al país.
+        </p>
+      </div>
+      <nav aria-label="Páginas principales">
+        <h3 class="text-xs font-semibold uppercase tracking-widest mb-5" style="color:var(--c-gold);letter-spacing:0.12em;">Sitio</h3>
+        <ul class="space-y-3 list-none p-0 m-0">
+          <li><a href="/"                    class="footer-link">Inicio</a></li>
+          <li><a href="/sobre-nosotros"       class="footer-link">Sobre Nosotros</a></li>
+          <li><a href="/preguntas-frecuentes" class="footer-link">Preguntas Frecuentes</a></li>
+          <li><a href="/articulos"            class="footer-link">Publicaciones</a></li>
+          <li><a href="/contacto"             class="footer-link">Contacto</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Páginas legales">
+        <h3 class="text-xs font-semibold uppercase tracking-widest mb-5" style="color:var(--c-gold);letter-spacing:0.12em;">Legal</h3>
+        <ul class="space-y-3 list-none p-0 m-0">
+          <li><a href="/terminos"   class="footer-link">Términos y Condiciones</a></li>
+          <li><a href="/privacidad" class="footer-link">Política de Privacidad</a></li>
+          <li><a href="/reembolso"  class="footer-link">Política de Reembolso</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="gold-rule mb-8"></div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p style="color:rgba(255,255,255,0.22);font-size:0.8125rem;">© 2024 cartadeinvitacionmexico.com — Todos los derechos reservados.</p>
+      <div class="flex items-center gap-3">
+        <span style="color:rgba(255,255,255,0.2);font-size:0.8125rem;">Idioma:</span>
+        <a href="/" class="text-xs font-bold px-3 py-1 rounded-full" style="background:rgba(201,168,76,0.14);color:var(--c-gold);border:1px solid rgba(201,168,76,0.2);">ES</a>
+        <a href="/en" class="text-xs font-medium px-3 py-1 rounded-full footer-link">EN</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

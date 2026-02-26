@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Formulario Plan Completo — Carta de Invitación a México</title>
+  <meta name="description" content="Completa tu solicitud de Carta de Invitación a México. Plan Completo $9 USD con itinerario, acompañantes y múltiples alojamientos.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              50:  '#EDF0F8', 100: '#C5D0EC', 200: '#9BAFD9',
+              300: '#7090C6', 400: '#4A6FA5', 500: '#3A5A8E',
+              600: '#2D5499', 700: '#1B3566', 800: '#132648', 900: '#0C1830',
+            },
+            gold: {
+              100: '#F5EEC8', 200: '#E8D080', 300: '#D9BC5C',
+              400: '#C9A84C', 500: '#B08930', 600: '#8B6A1E',
+            }
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans:    ['"DM Sans"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --c-navy:  #1B3566;
+      --c-navy2: #132648;
+      --c-navy3: #0C1830;
+      --c-mid:   #4A6FA5;
+      --c-gold:  #C9A84C;
+      --c-gold2: #D9BC5C;
+      --c-cream: #FAF8F4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      overflow-x: hidden;
+      color: var(--c-navy);
+      background: var(--c-cream);
+      min-height: 100vh;
+    }
+
+    /* ── Form inputs ── */
+    .form-input {
+      width: 100%;
+      border: 1.5px solid rgba(27,53,102,0.16);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 16px;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: var(--c-navy);
+      background: #fff;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--c-gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.14);
+    }
+    .form-input.error {
+      border-color: #E53E3E;
+      box-shadow: 0 0 0 3px rgba(229,62,62,0.1);
+    }
+    .form-input::placeholder { color: rgba(27,53,102,0.32); }
+    select.form-input {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%234A6FA5' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+    textarea.form-input { resize: vertical; min-height: 88px; line-height: 1.6; }
+
+    /* ── Labels ── */
+    .form-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--c-navy);
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+    .form-label .req { color: var(--c-gold); margin-left: 2px; }
+
+    /* ── Hints & errors ── */
+    .form-hint { font-size: 0.75rem; color: #6B7280; margin-top: 5px; line-height: 1.5; }
+    .form-hint.warn {
+      color: #7B5A24;
+      background: rgba(201,168,76,0.1);
+      border-left: 2.5px solid var(--c-gold);
+      padding: 6px 10px;
+      border-radius: 0 6px 6px 0;
+      margin-top: 8px;
+    }
+    .form-error { font-size: 0.75rem; color: #C53030; margin-top: 5px; display: none; font-weight: 500; }
+    .form-error.show { display: block; }
+
+    /* ── Step transitions ── */
+    .form-step { display: none; }
+    .form-step.active {
+      display: block;
+      animation: stepIn 0.42s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Sidebar ── */
+    .step-pill {
+      display: flex; align-items: flex-start; gap: 13px;
+      padding: 9px 0; position: relative;
+    }
+    .step-pill::after {
+      content: ''; position: absolute;
+      left: 14px; top: 38px; bottom: -9px;
+      width: 1.5px; background: rgba(255,255,255,0.08);
+    }
+    .step-pill:last-child::after { display: none; }
+    .pill-dot {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 700;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+    .pill-dot.pending { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.3); }
+    .pill-dot.active  { background: var(--c-gold); color: var(--c-navy); }
+    .pill-dot.done    { background: rgba(201,168,76,0.2); color: var(--c-gold); }
+    .pill-label { font-size: 0.8rem; padding-top: 4px; }
+    .pill-label.pending-txt { color: rgba(255,255,255,0.3); }
+    .pill-label.active-txt  { color: #fff; font-weight: 600; }
+    .pill-label.done-txt    { color: rgba(255,255,255,0.5); }
+    .pill-sub { font-size: 0.68rem; color: rgba(255,255,255,0.22); margin-top: 1px; }
+
+    /* ── Mobile progress bar ── */
+    .mob-progress-track { height: 3px; background: rgba(27,53,102,0.1); border-radius: 99px; overflow: hidden; }
+    .mob-progress-fill {
+      height: 100%; background: var(--c-gold); border-radius: 99px;
+      transition: width 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    /* ── Radio/checkbox cards ── */
+    .radio-card {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 15px;
+      border: 1.5px solid rgba(27,53,102,0.14); border-radius: 10px;
+      cursor: pointer; min-height: 44px; background: #fff; user-select: none;
+      transition: border-color 0.18s ease, background 0.18s ease;
+    }
+    .radio-card:hover { border-color: rgba(201,168,76,0.45); background: rgba(201,168,76,0.03); }
+    .radio-card.selected { border-color: var(--c-gold); background: rgba(201,168,76,0.07); }
+    .radio-card input[type="radio"], .radio-card input[type="checkbox"] {
+      accent-color: var(--c-gold); width: 16px; height: 16px; cursor: pointer; flex-shrink: 0;
+    }
+    .radio-card span { font-size: 0.875rem; color: var(--c-navy); font-weight: 500; }
+
+    /* ── Transport type card (icon stacked) ── */
+    .transport-type-card {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 6px; padding: 14px 8px;
+      border: 1.5px solid rgba(27,53,102,0.14); border-radius: 10px;
+      cursor: pointer; min-height: 80px; background: #fff; text-align: center; user-select: none;
+      transition: border-color 0.18s ease, background 0.18s ease;
+    }
+    .transport-type-card:hover { border-color: rgba(201,168,76,0.45); background: rgba(201,168,76,0.03); }
+    .transport-type-card.selected { border-color: var(--c-gold); background: rgba(201,168,76,0.07); }
+    .transport-type-card input { display: none; }
+    .transport-type-card .tt-icon { font-size: 1.4rem; }
+    .transport-type-card .tt-text { font-size: 0.8rem; font-weight: 600; color: var(--c-navy); }
+
+    /* ── Expense radios ── */
+    .expense-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 13px 0; border-bottom: 1px solid rgba(27,53,102,0.07); flex-wrap: wrap;
+    }
+    .expense-row:last-child { border-bottom: none; }
+    .expense-concept { font-size: 0.875rem; font-weight: 500; color: var(--c-navy); flex-shrink: 0; }
+    .expense-options { display: flex; gap: 6px; flex-wrap: wrap; }
+    .exp-radio {
+      display: flex; align-items: center; gap: 5px;
+      padding: 6px 11px; border: 1.5px solid rgba(27,53,102,0.12); border-radius: 7px;
+      background: #fff; cursor: pointer; font-size: 0.78rem; font-weight: 500; color: var(--c-mid);
+      transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+      min-height: 36px; white-space: nowrap; user-select: none;
+    }
+    .exp-radio input[type="radio"] { display: none; }
+    .exp-radio.selected-exp { border-color: var(--c-gold); background: rgba(201,168,76,0.1); color: var(--c-navy); font-weight: 600; }
+    .exp-radio:hover { border-color: rgba(201,168,76,0.4); }
+
+    /* ── Conditional fields ── */
+    .cond-fields {
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: max-height 0.38s ease, opacity 0.3s ease, margin-top 0.25s ease;
+    }
+    .cond-fields.open { max-height: 380px; opacity: 1; margin-top: 16px; }
+
+    /* ── Repeatable card (companion / destino) ── */
+    .repeat-card {
+      border: 1.5px solid rgba(27,53,102,0.1);
+      border-radius: 14px;
+      background: #fff;
+      overflow: hidden;
+      animation: cardIn 0.35s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .repeat-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 18px;
+      background: rgba(27,53,102,0.03);
+      border-bottom: 1px solid rgba(27,53,102,0.07);
+    }
+    .repeat-card-title {
+      font-size: 0.8125rem; font-weight: 700; color: var(--c-navy); letter-spacing: 0.01em;
+    }
+    .repeat-card-body { padding: 20px 18px; }
+    .btn-remove {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.75rem; font-weight: 600; color: #C53030;
+      background: rgba(197,48,48,0.07); border: 1px solid rgba(197,48,48,0.18);
+      border-radius: 7px; padding: 5px 10px; cursor: pointer;
+      transition: background 0.15s ease;
+      min-height: 32px;
+    }
+    .btn-remove:hover { background: rgba(197,48,48,0.12); }
+
+    /* ── Add button ── */
+    .btn-add {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,0.08);
+      border: 1.5px dashed rgba(201,168,76,0.45);
+      color: var(--c-navy); font-weight: 600;
+      border-radius: 12px; min-height: 48px;
+      padding: 0 1.5rem; font-size: 0.875rem;
+      cursor: pointer; width: 100%; justify-content: center;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      transition: background 0.18s ease, border-color 0.18s ease;
+    }
+    .btn-add:hover { background: rgba(201,168,76,0.14); border-color: var(--c-gold); }
+    .btn-add:focus-visible { outline: 3px solid var(--c-gold); outline-offset: 2px; }
+
+    /* ── Buttons ── */
+    .btn-gold {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--c-gold); color: var(--c-navy); font-weight: 700;
+      border-radius: 12px; min-height: 52px; padding: 0 2rem; font-size: 1rem;
+      border: none; cursor: pointer; font-family: 'DM Sans', system-ui, sans-serif;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    }
+    .btn-gold:hover { background: var(--c-gold2); box-shadow: 0 6px 28px rgba(201,168,76,0.42); transform: translateY(-2px); }
+    .btn-gold:active { transform: translateY(0); }
+    .btn-gold:focus-visible { outline: 3px solid var(--c-gold2); outline-offset: 3px; }
+
+    .btn-navy {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--c-navy); color: #fff; font-weight: 700;
+      border-radius: 12px; min-height: 52px; padding: 0 2rem; font-size: 1rem;
+      border: none; cursor: pointer; font-family: 'DM Sans', system-ui, sans-serif;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    }
+    .btn-navy:hover { background: var(--c-navy2); box-shadow: 0 6px 24px rgba(27,53,102,0.35); transform: translateY(-2px); }
+    .btn-navy:active { transform: translateY(0); }
+    .btn-navy:focus-visible { outline: 3px solid var(--c-gold); outline-offset: 3px; }
+
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: transparent; color: var(--c-mid); font-weight: 500;
+      border-radius: 10px; min-height: 52px; padding: 0 1.25rem; font-size: 0.9rem;
+      border: 1.5px solid rgba(74,111,165,0.2); cursor: pointer;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      transition: color 0.18s ease, background 0.18s ease;
+    }
+    .btn-back:hover { color: var(--c-navy); background: rgba(27,53,102,0.04); }
+    .btn-back:focus-visible { outline: 3px solid var(--c-gold); outline-offset: 2px; }
+
+    /* ── Decorative ── */
+    .gold-rule { height: 1px; background: linear-gradient(to right, transparent, var(--c-gold), transparent); opacity: 0.28; }
+    .section-label { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--c-gold); display: block; }
+    .step-icon {
+      width: 46px; height: 46px; border-radius: 13px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.22); flex-shrink: 0;
+    }
+    .grain { position: relative; }
+    .grain::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.038; pointer-events: none; z-index: 1; mix-blend-mode: overlay;
+    }
+    .grain > * { position: relative; z-index: 2; }
+    .nav-link { color: var(--c-mid); font-weight: 500; font-size: 0.875rem; transition: color 0.15s ease; }
+    .nav-link:hover { color: var(--c-gold); }
+
+    /* ── Empty state ── */
+    .empty-state {
+      border: 1.5px dashed rgba(27,53,102,0.14); border-radius: 14px;
+      padding: 32px 20px; text-align: center; background: rgba(27,53,102,0.02);
+    }
+
+    /* ── Destino date grid ── */
+    .date-range { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    @media (max-width: 639px) {
+      .expense-row { flex-direction: column; align-items: flex-start; }
+      .date-range { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ════════════════════ HEADER ════════════════════ -->
+<header style="background:#fff;border-bottom:1px solid rgba(27,53,102,0.08);box-shadow:0 1px 12px rgba(27,53,102,0.05);"
+        class="sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-20">
+
+    <a href="/" aria-label="Carta Invitación México — Inicio" class="flex-shrink-0">
+      <img src="brand_assets/logos/concept-1-el-sello.svg"
+           alt="Carta Invitación México" height="44" class="h-14 w-auto">
+    </a>
+
+    <div class="flex items-center gap-4">
+      <div class="hidden sm:flex items-center gap-2">
+        <span class="text-xs font-bold px-3 py-1.5 rounded-full"
+              style="background:var(--c-gold);color:var(--c-navy);">⭐ Más popular</span>
+        <span class="text-xs font-bold px-3 py-1.5 rounded-full"
+              style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);color:var(--c-gold);">
+          Plan Completo · $9 USD
+        </span>
+      </div>
+      <a href="/" class="nav-link text-sm hidden sm:block">← Volver</a>
+    </div>
+
+  </div>
+</header>
+
+<main style="overflow-x:hidden;">
+
+<div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+
+  <div class="md:grid md:gap-8 lg:gap-12" style="grid-template-columns:260px 1fr;">
+
+    <!-- ════════════ LEFT SIDEBAR ════════════ -->
+    <aside class="hidden md:flex flex-col sticky top-24 self-start gap-6">
+
+      <div class="rounded-2xl p-6 grain"
+           style="background:linear-gradient(148deg,#1B3566 0%,#132648 100%);
+                  border:1px solid rgba(201,168,76,0.22);
+                  box-shadow:0 8px 44px rgba(27,53,102,0.3);">
+
+        <!-- Popular badge -->
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full mb-3 text-xs font-bold"
+             style="background:var(--c-gold);color:var(--c-navy);">⭐ Más popular</div>
+
+        <p class="text-xs font-bold uppercase tracking-widest mb-0.5" style="color:rgba(201,168,76,0.55);letter-spacing:0.13em;">Plan Completo</p>
+        <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:2.75rem;font-weight:700;color:var(--c-gold);line-height:1.1;margin-bottom:1.25rem;">
+          $9 <span style="font-size:1.25rem;color:rgba(255,255,255,0.3);">USD</span>
+        </p>
+
+        <div id="sidebar-steps">
+          <div class="step-pill">
+            <div class="pill-dot" id="dot-1">1</div>
+            <div><div class="pill-label" id="pl-1">El viajero</div><div class="pill-sub">Datos del extranjero</div></div>
+          </div>
+          <div class="step-pill">
+            <div class="pill-dot" id="dot-2">2</div>
+            <div><div class="pill-label" id="pl-2">Acompañantes</div><div class="pill-sub">Quién viaja con él/ella</div></div>
+          </div>
+          <div class="step-pill">
+            <div class="pill-dot" id="dot-3">3</div>
+            <div><div class="pill-label" id="pl-3">El anfitrión</div><div class="pill-sub">Quien firma en México</div></div>
+          </div>
+          <div class="step-pill">
+            <div class="pill-dot" id="dot-4">4</div>
+            <div><div class="pill-label" id="pl-4">Gastos</div><div class="pill-sub">¿Quién cubre qué?</div></div>
+          </div>
+          <div class="step-pill">
+            <div class="pill-dot" id="dot-5">5</div>
+            <div><div class="pill-label" id="pl-5">Itinerario</div><div class="pill-sub">Destinos, alojamientos y vuelos</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust notes -->
+      <div class="space-y-3">
+        <div class="flex items-start gap-2.5 text-xs" style="color:#6B7280;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px;">
+            <rect x="1.5" y="5.5" width="11" height="7.5" rx="1.5" stroke="#C9A84C" stroke-width="1.1"/>
+            <path d="M4 5.5V4a3 3 0 016 0v1.5" stroke="#C9A84C" stroke-width="1.1"/>
+          </svg>
+          Datos transmitidos de forma segura (HTTPS)
+        </div>
+        <div class="flex items-start gap-2.5 text-xs" style="color:#6B7280;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px;">
+            <circle cx="7" cy="7" r="5.5" stroke="#C9A84C" stroke-width="1.1"/>
+            <path d="M4.5 7l2 2 3.5-3.5" stroke="#C9A84C" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Recibes tu PDF en minutos tras el pago
+        </div>
+        <div class="flex items-start gap-2.5 text-xs" style="color:#6B7280;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px;">
+            <path d="M7 1.5L8.5 5.5h4L9.5 8l1.5 4.5L7 10l-4 2.5 1.5-4.5-3-2.5h4z" stroke="#C9A84C" stroke-width="1.1"/>
+          </svg>
+          +2,400 cartas generadas · 4.9 estrellas
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ════════════ FORM PANEL ════════════ -->
+    <div>
+
+      <!-- Mobile progress -->
+      <div class="md:hidden mb-5">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold" style="color:var(--c-gold);" id="mob-label">Paso 1 de 5 — El viajero</span>
+          <span class="text-xs font-bold px-2.5 py-1 rounded-full" style="background:var(--c-gold);color:var(--c-navy);">$9 USD</span>
+        </div>
+        <div class="mob-progress-track">
+          <div class="mob-progress-fill" id="mob-fill" style="width:20%;"></div>
+        </div>
+      </div>
+
+      <!-- Form card -->
+      <div class="bg-white rounded-2xl overflow-hidden"
+           style="box-shadow:0 4px 36px rgba(27,53,102,0.08);border:1px solid rgba(27,53,102,0.07);">
+
+        <form id="main-form" novalidate>
+
+          <!-- ═══════════════════════
+               STEP 1 — EL VIAJERO
+          ═══════════════════════ -->
+          <section id="step-1" class="form-step active p-6 sm:p-8">
+
+            <div class="flex items-start gap-4 mb-7">
+              <div class="step-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <circle cx="11" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/>
+                  <path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <span class="section-label mb-1">Paso 1 de 5</span>
+                <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">El viajero</h1>
+                <p class="text-sm mt-1" style="color:#6B7280;">Datos de la persona principal que visitará México.</p>
+              </div>
+            </div>
+
+            <div class="space-y-5">
+
+              <div>
+                <label class="form-label" for="v-nombre">Nombre completo <span class="req">*</span></label>
+                <input type="text" id="v-nombre" name="v_nombre" class="form-input"
+                       placeholder="Tal como aparece en el pasaporte" required autocomplete="name">
+                <p class="form-hint">Nombre(s) y apellidos completos.</p>
+                <p class="form-error" id="err-v-nombre">Este campo es obligatorio.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="v-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
+                <input type="date" id="v-nacimiento" name="v_nacimiento" class="form-input" required>
+                <p class="form-error" id="err-v-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="v-nacionalidad">Nacionalidad <span class="req">*</span></label>
+                <select id="v-nacionalidad" name="v_nacionalidad" class="form-input" required>
+                  <option value="" disabled selected>La que aparece en tu pasaporte</option>
+                  <optgroup label="América Latina y el Caribe">
+                    <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option>
+                    <option>Barbados</option><option>Belice</option><option>Bolivia</option>
+                    <option>Brasil</option><option>Chile</option><option>Colombia</option>
+                    <option>Costa Rica</option><option>Cuba</option><option>Dominica</option>
+                    <option>Ecuador</option><option>El Salvador</option><option>Granada</option>
+                    <option>Guatemala</option><option>Guyana</option><option>Haití</option>
+                    <option>Honduras</option><option>Jamaica</option><option>Nicaragua</option>
+                    <option>Panamá</option><option>Paraguay</option><option>Perú</option>
+                    <option>República Dominicana</option><option>San Cristóbal y Nieves</option>
+                    <option>San Vicente y las Granadinas</option><option>Santa Lucía</option>
+                    <option>Surinam</option><option>Trinidad y Tobago</option>
+                    <option>Uruguay</option><option>Venezuela</option>
+                  </optgroup>
+                  <optgroup label="Norteamérica">
+                    <option>Canadá</option><option>Estados Unidos</option>
+                  </optgroup>
+                  <optgroup label="Europa">
+                    <option>Albania</option><option>Alemania</option><option>Andorra</option>
+                    <option>Austria</option><option>Bélgica</option><option>Bielorrusia</option>
+                    <option>Bosnia y Herzegovina</option><option>Bulgaria</option><option>Chipre</option>
+                    <option>Ciudad del Vaticano</option><option>Croacia</option><option>Dinamarca</option>
+                    <option>Eslovaquia</option><option>Eslovenia</option><option>España</option>
+                    <option>Estonia</option><option>Finlandia</option><option>Francia</option>
+                    <option>Grecia</option><option>Hungría</option><option>Irlanda</option>
+                    <option>Islandia</option><option>Italia</option><option>Kosovo</option>
+                    <option>Letonia</option><option>Liechtenstein</option><option>Lituania</option>
+                    <option>Luxemburgo</option><option>Malta</option><option>Moldavia</option>
+                    <option>Mónaco</option><option>Montenegro</option><option>Noruega</option>
+                    <option>Países Bajos</option><option>Polonia</option><option>Portugal</option>
+                    <option>Reino Unido</option><option>República Checa</option><option>Rumanía</option>
+                    <option>Rusia</option><option>San Marino</option><option>Serbia</option>
+                    <option>Suecia</option><option>Suiza</option><option>Ucrania</option>
+                  </optgroup>
+                  <optgroup label="África">
+                    <option>Argelia</option><option>Angola</option><option>Benín</option>
+                    <option>Botsuana</option><option>Burkina Faso</option><option>Burundi</option>
+                    <option>Cabo Verde</option><option>Camerún</option><option>Chad</option>
+                    <option>Comoras</option><option>Congo</option><option>Costa de Marfil</option>
+                    <option>Egipto</option><option>Eritrea</option><option>Etiopía</option>
+                    <option>Gabón</option><option>Gambia</option><option>Ghana</option>
+                    <option>Guinea</option><option>Guinea Ecuatorial</option><option>Guinea-Bisáu</option>
+                    <option>Kenia</option><option>Lesoto</option><option>Liberia</option>
+                    <option>Libia</option><option>Madagascar</option><option>Malaui</option>
+                    <option>Mali</option><option>Marruecos</option><option>Mauricio</option>
+                    <option>Mauritania</option><option>Mozambique</option><option>Namibia</option>
+                    <option>Níger</option><option>Nigeria</option><option>República Centroafricana</option>
+                    <option>República Democrática del Congo</option><option>Ruanda</option>
+                    <option>Santo Tomé y Príncipe</option><option>Senegal</option>
+                    <option>Seychelles</option><option>Sierra Leona</option><option>Somalia</option>
+                    <option>Sudáfrica</option><option>Sudán</option><option>Sudán del Sur</option>
+                    <option>Suazilandia</option><option>Tanzania</option><option>Togo</option>
+                    <option>Túnez</option><option>Uganda</option><option>Yibuti</option>
+                    <option>Zambia</option><option>Zimbabue</option>
+                  </optgroup>
+                  <optgroup label="Asia y Medio Oriente">
+                    <option>Afganistán</option><option>Arabia Saudita</option><option>Armenia</option>
+                    <option>Azerbaiyán</option><option>Bangladés</option><option>Brunéi</option>
+                    <option>Bután</option><option>Camboya</option><option>Catar</option>
+                    <option>China</option><option>Corea del Norte</option><option>Corea del Sur</option>
+                    <option>Emiratos Árabes Unidos</option><option>Filipinas</option><option>Georgia</option>
+                    <option>India</option><option>Indonesia</option><option>Irak</option>
+                    <option>Irán</option><option>Israel</option><option>Japón</option>
+                    <option>Jordania</option><option>Kazajistán</option><option>Kirguistán</option>
+                    <option>Kuwait</option><option>Laos</option><option>Líbano</option>
+                    <option>Malasia</option><option>Maldivas</option><option>Mongolia</option>
+                    <option>Myanmar</option><option>Nepal</option><option>Omán</option>
+                    <option>Pakistán</option><option>Palestina</option><option>Singapur</option>
+                    <option>Siria</option><option>Sri Lanka</option><option>Tailandia</option>
+                    <option>Tayikistán</option><option>Timor Oriental</option><option>Turkmenistán</option>
+                    <option>Turquía</option><option>Uzbekistán</option><option>Vietnam</option>
+                    <option>Yemen</option>
+                  </optgroup>
+                  <optgroup label="Oceanía">
+                    <option>Australia</option><option>Fiyi</option><option>Islas Marshall</option>
+                    <option>Islas Salomón</option><option>Kiribati</option><option>Micronesia</option>
+                    <option>Nauru</option><option>Nueva Zelanda</option><option>Palaos</option>
+                    <option>Papúa Nueva Guinea</option><option>Samoa</option><option>Tonga</option>
+                    <option>Tuvalu</option><option>Vanuatu</option>
+                  </optgroup>
+                </select>
+                <p class="form-error" id="err-v-nacionalidad">Por favor selecciona una nacionalidad.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="v-pasaporte">Número de pasaporte <span class="req">*</span></label>
+                <input type="text" id="v-pasaporte" name="v_pasaporte" class="form-input"
+                       placeholder="Ej. AB123456" required autocomplete="off">
+                <p class="form-hint warn">⚠ Verifica que el pasaporte tenga al menos <strong>6 meses de vigencia</strong> a partir de la fecha de entrada a México.</p>
+                <p class="form-error" id="err-v-pasaporte">Por favor ingresa el número de pasaporte.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="v-residencia">País de residencia <span class="req">*</span></label>
+                <input type="text" id="v-residencia" name="v_residencia" class="form-input"
+                       placeholder="País donde resides actualmente" required>
+                <p class="form-hint">Puede ser diferente a tu nacionalidad.</p>
+                <p class="form-error" id="err-v-residencia">Por favor ingresa tu país de residencia.</p>
+              </div>
+
+              <div>
+                <label class="form-label">Domicilio completo <span class="req">*</span></label>
+                <div class="space-y-3">
+                  <input type="text" id="v-calle" name="v_calle" class="form-input"
+                         placeholder="Calle, número, e interior (si aplica)" required>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" id="v-ciudad" name="v_ciudad" class="form-input" placeholder="Ciudad" required>
+                    <input type="text" id="v-provincia" name="v_provincia" class="form-input" placeholder="Provincia / Estado / Región" required>
+                  </div>
+                  <input type="text" id="v-cp" name="v_cp" class="form-input" placeholder="Código Postal">
+                </div>
+                <p class="form-error" id="err-v-domicilio">Por favor completa los campos de domicilio.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="v-ocupacion">Actividad profesional u ocupación <span class="req">*</span></label>
+                <input type="text" id="v-ocupacion" name="v_ocupacion" class="form-input"
+                       placeholder="Ej. Ingeniero, Estudiante, Comerciante…" required>
+                <p class="form-hint">En tu país de residencia.</p>
+                <p class="form-error" id="err-v-ocupacion">Por favor ingresa tu ocupación.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="v-email">Correo electrónico <span class="req">*</span></label>
+                <input type="email" id="v-email" name="v_email" class="form-input"
+                       placeholder="nombre@correo.com" required autocomplete="email"
+                       oninput="this.value=this.value.replace(/\s/g,'')"
+                       onblur="emailReq('v-email','err-v-email')">
+                <p class="form-hint">Te enviaremos tu carta en PDF a este correo.</p>
+                <p class="form-error" id="err-v-email">Por favor ingresa un correo electrónico válido (ej. nombre@correo.com).</p>
+              </div>
+
+            </div>
+
+            <div class="flex justify-end mt-8">
+              <button type="button" class="btn-gold" onclick="goNext(1)">
+                Continuar
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </section>
+
+
+          <!-- ═════════════════════════════
+               STEP 2 — ACOMPAÑANTES
+          ═════════════════════════════ -->
+          <section id="step-2" class="form-step p-6 sm:p-8">
+
+            <div class="flex items-start gap-4 mb-7">
+              <div class="step-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <circle cx="8" cy="7" r="3.5" stroke="#C9A84C" stroke-width="1.5"/>
+                  <path d="M2 19c0-3.5 2.7-6 6-6" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                  <circle cx="15" cy="7" r="3.5" stroke="#C9A84C" stroke-width="1.5"/>
+                  <path d="M11 19c0-3.5 2.7-6 6-6" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <span class="section-label mb-1">Paso 2 de 5</span>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Acompañantes</h2>
+                <p class="text-sm mt-1" style="color:#6B7280;">Personas que viajan junto al invitado principal y quedarán incluidas en la misma carta.</p>
+              </div>
+            </div>
+
+            <!-- Gold callout -->
+            <div class="rounded-xl p-4 mb-6 text-sm flex gap-3" style="background:rgba(201,168,76,0.09);border:1px solid rgba(201,168,76,0.25);color:#7B5A24;line-height:1.65;">
+              <span style="font-size:1.1rem;flex-shrink:0;">⭐</span>
+              <span><strong>Exclusivo Plan Completo.</strong> Si el viajero viene solo, puedes omitir este paso y continuar.</span>
+            </div>
+
+            <!-- Container for companion cards -->
+            <div id="companions-container" class="space-y-4 mb-4"></div>
+
+            <!-- Empty state (shown when 0 companions) -->
+            <div id="companions-empty" class="empty-state mb-4">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" class="mx-auto mb-3" aria-hidden="true">
+                <circle cx="18" cy="18" r="17" stroke="rgba(27,53,102,0.1)" stroke-width="1.5"/>
+                <circle cx="14" cy="14" r="4" stroke="#C9A84C" stroke-width="1.3"/>
+                <path d="M7 26c0-4 3.1-7 7-7" stroke="#C9A84C" stroke-width="1.3" stroke-linecap="round"/>
+                <circle cx="23" cy="14" r="4" stroke="rgba(201,168,76,0.4)" stroke-width="1.3"/>
+                <path d="M17 26c0-4 3.1-7 7-7" stroke="rgba(201,168,76,0.4)" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+              <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">Sin acompañantes por ahora</p>
+              <p class="text-xs" style="color:#6B7280;">Si alguien viaja contigo, agrégalo aquí.</p>
+            </div>
+
+            <button type="button" class="btn-add" onclick="addCompanion()">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+              </svg>
+              Agregar acompañante
+            </button>
+
+            <p class="form-error mt-3" id="err-companions">Por favor completa todos los campos del acompañante.</p>
+
+            <div class="flex items-center justify-between mt-8 gap-3">
+              <button type="button" class="btn-back" onclick="goPrev(2)">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Volver
+              </button>
+              <button type="button" class="btn-gold" onclick="goNext(2)">
+                Continuar
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </section>
+
+
+          <!-- ═══════════════════════
+               STEP 3 — EL ANFITRIÓN
+          ═══════════════════════ -->
+          <section id="step-3" class="form-step p-6 sm:p-8">
+
+            <div class="flex items-start gap-4 mb-7">
+              <div class="step-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <path d="M3 9l8-5.5L19 9v9a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M9 19v-6h4v6" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <span class="section-label mb-1">Paso 3 de 5</span>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">El anfitrión</h2>
+                <p class="text-sm mt-1" style="color:#6B7280;">Datos del mexicano o residente en México que firmará la carta.</p>
+              </div>
+            </div>
+
+            <div class="space-y-5">
+
+              <div>
+                <label class="form-label" for="a-nombre">Nombre completo <span class="req">*</span></label>
+                <input type="text" id="a-nombre" name="a_nombre" class="form-input"
+                       placeholder="Tal como aparece en tu identificación oficial" required>
+                <p class="form-error" id="err-a-nombre">Este campo es obligatorio.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
+                <input type="date" id="a-nacimiento" name="a_nacimiento" class="form-input" required>
+                <p class="form-error" id="err-a-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-id-tipo">Tipo de identificación oficial <span class="req">*</span></label>
+                <select id="a-id-tipo" name="a_id_tipo" class="form-input" required>
+                  <option value="" disabled selected>Selecciona el tipo</option>
+                  <option value="pasaporte">Pasaporte</option>
+                  <option value="ine">INE / IFE</option>
+                  <option value="residente">Tarjeta de residente</option>
+                </select>
+                <p class="form-hint warn">⚠ Se deberá anexar copia de esta identificación a la carta de invitación.</p>
+                <p class="form-error" id="err-a-id-tipo">Por favor selecciona el tipo de identificación.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-id-num">Número de identificación <span class="req">*</span></label>
+                <input type="text" id="a-id-num" name="a_id_num" class="form-input"
+                       placeholder="Número que aparece en tu identificación" required autocomplete="off">
+                <p class="form-error" id="err-a-id-num">Por favor ingresa el número de identificación.</p>
+              </div>
+
+              <div>
+                <label class="form-label">Domicilio en México <span class="req">*</span></label>
+                <div class="space-y-3">
+                  <input type="text" id="a-calle" name="a_calle" class="form-input" placeholder="Calle y número" required>
+                  <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" required>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" id="a-ciudad" name="a_ciudad" class="form-input" placeholder="Ciudad" required>
+                    <input type="text" id="a-estado" name="a_estado" class="form-input" placeholder="Estado" required>
+                  </div>
+                  <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal">
+                </div>
+                <p class="form-hint warn mt-3">⚠ Se recomienda anexar comprobante de domicilio con antigüedad no mayor a 3 meses.</p>
+                <p class="form-error" id="err-a-domicilio">Por favor completa el domicilio.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-telefono">Teléfono de contacto <span class="req">*</span></label>
+                <input type="tel" id="a-telefono" name="a_telefono" class="form-input"
+                       placeholder="+52 55 1234 5678" required autocomplete="tel">
+                <p class="form-hint warn">⚠ Migración puede llamar a este número exactamente al momento del arribo del visitante. Es fundamental que esté disponible durante las fechas del viaje.</p>
+                <p class="form-error" id="err-a-telefono">Por favor ingresa un teléfono de contacto.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-vinculo">Vínculo con el viajero <span class="req">*</span></label>
+                <select id="a-vinculo" name="a_vinculo" class="form-input" required>
+                  <option value="" disabled selected>¿Cuál es tu relación?</option>
+                  <option value="familiar">Familiar</option>
+                  <option value="pareja">Pareja</option>
+                  <option value="amistad">Amistad</option>
+                  <option value="laboral">Laboral</option>
+                  <option value="otro">Otro</option>
+                </select>
+                <p class="form-error" id="err-a-vinculo">Por favor indica el vínculo.</p>
+              </div>
+
+            </div>
+
+            <div class="flex items-center justify-between mt-8 gap-3">
+              <button type="button" class="btn-back" onclick="goPrev(3)">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Volver
+              </button>
+              <button type="button" class="btn-gold" onclick="goNext(3)">
+                Continuar
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </section>
+
+
+          <!-- ═══════════════════════
+               STEP 4 — GASTOS
+          ═══════════════════════ -->
+          <section id="step-4" class="form-step p-6 sm:p-8">
+
+            <div class="flex items-start gap-4 mb-7">
+              <div class="step-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <rect x="3" y="7" width="16" height="11" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+                  <path d="M7 7V5a4 4 0 018 0v2" stroke="#C9A84C" stroke-width="1.5"/>
+                  <circle cx="11" cy="12.5" r="2" stroke="#C9A84C" stroke-width="1.4"/>
+                </svg>
+              </div>
+              <div>
+                <span class="section-label mb-1">Paso 4 de 5</span>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Gastos del viaje</h2>
+                <p class="text-sm mt-1" style="color:#6B7280;">¿Quién cubrirá los gastos durante la estancia en México?</p>
+              </div>
+            </div>
+
+            <div class="rounded-xl p-4 mb-6 text-sm" style="background:rgba(201,168,76,0.09);border:1px solid rgba(201,168,76,0.25);color:#7B5A24;line-height:1.65;">
+              <strong>💡 Nota:</strong> Si el visitante cubre total o parcialmente sus propios gastos, se recomienda que pueda comprobar al menos <strong>USD $50 por día</strong> con efectivo, estado de cuenta bancario o tarjeta.
+            </div>
+
+            <div class="rounded-xl overflow-hidden mb-7" style="border:1.5px solid rgba(27,53,102,0.1);">
+              <div class="px-4 py-3 flex items-center justify-between"
+                   style="background:rgba(27,53,102,0.04);border-bottom:1px solid rgba(27,53,102,0.08);">
+                <span class="text-xs font-bold uppercase tracking-wider" style="color:var(--c-mid);">Concepto</span>
+                <span class="text-xs font-bold uppercase tracking-wider" style="color:var(--c-mid);">¿Quién cubre?</span>
+              </div>
+              <div class="px-4 bg-white">
+                <div class="expense-row">
+                  <span class="expense-concept">🏨 Hospedaje</span>
+                  <div class="expense-options">
+                    <label class="exp-radio"><input type="radio" name="g_hospedaje" value="visitante">Visitante</label>
+                    <label class="exp-radio"><input type="radio" name="g_hospedaje" value="anfitrion">Anfitrión</label>
+                    <label class="exp-radio"><input type="radio" name="g_hospedaje" value="ambos">Ambos</label>
+                  </div>
+                </div>
+                <div class="expense-row">
+                  <span class="expense-concept">🍽️ Alimentos</span>
+                  <div class="expense-options">
+                    <label class="exp-radio"><input type="radio" name="g_alimentos" value="visitante">Visitante</label>
+                    <label class="exp-radio"><input type="radio" name="g_alimentos" value="anfitrion">Anfitrión</label>
+                    <label class="exp-radio"><input type="radio" name="g_alimentos" value="ambos">Ambos</label>
+                  </div>
+                </div>
+                <div class="expense-row">
+                  <span class="expense-concept">🚌 Transporte</span>
+                  <div class="expense-options">
+                    <label class="exp-radio"><input type="radio" name="g_transporte" value="visitante">Visitante</label>
+                    <label class="exp-radio"><input type="radio" name="g_transporte" value="anfitrion">Anfitrión</label>
+                    <label class="exp-radio"><input type="radio" name="g_transporte" value="ambos">Ambos</label>
+                  </div>
+                </div>
+                <div class="expense-row">
+                  <span class="expense-concept">🗺️ Actividades turísticas</span>
+                  <div class="expense-options">
+                    <label class="exp-radio"><input type="radio" name="g_actividades" value="visitante">Visitante</label>
+                    <label class="exp-radio"><input type="radio" name="g_actividades" value="anfitrion">Anfitrión</label>
+                    <label class="exp-radio"><input type="radio" name="g_actividades" value="ambos">Ambos</label>
+                  </div>
+                </div>
+                <div class="expense-row">
+                  <span class="expense-concept">🏥 Gastos médicos / emergencias</span>
+                  <div class="expense-options">
+                    <label class="exp-radio"><input type="radio" name="g_medicos" value="visitante">Visitante</label>
+                    <label class="exp-radio"><input type="radio" name="g_medicos" value="anfitrion">Anfitrión</label>
+                    <label class="exp-radio"><input type="radio" name="g_medicos" value="ambos">Ambos</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label class="form-label">Medios de transporte del visitante en México <span class="req">*</span></label>
+              <p class="text-xs mb-3" style="color:#6B7280;">Selecciona todos los que apliquen.</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <label class="radio-card" id="tc-avion">
+                  <input type="checkbox" name="transporte_mx" value="avion" onchange="toggleTransportCard(this)">
+                  <span>✈️ Avión interno</span>
+                </label>
+                <label class="radio-card" id="tc-autobus">
+                  <input type="checkbox" name="transporte_mx" value="autobus" onchange="toggleTransportCard(this)">
+                  <span>🚌 Autobús</span>
+                </label>
+                <label class="radio-card" id="tc-auto">
+                  <input type="checkbox" name="transporte_mx" value="auto_rentado" onchange="toggleTransportCard(this)">
+                  <span>🚗 Auto rentado</span>
+                </label>
+                <label class="radio-card" id="tc-anfitrion">
+                  <input type="checkbox" name="transporte_mx" value="anfitrion" onchange="toggleTransportCard(this)">
+                  <span>🏠 Transporte del anfitrión</span>
+                </label>
+                <label class="radio-card" id="tc-otro">
+                  <input type="checkbox" name="transporte_mx" value="otro" onchange="toggleTransportCard(this)">
+                  <span>🔹 Otro</span>
+                </label>
+              </div>
+              <p class="form-error" id="err-transporte">Por favor selecciona al menos un medio de transporte.</p>
+            </div>
+
+            <div class="flex items-center justify-between mt-8 gap-3">
+              <button type="button" class="btn-back" onclick="goPrev(4)">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Volver
+              </button>
+              <button type="button" class="btn-gold" onclick="goNext(4)">
+                Continuar
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </section>
+
+
+          <!-- ══════════════════════════════
+               STEP 5 — ITINERARIO Y VUELOS
+          ══════════════════════════════ -->
+          <section id="step-5" class="form-step p-6 sm:p-8">
+
+            <div class="flex items-start gap-4 mb-7">
+              <div class="step-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <path d="M2.5 14.5L5 13.5l11.5-8.5a2.5 2.5 0 013.5 3.5L11 20.5 8.5 18l.5-2.5-6.5 2z" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M3 19.5h16" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <span class="section-label mb-1">Paso 5 de 5</span>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Itinerario y vuelos</h2>
+                <p class="text-sm mt-1" style="color:#6B7280;">Ingreso, destinos planeados y salida de México.</p>
+              </div>
+            </div>
+
+            <div class="rounded-xl p-4 mb-7 text-sm" style="background:rgba(201,168,76,0.09);border:1px solid rgba(201,168,76,0.25);color:#7B5A24;line-height:1.65;">
+              <strong>⚠ Importante:</strong> Se debe comprobar que se cuenta con reservación para el viaje de regreso al momento del ingreso a México.
+            </div>
+
+            <!-- ── INGRESO ── -->
+            <div class="mb-8">
+              <p class="section-label mb-4">Ingreso a México</p>
+              <div class="space-y-5">
+
+                <div>
+                  <label class="form-label">¿Cómo será el ingreso a México? <span class="req">*</span></label>
+                  <div class="grid grid-cols-3 gap-3">
+                    <label class="transport-type-card" id="ing-aereo-card">
+                      <input type="radio" name="ingreso_tipo" value="aereo" onchange="onTransportType('ingreso','aereo')">
+                      <span class="tt-icon">✈️</span><span class="tt-text">Aéreo</span>
+                    </label>
+                    <label class="transport-type-card" id="ing-terrestre-card">
+                      <input type="radio" name="ingreso_tipo" value="terrestre" onchange="onTransportType('ingreso','terrestre')">
+                      <span class="tt-icon">🚌</span><span class="tt-text">Terrestre</span>
+                    </label>
+                    <label class="transport-type-card" id="ing-maritimo-card">
+                      <input type="radio" name="ingreso_tipo" value="maritimo" onchange="onTransportType('ingreso','maritimo')">
+                      <span class="tt-icon">🚢</span><span class="tt-text">Marítimo</span>
+                    </label>
+                  </div>
+                  <p class="form-error" id="err-ingreso-tipo">Por favor selecciona el tipo de ingreso.</p>
+                </div>
+
+                <div id="cond-ingreso-aereo" class="cond-fields space-y-4">
+                  <div>
+                    <label class="form-label" for="ing-aeropuerto">Aeropuerto de ingreso</label>
+                    <input type="text" id="ing-aeropuerto" name="ing_aeropuerto" class="form-input" placeholder="Ej. AICM — Ciudad de México">
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="form-label" for="ing-aerolinea">Aerolínea de llegada</label>
+                      <input type="text" id="ing-aerolinea" name="ing_aerolinea" class="form-input" placeholder="Ej. Avianca, LATAM…">
+                    </div>
+                    <div>
+                      <label class="form-label" for="ing-vuelo">Número de vuelo</label>
+                      <input type="text" id="ing-vuelo" name="ing_vuelo" class="form-input" placeholder="Ej. AV204">
+                    </div>
+                  </div>
+                </div>
+
+                <div id="cond-ingreso-terrestre" class="cond-fields">
+                  <label class="form-label" for="ing-cruce">Estado / punto de cruce fronterizo</label>
+                  <input type="text" id="ing-cruce" name="ing_cruce" class="form-input" placeholder="Ej. Tijuana, Ciudad Juárez…">
+                </div>
+
+                <div id="cond-ingreso-maritimo" class="cond-fields">
+                  <label class="form-label" for="ing-puerto">Puerto de ingreso</label>
+                  <input type="text" id="ing-puerto" name="ing_puerto" class="form-input" placeholder="Ej. Puerto de Veracruz">
+                </div>
+
+                <div>
+                  <label class="form-label" for="ing-fecha">Fecha de llegada a México <span class="req">*</span></label>
+                  <input type="date" id="ing-fecha" name="ing_fecha" class="form-input" required>
+                  <p class="form-error" id="err-ing-fecha">Por favor indica la fecha de llegada.</p>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="gold-rule mb-7"></div>
+
+            <!-- ── DESTINOS ── -->
+            <div class="mb-8">
+              <div class="flex items-center justify-between mb-2">
+                <p class="section-label">Destinos del itinerario</p>
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full" style="background:rgba(201,168,76,0.1);color:var(--c-gold);border:1px solid rgba(201,168,76,0.2);">Exclusivo Plan Completo</span>
+              </div>
+              <p class="text-xs mb-5" style="color:#6B7280;">Agrega un bloque por cada ciudad o destino. El orden define la secuencia en la carta.</p>
+
+              <div id="destinos-container" class="space-y-4 mb-4"></div>
+
+              <button type="button" class="btn-add" onclick="addDestino()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                </svg>
+                Agregar destino
+              </button>
+              <p class="form-error mt-2" id="err-destinos">Agrega al menos un destino del itinerario.</p>
+            </div>
+
+            <div class="gold-rule mb-7"></div>
+
+            <!-- ── SALIDA ── -->
+            <div>
+              <p class="section-label mb-4">Salida de México</p>
+              <div class="space-y-5">
+
+                <div>
+                  <label class="form-label">¿Cómo será la salida de México? <span class="req">*</span></label>
+                  <div class="grid grid-cols-3 gap-3">
+                    <label class="transport-type-card" id="sal-aereo-card">
+                      <input type="radio" name="salida_tipo" value="aereo" onchange="onTransportType('salida','aereo')">
+                      <span class="tt-icon">✈️</span><span class="tt-text">Aéreo</span>
+                    </label>
+                    <label class="transport-type-card" id="sal-terrestre-card">
+                      <input type="radio" name="salida_tipo" value="terrestre" onchange="onTransportType('salida','terrestre')">
+                      <span class="tt-icon">🚌</span><span class="tt-text">Terrestre</span>
+                    </label>
+                    <label class="transport-type-card" id="sal-maritimo-card">
+                      <input type="radio" name="salida_tipo" value="maritimo" onchange="onTransportType('salida','maritimo')">
+                      <span class="tt-icon">🚢</span><span class="tt-text">Marítimo</span>
+                    </label>
+                  </div>
+                  <p class="form-error" id="err-salida-tipo">Por favor selecciona el tipo de salida.</p>
+                </div>
+
+                <div id="cond-salida-aereo" class="cond-fields space-y-4">
+                  <div>
+                    <label class="form-label" for="sal-aeropuerto">Aeropuerto de salida</label>
+                    <input type="text" id="sal-aeropuerto" name="sal_aeropuerto" class="form-input" placeholder="Ej. AICM — Ciudad de México">
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="form-label" for="sal-aerolinea">Aerolínea de regreso</label>
+                      <input type="text" id="sal-aerolinea" name="sal_aerolinea" class="form-input" placeholder="Ej. Avianca, LATAM…">
+                    </div>
+                    <div>
+                      <label class="form-label" for="sal-vuelo">Número de vuelo</label>
+                      <input type="text" id="sal-vuelo" name="sal_vuelo" class="form-input" placeholder="Ej. AV205">
+                    </div>
+                  </div>
+                </div>
+
+                <div id="cond-salida-terrestre" class="cond-fields">
+                  <label class="form-label" for="sal-cruce">Estado / punto de cruce fronterizo</label>
+                  <input type="text" id="sal-cruce" name="sal_cruce" class="form-input" placeholder="Ej. Nuevo Laredo, Reynosa…">
+                </div>
+
+                <div id="cond-salida-maritimo" class="cond-fields">
+                  <label class="form-label" for="sal-puerto">Puerto de salida</label>
+                  <input type="text" id="sal-puerto" name="sal_puerto" class="form-input" placeholder="Ej. Puerto de Ensenada">
+                </div>
+
+                <div>
+                  <label class="form-label" for="sal-fecha">Fecha de regreso <span class="req">*</span></label>
+                  <input type="date" id="sal-fecha" name="sal_fecha" class="form-input" required>
+                  <p class="form-error" id="err-sal-fecha">Por favor indica la fecha de regreso.</p>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Final CTA box -->
+            <div class="mt-8 rounded-2xl p-5" style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);">
+              <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">¿Todo listo?</p>
+              <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Al continuar pasarás al pago seguro. Tu carta PDF será enviada a tu correo electrónico en minutos.</p>
+              <div class="flex items-center gap-2 text-xs" style="color:#6B7280;">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                  <rect x="1.5" y="5.5" width="10" height="7" rx="1.5" stroke="#C9A84C" stroke-width="1.1"/>
+                  <path d="M4 5.5V4a2.5 2.5 0 015 0v1.5" stroke="#C9A84C" stroke-width="1.1"/>
+                </svg>
+                Pago procesado por <strong>Stripe</strong>. No almacenamos datos de tarjeta.
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between mt-5 gap-3">
+              <button type="button" class="btn-back" onclick="goPrev(5)">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Volver
+              </button>
+              <button type="button" class="btn-navy" onclick="goNext(5)" style="white-space:nowrap;font-size:0.9375rem;">
+                Ir al pago · $9 USD
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+
+          </section>
+
+        </form>
+      </div><!-- /form card -->
+
+      <!-- Bottom trust strip -->
+      <div class="flex flex-wrap items-center justify-center gap-5 mt-6 text-xs" style="color:#9BAFD9;">
+        <span class="flex items-center gap-1.5">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <rect x="1" y="4.5" width="10" height="7" rx="1.5" stroke="#C9A84C" stroke-width="1.1"/>
+            <path d="M3.5 4.5V3.5a2.5 2.5 0 015 0v1" stroke="#C9A84C" stroke-width="1.1"/>
+          </svg>
+          Conexión segura HTTPS
+        </span>
+        <a href="/privacidad" style="color:#9BAFD9;" class="hover:underline">Privacidad</a>
+        <a href="/terminos" style="color:#9BAFD9;" class="hover:underline">Términos</a>
+      </div>
+
+    </div><!-- /form panel -->
+
+  </div><!-- /two-col grid -->
+
+</div><!-- /max-w -->
+
+</main>
+
+
+<!-- ════ COMPANION TEMPLATE ════ -->
+<template id="companion-tpl">
+  <div class="repeat-card" data-companion>
+    <div class="repeat-card-header">
+      <span class="repeat-card-title">Acompañante <span class="card-num"></span></span>
+      <button type="button" class="btn-remove" onclick="removeCompanion(this)">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Eliminar
+      </button>
+    </div>
+    <div class="repeat-card-body space-y-4">
+      <div>
+        <label class="form-label">Nombre completo <span class="req">*</span></label>
+        <input type="text" name="comp_nombre[]" class="form-input companion-nombre"
+               placeholder="Tal como aparece en el pasaporte" required>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="form-label">Fecha de nacimiento <span class="req">*</span></label>
+          <input type="date" name="comp_nacimiento[]" class="form-input companion-nacimiento" required>
+        </div>
+        <div>
+          <label class="form-label">Relación con el viajero principal <span class="req">*</span></label>
+          <select name="comp_relacion[]" class="form-input companion-relacion" required>
+            <option value="" disabled selected>Selecciona</option>
+            <option value="esposo">Esposo/a</option>
+            <option value="pareja">Pareja</option>
+            <option value="hijo">Hijo/a</option>
+            <option value="familiar">Familiar</option>
+            <option value="amigo">Amigo/a</option>
+            <option value="colega">Colega</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="form-label">Nacionalidad <span class="req">*</span></label>
+          <select name="comp_nacionalidad[]" class="form-input companion-nacionalidad" required>
+            <option value="" disabled selected>Selecciona</option>
+            <optgroup label="América Latina">
+              <option>Argentina</option><option>Boliviana</option><option>Brasileña</option>
+              <option>Chilena</option><option>Colombiana</option><option>Costarricense</option>
+              <option>Cubana</option><option>Dominicana</option><option>Ecuatoriana</option>
+              <option>Guatemalteca</option><option>Haitiana</option><option>Hondureña</option>
+              <option>Nicaragüense</option><option>Panameña</option><option>Paraguaya</option>
+              <option>Peruana</option><option>Puertorriqueña</option><option>Salvadoreña</option>
+              <option>Uruguaya</option><option>Venezolana</option>
+            </optgroup>
+            <optgroup label="Norteamérica"><option>Canadiense</option><option>Estadounidense</option></optgroup>
+            <optgroup label="Europa">
+              <option>Alemana</option><option>Española</option><option>Francesa</option>
+              <option>Italiana</option><option>Portuguesa</option><option>Británica</option>
+            </optgroup>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">Número de pasaporte <span class="req">*</span></label>
+          <input type="text" name="comp_pasaporte[]" class="form-input companion-pasaporte"
+                 placeholder="Ej. AB123456" required autocomplete="off">
+          <p class="form-hint warn">⚠ Mín. 6 meses de vigencia desde la entrada.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<!-- ════ DESTINO TEMPLATE ════ -->
+<template id="destino-tpl">
+  <div class="repeat-card" data-destino>
+    <div class="repeat-card-header">
+      <span class="repeat-card-title">Destino <span class="card-num"></span></span>
+      <button type="button" class="btn-remove" onclick="removeDestino(this)">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Eliminar
+      </button>
+    </div>
+    <div class="repeat-card-body space-y-4">
+      <div>
+        <label class="form-label">Ciudad o destino <span class="req">*</span></label>
+        <input type="text" name="dest_ciudad[]" class="form-input dest-ciudad"
+               placeholder="Ej. Ciudad de México, CDMX" required>
+      </div>
+      <div>
+        <label class="form-label">Actividades planeadas en este destino <span class="req">*</span></label>
+        <textarea name="dest_actividades[]" class="form-input dest-actividades"
+                  placeholder="Ej. Turismo cultural, visita a museos, recorrido gastronómico…" required rows="2"></textarea>
+      </div>
+      <div>
+        <label class="form-label">Nombre del alojamiento <span style="color:#9BAFD9;font-weight:400;">(opcional)</span></label>
+        <input type="text" name="dest_aloj_nombre[]" class="form-input"
+               placeholder="Hotel, Airbnb, casa particular…">
+        <p class="form-hint">Se recomienda tener la reservación a la mano.</p>
+      </div>
+      <div>
+        <label class="form-label">Dirección del alojamiento <span class="req">*</span></label>
+        <div class="space-y-2.5">
+          <input type="text" name="dest_aloj_calle[]" class="form-input dest-aloj-calle"
+                 placeholder="Calle y número" required>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <input type="text" name="dest_aloj_ciudad[]" class="form-input dest-aloj-ciudad"
+                   placeholder="Ciudad o Alcaldía" required>
+            <input type="text" name="dest_aloj_estado[]" class="form-input"
+                   placeholder="Estado">
+          </div>
+          <input type="text" name="dest_aloj_cp[]" class="form-input"
+                 placeholder="Código Postal">
+        </div>
+      </div>
+      <div>
+        <label class="form-label">Fechas de estadía en este destino <span class="req">*</span></label>
+        <div class="date-range">
+          <div>
+            <p class="text-xs mb-1.5" style="color:#6B7280;">Llegada</p>
+            <input type="date" name="dest_fecha_desde[]" class="form-input dest-fecha-desde" required>
+          </div>
+          <div>
+            <p class="text-xs mb-1.5" style="color:#6B7280;">Salida</p>
+            <input type="date" name="dest_fecha_hasta[]" class="form-input dest-fecha-hasta" required>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<script>
+  const TOTAL = 5;
+  const LABELS = [
+    'Paso 1 de 5 — El viajero',
+    'Paso 2 de 5 — Acompañantes',
+    'Paso 3 de 5 — El anfitrión',
+    'Paso 4 de 5 — Gastos',
+    'Paso 5 de 5 — Itinerario y vuelos',
+  ];
+  let current = 1;
+  let companionCount = 0;
+  let destinoCount   = 0;
+
+  /* ── Expense radio visual ── */
+  document.querySelectorAll('.exp-radio input[type="radio"]').forEach(input => {
+    input.addEventListener('change', function() {
+      document.querySelectorAll(`input[name="${this.name}"]`)
+        .forEach(r => r.closest('.exp-radio').classList.remove('selected-exp'));
+      if (this.checked) this.closest('.exp-radio').classList.add('selected-exp');
+    });
+  });
+
+  /* ── Checkbox card toggle ── */
+  function toggleTransportCard(input) {
+    input.closest('.radio-card').classList.toggle('selected', input.checked);
+    if (document.querySelectorAll('input[name="transporte_mx"]:checked').length > 0) {
+      document.getElementById('err-transporte')?.classList.remove('show');
+    }
+  }
+
+  /* ── Conditional transport type ── */
+  function onTransportType(prefix, value) {
+    ['aereo','terrestre','maritimo'].forEach(type => {
+      document.getElementById(`cond-${prefix}-${type}`)?.classList.remove('open');
+      const pfx = prefix === 'ingreso' ? 'ing' : 'sal';
+      document.getElementById(`${pfx}-${type}-card`)?.classList.remove('selected');
+    });
+    document.getElementById(`cond-${prefix}-${value}`)?.classList.add('open');
+    const pfx = prefix === 'ingreso' ? 'ing' : 'sal';
+    document.getElementById(`${pfx}-${value}-card`)?.classList.add('selected');
+    const errId = prefix === 'ingreso' ? 'err-ingreso-tipo' : 'err-salida-tipo';
+    document.getElementById(errId)?.classList.remove('show');
+  }
+
+  /* ── Add companion ── */
+  function addCompanion() {
+    companionCount++;
+    const tpl = document.getElementById('companion-tpl');
+    const clone = tpl.content.cloneNode(true);
+    clone.querySelector('.card-num').textContent = companionCount;
+    document.getElementById('companions-container').appendChild(clone);
+    document.getElementById('companions-empty').style.display = 'none';
+    renumberCards('companions-container', '[data-companion]', 'Acompañante');
+    // Attach real-time validation to the newly added card
+    const card = document.getElementById('companions-container').lastElementChild;
+    card.querySelectorAll('.companion-nombre,.companion-nacimiento,.companion-pasaporte').forEach(el => {
+      el.addEventListener('blur', () => {
+        const ok = el.value.trim().length > 0;
+        el.classList.toggle('error', !ok);
+        if (!ok) document.getElementById('err-companions')?.classList.add('show');
+        else if (!card.closest('#companions-container').querySelector('.form-input.error'))
+          document.getElementById('err-companions')?.classList.remove('show');
+      });
+    });
+    card.querySelectorAll('.companion-relacion,.companion-nacionalidad').forEach(el => {
+      el.addEventListener('change', () => {
+        const ok = el.value !== '';
+        el.classList.toggle('error', !ok);
+      });
+    });
+  }
+
+  function removeCompanion(btn) {
+    btn.closest('[data-companion]').remove();
+    renumberCards('companions-container', '[data-companion]', 'Acompañante');
+    if (!document.querySelector('[data-companion]')) {
+      document.getElementById('companions-empty').style.display = '';
+    }
+  }
+
+  /* ── Add destino ── */
+  function addDestino() {
+    destinoCount++;
+    const tpl = document.getElementById('destino-tpl');
+    const clone = tpl.content.cloneNode(true);
+    clone.querySelector('.card-num').textContent = destinoCount;
+    document.getElementById('destinos-container').appendChild(clone);
+    document.getElementById('err-destinos').classList.remove('show');
+    renumberCards('destinos-container', '[data-destino]', 'Destino');
+    // Attach real-time validation to the newly added destino card
+    const card = document.getElementById('destinos-container').lastElementChild;
+    card.querySelectorAll('.dest-ciudad,.dest-actividades,.dest-aloj-calle,.dest-aloj-ciudad').forEach(el => {
+      el.addEventListener('blur', () => el.classList.toggle('error', !el.value.trim()));
+    });
+    card.querySelectorAll('.dest-fecha-desde,.dest-fecha-hasta').forEach(el => {
+      el.addEventListener('change', () => el.classList.toggle('error', !el.value.trim()));
+    });
+  }
+
+  function removeDestino(btn) {
+    btn.closest('[data-destino]').remove();
+    renumberCards('destinos-container', '[data-destino]', 'Destino');
+  }
+
+  /* ── Re-number cards after add/remove ── */
+  function renumberCards(containerId, selector, label) {
+    document.querySelectorAll(`#${containerId} ${selector}`).forEach((card, i) => {
+      card.querySelector('.card-num').textContent = i + 1;
+      card.querySelector('.repeat-card-title').firstChild.textContent = `${label} `;
+    });
+  }
+
+  /* ── Sidebar update ── */
+  function updateSidebar(n) {
+    for (let i = 1; i <= TOTAL; i++) {
+      const dot = document.getElementById('dot-' + i);
+      const lbl = document.getElementById('pl-' + i);
+      if (!dot) continue;
+      dot.className = 'pill-dot';
+      lbl.className = 'pill-label';
+      if (i < n) {
+        dot.classList.add('done');
+        dot.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6l3 3 4-4.5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        lbl.classList.add('done-txt');
+      } else if (i === n) {
+        dot.classList.add('active');
+        dot.textContent = i;
+        lbl.classList.add('active-txt');
+      } else {
+        dot.classList.add('pending');
+        dot.textContent = i;
+        lbl.classList.add('pending-txt');
+      }
+    }
+  }
+
+  /* ── Show step ── */
+  function showStep(n) {
+    document.querySelectorAll('.form-step').forEach(el => {
+      el.classList.remove('active');
+      el.style.display = 'none';
+    });
+    const step = document.getElementById('step-' + n);
+    step.style.display = 'block';
+    step.classList.add('active');
+    updateSidebar(n);
+    document.getElementById('mob-label').textContent = LABELS[n - 1];
+    document.getElementById('mob-fill').style.width = (n / TOTAL * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── Validation helpers ── */
+  function req(id, errId) {
+    const el = document.getElementById(id);
+    if (!el) return true;
+    const ok = el.value.trim().length > 0;
+    el.classList.toggle('error', !ok);
+    if (errId) document.getElementById(errId)?.classList.toggle('show', !ok);
+    return ok;
+  }
+  function selReq(id, errId) {
+    const el = document.getElementById(id);
+    if (!el) return true;
+    const ok = el.value !== '';
+    el.classList.toggle('error', !ok);
+    if (errId) document.getElementById(errId)?.classList.toggle('show', !ok);
+    return ok;
+  }
+  function emailReq(id, errId) {
+    const el = document.getElementById(id);
+    if (!el) return true;
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+    el.classList.toggle('error', !ok);
+    if (errId) document.getElementById(errId)?.classList.toggle('show', !ok);
+    return ok;
+  }
+  function clearErrors(stepEl) {
+    stepEl.querySelectorAll('.form-error.show').forEach(e => e.classList.remove('show'));
+    stepEl.querySelectorAll('.form-input.error').forEach(e => e.classList.remove('error'));
+  }
+
+  /* ── Validate step ── */
+  function validateStep(n) {
+    const stepEl = document.getElementById('step-' + n);
+    clearErrors(stepEl);
+    let ok = true;
+
+    if (n === 1) {
+      ok &= req('v-nombre',     'err-v-nombre');
+      ok &= req('v-nacimiento', 'err-v-nacimiento');
+      ok &= selReq('v-nacionalidad', 'err-v-nacionalidad');
+      ok &= req('v-pasaporte',  'err-v-pasaporte');
+      ok &= req('v-residencia', 'err-v-residencia');
+      ok &= req('v-calle',      'err-v-domicilio');
+      ok &= req('v-ciudad',     'err-v-domicilio');
+      ok &= req('v-provincia',  'err-v-domicilio');
+      ok &= req('v-ocupacion',  'err-v-ocupacion');
+      ok &= emailReq('v-email', 'err-v-email');
+
+    } else if (n === 2) {
+      // Validate each companion card if any exist
+      let compOk = true;
+      document.querySelectorAll('[data-companion]').forEach(card => {
+        const nombre = card.querySelector('.companion-nombre');
+        const nac    = card.querySelector('.companion-nacimiento');
+        const relac  = card.querySelector('.companion-relacion');
+        const nac2   = card.querySelector('.companion-nacionalidad');
+        const pas    = card.querySelector('.companion-pasaporte');
+        [nombre, nac, relac, nac2, pas].forEach(el => {
+          if (el && !el.value.trim()) { el.classList.add('error'); compOk = false; }
+        });
+      });
+      if (!compOk) {
+        document.getElementById('err-companions').classList.add('show');
+        ok = false;
+      }
+
+    } else if (n === 3) {
+      ok &= req('a-nombre',     'err-a-nombre');
+      ok &= req('a-nacimiento', 'err-a-nacimiento');
+      ok &= selReq('a-id-tipo', 'err-a-id-tipo');
+      ok &= req('a-id-num',     'err-a-id-num');
+      ok &= req('a-calle',      'err-a-domicilio');
+      ok &= req('a-ciudad',     'err-a-domicilio');
+      ok &= req('a-telefono',   'err-a-telefono');
+      ok &= selReq('a-vinculo', 'err-a-vinculo');
+
+    } else if (n === 4) {
+      const checked = document.querySelectorAll('input[name="transporte_mx"]:checked');
+      if (checked.length === 0) {
+        document.getElementById('err-transporte').classList.add('show');
+        ok = false;
+      }
+
+    } else if (n === 5) {
+      const ingreso = document.querySelector('input[name="ingreso_tipo"]:checked');
+      const salida  = document.querySelector('input[name="salida_tipo"]:checked');
+      if (!ingreso) { document.getElementById('err-ingreso-tipo').classList.add('show'); ok = false; }
+      if (!salida)  { document.getElementById('err-salida-tipo').classList.add('show'); ok = false; }
+      ok &= req('ing-fecha', 'err-ing-fecha');
+      ok &= req('sal-fecha', 'err-sal-fecha');
+
+      // Validate at least one destino
+      const destinos = document.querySelectorAll('[data-destino]');
+      if (destinos.length === 0) {
+        document.getElementById('err-destinos').classList.add('show');
+        ok = false;
+      } else {
+        destinos.forEach(card => {
+          ['.dest-ciudad', '.dest-actividades', '.dest-aloj-calle',
+           '.dest-aloj-ciudad', '.dest-fecha-desde', '.dest-fecha-hasta'].forEach(sel => {
+            const el = card.querySelector(sel);
+            if (el && !el.value.trim()) { el.classList.add('error'); ok = false; }
+          });
+        });
+      }
+    }
+
+    return Boolean(ok);
+  }
+
+  /* ── Navigation ── */
+  function goNext(n) {
+    if (!validateStep(n)) return;
+    if (n < TOTAL) {
+      current = n + 1;
+      showStep(current);
+    } else {
+      window.location.href = '#pago';
+      alert('¡Formulario completo! Redirigiendo al pago seguro…');
+    }
+  }
+  function goPrev(n) {
+    if (n > 1) { current = n - 1; showStep(current); }
+  }
+
+  /* ── Real-time field validation setup ── */
+  function setupRealtimeValidation() {
+    // Text / textarea → validate on blur
+    [
+      ['v-nombre','err-v-nombre'], ['v-pasaporte','err-v-pasaporte'],
+      ['v-residencia','err-v-residencia'], ['v-calle','err-v-domicilio'],
+      ['v-ciudad','err-v-domicilio'], ['v-provincia','err-v-domicilio'],
+      ['v-ocupacion','err-v-ocupacion'], ['a-nombre','err-a-nombre'],
+      ['a-id-num','err-a-id-num'], ['a-calle','err-a-domicilio'],
+      ['a-ciudad','err-a-domicilio'], ['a-telefono','err-a-telefono'],
+    ].forEach(([id, errId]) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('blur', () => req(id, errId));
+    });
+    // Date inputs → validate on change
+    [
+      ['v-nacimiento','err-v-nacimiento'], ['a-nacimiento','err-a-nacimiento'],
+      ['ing-fecha','err-ing-fecha'], ['sal-fecha','err-sal-fecha'],
+    ].forEach(([id, errId]) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('change', () => req(id, errId));
+    });
+    // Select inputs → validate on change
+    [
+      ['v-nacionalidad','err-v-nacionalidad'],
+      ['a-id-tipo','err-a-id-tipo'],
+      ['a-vinculo','err-a-vinculo'],
+    ].forEach(([id, errId]) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('change', () => selReq(id, errId));
+    });
+    // Transport type radios → clear error in onTransportType (already handled)
+    // Transport checkboxes → clear error in toggleTransportCard (already handled)
+  }
+
+  /* ── Init: add first destino automatically ── */
+  setupRealtimeValidation();
+  showStep(1);
+  addDestino(); // start with one destination pre-filled
+</script>
+
+</body>
+</html>
