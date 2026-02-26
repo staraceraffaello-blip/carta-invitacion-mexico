@@ -70,8 +70,8 @@ export default async function handler(req, res) {
         submission_id: submission.id,
         plan,
       },
-      success_url: `${req.headers.origin}/checkout?status=success&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.origin}/checkout?status=cancelled&plan=${plan}`,
+      success_url: `${req.headers.origin || process.env.SITE_URL || 'https://carta-invitacion-mexico-tawny.vercel.app'}/checkout?status=success&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin || process.env.SITE_URL || 'https://carta-invitacion-mexico-tawny.vercel.app'}/checkout?status=cancelled&plan=${plan}`,
     });
 
     // 3. Guardar stripe session ID en el registro
