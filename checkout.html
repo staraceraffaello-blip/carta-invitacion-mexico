@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/brand_assets/logos/concept-1-el-sello-white-bg.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Pago Seguro — Carta de Invitación a México</title>
+  <meta name="description" content="Completa tu pago seguro para recibir tu Carta de Invitación a México. Proceso encriptado, descarga inmediata por email.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              50:'#EDF0F8',100:'#C5D0EC',200:'#9BAFD9',
+              300:'#7090C6',400:'#4A6FA5',500:'#3A5A8E',
+              600:'#2D5499',700:'#1B3566',800:'#132648',900:'#0C1830',
+            },
+            gold: {
+              100:'#F5EEC8',200:'#E8D080',300:'#D9BC5C',
+              400:'#C9A84C',500:'#B08930',600:'#8B6A1E',
+            }
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"','Georgia','serif'],
+            sans:    ['"DM Sans"','system-ui','sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --c-navy:  #1B3566;
+      --c-navy2: #132648;
+      --c-navy3: #0C1830;
+      --c-mid:   #4A6FA5;
+      --c-gold:  #C9A84C;
+      --c-gold2: #D9BC5C;
+      --c-cream: #FAF8F4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      overflow-x: hidden;
+      color: var(--c-navy);
+      background: var(--c-cream);
+      min-height: 100vh;
+    }
+
+    /* ── Inputs ── */
+    .ck-input {
+      width: 100%;
+      border: 1.5px solid rgba(27,53,102,0.16);
+      border-radius: 10px;
+      padding: 13px 14px;
+      font-size: 16px;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: var(--c-navy);
+      background: #fff;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .ck-input:focus {
+      outline: none;
+      border-color: var(--c-gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.14);
+    }
+    .ck-input::placeholder { color: rgba(27,53,102,0.32); }
+    .ck-input.error {
+      border-color: #E53E3E;
+      box-shadow: 0 0 0 3px rgba(229,62,62,0.1);
+    }
+
+    .ck-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--c-navy);
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Card input formatting ── */
+    .card-field-group {
+      display: flex;
+      border: 1.5px solid rgba(27,53,102,0.16);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .card-field-group:focus-within {
+      border-color: var(--c-gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.14);
+    }
+    .card-field-group input {
+      border: none;
+      outline: none;
+      padding: 13px 14px;
+      font-size: 16px;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: var(--c-navy);
+      background: transparent;
+      flex: 1;
+      min-width: 0;
+    }
+    .card-field-group input::placeholder { color: rgba(27,53,102,0.32); }
+    .card-field-group .card-sep {
+      width: 1px;
+      background: rgba(27,53,102,0.1);
+      flex-shrink: 0;
+    }
+
+    /* ── Gold rule ── */
+    .gold-rule {
+      height: 1px;
+      background: linear-gradient(90deg, var(--c-gold) 0%, rgba(201,168,76,0.15) 100%);
+    }
+
+    /* ── Check icon ── */
+    .ck-check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(201,168,76,0.12);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── Pay button ── */
+    .btn-pay {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 12px;
+      border: none;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 54px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+      background: linear-gradient(135deg, var(--c-gold) 0%, #D9BC5C 100%);
+      color: var(--c-navy);
+      box-shadow: 0 4px 20px rgba(201,168,76,0.35), 0 2px 8px rgba(201,168,76,0.2);
+      letter-spacing: 0.01em;
+    }
+    .btn-pay:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(201,168,76,0.45), 0 2px 10px rgba(201,168,76,0.25); }
+    .btn-pay:active { transform: translateY(0); }
+    .btn-pay:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; }
+    .btn-pay:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+    /* ── Spinner ── */
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2.5px solid rgba(27,53,102,0.2);
+      border-top-color: var(--c-navy);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Trust badges ── */
+    .trust-badge {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.75rem; color: var(--c-mid);
+    }
+    .trust-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: rgba(27,53,102,0.04);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── Desktop sidebar visibility ── */
+    .desktop-aside { display: none; }
+    @media (min-width: 768px) {
+      .desktop-aside {
+        display: block;
+        width: 340px;
+        flex-shrink: 0;
+      }
+    }
+    @media (min-width: 1024px) {
+      .desktop-aside { width: 380px; }
+    }
+
+    /* ── Fade in ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+    .fade-up-d1 { animation-delay: 0.08s; }
+    .fade-up-d2 { animation-delay: 0.16s; }
+    .fade-up-d3 { animation-delay: 0.24s; }
+
+    /* ── Success state ── */
+    .success-overlay {
+      position: fixed; inset: 0; z-index: 50;
+      background: rgba(250,248,244,0.92);
+      backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .success-overlay.show { display: flex; }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .success-card { animation: scaleIn 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+
+    /* ── Guarantee stamp ── */
+    .guarantee-ring {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 2px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Header ═══ -->
+  <header class="px-4 sm:px-6 py-4 fade-up" style="border-bottom:1px solid rgba(27,53,102,0.06);">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 no-underline" aria-label="Ir al inicio">
+        <img src="/brand_assets/logos/concept-1-el-sello.svg" alt="Carta Invitación México logo" width="36" height="36" style="border-radius:4px;">
+        <span class="font-display text-lg font-bold tracking-tight hidden sm:inline" style="color:var(--c-navy);letter-spacing:-0.02em;">Carta Invitación México</span>
+      </a>
+      <div class="flex items-center gap-2 text-xs font-medium" style="color:var(--c-mid);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Pago seguro
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ Main ═══ -->
+  <main class="px-4 sm:px-6 py-8 md:py-12">
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Mobile: order summary toggle -->
+      <div class="md:hidden mb-6 fade-up">
+        <button id="mob-summary-toggle" type="button"
+                class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold"
+                style="background:rgba(27,53,102,0.04);color:var(--c-navy);min-height:48px;border:none;cursor:pointer;"
+                aria-expanded="false" aria-controls="mob-summary-panel">
+          <span class="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            Resumen del pedido
+          </span>
+          <span class="flex items-center gap-2">
+            <span id="mob-price-tag" class="font-bold" style="color:var(--c-gold);">$5 USD</span>
+            <svg id="mob-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.25s ease;"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </button>
+        <div id="mob-summary-panel" class="overflow-hidden" style="max-height:0;opacity:0;transition:max-height 0.35s ease,opacity 0.25s ease;">
+          <div class="pt-4 pb-2" id="mob-summary-content">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-column layout -->
+      <div class="flex flex-col-reverse md:flex-row gap-8 md:gap-12 lg:gap-16">
+
+        <!-- ── Left: Payment form ── -->
+        <section class="flex-1 min-w-0 fade-up fade-up-d1">
+
+          <button type="button" onclick="history.back()"
+                  class="inline-flex items-center gap-1.5 mb-6 text-sm font-medium"
+                  style="color:var(--c-mid);background:none;border:none;cursor:pointer;padding:0;min-height:44px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Volver al resumen
+          </button>
+
+          <h1 class="font-display text-2xl sm:text-3xl font-bold mb-1" style="letter-spacing:-0.03em;color:var(--c-navy);">
+            Completa tu pago
+          </h1>
+          <p class="text-sm mb-8" style="color:var(--c-mid);">Tu carta estará lista en minutos.</p>
+
+          <form id="checkout-form" novalidate autocomplete="on">
+
+            <!-- Email -->
+            <div class="mb-6">
+              <label class="ck-label" for="ck-email">Correo electrónico <span style="color:var(--c-gold);">*</span></label>
+              <input type="email" id="ck-email" class="ck-input" placeholder="tu@correo.com" required autocomplete="email" inputmode="email">
+              <p class="text-xs mt-1.5" style="color:var(--c-mid);">Aquí recibirás tu carta en PDF.</p>
+              <p id="err-email" class="text-xs font-medium mt-1 hidden" style="color:#C53030;">Ingresa un correo válido.</p>
+            </div>
+
+            <!-- Separator -->
+            <div class="gold-rule mb-6"></div>
+
+            <!-- Card holder -->
+            <div class="mb-5">
+              <label class="ck-label" for="ck-name">Nombre en la tarjeta <span style="color:var(--c-gold);">*</span></label>
+              <input type="text" id="ck-name" class="ck-input" placeholder="Como aparece en la tarjeta" required autocomplete="cc-name">
+              <p id="err-name" class="text-xs font-medium mt-1 hidden" style="color:#C53030;">Ingresa el nombre del titular.</p>
+            </div>
+
+            <!-- Card number -->
+            <div class="mb-5">
+              <label class="ck-label" for="ck-card">Número de tarjeta <span style="color:var(--c-gold);">*</span></label>
+              <div class="relative">
+                <input type="text" id="ck-card" class="ck-input" placeholder="1234 5678 9012 3456" required autocomplete="cc-number" inputmode="numeric" maxlength="19" style="padding-right:62px;">
+                <div id="card-brand" class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 opacity-40" aria-hidden="true">
+                  <svg width="28" height="18" viewBox="0 0 28 18" fill="none"><rect x=".5" y=".5" width="27" height="17" rx="2.5" stroke="currentColor" opacity=".3"/><circle cx="11" cy="9" r="5" fill="#E53E3E" opacity=".7"/><circle cx="17" cy="9" r="5" fill="#D69E2E" opacity=".7"/></svg>
+                </div>
+              </div>
+              <p id="err-card" class="text-xs font-medium mt-1 hidden" style="color:#C53030;">Ingresa un número de tarjeta válido.</p>
+            </div>
+
+            <!-- Expiry + CVV -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                <label class="ck-label" for="ck-exp">Vencimiento <span style="color:var(--c-gold);">*</span></label>
+                <input type="text" id="ck-exp" class="ck-input" placeholder="MM / AA" required autocomplete="cc-exp" inputmode="numeric" maxlength="7">
+                <p id="err-exp" class="text-xs font-medium mt-1 hidden" style="color:#C53030;">Formato MM/AA.</p>
+              </div>
+              <div>
+                <label class="ck-label" for="ck-cvv">CVV <span style="color:var(--c-gold);">*</span></label>
+                <div class="relative">
+                  <input type="text" id="ck-cvv" class="ck-input" placeholder="123" required autocomplete="cc-csc" inputmode="numeric" maxlength="4">
+                  <div class="absolute right-3 top-1/2 -translate-y-1/2 opacity-30" aria-hidden="true">
+                    <svg width="20" height="16" viewBox="0 0 20 16" fill="none"><rect x=".5" y=".5" width="19" height="15" rx="2" stroke="currentColor" opacity=".5"/><rect x="0" y="4" width="20" height="4" fill="currentColor" opacity=".15"/><rect x="11" y="10" width="6" height="2" rx="1" fill="currentColor" opacity=".25"/></svg>
+                  </div>
+                </div>
+                <p id="err-cvv" class="text-xs font-medium mt-1 hidden" style="color:#C53030;">Ingresa el código CVV.</p>
+              </div>
+            </div>
+
+            <!-- Pay button -->
+            <button type="submit" class="btn-pay" id="btn-submit">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span id="btn-label">Pagar <span id="btn-price">$5 USD</span></span>
+              <div class="spinner hidden" id="btn-spinner"></div>
+            </button>
+
+            <!-- Trust row -->
+            <div class="flex flex-wrap items-center justify-center gap-4 mt-6">
+              <div class="trust-badge">
+                <div class="trust-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--c-mid)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <span>Encriptación SSL</span>
+              </div>
+              <div class="trust-badge">
+                <div class="trust-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--c-mid)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                </div>
+                <span>Visa, Mastercard, Amex</span>
+              </div>
+              <div class="trust-badge">
+                <div class="trust-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--c-mid)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span>Pago único</span>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <!-- ── Right: Order summary (desktop) ── -->
+        <aside class="desktop-aside">
+          <div id="desktop-summary" style="position:sticky;top:2rem;">
+            <!-- Filled by JS -->
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══ Success Overlay ═══ -->
+  <div class="success-overlay" id="success-overlay" role="dialog" aria-modal="true" aria-labelledby="success-title">
+    <div class="success-card text-center max-w-md w-full rounded-2xl p-8 sm:p-10 bg-white"
+         style="box-shadow:0 20px 60px rgba(27,53,102,0.12),0 4px 20px rgba(27,53,102,0.06);">
+      <div class="mx-auto mb-5 w-16 h-16 rounded-full flex items-center justify-center"
+           style="background:rgba(201,168,76,0.12);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--c-gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2 id="success-title" class="font-display text-2xl font-bold mb-2" style="letter-spacing:-0.02em;color:var(--c-navy);">¡Pago confirmado!</h2>
+      <p class="text-sm mb-6" style="color:var(--c-mid);">
+        Tu carta de invitación está siendo generada. La recibirás en
+        <strong id="success-email" style="color:var(--c-navy);">tu correo</strong>
+        en los próximos minutos.
+      </p>
+      <div class="gold-rule mb-6"></div>
+      <div class="flex items-start gap-4 text-left p-4 rounded-xl" style="background:var(--c-cream);">
+        <div class="guarantee-ring">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--c-gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div>
+          <p class="text-sm font-semibold" style="color:var(--c-navy);">Revisa tu bandeja de entrada</p>
+          <p class="text-xs mt-0.5" style="color:var(--c-mid);">Si no lo ves en unos minutos, revisa la carpeta de spam o promociones.</p>
+        </div>
+      </div>
+      <a href="/" class="inline-flex items-center gap-2 mt-6 text-sm font-semibold no-underline"
+         style="color:var(--c-gold);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Volver al inicio
+      </a>
+    </div>
+  </div>
+
+  <!-- ═══ Footer ═══ -->
+  <footer class="px-4 sm:px-6 py-6 mt-8" style="border-top:1px solid rgba(27,53,102,0.06);">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs" style="color:var(--c-mid);">
+      <span>&copy; 2026 Carta Invitación México. Todos los derechos reservados.</span>
+      <div class="flex items-center gap-4">
+        <a href="/terminos" class="no-underline hover:underline" style="color:var(--c-mid);">Términos</a>
+        <a href="/privacidad" class="no-underline hover:underline" style="color:var(--c-mid);">Privacidad</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+/* ══════════════════════════════════════════════
+   Plan config — URL param ?plan=esencial|completo
+   ══════════════════════════════════════════════ */
+const PLANS = {
+  esencial: {
+    name: 'Plan Esencial',
+    price: 5,
+    features: [
+      'Carta formal dirigida a migración',
+      'Expedida para 1 persona invitada',
+      'Detalle de 1 viaje ida y vuelta',
+      'Información de 1 alojamiento',
+      'PDF profesional · Descarga inmediata',
+    ],
+  },
+  completo: {
+    name: 'Plan Completo',
+    price: 9,
+    badge: 'Más popular',
+    features: [
+      'Todo lo del Plan Esencial',
+      'Itinerario de viaje detallado',
+      'Nombres de acompañantes',
+      'Múltiples alojamientos',
+      'Ciudades y actividades planeadas',
+    ],
+  },
+};
+
+const params = new URLSearchParams(window.location.search);
+const planKey = PLANS[params.get('plan')] ? params.get('plan') : 'esencial';
+const plan = PLANS[planKey];
+
+/* ── Pre-fill email from URL param ── */
+const emailParam = params.get('email');
+if (emailParam) {
+  document.getElementById('ck-email').value = emailParam;
+}
+
+/* ── Build summary HTML ── */
+function summaryHTML() {
+  const checkSVG = `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 4-4" stroke="#C9A84C" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const badge = plan.badge
+    ? `<span class="inline-block text-xs font-bold px-3 py-1 rounded-full mb-4" style="background:var(--c-gold);color:var(--c-navy);letter-spacing:0.03em;">⭐ ${plan.badge}</span>`
+    : '';
+  const features = plan.features.map(f =>
+    `<li class="flex items-start gap-2.5">
+       <div class="ck-check mt-0.5">${checkSVG}</div>
+       <span class="text-sm" style="color:var(--c-mid);">${f}</span>
+     </li>`
+  ).join('');
+
+  return `
+    <div class="rounded-2xl p-6 lg:p-7" style="background:#fff;border:1px solid rgba(27,53,102,0.08);box-shadow:0 2px 20px rgba(27,53,102,0.05);">
+      ${badge}
+      <p class="text-xs font-semibold uppercase tracking-widest mb-3" style="color:var(--c-mid);letter-spacing:0.12em;">${plan.name}</p>
+      <div class="flex items-end gap-1.5 mb-1">
+        <span class="font-display text-4xl font-bold" style="color:var(--c-navy);letter-spacing:-0.03em;">$${plan.price}</span>
+        <span class="text-base font-medium mb-1" style="color:#9BAFD9;">USD</span>
+      </div>
+      <p class="text-sm mb-6" style="color:#9BAFD9;">Pago único · Descarga inmediata</p>
+      <div class="gold-rule mb-5"></div>
+      <p class="text-xs font-semibold uppercase tracking-wider mb-3" style="color:var(--c-navy);letter-spacing:0.08em;">Incluye</p>
+      <ul class="space-y-3">${features}</ul>
+      <div class="gold-rule mt-6 mb-4"></div>
+      <div class="flex items-center justify-between">
+        <span class="text-sm font-semibold" style="color:var(--c-navy);">Total a pagar</span>
+        <span class="font-display text-xl font-bold" style="color:var(--c-navy);letter-spacing:-0.02em;">$${plan.price} USD</span>
+      </div>
+    </div>
+
+    <!-- Guarantee -->
+    <div class="flex items-start gap-3.5 mt-5 px-1">
+      <div class="guarantee-ring" style="width:40px;height:40px;min-width:40px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--c-gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div>
+        <p class="text-xs font-semibold" style="color:var(--c-navy);">Garantía de entrega</p>
+        <p class="text-xs mt-0.5" style="color:var(--c-mid);line-height:1.6;">Si no recibes tu carta, te devolvemos el 100% de tu dinero. Sin preguntas.</p>
+      </div>
+    </div>
+  `;
+}
+
+/* ── Inject summaries ── */
+document.getElementById('desktop-summary').innerHTML = summaryHTML();
+document.getElementById('mob-summary-content').innerHTML = summaryHTML();
+
+/* ── Update price labels ── */
+document.getElementById('btn-price').textContent = `$${plan.price} USD`;
+document.getElementById('mob-price-tag').textContent = `$${plan.price} USD`;
+
+/* ── Mobile summary toggle ── */
+const mobToggle = document.getElementById('mob-summary-toggle');
+const mobPanel = document.getElementById('mob-summary-panel');
+const mobChevron = document.getElementById('mob-chevron');
+let mobOpen = false;
+mobToggle.addEventListener('click', () => {
+  mobOpen = !mobOpen;
+  mobToggle.setAttribute('aria-expanded', mobOpen);
+  mobPanel.style.maxHeight = mobOpen ? mobPanel.scrollHeight + 'px' : '0';
+  mobPanel.style.opacity = mobOpen ? '1' : '0';
+  mobChevron.style.transform = mobOpen ? 'rotate(180deg)' : '';
+});
+
+/* ══════════════════════════════════════════════
+   Card number formatting
+   ══════════════════════════════════════════════ */
+const cardInput = document.getElementById('ck-card');
+cardInput.addEventListener('input', () => {
+  let v = cardInput.value.replace(/\D/g, '').slice(0, 16);
+  cardInput.value = v.replace(/(.{4})/g, '$1 ').trim();
+});
+
+const expInput = document.getElementById('ck-exp');
+expInput.addEventListener('input', () => {
+  let v = expInput.value.replace(/\D/g, '').slice(0, 4);
+  if (v.length >= 3) v = v.slice(0, 2) + ' / ' + v.slice(2);
+  expInput.value = v;
+});
+
+const cvvInput = document.getElementById('ck-cvv');
+cvvInput.addEventListener('input', () => {
+  cvvInput.value = cvvInput.value.replace(/\D/g, '').slice(0, 4);
+});
+
+/* ══════════════════════════════════════════════
+   Validation + Submit
+   ══════════════════════════════════════════════ */
+function showErr(id) { document.getElementById(id).classList.remove('hidden'); }
+function hideErr(id) { document.getElementById(id).classList.add('hidden'); }
+
+function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+document.getElementById('checkout-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  let ok = true;
+
+  // Clear errors
+  ['err-email','err-name','err-card','err-exp','err-cvv'].forEach(hideErr);
+  document.querySelectorAll('.ck-input').forEach(el => el.classList.remove('error'));
+
+  const email = document.getElementById('ck-email').value.trim();
+  const name  = document.getElementById('ck-name').value.trim();
+  const card  = cardInput.value.replace(/\s/g, '');
+  const exp   = expInput.value.replace(/\s/g, '');
+  const cvv   = cvvInput.value.trim();
+
+  if (!validateEmail(email)) {
+    showErr('err-email'); document.getElementById('ck-email').classList.add('error'); ok = false;
+  }
+  if (!name) {
+    showErr('err-name'); document.getElementById('ck-name').classList.add('error'); ok = false;
+  }
+  if (card.length < 13) {
+    showErr('err-card'); cardInput.classList.add('error'); ok = false;
+  }
+  if (!/^\d{2}\/\d{2}$/.test(exp)) {
+    showErr('err-exp'); expInput.classList.add('error'); ok = false;
+  }
+  if (cvv.length < 3) {
+    showErr('err-cvv'); cvvInput.classList.add('error'); ok = false;
+  }
+
+  if (!ok) {
+    const firstErr = document.querySelector('.ck-input.error');
+    if (firstErr) firstErr.focus();
+    return;
+  }
+
+  // Simulate processing
+  const btn = document.getElementById('btn-submit');
+  const label = document.getElementById('btn-label');
+  const spinner = document.getElementById('btn-spinner');
+  btn.disabled = true;
+  label.textContent = 'Procesando…';
+  spinner.classList.remove('hidden');
+
+  setTimeout(() => {
+    spinner.classList.add('hidden');
+    document.getElementById('success-email').textContent = email;
+    document.getElementById('success-overlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }, 2200);
+});
+
+/* ── Real-time error clearing ── */
+const ckEmail = document.getElementById('ck-email');
+let emailTimeout;
+ckEmail.addEventListener('input', function() {
+  const v = this.value.trim();
+  clearTimeout(emailTimeout);
+  if (validateEmail(v)) { hideErr('err-email'); this.classList.remove('error'); }
+  else if (v.length > 0) {
+    emailTimeout = setTimeout(() => { showErr('err-email'); this.classList.add('error'); }, 800);
+  } else { hideErr('err-email'); this.classList.remove('error'); }
+});
+ckEmail.addEventListener('blur', function() {
+  clearTimeout(emailTimeout);
+  const v = this.value.trim();
+  if (v.length > 0 && !validateEmail(v)) { showErr('err-email'); this.classList.add('error'); }
+});
+document.getElementById('ck-name').addEventListener('input', function() {
+  if (this.value.trim()) { hideErr('err-name'); this.classList.remove('error'); }
+});
+cardInput.addEventListener('input', function() {
+  if (this.value.replace(/\s/g,'').length >= 13) { hideErr('err-card'); this.classList.remove('error'); }
+});
+expInput.addEventListener('input', function() {
+  if (/^\d{2}\s*\/\s*\d{2}$/.test(this.value)) { hideErr('err-exp'); this.classList.remove('error'); }
+});
+cvvInput.addEventListener('input', function() {
+  if (this.value.length >= 3) { hideErr('err-cvv'); this.classList.remove('error'); }
+});
+</script>
+
+</body>
+</html>

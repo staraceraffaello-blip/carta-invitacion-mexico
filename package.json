@@ -1,0 +1,26 @@
+{
+  "name": "carta-invitacion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/staraceraffaello-blip/carta-invitacion-mexico.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/staraceraffaello-blip/carta-invitacion-mexico/issues"
+  },
+  "homepage": "https://github.com/staraceraffaello-blip/carta-invitacion-mexico#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.98.0",
+    "micro": "^10.0.1",
+    "stripe": "^20.4.0"
+  }
+}

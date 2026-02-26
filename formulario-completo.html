@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/brand_assets/logos/concept-1-el-sello-white-bg.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Formulario Plan Completo — Carta de Invitación a México</title>
   <meta name="description" content="Completa tu solicitud de Carta de Invitación a México. Plan Completo $9 USD con itinerario, acompañantes y múltiples alojamientos.">
@@ -49,9 +50,10 @@
 
     *, *::before, *::after { box-sizing: border-box; }
 
+    html { overflow-x: hidden; }
+
     body {
       font-family: 'DM Sans', system-ui, sans-serif;
-      overflow-x: hidden;
       color: var(--c-navy);
       background: var(--c-cream);
       min-height: 100vh;
@@ -136,6 +138,8 @@
       width: 1.5px; background: rgba(255,255,255,0.08);
     }
     .step-pill:last-child::after { display: none; }
+    .step-pill.pill-nav { cursor: pointer; border-radius: 8px; margin: 0 -8px; padding-left: 8px; padding-right: 8px; transition: background 0.15s ease; }
+    .step-pill.pill-nav:hover { background: rgba(255,255,255,0.07); }
     .pill-dot {
       width: 28px; height: 28px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
@@ -193,6 +197,8 @@
       padding: 13px 0; border-bottom: 1px solid rgba(27,53,102,0.07); flex-wrap: wrap;
     }
     .expense-row:last-child { border-bottom: none; }
+    .expense-row.error { background: rgba(197,48,48,0.04); border-radius: 6px; margin: 0 -4px; padding-left: 4px; padding-right: 4px; }
+    .expense-row.error .expense-concept { color: #C53030; }
     .expense-concept { font-size: 0.875rem; font-weight: 500; color: var(--c-navy); flex-shrink: 0; }
     .expense-options { display: flex; gap: 6px; flex-wrap: wrap; }
     .exp-radio {
@@ -349,13 +355,12 @@
           Plan Completo · $9 USD
         </span>
       </div>
-      <a href="/" class="nav-link text-sm hidden sm:block">← Volver</a>
     </div>
 
   </div>
 </header>
 
-<main style="overflow-x:hidden;">
+<main>
 
 <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12">
 
@@ -399,6 +404,10 @@
             <div class="pill-dot" id="dot-5">5</div>
             <div><div class="pill-label" id="pl-5">Itinerario</div><div class="pill-sub">Destinos, alojamientos y vuelos</div></div>
           </div>
+          <div class="step-pill">
+            <div class="pill-dot" id="dot-6">6</div>
+            <div><div class="pill-label" id="pl-6">Revisión</div><div class="pill-sub">Confirmar datos</div></div>
+          </div>
         </div>
       </div>
 
@@ -434,7 +443,7 @@
       <!-- Mobile progress -->
       <div class="md:hidden mb-5">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-xs font-semibold" style="color:var(--c-gold);" id="mob-label">Paso 1 de 5 — El viajero</span>
+          <span class="text-xs font-semibold" style="color:var(--c-gold);" id="mob-label">Paso 1 de 6 — El viajero</span>
           <span class="text-xs font-bold px-2.5 py-1 rounded-full" style="background:var(--c-gold);color:var(--c-navy);">$9 USD</span>
         </div>
         <div class="mob-progress-track">
@@ -443,8 +452,8 @@
       </div>
 
       <!-- Form card -->
-      <div class="bg-white rounded-2xl overflow-hidden"
-           style="box-shadow:0 4px 36px rgba(27,53,102,0.08);border:1px solid rgba(27,53,102,0.07);">
+      <div class="bg-white rounded-2xl"
+           style="overflow:clip;box-shadow:0 4px 36px rgba(27,53,102,0.08);border:1px solid rgba(27,53,102,0.07);">
 
         <form id="main-form" novalidate>
 
@@ -581,8 +590,89 @@
 
               <div>
                 <label class="form-label" for="v-residencia">País de residencia <span class="req">*</span></label>
-                <input type="text" id="v-residencia" name="v_residencia" class="form-input"
-                       placeholder="País donde resides actualmente" required>
+                <select id="v-residencia" name="v_residencia" class="form-input" required>
+                  <option value="" disabled selected>País donde resides actualmente</option>
+                  <optgroup label="América Latina y el Caribe">
+                    <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option>
+                    <option>Barbados</option><option>Belice</option><option>Bolivia</option>
+                    <option>Brasil</option><option>Chile</option><option>Colombia</option>
+                    <option>Costa Rica</option><option>Cuba</option><option>Dominica</option>
+                    <option>Ecuador</option><option>El Salvador</option><option>Granada</option>
+                    <option>Guatemala</option><option>Guyana</option><option>Haití</option>
+                    <option>Honduras</option><option>Jamaica</option><option>Nicaragua</option>
+                    <option>Panamá</option><option>Paraguay</option><option>Perú</option>
+                    <option>República Dominicana</option><option>San Cristóbal y Nieves</option>
+                    <option>San Vicente y las Granadinas</option><option>Santa Lucía</option>
+                    <option>Surinam</option><option>Trinidad y Tobago</option>
+                    <option>Uruguay</option><option>Venezuela</option>
+                  </optgroup>
+                  <optgroup label="Norteamérica">
+                    <option>Canadá</option><option>Estados Unidos</option>
+                  </optgroup>
+                  <optgroup label="Europa">
+                    <option>Albania</option><option>Alemania</option><option>Andorra</option>
+                    <option>Austria</option><option>Bélgica</option><option>Bielorrusia</option>
+                    <option>Bosnia y Herzegovina</option><option>Bulgaria</option><option>Chipre</option>
+                    <option>Ciudad del Vaticano</option><option>Croacia</option><option>Dinamarca</option>
+                    <option>Eslovaquia</option><option>Eslovenia</option><option>España</option>
+                    <option>Estonia</option><option>Finlandia</option><option>Francia</option>
+                    <option>Grecia</option><option>Hungría</option><option>Irlanda</option>
+                    <option>Islandia</option><option>Italia</option><option>Kosovo</option>
+                    <option>Letonia</option><option>Liechtenstein</option><option>Lituania</option>
+                    <option>Luxemburgo</option><option>Malta</option><option>Moldavia</option>
+                    <option>Mónaco</option><option>Montenegro</option><option>Noruega</option>
+                    <option>Países Bajos</option><option>Polonia</option><option>Portugal</option>
+                    <option>Reino Unido</option><option>República Checa</option><option>Rumanía</option>
+                    <option>Rusia</option><option>San Marino</option><option>Serbia</option>
+                    <option>Suecia</option><option>Suiza</option><option>Ucrania</option>
+                  </optgroup>
+                  <optgroup label="África">
+                    <option>Argelia</option><option>Angola</option><option>Benín</option>
+                    <option>Botsuana</option><option>Burkina Faso</option><option>Burundi</option>
+                    <option>Cabo Verde</option><option>Camerún</option><option>Chad</option>
+                    <option>Comoras</option><option>Congo</option><option>Costa de Marfil</option>
+                    <option>Egipto</option><option>Eritrea</option><option>Etiopía</option>
+                    <option>Gabón</option><option>Gambia</option><option>Ghana</option>
+                    <option>Guinea</option><option>Guinea Ecuatorial</option><option>Guinea-Bisáu</option>
+                    <option>Kenia</option><option>Lesoto</option><option>Liberia</option>
+                    <option>Libia</option><option>Madagascar</option><option>Malaui</option>
+                    <option>Mali</option><option>Marruecos</option><option>Mauricio</option>
+                    <option>Mauritania</option><option>Mozambique</option><option>Namibia</option>
+                    <option>Níger</option><option>Nigeria</option><option>República Centroafricana</option>
+                    <option>República Democrática del Congo</option><option>Ruanda</option>
+                    <option>Santo Tomé y Príncipe</option><option>Senegal</option>
+                    <option>Seychelles</option><option>Sierra Leona</option><option>Somalia</option>
+                    <option>Sudáfrica</option><option>Sudán</option><option>Sudán del Sur</option>
+                    <option>Suazilandia</option><option>Tanzania</option><option>Togo</option>
+                    <option>Túnez</option><option>Uganda</option><option>Yibuti</option>
+                    <option>Zambia</option><option>Zimbabue</option>
+                  </optgroup>
+                  <optgroup label="Asia y Medio Oriente">
+                    <option>Afganistán</option><option>Arabia Saudita</option><option>Armenia</option>
+                    <option>Azerbaiyán</option><option>Bangladés</option><option>Brunéi</option>
+                    <option>Bután</option><option>Camboya</option><option>Catar</option>
+                    <option>China</option><option>Corea del Norte</option><option>Corea del Sur</option>
+                    <option>Emiratos Árabes Unidos</option><option>Filipinas</option><option>Georgia</option>
+                    <option>India</option><option>Indonesia</option><option>Irak</option>
+                    <option>Irán</option><option>Israel</option><option>Japón</option>
+                    <option>Jordania</option><option>Kazajistán</option><option>Kirguistán</option>
+                    <option>Kuwait</option><option>Laos</option><option>Líbano</option>
+                    <option>Malasia</option><option>Maldivas</option><option>Mongolia</option>
+                    <option>Myanmar</option><option>Nepal</option><option>Omán</option>
+                    <option>Pakistán</option><option>Palestina</option><option>Singapur</option>
+                    <option>Siria</option><option>Sri Lanka</option><option>Tailandia</option>
+                    <option>Tayikistán</option><option>Timor Oriental</option><option>Turkmenistán</option>
+                    <option>Turquía</option><option>Uzbekistán</option><option>Vietnam</option>
+                    <option>Yemen</option>
+                  </optgroup>
+                  <optgroup label="Oceanía">
+                    <option>Australia</option><option>Fiyi</option><option>Islas Marshall</option>
+                    <option>Islas Salomón</option><option>Kiribati</option><option>Micronesia</option>
+                    <option>Nauru</option><option>Nueva Zelanda</option><option>Palaos</option>
+                    <option>Papúa Nueva Guinea</option><option>Samoa</option><option>Tonga</option>
+                    <option>Tuvalu</option><option>Vanuatu</option>
+                  </optgroup>
+                </select>
                 <p class="form-hint">Puede ser diferente a tu nacionalidad.</p>
                 <p class="form-error" id="err-v-residencia">Por favor ingresa tu país de residencia.</p>
               </div>
@@ -596,7 +686,7 @@
                     <input type="text" id="v-ciudad" name="v_ciudad" class="form-input" placeholder="Ciudad" required>
                     <input type="text" id="v-provincia" name="v_provincia" class="form-input" placeholder="Provincia / Estado / Región" required>
                   </div>
-                  <input type="text" id="v-cp" name="v_cp" class="form-input" placeholder="Código Postal">
+                  <input type="text" id="v-cp" name="v_cp" class="form-input" placeholder="Código Postal" required>
                 </div>
                 <p class="form-error" id="err-v-domicilio">Por favor completa los campos de domicilio.</p>
               </div>
@@ -739,7 +829,7 @@
                 <label class="form-label" for="a-id-tipo">Tipo de identificación oficial <span class="req">*</span></label>
                 <select id="a-id-tipo" name="a_id_tipo" class="form-input" required>
                   <option value="" disabled selected>Selecciona el tipo</option>
-                  <option value="pasaporte">Pasaporte</option>
+                  <option value="pasaporte">Pasaporte mexicano</option>
                   <option value="ine">INE / IFE</option>
                   <option value="residente">Tarjeta de residente</option>
                 </select>
@@ -758,14 +848,51 @@
                 <label class="form-label">Domicilio en México <span class="req">*</span></label>
                 <div class="space-y-3">
                   <input type="text" id="a-calle" name="a_calle" class="form-input" placeholder="Calle y número" required>
-                  <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" required>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" required>
+                    <input type="text" id="a-delegacion" name="a_delegacion" class="form-input" placeholder="Delegación o Municipio" required>
+                  </div>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <input type="text" id="a-ciudad" name="a_ciudad" class="form-input" placeholder="Ciudad" required>
-                    <input type="text" id="a-estado" name="a_estado" class="form-input" placeholder="Estado" required>
+                    <select id="a-estado" name="a_estado" class="form-input" required>
+                      <option value="" disabled selected>Estado</option>
+                      <option>Aguascalientes</option>
+                      <option>Baja California</option>
+                      <option>Baja California Sur</option>
+                      <option>Campeche</option>
+                      <option>Chiapas</option>
+                      <option>Chihuahua</option>
+                      <option>Ciudad de México</option>
+                      <option>Coahuila</option>
+                      <option>Colima</option>
+                      <option>Durango</option>
+                      <option>Guanajuato</option>
+                      <option>Guerrero</option>
+                      <option>Hidalgo</option>
+                      <option>Jalisco</option>
+                      <option>México</option>
+                      <option>Michoacán</option>
+                      <option>Morelos</option>
+                      <option>Nayarit</option>
+                      <option>Nuevo León</option>
+                      <option>Oaxaca</option>
+                      <option>Puebla</option>
+                      <option>Querétaro</option>
+                      <option>Quintana Roo</option>
+                      <option>San Luis Potosí</option>
+                      <option>Sinaloa</option>
+                      <option>Sonora</option>
+                      <option>Tabasco</option>
+                      <option>Tamaulipas</option>
+                      <option>Tlaxcala</option>
+                      <option>Veracruz</option>
+                      <option>Yucatán</option>
+                      <option>Zacatecas</option>
+                    </select>
                   </div>
-                  <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal">
+                  <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal" required>
                 </div>
-                <p class="form-hint warn mt-3">⚠ Se recomienda anexar comprobante de domicilio con antigüedad no mayor a 3 meses.</p>
+                <p class="form-hint warn mt-3">⚠ Se recomienda anexar a la carta de invitación un comprobante de domicilio del anfitirión con antigüedad no mayor a 3 meses.</p>
                 <p class="form-error" id="err-a-domicilio">Por favor completa el domicilio.</p>
               </div>
 
@@ -830,7 +957,7 @@
             </div>
 
             <div class="rounded-xl p-4 mb-6 text-sm" style="background:rgba(201,168,76,0.09);border:1px solid rgba(201,168,76,0.25);color:#7B5A24;line-height:1.65;">
-              <strong>💡 Nota:</strong> Si el visitante cubre total o parcialmente sus propios gastos, se recomienda que pueda comprobar al menos <strong>USD $50 por día</strong> con efectivo, estado de cuenta bancario o tarjeta.
+              <strong>💡 Nota:</strong> Si el visitante cubre total o parcialmente sus propios gastos, se recomienda que pueda comprobar el equivalente de al menos <strong>USD $50 por día</strong> con efectivo, estado de cuenta bancario o de tarjeta.
             </div>
 
             <div class="rounded-xl overflow-hidden mb-7" style="border:1.5px solid rgba(27,53,102,0.1);">
@@ -882,6 +1009,7 @@
                 </div>
               </div>
             </div>
+            <p class="form-error" id="err-gastos">Por favor selecciona quién cubre cada concepto.</p>
 
             <div>
               <label class="form-label">Medios de transporte del visitante en México <span class="req">*</span></label>
@@ -1094,32 +1222,101 @@
               </div>
             </div>
 
-            <!-- Final CTA box -->
-            <div class="mt-8 rounded-2xl p-5" style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);">
-              <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">¿Todo listo?</p>
-              <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Al continuar pasarás al pago seguro. Tu carta PDF será enviada a tu correo electrónico en minutos.</p>
-              <div class="flex items-center gap-2 text-xs" style="color:#6B7280;">
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                  <rect x="1.5" y="5.5" width="10" height="7" rx="1.5" stroke="#C9A84C" stroke-width="1.1"/>
-                  <path d="M4 5.5V4a2.5 2.5 0 015 0v1.5" stroke="#C9A84C" stroke-width="1.1"/>
-                </svg>
-                Pago procesado por <strong>Stripe</strong>. No almacenamos datos de tarjeta.
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between mt-5 gap-3">
+            <div class="flex items-center justify-between mt-8 gap-3">
               <button type="button" class="btn-back" onclick="goPrev(5)">
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                   <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Volver
               </button>
-              <button type="button" class="btn-navy" onclick="goNext(5)" style="white-space:nowrap;font-size:0.9375rem;">
-                Ir al pago · $9 USD
+              <button type="button" class="btn-gold" onclick="goNext(5)" style="white-space:nowrap;font-size:0.9375rem;">
+                Revisar información
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
+            </div>
+
+          </section>
+
+          <!-- ═══════════════════════
+               STEP 6 — REVISIÓN
+          ═══════════════════════ -->
+          <section id="step-6" class="form-step p-6 sm:p-8">
+
+            <div class="flex items-start gap-4 mb-7">
+              <div class="step-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                  <path d="M4 6h14M4 11h10M4 16h7" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                  <circle cx="17" cy="16" r="3" stroke="#C9A84C" stroke-width="1.4"/>
+                  <path d="M19 18l2 2" stroke="#C9A84C" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <span class="section-label mb-1">Paso 6 de 6</span>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Revisa tu información</h2>
+                <p class="text-sm mt-1" style="color:#6B7280;">Verifica que todos los datos sean correctos antes de proceder al pago.</p>
+              </div>
+            </div>
+
+            <!-- CTA box — visible immediately on arrival at step 6 -->
+            <div class="rounded-2xl p-5 mb-6" style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);">
+              <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">¿Todo correcto?</p>
+              <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Revisa tus datos abajo y confirma para proceder al pago seguro. Tu carta PDF llegará a tu correo en minutos.</p>
+              <div class="flex items-center gap-2 text-xs mb-5" style="color:#6B7280;">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                  <rect x="1.5" y="5.5" width="10" height="7" rx="1.5" stroke="#C9A84C" stroke-width="1.1"/>
+                  <path d="M4 5.5V4a2.5 2.5 0 015 0v1.5" stroke="#C9A84C" stroke-width="1.1"/>
+                </svg>
+                Pago procesado por <strong>Stripe</strong>. No almacenamos datos de tarjeta.
+              </div>
+              <div class="flex items-center justify-between gap-3">
+                <button type="button" class="btn-back" onclick="goPrev(6)">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+                    <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Volver y editar
+                </button>
+                <button type="button" class="btn-navy" onclick="goNext(6)" style="white-space:nowrap;font-size:0.9375rem;">
+                  Confirmar y pagar · $9 USD
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Review data cards — populated by buildReview() -->
+            <p class="text-xs font-semibold mb-3" style="color:#6B7280;text-transform:uppercase;letter-spacing:0.06em;">Tu información</p>
+            <div id="review-content" class="space-y-4">
+              <!-- Populated by buildReview() -->
+            </div>
+
+            <!-- CTA box — repeated at the bottom after review cards -->
+            <div class="rounded-2xl p-5 mt-6" style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);">
+              <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">¿Todo correcto?</p>
+              <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Revisa tus datos abajo y confirma para proceder al pago seguro. Tu carta PDF llegará a tu correo en minutos.</p>
+              <div class="flex items-center gap-2 text-xs mb-5" style="color:#6B7280;">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                  <rect x="1.5" y="5.5" width="10" height="7" rx="1.5" stroke="#C9A84C" stroke-width="1.1"/>
+                  <path d="M4 5.5V4a2.5 2.5 0 015 0v1.5" stroke="#C9A84C" stroke-width="1.1"/>
+                </svg>
+                Pago procesado por <strong>Stripe</strong>. No almacenamos datos de tarjeta.
+              </div>
+              <div class="flex items-center justify-between gap-3">
+                <button type="button" class="btn-back" onclick="goPrev(6)">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+                    <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Volver y editar
+                </button>
+                <button type="button" class="btn-navy" onclick="goNext(6)" style="white-space:nowrap;font-size:0.9375rem;">
+                  Confirmar y pagar · $9 USD
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
             </div>
 
           </section>
@@ -1243,10 +1440,10 @@
                   placeholder="Ej. Turismo cultural, visita a museos, recorrido gastronómico…" required rows="2"></textarea>
       </div>
       <div>
-        <label class="form-label">Nombre del alojamiento <span style="color:#9BAFD9;font-weight:400;">(opcional)</span></label>
+        <label class="form-label">Nombre del alojamiento <span style="color:#9BAFD9;font-weight:400;">(si aplica, llenar solo en caso de ser hotel)</span></label>
         <input type="text" name="dest_aloj_nombre[]" class="form-input"
                placeholder="Hotel, Airbnb, casa particular…">
-        <p class="form-hint">Se recomienda tener la reservación a la mano.</p>
+        <p class="form-hint">Se recomienda tener la reservación a la mano para mostrar a la autoridad migratoria.</p>
       </div>
       <div>
         <label class="form-label">Dirección del alojamiento <span class="req">*</span></label>
@@ -1254,13 +1451,52 @@
           <input type="text" name="dest_aloj_calle[]" class="form-input dest-aloj-calle"
                  placeholder="Calle y número" required>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <input type="text" name="dest_aloj_colonia[]" class="form-input dest-aloj-colonia"
+                   placeholder="Colonia" required>
+            <input type="text" name="dest_aloj_delegacion[]" class="form-input dest-aloj-delegacion"
+                   placeholder="Delegación o Municipio" required>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <input type="text" name="dest_aloj_ciudad[]" class="form-input dest-aloj-ciudad"
                    placeholder="Ciudad o Alcaldía" required>
-            <input type="text" name="dest_aloj_estado[]" class="form-input"
-                   placeholder="Estado">
+            <select name="dest_aloj_estado[]" class="form-input dest-aloj-estado" required>
+              <option value="" disabled selected>Estado</option>
+              <option>Aguascalientes</option>
+              <option>Baja California</option>
+              <option>Baja California Sur</option>
+              <option>Campeche</option>
+              <option>Chiapas</option>
+              <option>Chihuahua</option>
+              <option>Ciudad de México</option>
+              <option>Coahuila</option>
+              <option>Colima</option>
+              <option>Durango</option>
+              <option>Guanajuato</option>
+              <option>Guerrero</option>
+              <option>Hidalgo</option>
+              <option>Jalisco</option>
+              <option>México</option>
+              <option>Michoacán</option>
+              <option>Morelos</option>
+              <option>Nayarit</option>
+              <option>Nuevo León</option>
+              <option>Oaxaca</option>
+              <option>Puebla</option>
+              <option>Querétaro</option>
+              <option>Quintana Roo</option>
+              <option>San Luis Potosí</option>
+              <option>Sinaloa</option>
+              <option>Sonora</option>
+              <option>Tabasco</option>
+              <option>Tamaulipas</option>
+              <option>Tlaxcala</option>
+              <option>Veracruz</option>
+              <option>Yucatán</option>
+              <option>Zacatecas</option>
+            </select>
           </div>
-          <input type="text" name="dest_aloj_cp[]" class="form-input"
-                 placeholder="Código Postal">
+          <input type="text" name="dest_aloj_cp[]" class="form-input dest-aloj-cp"
+                 placeholder="Código Postal" required>
         </div>
       </div>
       <div>
@@ -1282,13 +1518,14 @@
 
 
 <script>
-  const TOTAL = 5;
+  const TOTAL = 6;
   const LABELS = [
-    'Paso 1 de 5 — El viajero',
-    'Paso 2 de 5 — Acompañantes',
-    'Paso 3 de 5 — El anfitrión',
-    'Paso 4 de 5 — Gastos',
-    'Paso 5 de 5 — Itinerario y vuelos',
+    'Paso 1 de 6 — El viajero',
+    'Paso 2 de 6 — Acompañantes',
+    'Paso 3 de 6 — El anfitrión',
+    'Paso 4 de 6 — Gastos',
+    'Paso 5 de 6 — Itinerario y vuelos',
+    'Paso 6 de 6 — Revisión',
   ];
   let current = 1;
   let companionCount = 0;
@@ -1396,23 +1633,27 @@
   /* ── Sidebar update ── */
   function updateSidebar(n) {
     for (let i = 1; i <= TOTAL; i++) {
-      const dot = document.getElementById('dot-' + i);
-      const lbl = document.getElementById('pl-' + i);
+      const dot  = document.getElementById('dot-' + i);
+      const lbl  = document.getElementById('pl-' + i);
       if (!dot) continue;
+      const pill = dot.closest('.step-pill');
       dot.className = 'pill-dot';
       lbl.className = 'pill-label';
       if (i < n) {
         dot.classList.add('done');
         dot.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6l3 3 4-4.5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         lbl.classList.add('done-txt');
+        if (pill) { pill.classList.add('pill-nav'); pill.onclick = (function(step){ return function(){ current = step; showStep(step); }; })(i); }
       } else if (i === n) {
         dot.classList.add('active');
         dot.textContent = i;
         lbl.classList.add('active-txt');
+        if (pill) { pill.classList.remove('pill-nav'); pill.onclick = null; }
       } else {
         dot.classList.add('pending');
         dot.textContent = i;
         lbl.classList.add('pending-txt');
+        if (pill) { pill.classList.remove('pill-nav'); pill.onclick = null; }
       }
     }
   }
@@ -1460,6 +1701,7 @@
   function clearErrors(stepEl) {
     stepEl.querySelectorAll('.form-error.show').forEach(e => e.classList.remove('show'));
     stepEl.querySelectorAll('.form-input.error').forEach(e => e.classList.remove('error'));
+    stepEl.querySelectorAll('.expense-row.error').forEach(e => e.classList.remove('error'));
   }
 
   /* ── Validate step ── */
@@ -1473,10 +1715,11 @@
       ok &= req('v-nacimiento', 'err-v-nacimiento');
       ok &= selReq('v-nacionalidad', 'err-v-nacionalidad');
       ok &= req('v-pasaporte',  'err-v-pasaporte');
-      ok &= req('v-residencia', 'err-v-residencia');
+      ok &= selReq('v-residencia', 'err-v-residencia');
       ok &= req('v-calle',      'err-v-domicilio');
       ok &= req('v-ciudad',     'err-v-domicilio');
       ok &= req('v-provincia',  'err-v-domicilio');
+      ok &= req('v-cp',         'err-v-domicilio');
       ok &= req('v-ocupacion',  'err-v-ocupacion');
       ok &= emailReq('v-email', 'err-v-email');
 
@@ -1503,12 +1746,29 @@
       ok &= req('a-nacimiento', 'err-a-nacimiento');
       ok &= selReq('a-id-tipo', 'err-a-id-tipo');
       ok &= req('a-id-num',     'err-a-id-num');
-      ok &= req('a-calle',      'err-a-domicilio');
-      ok &= req('a-ciudad',     'err-a-domicilio');
-      ok &= req('a-telefono',   'err-a-telefono');
-      ok &= selReq('a-vinculo', 'err-a-vinculo');
+      ok &= req('a-calle',        'err-a-domicilio');
+      ok &= req('a-colonia',      'err-a-domicilio');
+      ok &= req('a-delegacion',   'err-a-domicilio');
+      ok &= req('a-ciudad',       'err-a-domicilio');
+      ok &= selReq('a-estado',    'err-a-domicilio');
+      ok &= req('a-cp',           'err-a-domicilio');
+      ok &= req('a-telefono',     'err-a-telefono');
+      ok &= selReq('a-vinculo',   'err-a-vinculo');
 
     } else if (n === 4) {
+      const expenseGroups = ['g_hospedaje','g_alimentos','g_transporte','g_actividades','g_medicos'];
+      const expenseRows   = stepEl.querySelectorAll('.expense-row');
+      let expOk = true;
+      expenseGroups.forEach((name, i) => {
+        if (!document.querySelector(`input[name="${name}"]:checked`)) {
+          if (expenseRows[i]) expenseRows[i].classList.add('error');
+          expOk = false;
+        }
+      });
+      if (!expOk) {
+        document.getElementById('err-gastos').classList.add('show');
+        ok = false;
+      }
       const checked = document.querySelectorAll('input[name="transporte_mx"]:checked');
       if (checked.length === 0) {
         document.getElementById('err-transporte').classList.add('show');
@@ -1519,7 +1779,35 @@
       const ingreso = document.querySelector('input[name="ingreso_tipo"]:checked');
       const salida  = document.querySelector('input[name="salida_tipo"]:checked');
       if (!ingreso) { document.getElementById('err-ingreso-tipo').classList.add('show'); ok = false; }
+      else {
+        if (ingreso.value === 'aereo') {
+          ['ing-aeropuerto','ing-aerolinea','ing-vuelo'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el && !el.value.trim()) { el.classList.add('error'); ok = false; }
+          });
+        } else if (ingreso.value === 'terrestre') {
+          const el = document.getElementById('ing-cruce');
+          if (el && !el.value.trim()) { el.classList.add('error'); ok = false; }
+        } else if (ingreso.value === 'maritimo') {
+          const el = document.getElementById('ing-puerto');
+          if (el && !el.value.trim()) { el.classList.add('error'); ok = false; }
+        }
+      }
       if (!salida)  { document.getElementById('err-salida-tipo').classList.add('show'); ok = false; }
+      else {
+        if (salida.value === 'aereo') {
+          ['sal-aeropuerto','sal-aerolinea','sal-vuelo'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el && !el.value.trim()) { el.classList.add('error'); ok = false; }
+          });
+        } else if (salida.value === 'terrestre') {
+          const el = document.getElementById('sal-cruce');
+          if (el && !el.value.trim()) { el.classList.add('error'); ok = false; }
+        } else if (salida.value === 'maritimo') {
+          const el = document.getElementById('sal-puerto');
+          if (el && !el.value.trim()) { el.classList.add('error'); ok = false; }
+        }
+      }
       ok &= req('ing-fecha', 'err-ing-fecha');
       ok &= req('sal-fecha', 'err-sal-fecha');
 
@@ -1531,7 +1819,9 @@
       } else {
         destinos.forEach(card => {
           ['.dest-ciudad', '.dest-actividades', '.dest-aloj-calle',
-           '.dest-aloj-ciudad', '.dest-fecha-desde', '.dest-fecha-hasta'].forEach(sel => {
+           '.dest-aloj-colonia', '.dest-aloj-delegacion',
+           '.dest-aloj-ciudad', '.dest-aloj-estado', '.dest-aloj-cp',
+           '.dest-fecha-desde', '.dest-fecha-hasta'].forEach(sel => {
             const el = card.querySelector(sel);
             if (el && !el.value.trim()) { el.classList.add('error'); ok = false; }
           });
@@ -1542,19 +1832,187 @@
     return Boolean(ok);
   }
 
+  /* ── Collect all form fields into a JSON object ── */
+  function collectFormData() {
+    const data = {};
+    document.querySelectorAll('#wizard input[type="text"], #wizard input[type="email"], #wizard input[type="date"], #wizard input[type="number"], #wizard input[type="tel"], #wizard select, #wizard textarea').forEach(el => {
+      if (el.id) data[el.id] = el.value.trim();
+    });
+    document.querySelectorAll('#wizard input[type="radio"]:checked').forEach(el => {
+      data[el.name] = el.value;
+    });
+    document.querySelectorAll('#wizard input[type="checkbox"]:checked').forEach(el => {
+      if (!data[el.name]) data[el.name] = [];
+      if (Array.isArray(data[el.name])) data[el.name].push(el.value);
+      else data[el.name] = [data[el.name], el.value];
+    });
+    return data;
+  }
+
+  /* ── Submit to API and redirect to Stripe ── */
+  async function submitToAPI() {
+    const confirmBtn = document.querySelector('[onclick*="goNext"]') || document.querySelector('.btn-pay, .btn-next');
+    if (confirmBtn) {
+      confirmBtn.disabled = true;
+      confirmBtn.innerHTML = '<span class="inline-flex items-center gap-2"><span class="spinner" style="width:18px;height:18px;border:2px solid rgba(27,53,102,0.2);border-top-color:var(--c-navy);border-radius:50%;animation:spin 0.7s linear infinite;"></span> Procesando…</span>';
+    }
+
+    try {
+      const formData = collectFormData();
+      const email = formData['v-email'] || '';
+
+      const res = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plan: 'completo',
+          email,
+          formData,
+        }),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.error || 'Error al procesar la solicitud.');
+      }
+
+      window.location.href = result.url;
+
+    } catch (err) {
+      alert('Hubo un error al procesar tu solicitud. Por favor intenta de nuevo.\n\n' + err.message);
+      if (confirmBtn) {
+        confirmBtn.disabled = false;
+        confirmBtn.innerHTML = 'Confirmar y pagar';
+      }
+    }
+  }
+
   /* ── Navigation ── */
   function goNext(n) {
     if (!validateStep(n)) return;
     if (n < TOTAL) {
+      if (n === 5) buildReview();
       current = n + 1;
       showStep(current);
     } else {
-      window.location.href = '#pago';
-      alert('¡Formulario completo! Redirigiendo al pago seguro…');
+      const _email = encodeURIComponent(document.getElementById('v-email')?.value?.trim() || '');
+      window.location.href = '/checkout?plan=completo' + (_email ? '&email=' + _email : '');
     }
   }
   function goPrev(n) {
     if (n > 1) { current = n - 1; showStep(current); }
+  }
+
+  /* ── Build review screen ── */
+  function rval(id) {
+    const el = document.getElementById(id);
+    return el ? (el.value.trim() || '—') : '—';
+  }
+  function reviewCard(title, rows) {
+    const items = rows.map(([label, value]) =>
+      `<div><dt style="font-size:0.75rem;color:#6B7280;font-weight:500;margin-bottom:2px;">${label}</dt>` +
+      `<dd style="font-size:0.875rem;color:var(--c-navy);font-weight:600;margin:0;">${value || '—'}</dd></div>`
+    ).join('');
+    return `<div style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);border-radius:16px;padding:20px;">` +
+      `<p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--c-gold);margin:0 0 8px;">${title}</p>` +
+      `<div class="gold-rule" style="margin-bottom:14px;"></div>` +
+      `<dl style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px 16px;margin:0;">${items}</dl></div>`;
+  }
+  function buildReview() {
+    // Viajero
+    const addr = [rval('v-calle'), rval('v-ciudad'), rval('v-provincia'), rval('v-cp')].filter(v => v !== '—').join(', ');
+    const viajero = reviewCard('El viajero', [
+      ['Nombre completo', rval('v-nombre')],
+      ['Fecha de nacimiento', rval('v-nacimiento')],
+      ['Nacionalidad', rval('v-nacionalidad')],
+      ['N.º de pasaporte', rval('v-pasaporte')],
+      ['País de residencia', rval('v-residencia')],
+      ['Domicilio', addr || '—'],
+      ['Ocupación', rval('v-ocupacion')],
+      ['Correo electrónico', rval('v-email')],
+    ]);
+
+    // Acompañantes
+    const compCards = document.querySelectorAll('[data-companion]');
+    let acomp;
+    if (compCards.length === 0) {
+      acomp = `<div style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);border-radius:16px;padding:20px;">` +
+        `<p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--c-gold);margin:0 0 8px;">Acompañantes</p>` +
+        `<div class="gold-rule" style="margin-bottom:14px;"></div>` +
+        `<p style="font-size:0.875rem;color:#6B7280;margin:0;">Ninguno</p></div>`;
+    } else {
+      acomp = Array.from(compCards).map((card, i) => reviewCard(`Acompañante ${i + 1}`, [
+        ['Nombre', card.querySelector('.companion-nombre')?.value || '—'],
+        ['Nacimiento', card.querySelector('.companion-nacimiento')?.value || '—'],
+        ['Relación', card.querySelector('.companion-relacion')?.value || '—'],
+        ['Nacionalidad', card.querySelector('.companion-nacionalidad')?.value || '—'],
+        ['Pasaporte', card.querySelector('.companion-pasaporte')?.value || '—'],
+      ])).join('');
+    }
+
+    // Anfitrión
+    const anfiAddr = [rval('a-calle'), rval('a-colonia'), rval('a-delegacion'), rval('a-ciudad'), rval('a-estado'), rval('a-cp')].filter(v => v !== '—').join(', ');
+    const anfitrion = reviewCard('El anfitrión', [
+      ['Nombre completo', rval('a-nombre')],
+      ['Fecha de nacimiento', rval('a-nacimiento')],
+      ['Tipo de ID', rval('a-id-tipo')],
+      ['N.º de ID', rval('a-id-num')],
+      ['Domicilio en México', anfiAddr || '—'],
+      ['Teléfono', rval('a-telefono')],
+      ['Vínculo con el viajero', rval('a-vinculo')],
+    ]);
+
+    // Gastos
+    const getExp = name => { const r = document.querySelector(`input[name="${name}"]:checked`); return r ? r.value : '—'; };
+    const modos = Array.from(document.querySelectorAll('input[name="transporte_mx"]:checked')).map(i => i.value).join(', ') || '—';
+    const gastos = reviewCard('Gastos', [
+      ['Hospedaje', getExp('g_hospedaje')],
+      ['Alimentos', getExp('g_alimentos')],
+      ['Transporte', getExp('g_transporte')],
+      ['Actividades', getExp('g_actividades')],
+      ['Atención médica', getExp('g_medicos')],
+      ['Transporte en México', modos],
+    ]);
+
+    // Destinos
+    const destinoCards = document.querySelectorAll('[data-destino]');
+    const destinosHTML = Array.from(destinoCards).map((card, i) => {
+      const ciudad = card.querySelector('.dest-ciudad')?.value || '—';
+      const alojCalle = card.querySelector('.dest-aloj-calle')?.value || '—';
+      const alojCiudad = card.querySelector('.dest-aloj-ciudad')?.value || '—';
+      const estado = card.querySelector('.dest-aloj-estado')?.value || '—';
+      return reviewCard(`Destino ${i + 1} — ${ciudad}`, [
+        ['Ciudad', ciudad],
+        ['Actividades', card.querySelector('.dest-actividades')?.value || '—'],
+        ['Alojamiento', card.querySelector('[name="dest_aloj_nombre[]"]')?.value || '—'],
+        ['Dirección alojamiento', [alojCalle, alojCiudad, estado].filter(v => v !== '—').join(', ') || '—'],
+        ['Llegada', card.querySelector('.dest-fecha-desde')?.value || '—'],
+        ['Salida', card.querySelector('.dest-fecha-hasta')?.value || '—'],
+      ]);
+    }).join('');
+
+    // Vuelos / ingreso-salida
+    const ingresoTipo = document.querySelector('input[name="ingreso_tipo"]:checked')?.value || '';
+    let ingresoDetail = '—';
+    if (ingresoTipo === 'aereo') ingresoDetail = [rval('ing-aeropuerto'), rval('ing-aerolinea'), rval('ing-vuelo')].filter(v => v !== '—').join(' · ') || '—';
+    else if (ingresoTipo === 'terrestre') ingresoDetail = rval('ing-cruce');
+    else if (ingresoTipo === 'maritimo') ingresoDetail = rval('ing-puerto');
+    const salidaTipo = document.querySelector('input[name="salida_tipo"]:checked')?.value || '';
+    let salidaDetail = '—';
+    if (salidaTipo === 'aereo') salidaDetail = [rval('sal-aeropuerto'), rval('sal-aerolinea'), rval('sal-vuelo')].filter(v => v !== '—').join(' · ') || '—';
+    else if (salidaTipo === 'terrestre') salidaDetail = rval('sal-cruce');
+    else if (salidaTipo === 'maritimo') salidaDetail = rval('sal-puerto');
+    const vuelos = reviewCard('Vuelos', [
+      ['Tipo de ingreso', ingresoTipo || '—'],
+      ['Detalle ingreso', ingresoDetail],
+      ['Fecha de llegada', rval('ing-fecha')],
+      ['Tipo de salida', salidaTipo || '—'],
+      ['Detalle salida', salidaDetail],
+      ['Fecha de regreso', rval('sal-fecha')],
+    ]);
+
+    document.getElementById('review-content').innerHTML = viajero + acomp + anfitrion + gastos + destinosHTML + vuelos;
   }
 
   /* ── Real-time field validation setup ── */
