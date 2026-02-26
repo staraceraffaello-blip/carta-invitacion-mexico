@@ -459,6 +459,12 @@ const params = new URLSearchParams(window.location.search);
 const planKey = PLANS[params.get('plan')] ? params.get('plan') : 'esencial';
 const plan = PLANS[planKey];
 
+/* ── Show success overlay if returning from Stripe ── */
+if (params.get('status') === 'success') {
+  document.getElementById('success-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
 /* ── Pre-fill email from URL param ── */
 const emailParam = params.get('email');
 if (emailParam) {
