@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="/brand_assets/logos/concept-1-el-sello-white-bg.svg">
+  <link rel="icon" type="image/svg+xml" href="/brand_assets/logos/concept-1-el-sello-white.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Pago Seguro — Carta de Invitación a México</title>
   <meta name="description" content="Completa tu pago seguro para recibir tu Carta de Invitación a México. Proceso encriptado, descarga inmediata por email.">
@@ -596,20 +596,20 @@ document.getElementById('checkout-form').addEventListener('submit', (e) => {
     return;
   }
 
-  // Simulate processing
+  const stripeUrl = params.get('stripe_url');
+  if (!stripeUrl) {
+    alert('No se encontró el enlace de pago. Por favor regresa al formulario e inténtalo de nuevo.');
+    return;
+  }
+
   const btn = document.getElementById('btn-submit');
   const label = document.getElementById('btn-label');
   const spinner = document.getElementById('btn-spinner');
   btn.disabled = true;
-  label.textContent = 'Procesando…';
+  label.textContent = 'Redirigiendo…';
   spinner.classList.remove('hidden');
 
-  setTimeout(() => {
-    spinner.classList.add('hidden');
-    document.getElementById('success-email').textContent = email;
-    document.getElementById('success-overlay').classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }, 2200);
+  window.location.href = stripeUrl;
 });
 
 /* ── Real-time error clearing ── */

@@ -1882,7 +1882,8 @@
         throw new Error(result.error || 'Error al procesar la solicitud.');
       }
 
-      window.location.href = result.url;
+      const checkoutUrl = `/checkout?plan=completo&email=${encodeURIComponent(email)}&stripe_url=${encodeURIComponent(result.url)}`;
+      window.location.href = checkoutUrl;
 
     } catch (err) {
       alert('Hubo un error al procesar tu solicitud. Por favor intenta de nuevo.\n\n' + err.message);

@@ -19,15 +19,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('[submit] Content-Type:', req.headers['content-type']);
-    console.log('[submit] req.body type:', typeof req.body);
-    console.log('[submit] req.body:', JSON.stringify(req.body)?.slice(0, 300));
-
     const { plan, email, formData } = req.body ?? {};
 
     // Validar campos requeridos
     if (!plan || !email || !formData) {
-      console.log('[submit] validation failed — plan:', plan, '| email:', email, '| formData type:', typeof formData);
       return res.status(400).json({ error: 'Faltan campos requeridos: plan, email, formData' });
     }
 
@@ -43,6 +38,7 @@ export default async function handler(req, res) {
         email,
         form_data: formData,
         status: 'pending_payment',
+        created_at: new Date().toISOString(),
       })
       .select('id')
       .single();

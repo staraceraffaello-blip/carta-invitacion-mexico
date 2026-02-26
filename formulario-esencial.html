@@ -1671,8 +1671,8 @@
         throw new Error(result.error || 'Error al procesar la solicitud.');
       }
 
-      // Redirigir a Stripe Checkout
-      window.location.href = result.url;
+      const checkoutUrl = `/checkout?plan=esencial&email=${encodeURIComponent(email)}&stripe_url=${encodeURIComponent(result.url)}`;
+      window.location.href = checkoutUrl;
 
     } catch (err) {
       alert('Hubo un error al procesar tu solicitud. Por favor intenta de nuevo.\n\n' + err.message);
