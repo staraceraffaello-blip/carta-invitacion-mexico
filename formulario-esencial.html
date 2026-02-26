@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="/brand_assets/logos/concept-1-el-sello-white-bg.svg">
+  <link rel="icon" type="image/svg+xml" href="/brand_assets/logos/concept-1-el-sello-white.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Formulario Plan Esencial — Carta de Invitación a México</title>
   <meta name="description" content="Completa tu solicitud de Carta de Invitación a México. Plan Esencial $5 USD. Proceso 100% en línea, seguro e inmediato.">
@@ -1627,15 +1627,15 @@
   function collectFormData() {
     const data = {};
     // Text / select / textarea inputs
-    document.querySelectorAll('#wizard input[type="text"], #wizard input[type="email"], #wizard input[type="date"], #wizard input[type="number"], #wizard input[type="tel"], #wizard select, #wizard textarea').forEach(el => {
+    document.querySelectorAll('#main-form input[type="text"], #main-form input[type="email"], #main-form input[type="date"], #main-form input[type="number"], #main-form input[type="tel"], #main-form select, #main-form textarea').forEach(el => {
       if (el.id) data[el.id] = el.value.trim();
     });
     // Radio inputs
-    document.querySelectorAll('#wizard input[type="radio"]:checked').forEach(el => {
+    document.querySelectorAll('#main-form input[type="radio"]:checked').forEach(el => {
       data[el.name] = el.value;
     });
     // Checkbox inputs
-    document.querySelectorAll('#wizard input[type="checkbox"]:checked').forEach(el => {
+    document.querySelectorAll('#main-form input[type="checkbox"]:checked').forEach(el => {
       if (!data[el.name]) data[el.name] = [];
       if (Array.isArray(data[el.name])) data[el.name].push(el.value);
       else data[el.name] = [data[el.name], el.value];
