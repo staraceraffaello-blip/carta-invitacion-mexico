@@ -9,11 +9,29 @@
  * Container:     560 px max-width
  */
 
-// ── Brand logo (white variant) inlined as a data-URI ──────────────────
-const LOGO_B64 =
-  'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNDAgMTQwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0iY2ltLWxvZ28tdy10aXRsZSI+CiAgPHRpdGxlIGlkPSJjaW0tbG9nby13LXRpdGxlIj5DYXJ0YSBJbnZpdGFjacOzbiBNw6l4aWNvPC90aXRsZT4KCiAgPCEtLSBPdXRlciB3aGl0ZSBmcmFtZSAtLT4KICA8cmVjdCB4PSIyIiB5PSIyIiB3aWR0aD0iMTM2IiBoZWlnaHQ9IjEzNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuODgpIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8IS0tIElubmVyIGdvbGQgYWNjZW50IGZyYW1lIC0tPgogIDxyZWN0IHg9IjgiIHk9IjgiIHdpZHRoPSIxMjQiIGhlaWdodD0iMTI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMC44IiBvcGFjaXR5PSIwLjY1Ii8+CgogIDwhLS0gQ29ybmVyIGdvbGQgYWNjZW50cyAtLT4KICA8ZyBmaWxsPSIjQzlBODRDIiBvcGFjaXR5PSIwLjY1Ij4KICAgIDwhLS0gTlcgLS0+CiAgICA8cmVjdCB4PSI4IiAgICAgeT0iOCIgICAgIHdpZHRoPSIxNCIgIGhlaWdodD0iMS41Ii8+CiAgICA8cmVjdCB4PSI4IiAgICAgeT0iOCIgICAgIHdpZHRoPSIxLjUiIGhlaWdodD0iMTQiLz4KICAgIDwhLS0gTkUgLS0+CiAgICA8cmVjdCB4PSIxMTgiICAgeT0iOCIgICAgIHdpZHRoPSIxNCIgIGhlaWdodD0iMS41Ii8+CiAgICA8cmVjdCB4PSIxMzAuNSIgeT0iOCIgICAgIHdpZHRoPSIxLjUiIGhlaWdodD0iMTQiLz4KICAgIDwhLS0gU1cgLS0+CiAgICA8cmVjdCB4PSI4IiAgICAgeT0iMTMwLjUiIHdpZHRoPSIxNCIgIGhlaWdodD0iMS41Ii8+CiAgICA8cmVjdCB4PSI4IiAgICAgeT0iMTE4IiAgIHdpZHRoPSIxLjUiIGhlaWdodD0iMTQiLz4KICAgIDwhLS0gU0UgLS0+CiAgICA8cmVjdCB4PSIxMTgiICAgeT0iMTMwLjUiIHdpZHRoPSIxNCIgIGhlaWdodD0iMS41Ii8+CiAgICA8cmVjdCB4PSIxMzAuNSIgeT0iMTE4IiAgIHdpZHRoPSIxLjUiIGhlaWdodD0iMTQiLz4KICA8L2c+CgogIDwhLS0gQ0kg4oCUIHVwcGVyIGhhbGYsIHdoaXRlIC0tPgogIDx0ZXh0IHg9Ijc2IiB5PSI1NyIKICAgICAgICB0ZXh0LWFuY2hvcj0ibWlkZGxlIgogICAgICAgIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSI0NiIgZm9udC13ZWlnaHQ9IjcwMCIKICAgICAgICBmaWxsPSJ3aGl0ZSIKICAgICAgICBsZXR0ZXItc3BhY2luZz0iMTIiPkNJPC90ZXh0PgoKICA8IS0tIEdvbGQgc2VwYXJhdG9yIHJ1bGUgLS0+CiAgPGxpbmUgeDE9IjIwIiB5MT0iNzAiIHgyPSIxMjAiIHkyPSI3MCIgc3Ryb2tlPSIjQzlBODRDIiBzdHJva2Utd2lkdGg9IjAuOSIgb3BhY2l0eT0iMC41NSIvPgoKICA8IS0tIE1YIOKAlCBsb3dlciBoYWxmLCBnb2xkIC0tPgogIDx0ZXh0IHg9Ijc2IiB5PSIxMTYiCiAgICAgICAgdGV4dC1hbmNob3I9Im1pZGRsZSIKICAgICAgICBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIgogICAgICAgIGZvbnQtc2l6ZT0iNDYiIGZvbnQtd2VpZ2h0PSI3MDAiCiAgICAgICAgZmlsbD0iI0M5QTg0QyIKICAgICAgICBsZXR0ZXItc3BhY2luZz0iMTIiPk1YPC90ZXh0Pgo8L3N2Zz4K';
+// ── Brand logo as pure HTML/CSS (SVG blocked by Gmail) ────────────────
+// Renders the CI·MX seal mark using table + inline styles — works everywhere.
+function logoMark(size = 44) {
+  const half = Math.round(size / 2);
+  const fontSize = Math.round(size * 0.34);
+  const borderColor = 'rgba(255,255,255,0.7)';
+  const goldColor = '#C9A84C';
+  return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="${size}" height="${size}" style="width: ${size}px; height: ${size}px; border: 2px solid ${borderColor};">
+    <tr>
+      <td align="center" valign="bottom" height="${half}" style="font-family: Georgia, 'Times New Roman', serif; font-size: ${fontSize}px; font-weight: 700; color: #FFFFFF; letter-spacing: 3px; line-height: 1; padding: 0 0 1px;">CI</td>
+    </tr>
+    <tr>
+      <td height="1" style="font-size: 0; line-height: 0; padding: 0 4px;"><div style="height: 1px; background-color: ${goldColor}; opacity: 0.55;"></div></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" height="${half}" style="font-family: Georgia, 'Times New Roman', serif; font-size: ${fontSize}px; font-weight: 700; color: ${goldColor}; letter-spacing: 3px; line-height: 1; padding: 1px 0 0;">MX</td>
+    </tr>
+  </table>`;
+}
 
-const LOGO_URI = `data:image/svg+xml;base64,${LOGO_B64}`;
+function logoMarkSmall() {
+  return logoMark(32);
+}
 
 // ── Shared font stacks ────────────────────────────────────────────────
 const SERIF  = "Georgia, 'Times New Roman', serif";
@@ -72,7 +90,7 @@ function header(title) {
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                 <tr>
                   <td width="48" valign="middle" style="padding-right: 16px;">
-                    <img src="${LOGO_URI}" alt="Carta Invitaci\u00F3n M\u00E9xico" width="44" height="44" style="display: block; width: 44px; height: 44px;">
+                    ${logoMark(44)}
                   </td>
                   <td valign="middle">
                     <h1 style="margin: 0; font-family: ${SERIF}; font-size: 20px; font-weight: 700; color: #FFFFFF; line-height: 1.3;">
@@ -101,7 +119,7 @@ function footer() {
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                 <tr>
                   <td align="center">
-                    <img src="${LOGO_URI}" alt="CI MX" width="32" height="32" style="display: block; margin: 0 auto 10px; width: 32px; height: 32px;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 10px;"><tr><td>${logoMarkSmall()}</td></tr></table>
                     <p style="margin: 0 0 4px; font-family: ${SANS}; font-size: 12px; color: #4A6FA5;">
                       <a href="https://cartadeinvitacionmexico.com" style="color: #4A6FA5; text-decoration: underline;">cartadeinvitacionmexico.com</a>
                     </p>
