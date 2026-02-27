@@ -338,6 +338,7 @@
 </head>
 
 <body>
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:rounded focus:shadow-lg focus:text-navy-700 focus:font-semibold">Saltar al contenido principal</a>
 
 <!-- ════════════════════ HEADER ════════════════════ -->
 <header style="background:#fff;border-bottom:1px solid rgba(27,53,102,0.08);box-shadow:0 1px 12px rgba(27,53,102,0.05);"
@@ -363,7 +364,7 @@
   </div>
 </header>
 
-<main>
+<main id="main-content">
 
 <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12">
 
@@ -473,7 +474,7 @@
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 1 de 5</span>
+                <span class="section-label mb-1">Paso 1 de 6</span>
                 <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">El viajero</h1>
                 <p class="text-sm mt-1" style="color:#6B7280;">Datos de la persona principal que visitará México.</p>
               </div>
@@ -491,7 +492,7 @@
 
               <div>
                 <label class="form-label" for="v-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
-                <input type="date" id="v-nacimiento" name="v_nacimiento" class="form-input" required>
+                <input type="date" id="v-nacimiento" name="v_nacimiento" class="form-input" required min="1900-01-01" max="2026-12-31">
                 <p class="form-error" id="err-v-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
               </div>
 
@@ -740,7 +741,7 @@
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 2 de 5</span>
+                <span class="section-label mb-1">Paso 2 de 6</span>
                 <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Acompañantes</h2>
                 <p class="text-sm mt-1" style="color:#6B7280;">Personas que viajan junto al invitado principal y quedarán incluidas en la misma carta.</p>
               </div>
@@ -807,7 +808,7 @@
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 3 de 5</span>
+                <span class="section-label mb-1">Paso 3 de 6</span>
                 <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">El anfitrión</h2>
                 <p class="text-sm mt-1" style="color:#6B7280;">Datos del mexicano o residente en México que firmará la carta.</p>
               </div>
@@ -824,7 +825,7 @@
 
               <div>
                 <label class="form-label" for="a-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
-                <input type="date" id="a-nacimiento" name="a_nacimiento" class="form-input" required>
+                <input type="date" id="a-nacimiento" name="a_nacimiento" class="form-input" required min="1900-01-01" max="2026-12-31">
                 <p class="form-hint">El anfitrión debe ser mayor de edad (18 años o más).</p>
                 <p class="form-error" id="err-a-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
               </div>
@@ -896,7 +897,7 @@
                   </div>
                   <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal" required>
                 </div>
-                <p class="form-hint warn mt-3">⚠ Se recomienda anexar a la carta de invitación un comprobante de domicilio del anfitirión con antigüedad no mayor a 3 meses.</p>
+                <p class="form-hint warn mt-3">⚠ Se recomienda anexar a la carta de invitación un comprobante de domicilio del anfitrión con antigüedad no mayor a 3 meses.</p>
                 <p class="form-error" id="err-a-domicilio">Por favor completa el domicilio.</p>
               </div>
 
@@ -976,7 +977,7 @@
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 4 de 5</span>
+                <span class="section-label mb-1">Paso 4 de 6</span>
                 <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Gastos del viaje</h2>
                 <p class="text-sm mt-1" style="color:#6B7280;">¿Quién cubrirá los gastos durante la estancia en México?</p>
               </div>
@@ -1095,7 +1096,7 @@
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 5 de 5</span>
+                <span class="section-label mb-1">Paso 5 de 6</span>
                 <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Itinerario, entrada y salida</h2>
                 <p class="text-sm mt-1" style="color:#6B7280;">Ingreso, destinos planeados y salida de México.</p>
               </div>
@@ -1158,7 +1159,7 @@
 
                 <div>
                   <label class="form-label" for="ing-fecha">Fecha de llegada a México <span class="req">*</span></label>
-                  <input type="date" id="ing-fecha" name="ing_fecha" class="form-input" required>
+                  <input type="date" id="ing-fecha" name="ing_fecha" class="form-input" required min="2026-01-01" max="2031-12-31">
                   <p class="form-error" id="err-ing-fecha">Por favor indica la fecha de llegada.</p>
                 </div>
 
@@ -1241,7 +1242,7 @@
 
                 <div>
                   <label class="form-label" for="sal-fecha">Fecha de regreso <span class="req">*</span></label>
-                  <input type="date" id="sal-fecha" name="sal_fecha" class="form-input" required>
+                  <input type="date" id="sal-fecha" name="sal_fecha" class="form-input" required min="2026-01-01" max="2031-12-31">
                   <p class="form-error" id="err-sal-fecha">Por favor indica la fecha de regreso.</p>
                 </div>
 
@@ -1393,7 +1394,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label class="form-label">Fecha de nacimiento <span class="req">*</span></label>
-          <input type="date" name="comp_nacimiento[]" class="form-input companion-nacimiento" required>
+          <input type="date" name="comp_nacimiento[]" class="form-input companion-nacimiento" required min="1900-01-01" max="2026-12-31">
         </div>
         <div>
           <label class="form-label">Relación con el viajero principal <span class="req">*</span></label>
@@ -1413,20 +1414,86 @@
         <div>
           <label class="form-label">Nacionalidad <span class="req">*</span></label>
           <select name="comp_nacionalidad[]" class="form-input companion-nacionalidad" required>
-            <option value="" disabled selected>Selecciona</option>
-            <optgroup label="América Latina">
-              <option>Argentina</option><option>Boliviana</option><option>Brasileña</option>
-              <option>Chilena</option><option>Colombiana</option><option>Costarricense</option>
-              <option>Cubana</option><option>Dominicana</option><option>Ecuatoriana</option>
-              <option>Guatemalteca</option><option>Haitiana</option><option>Hondureña</option>
-              <option>Nicaragüense</option><option>Panameña</option><option>Paraguaya</option>
-              <option>Peruana</option><option>Puertorriqueña</option><option>Salvadoreña</option>
-              <option>Uruguaya</option><option>Venezolana</option>
+            <option value="" disabled selected>La que aparece en su pasaporte</option>
+            <optgroup label="América Latina y el Caribe">
+              <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option>
+              <option>Barbados</option><option>Belice</option><option>Bolivia</option>
+              <option>Brasil</option><option>Chile</option><option>Colombia</option>
+              <option>Costa Rica</option><option>Cuba</option><option>Dominica</option>
+              <option>Ecuador</option><option>El Salvador</option><option>Granada</option>
+              <option>Guatemala</option><option>Guyana</option><option>Haití</option>
+              <option>Honduras</option><option>Jamaica</option><option>Nicaragua</option>
+              <option>Panamá</option><option>Paraguay</option><option>Perú</option>
+              <option>República Dominicana</option><option>San Cristóbal y Nieves</option>
+              <option>San Vicente y las Granadinas</option><option>Santa Lucía</option>
+              <option>Surinam</option><option>Trinidad y Tobago</option>
+              <option>Uruguay</option><option>Venezuela</option>
             </optgroup>
-            <optgroup label="Norteamérica"><option>Canadiense</option><option>Estadounidense</option></optgroup>
+            <optgroup label="Norteamérica">
+              <option>Canadá</option><option>Estados Unidos</option>
+            </optgroup>
             <optgroup label="Europa">
-              <option>Alemana</option><option>Española</option><option>Francesa</option>
-              <option>Italiana</option><option>Portuguesa</option><option>Británica</option>
+              <option>Albania</option><option>Alemania</option><option>Andorra</option>
+              <option>Austria</option><option>Bélgica</option><option>Bielorrusia</option>
+              <option>Bosnia y Herzegovina</option><option>Bulgaria</option><option>Chipre</option>
+              <option>Ciudad del Vaticano</option><option>Croacia</option><option>Dinamarca</option>
+              <option>Eslovaquia</option><option>Eslovenia</option><option>España</option>
+              <option>Estonia</option><option>Finlandia</option><option>Francia</option>
+              <option>Grecia</option><option>Hungría</option><option>Irlanda</option>
+              <option>Islandia</option><option>Italia</option><option>Kosovo</option>
+              <option>Letonia</option><option>Liechtenstein</option><option>Lituania</option>
+              <option>Luxemburgo</option><option>Malta</option><option>Moldavia</option>
+              <option>Mónaco</option><option>Montenegro</option><option>Noruega</option>
+              <option>Países Bajos</option><option>Polonia</option><option>Portugal</option>
+              <option>Reino Unido</option><option>República Checa</option><option>Rumanía</option>
+              <option>Rusia</option><option>San Marino</option><option>Serbia</option>
+              <option>Suecia</option><option>Suiza</option><option>Ucrania</option>
+            </optgroup>
+            <optgroup label="África">
+              <option>Argelia</option><option>Angola</option><option>Benín</option>
+              <option>Botsuana</option><option>Burkina Faso</option><option>Burundi</option>
+              <option>Cabo Verde</option><option>Camerún</option><option>Chad</option>
+              <option>Comoras</option><option>Congo</option><option>Costa de Marfil</option>
+              <option>Egipto</option><option>Eritrea</option><option>Etiopía</option>
+              <option>Gabón</option><option>Gambia</option><option>Ghana</option>
+              <option>Guinea</option><option>Guinea Ecuatorial</option><option>Guinea-Bisáu</option>
+              <option>Kenia</option><option>Lesoto</option><option>Liberia</option>
+              <option>Libia</option><option>Madagascar</option><option>Malaui</option>
+              <option>Mali</option><option>Marruecos</option><option>Mauricio</option>
+              <option>Mauritania</option><option>Mozambique</option><option>Namibia</option>
+              <option>Níger</option><option>Nigeria</option><option>República Centroafricana</option>
+              <option>República Democrática del Congo</option><option>Ruanda</option>
+              <option>Santo Tomé y Príncipe</option><option>Senegal</option>
+              <option>Seychelles</option><option>Sierra Leona</option><option>Somalia</option>
+              <option>Sudáfrica</option><option>Sudán</option><option>Sudán del Sur</option>
+              <option>Suazilandia</option><option>Tanzania</option><option>Togo</option>
+              <option>Túnez</option><option>Uganda</option><option>Yibuti</option>
+              <option>Zambia</option><option>Zimbabue</option>
+            </optgroup>
+            <optgroup label="Asia y Medio Oriente">
+              <option>Afganistán</option><option>Arabia Saudita</option><option>Armenia</option>
+              <option>Azerbaiyán</option><option>Bangladés</option><option>Brunéi</option>
+              <option>Bután</option><option>Camboya</option><option>Catar</option>
+              <option>China</option><option>Corea del Norte</option><option>Corea del Sur</option>
+              <option>Emiratos Árabes Unidos</option><option>Filipinas</option><option>Georgia</option>
+              <option>India</option><option>Indonesia</option><option>Irak</option>
+              <option>Irán</option><option>Israel</option><option>Japón</option>
+              <option>Jordania</option><option>Kazajistán</option><option>Kirguistán</option>
+              <option>Kuwait</option><option>Laos</option><option>Líbano</option>
+              <option>Malasia</option><option>Maldivas</option><option>Mongolia</option>
+              <option>Myanmar</option><option>Nepal</option><option>Omán</option>
+              <option>Pakistán</option><option>Palestina</option><option>Singapur</option>
+              <option>Siria</option><option>Sri Lanka</option><option>Tailandia</option>
+              <option>Tayikistán</option><option>Timor Oriental</option><option>Turkmenistán</option>
+              <option>Turquía</option><option>Uzbekistán</option><option>Vietnam</option>
+              <option>Yemen</option>
+            </optgroup>
+            <optgroup label="Oceanía">
+              <option>Australia</option><option>Fiyi</option><option>Islas Marshall</option>
+              <option>Islas Salomón</option><option>Kiribati</option><option>Micronesia</option>
+              <option>Nauru</option><option>Nueva Zelanda</option><option>Palaos</option>
+              <option>Papúa Nueva Guinea</option><option>Samoa</option><option>Tonga</option>
+              <option>Tuvalu</option><option>Vanuatu</option>
             </optgroup>
           </select>
         </div>
@@ -1532,11 +1599,11 @@
         <div class="date-range">
           <div>
             <p class="text-xs mb-1.5" style="color:#6B7280;">Llegada</p>
-            <input type="date" name="dest_fecha_desde[]" class="form-input dest-fecha-desde" required>
+            <input type="date" name="dest_fecha_desde[]" class="form-input dest-fecha-desde" required min="2026-01-01" max="2031-12-31">
           </div>
           <div>
             <p class="text-xs mb-1.5" style="color:#6B7280;">Salida</p>
-            <input type="date" name="dest_fecha_hasta[]" class="form-input dest-fecha-hasta" required>
+            <input type="date" name="dest_fecha_hasta[]" class="form-input dest-fecha-hasta" required min="2026-01-01" max="2031-12-31">
           </div>
         </div>
       </div>
@@ -1736,6 +1803,46 @@
     if (errId) document.getElementById(errId)?.classList.toggle('show', !ok);
     return ok;
   }
+  function dateReq(id, errId, minYear, maxYear) {
+    const el = document.getElementById(id);
+    if (!el) return true;
+    const v = el.value;
+    const errEl = errId ? document.getElementById(errId) : null;
+    if (!v) { el.classList.add('error'); if (errEl) errEl.classList.add('show'); return false; }
+    const parts = v.split('-');
+    const y = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10);
+    const d = parseInt(parts[2], 10);
+    const dt = new Date(y, m - 1, d);
+    const validDate = dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d;
+    if (!validDate) {
+      el.classList.add('error');
+      if (errEl) { errEl.textContent = 'Por favor ingresa una fecha válida.'; errEl.classList.add('show'); }
+      return false;
+    }
+    if (y < minYear || y > maxYear) {
+      el.classList.add('error');
+      if (errEl) { errEl.textContent = `El año debe estar entre ${minYear} y ${maxYear}.`; errEl.classList.add('show'); }
+      return false;
+    }
+    el.classList.remove('error');
+    if (errEl) errEl.classList.remove('show');
+    return true;
+  }
+  function dateElReq(el, minYear, maxYear) {
+    if (!el) return true;
+    const v = el.value;
+    if (!v) { el.classList.add('error'); return false; }
+    const parts = v.split('-');
+    const y = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10);
+    const d = parseInt(parts[2], 10);
+    const dt = new Date(y, m - 1, d);
+    const validDate = dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d;
+    if (!validDate || y < minYear || y > maxYear) { el.classList.add('error'); return false; }
+    el.classList.remove('error');
+    return true;
+  }
   function clearErrors(stepEl) {
     stepEl.querySelectorAll('.form-error.show').forEach(e => e.classList.remove('show'));
     stepEl.querySelectorAll('.form-input.error').forEach(e => e.classList.remove('error'));
@@ -1750,7 +1857,7 @@
 
     if (n === 1) {
       ok &= req('v-nombre',     'err-v-nombre');
-      ok &= req('v-nacimiento', 'err-v-nacimiento');
+      ok &= dateReq('v-nacimiento', 'err-v-nacimiento', 1900, new Date().getFullYear());
       ok &= selReq('v-nacionalidad', 'err-v-nacionalidad');
       ok &= req('v-pasaporte',  'err-v-pasaporte');
       ok &= selReq('v-residencia', 'err-v-residencia');
@@ -1770,9 +1877,10 @@
         const relac  = card.querySelector('.companion-relacion');
         const nac2   = card.querySelector('.companion-nacionalidad');
         const pas    = card.querySelector('.companion-pasaporte');
-        [nombre, nac, relac, nac2, pas].forEach(el => {
+        [nombre, relac, nac2, pas].forEach(el => {
           if (el && !el.value.trim()) { el.classList.add('error'); compOk = false; }
         });
+        if (nac && !dateElReq(nac, 1900, new Date().getFullYear())) compOk = false;
       });
       if (!compOk) {
         document.getElementById('err-companions').classList.add('show');
@@ -1781,7 +1889,7 @@
 
     } else if (n === 3) {
       ok &= req('a-nombre',     'err-a-nombre');
-      ok &= req('a-nacimiento', 'err-a-nacimiento');
+      ok &= dateReq('a-nacimiento', 'err-a-nacimiento', 1900, new Date().getFullYear());
       ok &= selReq('a-id-tipo', 'err-a-id-tipo');
       ok &= req('a-id-num',     'err-a-id-num');
       ok &= req('a-calle',        'err-a-domicilio');
@@ -1848,8 +1956,8 @@
           if (el && !el.value.trim()) { el.classList.add('error'); ok = false; }
         }
       }
-      ok &= req('ing-fecha', 'err-ing-fecha');
-      ok &= req('sal-fecha', 'err-sal-fecha');
+      ok &= dateReq('ing-fecha', 'err-ing-fecha', new Date().getFullYear(), new Date().getFullYear() + 5);
+      ok &= dateReq('sal-fecha', 'err-sal-fecha', new Date().getFullYear(), new Date().getFullYear() + 5);
       // Validate departure date >= arrival date
       const ingFecha = document.getElementById('ing-fecha')?.value;
       const salFecha = document.getElementById('sal-fecha')?.value;
@@ -1867,14 +1975,20 @@
         document.getElementById('err-destinos').classList.add('show');
         ok = false;
       } else {
+        const cy = new Date().getFullYear();
         destinos.forEach(card => {
           let cardOk = true;
           ['.dest-ciudad', '.dest-actividades', '.dest-aloj-calle',
            '.dest-aloj-colonia', '.dest-aloj-delegacion',
-           '.dest-aloj-ciudad', '.dest-aloj-estado', '.dest-aloj-cp',
-           '.dest-fecha-desde', '.dest-fecha-hasta'].forEach(sel => {
+           '.dest-aloj-ciudad', '.dest-aloj-estado', '.dest-aloj-cp'].forEach(sel => {
             const el = card.querySelector(sel);
             if (el && !el.value.trim()) { el.classList.add('error'); cardOk = false; ok = false; }
+          });
+          // Validate destino dates with year-range check
+          ['.dest-fecha-desde', '.dest-fecha-hasta'].forEach(sel => {
+            const el = card.querySelector(sel);
+            if (!el) return;
+            if (!dateElReq(el, cy, cy + 5)) { cardOk = false; ok = false; }
           });
           const cardErr = card.querySelector('.dest-card-err');
           if (cardErr) cardErr.classList.toggle('show', !cardOk);
@@ -2117,13 +2231,16 @@
       const el = document.getElementById(id);
       if (el) el.addEventListener('blur', () => req(id, errId));
     });
-    // Date inputs → validate on change
+    // Date inputs → validate on change (with year-range check)
+    const curYear = new Date().getFullYear();
     [
-      ['v-nacimiento','err-v-nacimiento'], ['a-nacimiento','err-a-nacimiento'],
-      ['ing-fecha','err-ing-fecha'], ['sal-fecha','err-sal-fecha'],
-    ].forEach(([id, errId]) => {
+      ['v-nacimiento','err-v-nacimiento', 1900, curYear],
+      ['a-nacimiento','err-a-nacimiento', 1900, curYear],
+      ['ing-fecha','err-ing-fecha', curYear, curYear + 5],
+      ['sal-fecha','err-sal-fecha', curYear, curYear + 5],
+    ].forEach(([id, errId, minY, maxY]) => {
       const el = document.getElementById(id);
-      if (el) el.addEventListener('change', () => req(id, errId));
+      if (el) el.addEventListener('change', () => dateReq(id, errId, minY, maxY));
     });
     // Select inputs → validate on change
     [
