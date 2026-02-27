@@ -55,7 +55,7 @@ export default function generatePDF(formData, plan) {
       margins: { top: 60, bottom: 60, left: 65, right: 65 },
       info: {
         Title: 'Carta de Invitación a México',
-        Author: 'carta-invitacion-mexico.com',
+        Author: 'cartadeinvitacionmexico.com',
       },
     });
 
@@ -71,7 +71,7 @@ export default function generatePDF(formData, plan) {
       .text('CARTA DE INVITACIÓN', { align: 'center' });
     doc.moveDown(0.3);
     doc.fontSize(10).fillColor(LIGHT_GRAY).font('Helvetica')
-      .text('carta-invitacion-mexico.com', { align: 'center' });
+      .text('cartadeinvitacionmexico.com', { align: 'center' });
     doc.moveDown(0.6);
 
     // Horizontal rule

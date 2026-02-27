@@ -13,7 +13,7 @@ export default async function sendEmail(to, pdfBuffer, plan, guestName) {
   const planLabel = plan === 'completo' ? 'Plan Completo' : 'Plan Esencial';
 
   const { data, error } = await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL || 'Carta de Invitación <cartas@carta-invitacion-mexico.com>',
+    from: process.env.RESEND_FROM_EMAIL || 'Carta de Invitación <cartas@cartadeinvitacionmexico.com>',
     to,
     subject: `Tu Carta de Invitación a México está lista — ${planLabel}`,
     html: `
@@ -40,7 +40,7 @@ export default async function sendEmail(to, pdfBuffer, plan, guestName) {
           </p>
           <hr style="border: none; border-top: 1px solid #E5E7EB; margin: 24px 0;">
           <p style="font-size: 11px; color: #9CA3AF; text-align: center;">
-            carta-invitacion-mexico.com · Este documento no constituye asesoría legal.
+            cartadeinvitacionmexico.com · Este documento no constituye asesoría legal.
           </p>
         </div>
       </div>

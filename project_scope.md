@@ -1,8 +1,8 @@
-# Alcance del Proyecto: carta-invitacion-mexico.com
+# Alcance del Proyecto: cartadeinvitacionmexico.com
 
 ## Visión General
 
-**Dominio:** carta-invitacion-mexico.com
+**Dominio:** cartadeinvitacionmexico.com
 **Tipo:** Sitio web transaccional (descarga digital de documento PDF)
 **Idiomas:** Español (default) / Inglés
 **Modelo de negocio:** Venta directa de cartas de invitación personalizadas en formato PDF
@@ -275,8 +275,8 @@ Crear páginas que respondan directamente a las preguntas que los usuarios hacen
 
 ### 7.1 Implementación
 
-- **Idioma default:** Español (sin prefijo en URL — `carta-invitacion-mexico.com/blog/...`)
-- **Inglés:** Con prefijo `/en/` (ej. `carta-invitacion-mexico.com/en/blog/...`)
+- **Idioma default:** Español (sin prefijo en URL — `cartadeinvitacionmexico.com/blog/...`)
+- **Inglés:** Con prefijo `/en/` (ej. `cartadeinvitacionmexico.com/en/blog/...`)
 - **Selector de idioma:** Visible en el header y footer (bandera o dropdown ES/EN)
 - **Hreflang tags** en cada página para indicar la relación entre versiones
 - **Contenido traducido profesionalmente** (no automático). El copy en inglés debe sonar nativo, no traducido.
