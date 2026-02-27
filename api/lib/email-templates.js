@@ -9,29 +9,12 @@
  * Container:     560 px max-width
  */
 
-// ── Brand logo as pure HTML/CSS (SVG blocked by Gmail) ────────────────
-// Renders the CI·MX seal mark using table + inline styles — works everywhere.
-function logoMark(size = 44) {
-  const half = Math.round(size / 2);
-  const fontSize = Math.round(size * 0.34);
-  const borderColor = 'rgba(255,255,255,0.7)';
-  const goldColor = '#C9A84C';
-  return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="${size}" height="${size}" style="width: ${size}px; height: ${size}px; border: 2px solid ${borderColor};">
-    <tr>
-      <td align="center" valign="bottom" height="${half}" style="font-family: Georgia, 'Times New Roman', serif; font-size: ${fontSize}px; font-weight: 700; color: #FFFFFF; letter-spacing: 3px; line-height: 1; padding: 0 0 1px;">CI</td>
-    </tr>
-    <tr>
-      <td height="1" style="font-size: 0; line-height: 0; padding: 0 4px;"><div style="height: 1px; background-color: ${goldColor}; opacity: 0.55;"></div></td>
-    </tr>
-    <tr>
-      <td align="center" valign="top" height="${half}" style="font-family: Georgia, 'Times New Roman', serif; font-size: ${fontSize}px; font-weight: 700; color: ${goldColor}; letter-spacing: 3px; line-height: 1; padding: 1px 0 0;">MX</td>
-    </tr>
-  </table>`;
-}
-
-function logoMarkSmall() {
-  return logoMark(32);
-}
+// ── Brand logo PNGs (hosted on production domain) ─────────────────────
+// SVG is blocked by Gmail; HTML text logos render inconsistently.
+// Pre-rendered PNGs at 2x resolution for retina sharpness.
+const DOMAIN = 'https://cartadeinvitacionmexico.com';
+const LOGO_88 = `${DOMAIN}/brand_assets/email/logo-white-88.png`; // display 44×44
+const LOGO_64 = `${DOMAIN}/brand_assets/email/logo-white-64.png`; // display 32×32
 
 // ── Shared font stacks ────────────────────────────────────────────────
 const SERIF  = "Georgia, 'Times New Roman', serif";
@@ -90,7 +73,7 @@ function header(title) {
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                 <tr>
                   <td width="48" valign="middle" style="padding-right: 16px;">
-                    ${logoMark(44)}
+                    <img src="${LOGO_88}" alt="Carta Invitaci\u00F3n M\u00E9xico" width="44" height="44" style="display: block; width: 44px; height: 44px;">
                   </td>
                   <td valign="middle">
                     <h1 style="margin: 0; font-family: ${SERIF}; font-size: 20px; font-weight: 700; color: #FFFFFF; line-height: 1.3;">
@@ -119,7 +102,7 @@ function footer() {
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                 <tr>
                   <td align="center">
-                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 10px;"><tr><td>${logoMarkSmall()}</td></tr></table>
+                    <img src="${LOGO_64}" alt="CI MX" width="32" height="32" style="display: block; margin: 0 auto 10px; width: 32px; height: 32px;">
                     <p style="margin: 0 0 4px; font-family: ${SANS}; font-size: 12px; color: #4A6FA5;">
                       <a href="https://cartadeinvitacionmexico.com" style="color: #4A6FA5; text-decoration: underline;">cartadeinvitacionmexico.com</a>
                     </p>
