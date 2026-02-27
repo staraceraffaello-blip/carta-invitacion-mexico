@@ -680,7 +680,7 @@
               </div>
 
               <div>
-                <label class="form-label">Domicilio completo <span class="req">*</span></label>
+                <label class="form-label">Domicilio completo en país de residencia <span class="req">*</span></label>
                 <div class="space-y-3">
                   <input type="text" id="v-calle" name="v_calle" class="form-input"
                          placeholder="Calle, número, e interior (si aplica)" required>
@@ -855,7 +855,7 @@
                     <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" required>
                     <input type="text" id="a-delegacion" name="a_delegacion" class="form-input" placeholder="Delegación o Municipio" required>
                   </div>
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="grid grid-cols-2 gap-3">
                     <input type="text" id="a-ciudad" name="a_ciudad" class="form-input" placeholder="Ciudad" required>
                     <select id="a-estado" name="a_estado" class="form-input" required>
                       <option value="" disabled selected>Estado</option>
@@ -902,9 +902,11 @@
               <div>
                 <label class="form-label" for="a-telefono">Teléfono de contacto <span class="req">*</span></label>
                 <input type="tel" id="a-telefono" name="a_telefono" class="form-input"
-                       placeholder="+52 55 1234 5678" required autocomplete="tel">
+                       placeholder="55 1234 5678" required autocomplete="tel" maxlength="12"
+                       oninput="this.value=this.value.replace(/[^\d]/g,'').replace(/^(\d{2})(\d{0,4})(\d{0,4})$/,(_,a,b,c)=>[a,b,c].filter(Boolean).join(' ')).slice(0,12)">
+                <p class="form-hint">10 dígitos sin LADA internacional.</p>
                 <p class="form-hint warn">⚠ Migración puede llamar a este número exactamente al momento del arribo del visitante. Es fundamental que esté disponible durante las fechas del viaje.</p>
-                <p class="form-error" id="err-a-telefono">Por favor ingresa un teléfono de contacto.</p>
+                <p class="form-error" id="err-a-telefono">Por favor ingresa un teléfono válido de 10 dígitos.</p>
               </div>
 
               <div>
@@ -1716,6 +1718,15 @@
     if (errId) document.getElementById(errId)?.classList.toggle('show', !ok);
     return ok;
   }
+  function phoneReq(id, errId) {
+    const el = document.getElementById(id);
+    if (!el) return true;
+    const digits = el.value.replace(/\D/g, '');
+    const ok = digits.length === 10;
+    el.classList.toggle('error', !ok);
+    if (errId) document.getElementById(errId)?.classList.toggle('show', !ok);
+    return ok;
+  }
   function emailReq(id, errId) {
     const el = document.getElementById(id);
     if (!el) return true;
@@ -1778,7 +1789,7 @@
       ok &= req('a-ciudad',       'err-a-domicilio');
       ok &= selReq('a-estado',    'err-a-domicilio');
       ok &= req('a-cp',           'err-a-domicilio');
-      ok &= req('a-telefono',     'err-a-telefono');
+      ok &= phoneReq('a-telefono', 'err-a-telefono');
       ok &= selReq('a-vinculo',   'err-a-vinculo');
       ok &= selReq('a-perspectiva', 'err-a-perspectiva');
       ok &= req('a-vinculo-detalle', 'err-a-vinculo-detalle');
@@ -2099,7 +2110,7 @@
       ['v-ciudad','err-v-domicilio'], ['v-provincia','err-v-domicilio'], ['v-cp','err-v-domicilio'],
       ['v-ocupacion','err-v-ocupacion'], ['a-nombre','err-a-nombre'],
       ['a-id-num','err-a-id-num'], ['a-calle','err-a-domicilio'],
-      ['a-ciudad','err-a-domicilio'], ['a-cp','err-a-domicilio'], ['a-telefono','err-a-telefono'],
+      ['a-ciudad','err-a-domicilio'], ['a-cp','err-a-domicilio'],
       ['a-vinculo-detalle','err-a-vinculo-detalle'],
     ].forEach(([id, errId]) => {
       const el = document.getElementById(id);
@@ -2123,6 +2134,9 @@
       const el = document.getElementById(id);
       if (el) el.addEventListener('change', () => selReq(id, errId));
     });
+    // Phone → validate on blur
+    const telEl = document.getElementById('a-telefono');
+    if (telEl) telEl.addEventListener('blur', () => phoneReq('a-telefono', 'err-a-telefono'));
     // Transport type radios → clear error in onTransportType (already handled)
     // Transport checkboxes → clear error in toggleTransportCard (already handled)
   }
