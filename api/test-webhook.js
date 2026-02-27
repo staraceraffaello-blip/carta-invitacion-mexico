@@ -37,8 +37,8 @@ export default async function handler(req, res) {
 
     const guestName = submission.form_data['v-nombre'] || '';
     log('8. Sending email to: ' + submission.email);
-    await sendEmail(submission.email, pdfBuffer, submission.plan, guestName);
-    log('9. EMAIL SENT SUCCESSFULLY!');
+    const emailResult = await sendEmail(submission.email, pdfBuffer, submission.plan, guestName);
+    log('9. EMAIL SENT SUCCESSFULLY! Resend response: ' + JSON.stringify(emailResult));
 
     return res.status(200).json({ success: true, logs });
   } catch (err) {

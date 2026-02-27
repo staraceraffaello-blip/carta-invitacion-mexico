@@ -48,8 +48,7 @@ export default async function sendEmail(to, pdfBuffer, plan, guestName) {
     attachments: [
       {
         filename: `Carta-Invitacion-Mexico-${(guestName || 'visitante').replace(/\s+/g, '-')}.pdf`,
-        content: pdfBuffer.toString('base64'),
-        content_type: 'application/pdf',
+        content: pdfBuffer,
       },
     ],
   });
