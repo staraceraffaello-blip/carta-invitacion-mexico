@@ -513,7 +513,7 @@
             <div class="space-y-5">
 
               <div>
-                <label class="form-label" for="v-nombre">Nombre completo <span class="req">*</span></label>
+                <label class="form-label" for="v-nombre">Nombre completo del viajero <span class="req">*</span></label>
                 <input type="text" id="v-nombre" name="v_nombre" class="form-input"
                        placeholder="Tal como aparece en el pasaporte" required autocomplete="name">
                 <p class="form-hint">Nombre(s) y apellidos completos.</p>
@@ -745,6 +745,16 @@
 
             </div>
 
+            <!-- Upsell note -->
+            <div style="margin-top:1.5rem;padding:12px 16px;background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(27,53,102,0.05));border:1px solid rgba(201,168,76,0.25);border-radius:10px;display:flex;align-items:flex-start;gap:10px;">
+              <span style="font-size:1.1rem;line-height:1;">👥</span>
+              <p style="font-size:0.8rem;color:#4A5568;line-height:1.55;margin:0;">
+                <strong style="color:var(--c-navy);">¿Viajan más personas contigo?</strong> Con el
+                <a href="formulario-completo.html" style="color:var(--c-gold);font-weight:600;text-decoration:underline;text-underline-offset:2px;">Plan Completo</a>
+                puedes incluir acompañantes en la misma carta de invitación.
+              </p>
+            </div>
+
             <div class="flex justify-end mt-8">
               <button type="button" class="btn-gold" onclick="goNext(1)">
                 Continuar
@@ -779,7 +789,7 @@
             <div class="space-y-5">
 
               <div>
-                <label class="form-label" for="a-nombre">Nombre completo <span class="req">*</span></label>
+                <label class="form-label" for="a-nombre">Nombre completo del anfitrión <span class="req">*</span></label>
                 <input type="text" id="a-nombre" name="a_nombre" class="form-input"
                        placeholder="Tal como aparece en tu identificación oficial" required>
                 <p class="form-error" id="err-a-nombre">Este campo es obligatorio.</p>
@@ -788,6 +798,7 @@
               <div>
                 <label class="form-label" for="a-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
                 <input type="date" id="a-nacimiento" name="a_nacimiento" class="form-input" required>
+                <p class="form-hint">El anfitrión debe ser mayor de edad (18 años o más).</p>
                 <p class="form-error" id="err-a-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
               </div>
 
@@ -978,6 +989,16 @@
               </div>
 
 
+            </div>
+
+            <!-- Upsell note -->
+            <div style="margin-top:1.5rem;padding:12px 16px;background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(27,53,102,0.05));border:1px solid rgba(201,168,76,0.25);border-radius:10px;display:flex;align-items:flex-start;gap:10px;">
+              <span style="font-size:1.1rem;line-height:1;">🗺️</span>
+              <p style="font-size:0.8rem;color:#4A5568;line-height:1.55;margin:0;">
+                <strong style="color:var(--c-navy);">¿Visitarás varias ciudades o tendrás más de un alojamiento?</strong> Con el
+                <a href="formulario-completo.html" style="color:var(--c-gold);font-weight:600;text-decoration:underline;text-underline-offset:2px;">Plan Completo</a>
+                puedes agregar un itinerario multi-destino con múltiples alojamientos.
+              </p>
             </div>
 
             <div class="flex items-center justify-between mt-8 gap-3">
@@ -1817,13 +1838,13 @@
     [
       ['v-nombre','err-v-nombre'], ['v-pasaporte','err-v-pasaporte'],
       ['v-residencia','err-v-residencia'], ['v-calle','err-v-domicilio'],
-      ['v-ciudad','err-v-domicilio'], ['v-provincia','err-v-domicilio'],
+      ['v-ciudad','err-v-domicilio'], ['v-provincia','err-v-domicilio'], ['v-cp','err-v-domicilio'],
       ['v-ocupacion','err-v-ocupacion'], ['a-nombre','err-a-nombre'],
       ['a-id-num','err-a-id-num'], ['a-calle','err-a-domicilio'],
-      ['a-ciudad','err-a-domicilio'], ['a-telefono','err-a-telefono'],
+      ['a-ciudad','err-a-domicilio'], ['a-cp','err-a-domicilio'], ['a-telefono','err-a-telefono'],
       ['a-vinculo-detalle','err-a-vinculo-detalle'],
       ['j-actividades','err-j-actividades'], ['j-al-calle','err-j-alojamiento'],
-      ['j-al-ciudad','err-j-alojamiento'],
+      ['j-al-ciudad','err-j-alojamiento'], ['j-al-cp','err-j-alojamiento'],
     ].forEach(([id, errId]) => {
       const el = document.getElementById(id);
       if (el) el.addEventListener('blur', () => req(id, errId));

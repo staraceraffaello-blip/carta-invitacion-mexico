@@ -481,7 +481,7 @@
             <div class="space-y-5">
 
               <div>
-                <label class="form-label" for="v-nombre">Nombre completo <span class="req">*</span></label>
+                <label class="form-label" for="v-nombre">Nombre completo del viajero <span class="req">*</span></label>
                 <input type="text" id="v-nombre" name="v_nombre" class="form-input"
                        placeholder="Tal como aparece en el pasaporte" required autocomplete="name">
                 <p class="form-hint">Nombre(s) y apellidos completos.</p>
@@ -815,7 +815,7 @@
             <div class="space-y-5">
 
               <div>
-                <label class="form-label" for="a-nombre">Nombre completo <span class="req">*</span></label>
+                <label class="form-label" for="a-nombre">Nombre completo del anfitrión <span class="req">*</span></label>
                 <input type="text" id="a-nombre" name="a_nombre" class="form-input"
                        placeholder="Tal como aparece en tu identificación oficial" required>
                 <p class="form-error" id="err-a-nombre">Este campo es obligatorio.</p>
@@ -824,6 +824,7 @@
               <div>
                 <label class="form-label" for="a-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
                 <input type="date" id="a-nacimiento" name="a_nacimiento" class="form-input" required>
+                <p class="form-hint">El anfitrión debe ser mayor de edad (18 años o más).</p>
                 <p class="form-error" id="err-a-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
               </div>
 
@@ -1382,7 +1383,7 @@
     </div>
     <div class="repeat-card-body space-y-4">
       <div>
-        <label class="form-label">Nombre completo <span class="req">*</span></label>
+        <label class="form-label">Nombre completo del acompañante <span class="req">*</span></label>
         <input type="text" name="comp_nombre[]" class="form-input companion-nombre"
                placeholder="Tal como aparece en el pasaporte" required>
       </div>
@@ -2095,10 +2096,10 @@
     [
       ['v-nombre','err-v-nombre'], ['v-pasaporte','err-v-pasaporte'],
       ['v-residencia','err-v-residencia'], ['v-calle','err-v-domicilio'],
-      ['v-ciudad','err-v-domicilio'], ['v-provincia','err-v-domicilio'],
+      ['v-ciudad','err-v-domicilio'], ['v-provincia','err-v-domicilio'], ['v-cp','err-v-domicilio'],
       ['v-ocupacion','err-v-ocupacion'], ['a-nombre','err-a-nombre'],
       ['a-id-num','err-a-id-num'], ['a-calle','err-a-domicilio'],
-      ['a-ciudad','err-a-domicilio'], ['a-telefono','err-a-telefono'],
+      ['a-ciudad','err-a-domicilio'], ['a-cp','err-a-domicilio'], ['a-telefono','err-a-telefono'],
       ['a-vinculo-detalle','err-a-vinculo-detalle'],
     ].forEach(([id, errId]) => {
       const el = document.getElementById(id);
