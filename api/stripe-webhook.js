@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
 import { buffer } from 'micro';
+import generatePDF from './lib/generate-pdf.js';
+import sendEmail from './lib/send-email.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -61,9 +63,38 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: 'Database update failed' });
       }
 
-      // 2. TODO: Generar PDF y enviar email con Resend
-      // Esto se implementará en el paso 5 del plan
-      console.log(`Payment confirmed for submission ${submissionId}`);
+      // 2. Fetch full submission data
+      const { data: submission, error: fetchError } = await supabase
+        .from('submissions')
+        .select('plan, email, form_data')
+        .eq('id', submissionId)
+        .single();
+
+      if (fetchError || !submission) {
+        console.error('Failed to fetch submission:', fetchError);
+        return res.status(500).json({ error: 'Failed to fetch submission data' });
+      }
+
+      // 3. Generate PDF and send email
+      try {
+        const pdfBuffer = await generatePDF(submission.form_data, submission.plan);
+        const guestName = submission.form_data['v-nombre'] || '';
+
+        await sendEmail(submission.email, pdfBuffer, submission.plan, guestName);
+
+        await supabase
+          .from('submissions')
+          .update({ status: 'delivered', delivered_at: new Date().toISOString() })
+          .eq('id', submissionId);
+
+        console.log(`PDF generated and emailed for submission ${submissionId}`);
+      } catch (deliveryErr) {
+        console.error('PDF/email delivery failed:', deliveryErr);
+        await supabase
+          .from('submissions')
+          .update({ status: 'delivery_failed' })
+          .eq('id', submissionId);
+      }
 
     } catch (err) {
       console.error('Webhook processing error:', err);

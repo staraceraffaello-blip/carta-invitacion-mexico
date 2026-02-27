@@ -1851,6 +1851,39 @@
       if (Array.isArray(data[el.name])) data[el.name].push(el.value);
       else data[el.name] = [data[el.name], el.value];
     });
+
+    /* ── Companions (repeatable cards) ── */
+    const companions = [];
+    document.querySelectorAll('[data-companion]').forEach(card => {
+      companions.push({
+        nombre:      card.querySelector('.companion-nombre')?.value.trim() || '',
+        nacimiento:  card.querySelector('.companion-nacimiento')?.value || '',
+        relacion:    card.querySelector('.companion-relacion')?.value || '',
+        nacionalidad:card.querySelector('.companion-nacionalidad')?.value || '',
+        pasaporte:   card.querySelector('.companion-pasaporte')?.value.trim() || '',
+      });
+    });
+    if (companions.length) data.companions = companions;
+
+    /* ── Destinos (repeatable cards) ── */
+    const destinos = [];
+    document.querySelectorAll('[data-destino]').forEach(card => {
+      destinos.push({
+        ciudad:       card.querySelector('.dest-ciudad')?.value.trim() || '',
+        actividades:  card.querySelector('.dest-actividades')?.value.trim() || '',
+        aloj_nombre:  card.querySelector('[name="dest_aloj_nombre[]"]')?.value.trim() || '',
+        aloj_calle:   card.querySelector('.dest-aloj-calle')?.value.trim() || '',
+        aloj_colonia: card.querySelector('.dest-aloj-colonia')?.value.trim() || '',
+        aloj_delegacion: card.querySelector('.dest-aloj-delegacion')?.value.trim() || '',
+        aloj_ciudad:  card.querySelector('.dest-aloj-ciudad')?.value.trim() || '',
+        aloj_estado:  card.querySelector('.dest-aloj-estado')?.value || '',
+        aloj_cp:      card.querySelector('.dest-aloj-cp')?.value.trim() || '',
+        fecha_desde:  card.querySelector('.dest-fecha-desde')?.value || '',
+        fecha_hasta:  card.querySelector('.dest-fecha-hasta')?.value || '',
+      });
+    });
+    if (destinos.length) data.destinos = destinos;
+
     return data;
   }
 
