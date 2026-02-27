@@ -12,6 +12,9 @@ node_modules/
 # Vercel
 .vercel
 
+# MCP config (contains tokens)
+.mcp.json
+
 # OS files
 .DS_Store
 Thumbs.db

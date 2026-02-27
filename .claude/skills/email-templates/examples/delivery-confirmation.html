@@ -1,0 +1,230 @@
+<!--
+  TEMPLATE: Delivery Confirmation
+  TYPE: Transactional — sent after successful payment + PDF generation
+  VARIABLES: {{guestName}}, {{planLabel}}, {{orderDate}}, {{orderId}}
+-->
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>Tu Carta de Invitacion esta lista</title>
+  <!--[if !mso]><!-->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <!--<![endif]-->
+  <!--[if mso]>
+  <noscript><xml>
+    <o:OfficeDocumentSettings>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+  </xml></noscript>
+  <style>
+    table { border-collapse: collapse; }
+    td { font-family: Arial, sans-serif; }
+  </style>
+  <![endif]-->
+  <style>
+    /* Reset */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+    body { margin: 0; padding: 0; width: 100% !important; height: 100% !important; }
+
+    /* Dark mode styles */
+    @media (prefers-color-scheme: dark) {
+      .email-bg { background-color: #0C1830 !important; }
+      .card-bg { background-color: #132648 !important; }
+      .body-text { color: #E5E7EB !important; }
+      .muted-text { color: #9CA3AF !important; }
+    }
+
+    /* Mobile */
+    @media only screen and (max-width: 600px) {
+      .email-container { width: 100% !important; max-width: 100% !important; }
+      .fluid { max-width: 100% !important; height: auto !important; }
+      .stack-column { display: block !important; width: 100% !important; }
+      .mobile-padding { padding-left: 20px !important; padding-right: 20px !important; }
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #FAF8F4; font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+
+  <!-- Preheader (hidden preview text) -->
+  <div style="display: none; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #FAF8F4;">
+    Tu carta de invitacion para {{guestName}} ha sido generada exitosamente. Encontraras el PDF adjunto.
+    &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+  </div>
+
+  <!-- Outer wrapper -->
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #FAF8F4;" class="email-bg">
+    <tr>
+      <td align="center" style="padding: 24px 16px;">
+
+        <!-- Email container -->
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" class="email-container" style="max-width: 560px; width: 100%;">
+
+          <!-- ====== HEADER (Navy) ====== -->
+          <tr>
+            <td style="background-color: #1B3566; padding: 28px 32px; border-radius: 12px 12px 0 0;" class="mobile-padding">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td>
+                    <!-- Logo placeholder — replace src with production logo URL or inline base64 -->
+                    <div style="font-family: Georgia, 'Times New Roman', serif; font-size: 11px; letter-spacing: 3px; color: #C9A84C; text-transform: uppercase; margin-bottom: 8px;">CI &middot; MX</div>
+                    <h1 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 700; color: #FFFFFF; line-height: 1.3;">
+                      Carta de Invitacion a Mexico
+                    </h1>
+                  </td>
+                  <td width="48" valign="top" align="right">
+                    <!-- Decorative gold accent -->
+                    <div style="width: 40px; height: 40px; border: 2px solid rgba(201,168,76,0.3); border-radius: 50%;"></div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ====== GOLD ACCENT LINE ====== -->
+          <tr>
+            <td style="background-color: #FFFFFF; height: 3px; font-size: 0; line-height: 0;">
+              <div style="height: 3px; background: linear-gradient(to right, #C9A84C, #D9BC5C, #C9A84C);"></div>
+              <!--[if mso]><div style="height: 3px; background-color: #C9A84C;"></div><![endif]-->
+            </td>
+          </tr>
+
+          <!-- ====== BODY ====== -->
+          <tr>
+            <td style="background-color: #FFFFFF; padding: 32px;" class="mobile-padding card-bg">
+
+              <!-- Greeting -->
+              <p style="margin: 0 0 20px; font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.6; color: #1F2937;" class="body-text">
+                &iexcl;Hola!
+              </p>
+
+              <!-- Main message -->
+              <p style="margin: 0 0 24px; font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.6; color: #1F2937;" class="body-text">
+                Tu carta de invitacion para <strong style="color: #1B3566;">{{guestName}}</strong> ha sido generada
+                exitosamente con el <strong style="color: #1B3566;">{{planLabel}}</strong>. Encontraras el documento en PDF adjunto a este correo.
+              </p>
+
+              <!-- Order details mini-card -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+                <tr>
+                  <td style="background-color: #FAF8F4; border-radius: 8px; padding: 20px;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                      <tr>
+                        <td style="font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; color: #6B7280; text-transform: uppercase; letter-spacing: 1px; padding-bottom: 12px;" colspan="2">
+                          Resumen del pedido
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; color: #6B7280; padding: 4px 0;">Plan</td>
+                        <td align="right" style="font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; color: #1B3566; font-weight: 600;">{{planLabel}}</td>
+                      </tr>
+                      <tr>
+                        <td style="font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; color: #6B7280; padding: 4px 0;">Visitante</td>
+                        <td align="right" style="font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; color: #1B3566; font-weight: 600;">{{guestName}}</td>
+                      </tr>
+                      <tr>
+                        <td style="font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; color: #6B7280; padding: 4px 0;">Fecha</td>
+                        <td align="right" style="font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; color: #1F2937;">{{orderDate}}</td>
+                      </tr>
+                      <tr>
+                        <td style="font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; color: #6B7280; padding: 4px 0;">Orden</td>
+                        <td align="right" style="font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #4A6FA5;">{{orderId}}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Recommendations callout -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+                <tr>
+                  <td style="background-color: #F0F4FF; border-left: 4px solid #1B3566; padding: 16px 20px; border-radius: 0 8px 8px 0;">
+                    <p style="margin: 0 0 8px; font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; color: #1B3566; font-weight: 600;">
+                      Recomendaciones
+                    </p>
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td valign="top" style="padding: 3px 8px 3px 0; font-size: 13px; color: #C9A84C;">&bull;</td>
+                        <td style="font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 13px; line-height: 1.7; color: #374151; padding-bottom: 4px;">
+                          Imprime la carta o tenla disponible en tu celular al momento de llegar a Mexico.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top" style="padding: 3px 8px 3px 0; font-size: 13px; color: #C9A84C;">&bull;</td>
+                        <td style="font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 13px; line-height: 1.7; color: #374151; padding-bottom: 4px;">
+                          Lleva tambien copia de la identificacion del anfitrion y comprobante de domicilio.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top" style="padding: 3px 8px 3px 0; font-size: 13px; color: #C9A84C;">&bull;</td>
+                        <td style="font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 13px; line-height: 1.7; color: #374151;">
+                          Ten a la mano tu reservacion de vuelo de regreso y comprobante de hospedaje.
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA Button -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+                <tr>
+                  <td align="center">
+                    <!--[if mso]>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="https://cartadeinvitacionmexico.com" style="height:48px;v-text-anchor:middle;width:240px;" arcsize="17%" strokecolor="#C9A84C" fillcolor="#C9A84C">
+                      <w:anchorlock/>
+                      <center style="color:#1B3566;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">Ver mi pedido</center>
+                    </v:roundrect>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
+                    <a href="https://cartadeinvitacionmexico.com" target="_blank" style="display: inline-block; background-color: #C9A84C; color: #1B3566; font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 8px; text-align: center;">
+                      Ver mi pedido
+                    </a>
+                    <!--<![endif]-->
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Help text -->
+              <p style="margin: 0; font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; color: #6B7280; line-height: 1.6;" class="muted-text">
+                Si tienes alguna pregunta, responde directamente a este correo.
+              </p>
+            </td>
+          </tr>
+
+          <!-- ====== FOOTER ====== -->
+          <tr>
+            <td style="background-color: #0C1830; padding: 24px 32px; border-radius: 0 0 12px 12px;" class="mobile-padding">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="center">
+                    <p style="margin: 0 0 8px; font-family: Georgia, 'Times New Roman', serif; font-size: 12px; letter-spacing: 2px; color: #C9A84C; text-transform: uppercase;">
+                      CI &middot; MX
+                    </p>
+                    <p style="margin: 0 0 4px; font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; color: #4A6FA5;">
+                      <a href="https://cartadeinvitacionmexico.com" style="color: #4A6FA5; text-decoration: underline;">cartadeinvitacionmexico.com</a>
+                    </p>
+                    <p style="margin: 12px 0 0; font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 11px; color: #9CA3AF; line-height: 1.5;">
+                      Este documento no constituye asesoria legal.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /Email container -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

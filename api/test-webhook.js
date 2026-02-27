@@ -1,4 +1,5 @@
 import generatePDF from './lib/generate-pdf.js';
+import { deliveryConfirmation } from './lib/email-templates.js';
 import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 
@@ -35,6 +36,13 @@ export default async function handler(req, res) {
     log('6. PDF generated! Size: ' + pdfBuffer.length + ' bytes');
 
     const guestName = submission.form_data['v-nombre'] || '';
+    const planLabel = submission.plan === 'completo' ? 'Plan Completo' : 'Plan Esencial';
+    const now = new Date();
+    const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const orderDate = `${now.getDate()} de ${months[now.getMonth()]} de ${now.getFullYear()}`;
+
+    const html = deliveryConfirmation({ guestName, planLabel, orderDate });
+
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const fromAddr = useTestSender
@@ -45,11 +53,11 @@ export default async function handler(req, res) {
     const { data, error } = await resend.emails.send({
       from: fromAddr,
       to: submission.email,
-      subject: `Tu Carta de Invitación a México está lista`,
-      html: '<h2>Tu carta de invitación está adjunta</h2><p>Este es un email de prueba.</p>',
+      subject: `Tu Carta de Invitación a México está lista — ${planLabel}`,
+      html,
       attachments: [
         {
-          filename: `Carta-Invitacion-Mexico.pdf`,
+          filename: `Carta-Invitacion-Mexico-${(guestName || 'visitante').replace(/\s+/g, '-')}.pdf`,
           content: pdfBuffer,
         },
       ],

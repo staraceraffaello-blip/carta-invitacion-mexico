@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
+import mexicoNow from './lib/mexico-now.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -38,7 +39,7 @@ export default async function handler(req, res) {
         email,
         form_data: formData,
         status: 'pending_payment',
-        created_at: new Date().toISOString(),
+        created_at: mexicoNow(),
       })
       .select('id')
       .single();
