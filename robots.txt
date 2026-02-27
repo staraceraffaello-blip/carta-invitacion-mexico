@@ -4,7 +4,5 @@ Allow: /
 Disallow: /formulario-esencial
 Disallow: /formulario-completo
 Disallow: /checkout
-Disallow: /privacidad
-Disallow: /terminos
 
 Sitemap: https://cartadeinvitacionmexico.com/sitemap.xml
