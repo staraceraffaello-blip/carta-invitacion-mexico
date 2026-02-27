@@ -1,58 +1,57 @@
 # Formulario — Carta de Invitación para Visitantes a México
+## Plan Esencial
+
+> Formulario de 5 pasos + revisión final. Precio: **$5 USD**.
 
 ---
 
-## Sección 1 — Información del extranjero que visitará México
+## Paso 1 — El viajero (Información del extranjero que visitará México)
 
 | # | Campo | Detalle | Fuente |
 |---|-------|---------|--------|
 | 1 | **Nombre completo** (tal cual aparece en su pasaporte) | Nombre(s) y Apellidos | Embajada / DIAM S.C. |
-| 2 | **Fecha de nacimiento** | DD/MM/AAAA | ✅ *Agregado* — Embajada MX |
-| 3 | **Nacionalidad** | La que aparece en el pasaporte | Embajada / DIAM S.C. |
+| 2 | **Fecha de nacimiento** | DD/MM/AAAA | Embajada MX |
+| 3 | **Nacionalidad** | Dropdown con países agrupados por región (la que aparece en el pasaporte) | Embajada / DIAM S.C. |
 | 4 | **Número de pasaporte** | ⚠️ *Verificar que el pasaporte tenga al menos 6 meses de vigencia a partir de la fecha de entrada a México* | Embajada / DIAM S.C. |
-| 5 | **País de residencia** | Donde vive el extranjero | Embajada / DIAM S.C. |
+| 5 | **País de residencia** | Dropdown con países (donde vive el extranjero) | Embajada / DIAM S.C. |
 | 6 | **Domicilio del extranjero** | Línea 1 (calle y número / apto), Ciudad, Provincia / Estado / Región, Código Postal, País | DIAM S.C. |
 | 7 | **Actividad profesional u ocupación** | En su país de residencia | DIAM S.C. |
 | 8 | **Email** | Para contacto y envío de la carta | — |
 
-> **Campos eliminados respecto a v1:** País emisor del pasaporte (redundante con nacionalidad), fecha de expedición del pasaporte (no requerida en el contenido de la carta).
-
 ---
 
-## Sección 2 — Información del mexicano/a o residente en México que firmará la carta
+## Paso 2 — El anfitrión (Mexicano/a o residente en México que firmará la carta)
 
 | # | Campo | Detalle | Fuente |
 |---|-------|---------|--------|
 | 1 | **Nombre completo** | Tal cual aparece en su identificación oficial | Embajada / DIAM S.C. |
-| 2 | **Fecha de nacimiento** | DD/MM/AAAA | ✅ *Agregado* — Embajada MX |
-| 3 | **Identificación oficial** | Pasaporte / INE / Tarjeta de residente — ⚠️ *Se deberá anexar copia de esta identificación a la carta de invitación* | INM |
-| 4 | **Número de identificación oficial** | | INM |
-| 5 | **Domicilio de residencia** | Calle y número, Colonia, Ciudad, Estado, Código Postal | Embajada / DIAM S.C. |
-| 6 | **Comprobante de domicilio** | ⚠️ *Se recomienda anexar comprobante de domicilio a la carta de invitación. Debe tener una antigüedad no mayor a 3 meses.* | Migrans MX |
-| 7 | **Teléfono de contacto** | ⚠️ *Migración puede contactar al anfitrión en el momento exacto del arribo para verificar los datos. Es fundamental que este número esté disponible durante las fechas del viaje.* | Embajada MX |
-| 8 | **Vínculo con el extranjero** | Familiar / Pareja / Amistad / Laboral / Otro | ✅ *Agregado* — Embajada MX |
+| 2 | **Fecha de nacimiento** | DD/MM/AAAA | Embajada MX |
+| 3 | **Tipo de identificación oficial** | Pasaporte mexicano / INE-IFE / Tarjeta de residente — ⚠️ *Se deberá anexar copia de esta identificación a la carta de invitación* | INM |
+| 4 | **Número de identificación** | Número que aparece en la identificación seleccionada | INM |
+| 5 | **Domicilio en México** | Calle y número, Colonia, Delegación o Municipio, Ciudad, Estado (dropdown con los 32 estados), Código Postal — ⚠️ *Se recomienda anexar comprobante de domicilio con antigüedad no mayor a 3 meses* | Embajada / DIAM S.C. / Migrans MX |
+| 6 | **Teléfono de contacto** | ⚠️ *Migración puede contactar al anfitrión en el momento exacto del arribo para verificar los datos. Es fundamental que este número esté disponible durante las fechas del viaje.* | Embajada MX |
+| 7 | **Vínculo con el viajero** | Familiar / Pareja / Amistad / Laboral / Otro | Embajada MX |
+
+> **Nota:** El comprobante de domicilio no es un campo del formulario sino una recomendación que se muestra como nota debajo de la dirección.
 
 ---
 
-## Sección 3 — Información del viaje y estancia
+## Paso 3 — El viaje (Información de la estancia y alojamiento)
 
 | # | Campo | Detalle | Fuente |
 |---|-------|---------|--------|
-| 1 | **Actividades que realizará en México** | Descripción de actividades turísticas o personales planeadas | ✅ *Agregado* — DIAM S.C. |
-| 2 | **Nombre del alojamiento** *(opcional)* | Hotel, Airbnb, etc. — solo si aplica. ⚠️ *Se recomienda tener a la mano el comprobante de la reservación.* | Uso interno |
+| 1 | **Actividades que realizará en México** | Textarea — descripción de actividades turísticas o personales planeadas | DIAM S.C. |
+| 2 | **Nombre del alojamiento** *(si aplica, llenar solo en caso de ser hotel)* | Hotel, Airbnb, etc. — ⚠️ *Se recomienda tener la reservación a la mano para mostrar a la autoridad migratoria.* | Uso interno |
 | 3 | **Dirección del alojamiento en México** | Calle y número, Colonia, Ciudad o Alcaldía, Estado, Código Postal | Embajada / DIAM S.C. |
-| 4 | **Duración total de la estancia** | Número de días en México | Embajada / DIAM S.C. |
+| 4 | **Duración total de la estancia** | Número de días en México (input numérico, mín 1, máx 180) | Embajada / DIAM S.C. |
 
 ---
 
-## Sección 4 — Gastos del viaje
+## Paso 4 — Gastos del viaje
 
 > ⚠️ *Si el visitante cubre total o parcialmente sus propios gastos, se recomienda que pueda comprobar una capacidad de gasto de al menos USD $50 por día, ya sea con efectivo, estado de cuenta bancario o tarjetas de crédito/débito.*
 
-| # | Campo | Detalle | Fuente |
-|---|-------|---------|--------|
-| 1 | **¿Quién cubre los gastos del viaje?** | Ver tabla a continuación | ✅ *Agregado* — DIAM S.C. |
-| 2 | **Medios de transporte del visitante en México** | Avión interno / Autobús / Auto rentado / Transporte del anfitrión / Otro | ✅ *Agregado* — DIAM S.C. |
+### Tabla de gastos
 
 | Concepto | ¿Quién cubre? |
 |----------|---------------|
@@ -62,9 +61,19 @@
 | Actividades turísticas | Visitante / Anfitrión / Ambos |
 | Gastos médicos / emergencias | Visitante / Anfitrión / Ambos |
 
+### Medios de transporte del visitante en México
+
+Checkboxes (selección múltiple):
+
+- ✈️ Avión interno
+- 🚌 Autobús
+- 🚗 Auto rentado
+- 🏠 Transporte del anfitrión
+- 🔹 Otro
+
 ---
 
-## Sección 5 — Datos del vuelo / ingreso y salida de México
+## Paso 5 — Vuelos e ingreso (Datos del vuelo / ingreso y salida de México)
 
 > ⚠️ *Se deberá comprobar que se cuenta con reservación para el viaje de regreso al momento del ingreso a México.*
 
@@ -72,31 +81,37 @@
 
 | # | Campo | Detalle | Condicional |
 |---|-------|---------|-------------|
-| 1 | **¿Cómo será su ingreso a México?** | Vía aérea / Vía terrestre / Vía marítima | — |
+| 1 | **¿Cómo será el ingreso a México?** | Vía aérea / Vía terrestre / Vía marítima (cards con íconos) | — |
 | 1a | **Aeropuerto de ingreso** | | ⚠️ *Solo si = Aéreo* |
-| 1b | **Estado / punto de cruce** | | ⚠️ *Solo si = Terrestre* |
+| 2 | **Aerolínea de llegada** | | ⚠️ *Solo si = Aéreo* |
+| 3 | **Número de vuelo** | | ⚠️ *Solo si = Aéreo* |
+| 1b | **Estado / punto de cruce fronterizo** | | ⚠️ *Solo si = Terrestre* |
 | 1c | **Puerto de ingreso** | | ⚠️ *Solo si = Marítimo* |
-| 2 | **Aerolínea del vuelo de llegada** | | ⚠️ *Solo si = Aéreo* |
-| 3 | **Número del vuelo de llegada** | | ⚠️ *Solo si = Aéreo* |
-| 4 | **Fecha de llegada a México** | | — |
+| 4 | **Fecha de llegada a México** | Input date | — |
 
 ### Salida de México
 
 | # | Campo | Detalle | Condicional |
 |---|-------|---------|-------------|
-| 5 | **¿Cómo será su salida de México?** | Vía aérea / Vía terrestre / Vía marítima | — |
-| 5a | **Aeropuerto de salida** | | ⚠️ *Solo si = Aéreo* |
-| 5b | **Estado / punto de cruce** | | ⚠️ *Solo si = Terrestre* |
-| 5c | **Puerto de salida** | | ⚠️ *Solo si = Marítimo* |
-| 6 | **Aerolínea del vuelo de regreso** | | ⚠️ *Solo si = Aéreo* |
-| 7 | **Número del vuelo de regreso** | | ⚠️ *Solo si = Aéreo* |
-| 8 | **Fecha de regreso** | | — |
+| 1 | **¿Cómo será la salida de México?** | Vía aérea / Vía terrestre / Vía marítima (cards con íconos) | — |
+| 1a | **Aeropuerto de salida** | | ⚠️ *Solo si = Aéreo* |
+| 2 | **Aerolínea de regreso** | | ⚠️ *Solo si = Aéreo* |
+| 3 | **Número de vuelo** | | ⚠️ *Solo si = Aéreo* |
+| 1b | **Estado / punto de cruce fronterizo** | | ⚠️ *Solo si = Terrestre* |
+| 1c | **Puerto de salida** | | ⚠️ *Solo si = Marítimo* |
+| 4 | **Fecha de regreso** | Input date | — |
+
+---
+
+## Paso 6 — Revisión
+
+Paso final sin campos nuevos. Muestra un resumen de todos los datos ingresados en los pasos 1–5 para que el usuario verifique antes de proceder al pago.
 
 ---
 
 ## Lógica condicional
 
-Los campos marcados con ⚠️ se muestran u ocultan según el tipo de ingreso/salida seleccionado:
+Los campos de ingreso/salida se muestran u ocultan según el tipo seleccionado:
 
 | Selección | Campos que se muestran |
 |-----------|------------------------|
@@ -117,7 +132,9 @@ Los campos marcados con ⚠️ se muestran u ocultan según el tipo de ingreso/s
 | ✅ Agregado | Desglose de gastos (visitante y anfitrión) | Requerido por DIAM S.C. |
 | ✅ Agregado | Medios de transporte en México | Requerido por DIAM S.C. |
 | ✅ Agregado | Duración total de la estancia | Embajada MX / DIAM S.C. |
-| ⚠️ Fusionado | Secciones 2 y 3 | Vínculo integrado al final de los datos del anfitrión |
+| ✅ Agregado | Delegación o Municipio en domicilio del anfitrión | Precisión para direcciones mexicanas |
+| ✅ Agregado | Estado como dropdown (32 estados) | Estandarización de datos |
+| ⚠️ Fusionado | Comprobante de domicilio | Ya no es campo separado; se muestra como nota de recomendación debajo de la dirección |
 | ⚠️ Movido | Sección de gastos | Separada en sección propia para mayor claridad |
 | ❌ Eliminado | País emisor del pasaporte | Redundante con nacionalidad |
 | ❌ Eliminado | Fecha de expedición del pasaporte | No requerida en el contenido de la carta |
