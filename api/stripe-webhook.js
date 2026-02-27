@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import { buffer } from 'micro';
 import generatePDF from './lib/generate-pdf.js';
 import sendEmail from './lib/send-email.js';
+import mexicoNow from './lib/mexico-now.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -53,7 +54,7 @@ export default async function handler(req, res) {
         .from('submissions')
         .update({
           status: 'paid',
-          paid_at: new Date().toISOString(),
+          paid_at: mexicoNow(),
           stripe_session: session.id,
         })
         .eq('id', submissionId);
@@ -64,6 +65,7 @@ export default async function handler(req, res) {
       }
 
       // 2. Fetch full submission data
+      console.log('[webhook] Fetching submission data for:', submissionId);
       const { data: submission, error: fetchError } = await supabase
         .from('submissions')
         .select('plan, email, form_data')
@@ -71,25 +73,34 @@ export default async function handler(req, res) {
         .single();
 
       if (fetchError || !submission) {
-        console.error('Failed to fetch submission:', fetchError);
+        console.error('[webhook] Failed to fetch submission:', fetchError);
         return res.status(500).json({ error: 'Failed to fetch submission data' });
       }
 
+      console.log('[webhook] Submission fetched. Plan:', submission.plan, 'Email:', submission.email);
+      console.log('[webhook] RESEND_API_KEY set:', !!process.env.RESEND_API_KEY);
+      console.log('[webhook] RESEND_FROM_EMAIL:', process.env.RESEND_FROM_EMAIL || '(not set, using default)');
+
       // 3. Generate PDF and send email
       try {
+        console.log('[webhook] Generating PDF...');
         const pdfBuffer = await generatePDF(submission.form_data, submission.plan);
+        console.log('[webhook] PDF generated, size:', pdfBuffer.length, 'bytes');
+
         const guestName = submission.form_data['v-nombre'] || '';
-
+        console.log('[webhook] Sending email to:', submission.email);
         await sendEmail(submission.email, pdfBuffer, submission.plan, guestName);
+        console.log('[webhook] Email sent successfully');
 
-        await supabase
+        const { error: deliverErr } = await supabase
           .from('submissions')
-          .update({ status: 'delivered', delivered_at: new Date().toISOString() })
+          .update({ status: 'delivered', delivered_at: mexicoNow() })
           .eq('id', submissionId);
 
-        console.log(`PDF generated and emailed for submission ${submissionId}`);
+        if (deliverErr) console.error('[webhook] Failed to update status to delivered:', deliverErr);
+        else console.log(`[webhook] Submission ${submissionId} marked as delivered`);
       } catch (deliveryErr) {
-        console.error('PDF/email delivery failed:', deliveryErr);
+        console.error('[webhook] PDF/email delivery failed:', deliveryErr.message || deliveryErr);
         await supabase
           .from('submissions')
           .update({ status: 'delivery_failed' })
