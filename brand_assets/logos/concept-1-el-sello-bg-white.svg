@@ -1,5 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" role="img" aria-labelledby="cim-logo-title">
-  <title id="cim-logo-title">Carta Invitación México</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" role="img" aria-labelledby="cim-logo-bg-title">
+  <title id="cim-logo-bg-title">Carta Invitación México</title>
+
+  <!-- White background -->
+  <rect width="140" height="140" fill="#fff"/>
 
   <!-- Outer navy frame -->
   <rect x="2" y="2" width="136" height="136" fill="none" stroke="#1B3566" stroke-width="3"/>
