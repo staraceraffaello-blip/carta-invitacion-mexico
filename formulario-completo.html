@@ -1668,7 +1668,7 @@
     renumberCards('companions-container', '[data-companion]', 'Acompañante');
     // Attach real-time validation to the newly added card
     const card = document.getElementById('companions-container').lastElementChild;
-    card.querySelectorAll('.companion-nombre,.companion-nacimiento,.companion-pasaporte').forEach(el => {
+    card.querySelectorAll('.companion-nombre,.companion-pasaporte').forEach(el => {
       el.addEventListener('blur', () => {
         const ok = el.value.trim().length > 0;
         el.classList.toggle('error', !ok);
@@ -1676,6 +1676,15 @@
         else if (!card.closest('#companions-container').querySelector('.form-input.error'))
           document.getElementById('err-companions')?.classList.remove('show');
       });
+    });
+    // Companion birth date: validate on change + input with year-range check
+    card.querySelectorAll('.companion-nacimiento').forEach(el => {
+      const validate = () => {
+        if (!el.value) return;
+        dateElReq(el, 1900, new Date().getFullYear());
+      };
+      el.addEventListener('change', validate);
+      el.addEventListener('input', validate);
     });
     card.querySelectorAll('.companion-relacion,.companion-nacionalidad').forEach(el => {
       el.addEventListener('change', () => {
@@ -1707,8 +1716,14 @@
     card.querySelectorAll('.dest-ciudad,.dest-actividades,.dest-aloj-calle,.dest-aloj-ciudad').forEach(el => {
       el.addEventListener('blur', () => el.classList.toggle('error', !el.value.trim()));
     });
+    // Destino dates: validate on change + input with year-range check
     card.querySelectorAll('.dest-fecha-desde,.dest-fecha-hasta').forEach(el => {
-      el.addEventListener('change', () => el.classList.toggle('error', !el.value.trim()));
+      const validate = () => {
+        if (!el.value) return;
+        dateElReq(el, new Date().getFullYear(), new Date().getFullYear() + 5);
+      };
+      el.addEventListener('change', validate);
+      el.addEventListener('input', validate);
     });
   }
 
