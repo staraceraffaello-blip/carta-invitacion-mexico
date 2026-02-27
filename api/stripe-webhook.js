@@ -81,20 +81,46 @@ export default async function handler(req, res) {
       console.log('[webhook] RESEND_API_KEY set:', !!process.env.RESEND_API_KEY);
       console.log('[webhook] RESEND_FROM_EMAIL:', process.env.RESEND_FROM_EMAIL || '(not set, using default)');
 
-      // 3. Generate PDF and send email
+      // 3. Generate PDF, upload to storage, and send email
       try {
         console.log('[webhook] Generating PDF...');
         const pdfBuffer = await generatePDF(submission.form_data, submission.plan);
         console.log('[webhook] PDF generated, size:', pdfBuffer.length, 'bytes');
 
+        // Upload PDF to Supabase Storage
         const guestName = submission.form_data['v-nombre'] || '';
+        const safeName = (guestName || 'visitante').replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '');
+        const pdfPath = `${submissionId}/${safeName}.pdf`;
+        console.log('[webhook] Uploading PDF to storage:', pdfPath);
+
+        const { error: uploadErr } = await supabase.storage
+          .from('pdfs')
+          .upload(pdfPath, pdfBuffer, {
+            contentType: 'application/pdf',
+            upsert: true,
+          });
+
+        let pdfUrl = null;
+        if (uploadErr) {
+          console.error('[webhook] PDF upload failed (non-blocking):', uploadErr.message);
+        } else {
+          const { data: urlData } = supabase.storage.from('pdfs').getPublicUrl(pdfPath);
+          pdfUrl = urlData.publicUrl;
+          console.log('[webhook] PDF uploaded, URL:', pdfUrl);
+        }
+
+        // Send email
         console.log('[webhook] Sending email to:', submission.email);
         await sendEmail(submission.email, pdfBuffer, submission.plan, guestName);
         console.log('[webhook] Email sent successfully');
 
         const { error: deliverErr } = await supabase
           .from('submissions')
-          .update({ status: 'delivered', delivered_at: mexicoNow() })
+          .update({
+            status: 'delivered',
+            delivered_at: mexicoNow(),
+            ...(pdfUrl && { pdf_url: pdfUrl }),
+          })
           .eq('id', submissionId);
 
         if (deliverErr) console.error('[webhook] Failed to update status to delivered:', deliverErr);
