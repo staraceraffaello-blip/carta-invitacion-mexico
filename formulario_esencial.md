@@ -31,6 +31,8 @@
 | 5 | **Domicilio en México** | Calle y número, Colonia, Delegación o Municipio, Ciudad, Estado (dropdown con los 32 estados), Código Postal — ⚠️ *Se recomienda anexar comprobante de domicilio con antigüedad no mayor a 3 meses* | Embajada / DIAM S.C. / Migrans MX |
 | 6 | **Teléfono de contacto** | ⚠️ *Migración puede contactar al anfitrión en el momento exacto del arribo para verificar los datos. Es fundamental que este número esté disponible durante las fechas del viaje.* | Embajada MX |
 | 7 | **Vínculo con el viajero** | Familiar / Pareja / Amistad / Laboral / Otro | Embajada MX |
+| 8 | **¿Quién llena este formulario?** | Yo soy el anfitrión / Yo soy el visitante — para redactar la carta desde la perspectiva correcta | Uso interno |
+| 9 | **Describe brevemente el vínculo** | Textarea — Ej. "Relación de amistad de 10 años", "Tío de mi esposa", "Compañeros de universidad desde 2015" — ⚠️ *Entre más detalle, más personalizada y convincente la carta* | Uso interno |
 
 > **Nota:** El comprobante de domicilio no es un campo del formulario sino una recomendación que se muestra como nota debajo de la dirección.
 
@@ -40,10 +42,11 @@
 
 | # | Campo | Detalle | Fuente |
 |---|-------|---------|--------|
-| 1 | **Actividades que realizará en México** | Textarea — descripción de actividades turísticas o personales planeadas | DIAM S.C. |
+| 1 | **Actividades que realizará en México** | Textarea — ⚠️ *Sé lo más específico posible: incluye nombres de lugares, eventos, razones del viaje y cualquier detalle relevante. Mientras más información, más completa la carta.* Ej. incluye boda del anfitrión, turismo cultural, etc. | DIAM S.C. |
 | 2 | **Nombre del alojamiento** *(si aplica, llenar solo en caso de ser hotel)* | Hotel, Airbnb, etc. — ⚠️ *Se recomienda tener la reservación a la mano para mostrar a la autoridad migratoria.* | Uso interno |
 | 3 | **Dirección del alojamiento en México** | Calle y número, Colonia, Ciudad o Alcaldía, Estado, Código Postal | Embajada / DIAM S.C. |
-| 4 | **Duración total de la estancia** | Número de días en México (input numérico, mín 1, máx 180) | Embajada / DIAM S.C. |
+
+> **Nota:** La duración de la estancia se calcula automáticamente a partir de las fechas de llegada y regreso en el Paso 5.
 
 ---
 
@@ -73,7 +76,7 @@ Checkboxes (selección múltiple):
 
 ---
 
-## Paso 5 — Vuelos e ingreso (Datos del vuelo / ingreso y salida de México)
+## Paso 5 — Entrada y salida de México
 
 > ⚠️ *Se deberá comprobar que se cuenta con reservación para el viaje de regreso al momento del ingreso a México.*
 
@@ -99,7 +102,7 @@ Checkboxes (selección múltiple):
 | 3 | **Número de vuelo** | | ⚠️ *Solo si = Aéreo* |
 | 1b | **Estado / punto de cruce fronterizo** | | ⚠️ *Solo si = Terrestre* |
 | 1c | **Puerto de salida** | | ⚠️ *Solo si = Marítimo* |
-| 4 | **Fecha de regreso** | Input date | — |
+| 4 | **Fecha de regreso** | Input date — ⚠️ *Debe ser igual o posterior a la fecha de llegada* | — |
 
 ---
 
@@ -131,7 +134,9 @@ Los campos de ingreso/salida se muestran u ocultan según el tipo seleccionado:
 | ✅ Agregado | Actividades que realizará en México | Requerido por DIAM S.C. (abogados migratorios) |
 | ✅ Agregado | Desglose de gastos (visitante y anfitrión) | Requerido por DIAM S.C. |
 | ✅ Agregado | Medios de transporte en México | Requerido por DIAM S.C. |
-| ✅ Agregado | Duración total de la estancia | Embajada MX / DIAM S.C. |
+| ✅ Agregado | ¿Quién llena este formulario? (perspectiva) | Claridad para redacción de la carta |
+| ✅ Agregado | Detalle del vínculo (textarea descriptivo) | Personalización de la carta |
+| ✅ Agregado | Validación fecha regreso >= fecha llegada | Integridad de datos |
 | ✅ Agregado | Delegación o Municipio en domicilio del anfitrión | Precisión para direcciones mexicanas |
 | ✅ Agregado | Estado como dropdown (32 estados) | Estandarización de datos |
 | ⚠️ Fusionado | Comprobante de domicilio | Ya no es campo separado; se muestra como nota de recomendación debajo de la dirección |
@@ -140,7 +145,9 @@ Los campos de ingreso/salida se muestran u ocultan según el tipo seleccionado:
 | ❌ Eliminado | Fecha de expedición del pasaporte | No requerida en el contenido de la carta |
 | ❌ Eliminado | Fecha de vencimiento del pasaporte | Se reemplaza por nota de alerta en el campo Número de pasaporte |
 | ❌ Eliminado | Email del anfitrión | No requerido por ninguna fuente |
-| ❌ Eliminado | Check-in y Check-out | Se derivan de fechas de vuelo; se mantiene solo duración total |
+| ❌ Eliminado | Check-in y Check-out | Se derivan de fechas de entrada/salida |
+| ❌ Eliminado | Duración total de la estancia | Se calcula de fechas de llegada y regreso |
+| ⚠️ Renombrado | "Vuelos e ingreso" → "Entrada y salida" | Aplica a vía aérea, terrestre y marítima |
 
 ---
 

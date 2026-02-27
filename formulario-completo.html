@@ -404,7 +404,7 @@
           </div>
           <div class="step-pill">
             <div class="pill-dot" id="dot-5">5</div>
-            <div><div class="pill-label" id="pl-5">Itinerario</div><div class="pill-sub">Destinos, alojamientos y vuelos</div></div>
+            <div><div class="pill-label" id="pl-5">Itinerario</div><div class="pill-sub">Destinos, entrada y salida</div></div>
           </div>
           <div class="step-pill">
             <div class="pill-dot" id="dot-6">6</div>
@@ -919,6 +919,26 @@
                 <p class="form-error" id="err-a-vinculo">Por favor indica el vínculo.</p>
               </div>
 
+              <div>
+                <label class="form-label" for="a-perspectiva">¿Quién llena este formulario? <span class="req">*</span></label>
+                <select id="a-perspectiva" name="a_perspectiva" class="form-input" required>
+                  <option value="" disabled selected>Selecciona quién está describiendo</option>
+                  <option value="anfitrion">Yo soy el anfitrión</option>
+                  <option value="visitante">Yo soy el visitante</option>
+                </select>
+                <p class="form-hint">Esto nos ayuda a redactar correctamente la carta desde la perspectiva adecuada.</p>
+                <p class="form-error" id="err-a-perspectiva">Por favor indica quién llena el formulario.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-vinculo-detalle">Describe brevemente el vínculo <span class="req">*</span></label>
+                <textarea id="a-vinculo-detalle" name="a_vinculo_detalle" class="form-input"
+                          placeholder="Ej. Relación de amistad de 10 años · Tío de mi esposa · Compañeros de universidad desde 2015…"
+                          required rows="2"></textarea>
+                <p class="form-hint warn">⚠ Entre más detalle proporciones sobre la relación, más personalizada y convincente será tu carta de invitación.</p>
+                <p class="form-error" id="err-a-vinculo-detalle">Por favor describe el vínculo entre ambas personas.</p>
+              </div>
+
             </div>
 
             <div class="flex items-center justify-between mt-8 gap-3">
@@ -1072,7 +1092,7 @@
               </div>
               <div>
                 <span class="section-label mb-1">Paso 5 de 5</span>
-                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Itinerario y vuelos</h2>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Itinerario, entrada y salida</h2>
                 <p class="text-sm mt-1" style="color:#6B7280;">Ingreso, destinos planeados y salida de México.</p>
               </div>
             </div>
@@ -1440,7 +1460,8 @@
       <div>
         <label class="form-label">Actividades planeadas en este destino <span class="req">*</span></label>
         <textarea name="dest_actividades[]" class="form-input dest-actividades"
-                  placeholder="Ej. Turismo cultural, visita a museos, recorrido gastronómico…" required rows="2"></textarea>
+                  placeholder="Ej. Turismo cultural, visita a museos, asistencia a la boda del anfitrión y celebraciones correspondientes, recorrido gastronómico…" required rows="2"></textarea>
+        <p class="form-hint warn">⚠ Sé lo más específico posible: incluye nombres de lugares, eventos, razones del viaje y cualquier detalle relevante. Mientras más información proporciones, más completa será tu carta de invitación.</p>
       </div>
       <div>
         <label class="form-label">Nombre del alojamiento <span style="color:#9BAFD9;font-weight:400;">(si aplica, llenar solo en caso de ser hotel)</span></label>
@@ -1527,7 +1548,7 @@
     'Paso 2 de 6 — Acompañantes',
     'Paso 3 de 6 — El anfitrión',
     'Paso 4 de 6 — Gastos',
-    'Paso 5 de 6 — Itinerario y vuelos',
+    'Paso 5 de 6 — Itinerario, entrada y salida',
     'Paso 6 de 6 — Revisión',
   ];
   let current = 1;
@@ -1758,6 +1779,8 @@
       ok &= req('a-cp',           'err-a-domicilio');
       ok &= req('a-telefono',     'err-a-telefono');
       ok &= selReq('a-vinculo',   'err-a-vinculo');
+      ok &= selReq('a-perspectiva', 'err-a-perspectiva');
+      ok &= req('a-vinculo-detalle', 'err-a-vinculo-detalle');
 
     } else if (n === 4) {
       const expenseGroups = ['g_hospedaje','g_alimentos','g_transporte','g_actividades','g_medicos'];
@@ -1814,6 +1837,16 @@
       }
       ok &= req('ing-fecha', 'err-ing-fecha');
       ok &= req('sal-fecha', 'err-sal-fecha');
+      // Validate departure date >= arrival date
+      const ingFecha = document.getElementById('ing-fecha')?.value;
+      const salFecha = document.getElementById('sal-fecha')?.value;
+      if (ingFecha && salFecha && salFecha < ingFecha) {
+        const salEl = document.getElementById('sal-fecha');
+        salEl.classList.add('error');
+        const errEl = document.getElementById('err-sal-fecha');
+        if (errEl) { errEl.textContent = 'La fecha de regreso debe ser igual o posterior a la fecha de llegada.'; errEl.classList.add('show'); }
+        ok = false;
+      }
 
       // Validate at least one destino
       const destinos = document.querySelectorAll('[data-destino]');
@@ -2000,6 +2033,8 @@
       ['Domicilio en México', anfiAddr || '—'],
       ['Teléfono', rval('a-telefono')],
       ['Vínculo con el viajero', rval('a-vinculo')],
+      ['¿Quién llena?', rval('a-perspectiva')],
+      ['Detalle del vínculo', rval('a-vinculo-detalle')],
     ]);
 
     // Gastos
@@ -2042,7 +2077,7 @@
     if (salidaTipo === 'aereo') salidaDetail = [rval('sal-aeropuerto'), rval('sal-aerolinea'), rval('sal-vuelo')].filter(v => v !== '—').join(' · ') || '—';
     else if (salidaTipo === 'terrestre') salidaDetail = rval('sal-cruce');
     else if (salidaTipo === 'maritimo') salidaDetail = rval('sal-puerto');
-    const vuelos = reviewCard('Vuelos', [
+    const vuelos = reviewCard('Entrada y salida', [
       ['Tipo de ingreso', ingresoTipo || '—'],
       ['Detalle ingreso', ingresoDetail],
       ['Fecha de llegada', rval('ing-fecha')],
@@ -2064,6 +2099,7 @@
       ['v-ocupacion','err-v-ocupacion'], ['a-nombre','err-a-nombre'],
       ['a-id-num','err-a-id-num'], ['a-calle','err-a-domicilio'],
       ['a-ciudad','err-a-domicilio'], ['a-telefono','err-a-telefono'],
+      ['a-vinculo-detalle','err-a-vinculo-detalle'],
     ].forEach(([id, errId]) => {
       const el = document.getElementById(id);
       if (el) el.addEventListener('blur', () => req(id, errId));
@@ -2081,6 +2117,7 @@
       ['v-nacionalidad','err-v-nacionalidad'],
       ['a-id-tipo','err-a-id-tipo'],
       ['a-vinculo','err-a-vinculo'],
+      ['a-perspectiva','err-a-perspectiva'],
     ].forEach(([id, errId]) => {
       const el = document.getElementById(id);
       if (el) el.addEventListener('change', () => selReq(id, errId));

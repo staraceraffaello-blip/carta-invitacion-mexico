@@ -47,6 +47,8 @@
 | 5 | **Domicilio en México** | Calle y número, Colonia, Delegación o Municipio, Ciudad, Estado (dropdown con los 32 estados), Código Postal — ⚠️ *Se recomienda anexar comprobante de domicilio con antigüedad no mayor a 3 meses* |
 | 6 | **Teléfono de contacto** | ⚠️ *Migración puede contactar al anfitrión en el momento exacto del arribo para verificar los datos. Es fundamental que este número esté disponible durante las fechas del viaje.* |
 | 7 | **Vínculo con el viajero** | Familiar / Pareja / Amistad / Laboral / Otro |
+| 8 | **¿Quién llena este formulario?** | Yo soy el anfitrión / Yo soy el visitante — para redactar la carta desde la perspectiva correcta |
+| 9 | **Describe brevemente el vínculo** | Textarea — Ej. "Relación de amistad de 10 años", "Tío de mi esposa", "Compañeros de universidad desde 2015" — ⚠️ *Entre más detalle, más personalizada y convincente la carta* |
 
 > **Nota:** El comprobante de domicilio no es un campo del formulario sino una recomendación que se muestra como nota debajo de la dirección.
 
@@ -78,7 +80,7 @@ Checkboxes (selección múltiple):
 
 ---
 
-## Paso 5 — Itinerario y vuelos *(exclusivo Plan Completo)*
+## Paso 5 — Itinerario, entrada y salida *(exclusivo Plan Completo)*
 
 > ⚠️ *Se deberá comprobar que se cuenta con reservación para el viaje de regreso al momento del ingreso a México.*
 
@@ -105,7 +107,7 @@ Checkboxes (selección múltiple):
 | # | Campo | Detalle |
 |---|-------|---------|
 | 1 | **Ciudad o destino** | Ciudad, Estado |
-| 2 | **Actividades planeadas en este destino** | Descripción de actividades turísticas, culturales, personales, etc. |
+| 2 | **Actividades planeadas en este destino** | Textarea — ⚠️ *Sé lo más específico posible: incluye nombres de lugares, eventos (boda, celebraciones), razones del viaje y cualquier detalle relevante. Mientras más información, más completa la carta.* |
 | 3 | **Nombre del alojamiento** *(opcional)* | Hotel, Airbnb, etc. — solo si aplica. ⚠️ *Se recomienda tener a la mano el comprobante de la reservación.* |
 | 4 | **Dirección del alojamiento** | Línea 1, Ciudad, Estado, Código Postal |
 | 5 | **Fechas de estadía en este destino** | Del DD/MM/AAAA al DD/MM/AAAA |
@@ -122,7 +124,7 @@ Checkboxes (selección múltiple):
 | 3 | **Número de vuelo** | | ⚠️ *Solo si = Aéreo* |
 | 1b | **Estado / punto de cruce fronterizo** | | ⚠️ *Solo si = Terrestre* |
 | 1c | **Puerto de salida** | | ⚠️ *Solo si = Marítimo* |
-| 4 | **Fecha de regreso** | Input date | — |
+| 4 | **Fecha de regreso** | Input date — ⚠️ *Debe ser igual o posterior a la fecha de llegada* | — |
 
 ---
 
@@ -147,7 +149,7 @@ Paso final sin campos nuevos. Muestra un resumen de todos los datos ingresados e
 | Aspecto | Qué se agrega en Plan Completo |
 |---------|-------------------------------|
 | Paso 2 | Acompañantes: nombre, fecha de nacimiento, nacionalidad, pasaporte y relación con el invitado principal (repetible) |
-| Paso 5 | Itinerario integrado con vuelos: ingreso → destinos (repetibles) → salida |
+| Paso 5 | Itinerario integrado con entrada/salida: ingreso → destinos (repetibles) → salida |
 | Paso 5 | Por cada destino: ciudad, actividades planeadas, alojamiento y fechas de estadía |
 | Paso 5 | La duración total de la estancia se deriva automáticamente del itinerario, no se pide como campo separado |
 | Paso 3 | El viaje (actividades, alojamiento único, duración) del Esencial se reemplaza por el itinerario multi-destino |
