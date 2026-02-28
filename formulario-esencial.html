@@ -282,7 +282,7 @@
       transition: max-height 0.38s ease, opacity 0.3s ease, margin-top 0.25s ease;
     }
     .cond-fields.open {
-      max-height: 360px;
+      max-height: 800px;
       opacity: 1;
       margin-top: 16px;
     }
@@ -517,8 +517,9 @@
               <div>
                 <label class="form-label" for="v-nombre">Nombre completo del viajero <span class="req">*</span></label>
                 <input type="text" id="v-nombre" name="v_nombre" class="form-input"
-                       placeholder="Tal como aparece en el pasaporte" required autocomplete="name">
-                <p class="form-hint">Nombre(s) y apellidos completos.</p>
+                       placeholder="Ej. Juan Carlos Pérez López" required autocomplete="name"
+                       oninput="titleCase(this)">
+                <p class="form-hint warn">⚠ Tal como aparece en el pasaporte.</p>
                 <p class="form-error" id="err-v-nombre">Este campo es obligatorio.</p>
               </div>
 
@@ -619,7 +620,8 @@
               <div>
                 <label class="form-label" for="v-pasaporte">Número de pasaporte <span class="req">*</span></label>
                 <input type="text" id="v-pasaporte" name="v_pasaporte" class="form-input"
-                       placeholder="Ej. AB123456" required autocomplete="off">
+                       placeholder="Ej. AB123456" required autocomplete="off"
+                       oninput="upperAll(this)">
                 <p class="form-hint warn">⚠ Verifica que el pasaporte tenga al menos <strong>6 meses de vigencia</strong> a partir de la fecha de entrada a México.</p>
                 <p class="form-error" id="err-v-pasaporte">Por favor ingresa el número de pasaporte.</p>
               </div>
@@ -709,7 +711,7 @@
                     <option>Tuvalu</option><option>Vanuatu</option>
                   </optgroup>
                 </select>
-                <p class="form-hint">Puede ser diferente a tu nacionalidad.</p>
+                <p class="form-hint">Puede ser diferente a la nacionalidad.</p>
                 <p class="form-error" id="err-v-residencia">Por favor ingresa tu país de residencia.</p>
               </div>
 
@@ -719,10 +721,10 @@
                   <input type="text" id="v-calle" name="v_calle" class="form-input"
                          placeholder="Calle, número, e interior (si aplica)" required>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input type="text" id="v-ciudad" name="v_ciudad" class="form-input" placeholder="Ciudad" required>
-                    <input type="text" id="v-provincia" name="v_provincia" class="form-input" placeholder="Provincia / Estado / Región" required>
+                    <input type="text" id="v-ciudad" name="v_ciudad" class="form-input" placeholder="Ciudad" required oninput="capFirst(this)">
+                    <input type="text" id="v-provincia" name="v_provincia" class="form-input" placeholder="Provincia / Estado / Región" required oninput="capFirst(this)">
                   </div>
-                  <input type="text" id="v-cp" name="v_cp" class="form-input" placeholder="Código Postal" required>
+                  <input type="text" id="v-cp" name="v_cp" class="form-input" placeholder="Código Postal" required oninput="upperAll(this)">
                 </div>
                 <p class="form-error" id="err-v-domicilio">Por favor completa los campos de domicilio.</p>
               </div>
@@ -793,7 +795,9 @@
               <div>
                 <label class="form-label" for="a-nombre">Nombre completo del anfitrión <span class="req">*</span></label>
                 <input type="text" id="a-nombre" name="a_nombre" class="form-input"
-                       placeholder="Tal como aparece en tu identificación oficial" required>
+                       placeholder="Ej. María Elena García Torres" required
+                       oninput="titleCase(this)">
+                <p class="form-hint warn">⚠ Tal como aparece en la identificación oficial.</p>
                 <p class="form-error" id="err-a-nombre">Este campo es obligatorio.</p>
               </div>
 
@@ -819,20 +823,21 @@
               <div>
                 <label class="form-label" for="a-id-num">Número de identificación <span class="req">*</span></label>
                 <input type="text" id="a-id-num" name="a_id_num" class="form-input"
-                       placeholder="Número que aparece en tu identificación" required autocomplete="off">
+                       placeholder="Número que aparece en tu identificación" required autocomplete="off"
+                       oninput="upperAll(this)">
                 <p class="form-error" id="err-a-id-num">Por favor ingresa el número de identificación.</p>
               </div>
 
               <div>
                 <label class="form-label">Domicilio en México <span class="req">*</span></label>
                 <div class="space-y-3">
-                  <input type="text" id="a-calle" name="a_calle" class="form-input" placeholder="Calle y número" required>
+                  <input type="text" id="a-calle" name="a_calle" class="form-input" placeholder="Calle, número e interior (si aplica)" required>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" required>
-                    <input type="text" id="a-delegacion" name="a_delegacion" class="form-input" placeholder="Delegación o Municipio" required>
+                    <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" required oninput="capFirst(this)">
+                    <input type="text" id="a-delegacion" name="a_delegacion" class="form-input" placeholder="Delegación o Municipio" required oninput="capFirst(this)">
                   </div>
                   <div class="grid grid-cols-2 gap-3" style="overflow:hidden">
-                    <input type="text" id="a-ciudad" name="a_ciudad" class="form-input" placeholder="Ciudad" required autocomplete="off">
+                    <input type="text" id="a-ciudad" name="a_ciudad" class="form-input" placeholder="Ciudad" required autocomplete="off" oninput="capFirst(this)">
                     <select id="a-estado" name="a_estado" class="form-input" required>
                       <option value="" disabled selected>Estado</option>
                       <option>Aguascalientes</option>
@@ -869,7 +874,7 @@
                       <option>Zacatecas</option>
                     </select>
                   </div>
-                  <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal" required>
+                  <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal" required oninput="upperAll(this)">
                 </div>
                 <p class="form-hint warn mt-3">⚠ Se recomienda anexar a la carta de invitación un comprobante de domicilio del anfitrión con antigüedad no mayor a 3 meses.</p>
                 <p class="form-error" id="err-a-domicilio">Por favor completa el domicilio.</p>
@@ -969,6 +974,23 @@
               </div>
 
               <div>
+                <label class="form-label">¿El viajero se hospedará en la dirección del anfitrión? <span class="req">*</span></label>
+                <div class="grid grid-cols-2 gap-3" style="max-width:320px;">
+                  <label class="radio-card" id="aloj-host-si">
+                    <input type="radio" name="aloj_es_anfitrion" value="si" onchange="onAlojToggle()">
+                    <span>Sí</span>
+                  </label>
+                  <label class="radio-card" id="aloj-host-no">
+                    <input type="radio" name="aloj_es_anfitrion" value="no" onchange="onAlojToggle()">
+                    <span>No</span>
+                  </label>
+                </div>
+                <p class="form-error" id="err-aloj-toggle">Por favor indica si el alojamiento es la dirección del anfitrión.</p>
+              </div>
+
+              <div id="aloj-custom-container" class="cond-fields space-y-5">
+
+              <div>
                 <label class="form-label" for="j-aloj-nombre">
                   Nombre del alojamiento
                   <span style="color:#9BAFD9;font-weight:400;">(si aplica, llenar solo en caso de ser hotel)</span>
@@ -981,10 +1003,13 @@
               <div>
                 <label class="form-label">Dirección del alojamiento en México <span class="req">*</span></label>
                 <div class="space-y-3">
-                  <input type="text" id="j-al-calle" name="j_al_calle" class="form-input" placeholder="Calle y número" required>
-                  <input type="text" id="j-al-colonia" name="j_al_colonia" class="form-input" placeholder="Colonia" required>
+                  <input type="text" id="j-al-calle" name="j_al_calle" class="form-input" placeholder="Calle, número e interior (si aplica)" required>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input type="text" id="j-al-ciudad" name="j_al_ciudad" class="form-input" placeholder="Ciudad o Alcaldía" required>
+                    <input type="text" id="j-al-colonia" name="j_al_colonia" class="form-input" placeholder="Colonia" required oninput="capFirst(this)">
+                    <input type="text" id="j-al-delegacion" name="j_al_delegacion" class="form-input" placeholder="Delegación o Municipio" required oninput="capFirst(this)">
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" id="j-al-ciudad" name="j_al_ciudad" class="form-input" placeholder="Ciudad" required oninput="capFirst(this)">
                     <select id="j-al-estado" name="j_al_estado" class="form-input" required>
                       <option value="" disabled selected>Estado</option>
                       <option>Aguascalientes</option>
@@ -1021,11 +1046,12 @@
                       <option>Zacatecas</option>
                     </select>
                   </div>
-                  <input type="text" id="j-al-cp" name="j_al_cp" class="form-input" placeholder="Código Postal" required>
+                  <input type="text" id="j-al-cp" name="j_al_cp" class="form-input" placeholder="Código Postal" required oninput="upperAll(this)">
                 </div>
                 <p class="form-error" id="err-j-alojamiento">Por favor completa la dirección del alojamiento.</p>
               </div>
 
+              </div><!-- /aloj-custom-container -->
 
             </div>
 
@@ -1082,7 +1108,7 @@
               <strong>💡 Nota:</strong> Si el visitante cubre total o parcialmente sus propios gastos, se recomienda que pueda comprobar el equivalente de al menos <strong>USD $50 por día</strong> con efectivo, estado de cuenta bancario o de tarjeta.
             </div>
 
-            <!-- Expense table -->
+            <!-- Hospedaje -->
             <div class="rounded-xl overflow-hidden mb-7" style="border:1.5px solid rgba(27,53,102,0.1);">
               <div class="px-4 py-3 flex items-center justify-between"
                    style="background:rgba(27,53,102,0.04);border-bottom:1px solid rgba(27,53,102,0.08);">
@@ -1090,7 +1116,6 @@
                 <span class="text-xs font-bold uppercase tracking-wider" style="color:var(--c-mid);">¿Quién cubre?</span>
               </div>
               <div class="px-4 bg-white">
-
                 <div class="expense-row">
                   <span class="expense-concept">🏨 Hospedaje</span>
                   <div class="expense-options">
@@ -1099,60 +1124,72 @@
                     <label class="exp-radio"><input type="radio" name="g_hospedaje" value="ambos">Ambos</label>
                   </div>
                 </div>
-
-                <div class="expense-row">
-                  <span class="expense-concept">🍽️ Alimentos</span>
-                  <div class="expense-options">
-                    <label class="exp-radio"><input type="radio" name="g_alimentos" value="visitante">Visitante</label>
-                    <label class="exp-radio"><input type="radio" name="g_alimentos" value="anfitrion">Anfitrión</label>
-                    <label class="exp-radio"><input type="radio" name="g_alimentos" value="ambos">Ambos</label>
-                  </div>
-                </div>
-
-                <div class="expense-row">
-                  <span class="expense-concept">🚌 Transporte</span>
-                  <div class="expense-options">
-                    <label class="exp-radio"><input type="radio" name="g_transporte" value="visitante">Visitante</label>
-                    <label class="exp-radio"><input type="radio" name="g_transporte" value="anfitrion">Anfitrión</label>
-                    <label class="exp-radio"><input type="radio" name="g_transporte" value="ambos">Ambos</label>
-                  </div>
-                </div>
-
-                <div class="expense-row">
-                  <span class="expense-concept">🗺️ Actividades turísticas</span>
-                  <div class="expense-options">
-                    <label class="exp-radio"><input type="radio" name="g_actividades" value="visitante">Visitante</label>
-                    <label class="exp-radio"><input type="radio" name="g_actividades" value="anfitrion">Anfitrión</label>
-                    <label class="exp-radio"><input type="radio" name="g_actividades" value="ambos">Ambos</label>
-                  </div>
-                </div>
-
-                <div class="expense-row">
-                  <span class="expense-concept">🏥 Gastos médicos / emergencias</span>
-                  <div class="expense-options">
-                    <label class="exp-radio"><input type="radio" name="g_medicos" value="visitante">Visitante</label>
-                    <label class="exp-radio"><input type="radio" name="g_medicos" value="anfitrion">Anfitrión</label>
-                    <label class="exp-radio"><input type="radio" name="g_medicos" value="ambos">Ambos</label>
-                  </div>
-                </div>
-
               </div>
             </div>
-            <p class="form-error" id="err-gastos">Por favor selecciona quién cubre cada concepto.</p>
+            <p class="form-error" id="err-gastos">Por favor selecciona quién cubre el hospedaje.</p>
+
+            <!-- Host expenses question -->
+            <div class="space-y-5">
+              <div>
+                <label class="form-label">¿Hay algún gasto que será a cargo del anfitrión (sin incluir alojamiento)? <span class="req">*</span></label>
+                <div class="grid grid-cols-2 gap-3" style="max-width:320px;">
+                  <label class="radio-card" id="gastos-host-si">
+                    <input type="radio" name="gastos_anfitrion" value="si" onchange="onGastosHostToggle()">
+                    <span>Sí</span>
+                  </label>
+                  <label class="radio-card" id="gastos-host-no">
+                    <input type="radio" name="gastos_anfitrion" value="no" onchange="onGastosHostToggle()">
+                    <span>No</span>
+                  </label>
+                </div>
+                <p class="form-error" id="err-gastos-host">Por favor indica si el anfitrión cubrirá algún gasto.</p>
+              </div>
+
+              <!-- Warning + checkboxes (only when Sí) -->
+              <div id="gastos-host-detail" class="cond-fields">
+                <div class="rounded-xl p-4 mb-5 text-sm" style="background:rgba(220,38,38,0.06);border:1.5px solid rgba(220,38,38,0.3);color:#991B1B;line-height:1.65;">
+                  <strong>⚠ Importante:</strong> Si el anfitrión asume alguno de los gastos, se debe anexar documentación adicional de solvencia económica del anfitrión, como <strong>estados de cuenta bancarios</strong> o <strong>recibos de nómina</strong>, para demostrar que cuenta con los recursos para cubrir la estancia.
+                </div>
+
+                <label class="form-label">¿Cuáles gastos serán cubiertos por el anfitrión? <span class="req">*</span></label>
+                <p class="text-xs mb-3" style="color:#6B7280;">Selecciona todos los que apliquen.</p>
+                <div class="space-y-2.5">
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="alimentos" onchange="toggleTransportCard(this)">
+                    <span>🍽️ Alimentos</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="transporte" onchange="toggleTransportCard(this)">
+                    <span>🚌 Transporte</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="actividades" onchange="toggleTransportCard(this)">
+                    <span>🗺️ Actividades turísticas</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="medicos" onchange="toggleTransportCard(this)">
+                    <span>🏥 Gastos médicos o emergencia</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="otro" onchange="onGastosOtroToggle()">
+                    <span>🔹 Otro</span>
+                  </label>
+                </div>
+                <div id="gastos-otro-container" class="cond-fields" style="margin-top:8px;">
+                  <input type="text" id="gastos-otro-texto" name="gastos_otro_texto" class="form-input"
+                         placeholder="Describe el gasto adicional…">
+                </div>
+                <p class="form-error" id="err-gastos-conceptos">Por favor selecciona al menos un concepto.</p>
+              </div>
+            </div>
+
+            <div class="gold-rule my-6"></div>
 
             <!-- Transport modes -->
             <div>
               <label class="form-label">Medios de transporte del visitante en México <span class="req">*</span></label>
               <p class="text-xs mb-3" style="color:#6B7280;">Selecciona todos los que apliquen.</p>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                <label class="radio-card" id="tc-avion">
-                  <input type="checkbox" name="transporte_mx" value="avion" onchange="toggleTransportCard(this)">
-                  <span>✈️ Avión interno</span>
-                </label>
-                <label class="radio-card" id="tc-autobus">
-                  <input type="checkbox" name="transporte_mx" value="autobus" onchange="toggleTransportCard(this)">
-                  <span>🚌 Autobús</span>
-                </label>
                 <label class="radio-card" id="tc-auto">
                   <input type="checkbox" name="transporte_mx" value="auto_rentado" onchange="toggleTransportCard(this)">
                   <span>🚗 Auto rentado</span>
@@ -1161,9 +1198,9 @@
                   <input type="checkbox" name="transporte_mx" value="anfitrion" onchange="toggleTransportCard(this)">
                   <span>🏠 Transporte del anfitrión</span>
                 </label>
-                <label class="radio-card" id="tc-otro">
-                  <input type="checkbox" name="transporte_mx" value="otro" onchange="toggleTransportCard(this)">
-                  <span>🔹 Otro</span>
+                <label class="radio-card" id="tc-publico">
+                  <input type="checkbox" name="transporte_mx" value="transporte_publico" onchange="toggleTransportCard(this)">
+                  <span>🚇 Transporte público</span>
                 </label>
               </div>
               <p class="form-error" id="err-transporte">Por favor selecciona al menos un medio de transporte.</p>
@@ -1244,30 +1281,30 @@
                   <div>
                     <label class="form-label" for="ing-aeropuerto">Aeropuerto de ingreso</label>
                     <input type="text" id="ing-aeropuerto" name="ing_aeropuerto" class="form-input"
-                           placeholder="Ej. AICM — Ciudad de México">
+                           placeholder="Ej. AICM — Ciudad de México" oninput="capFirst(this)">
                   </div>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label class="form-label" for="ing-aerolinea">Aerolínea de llegada</label>
-                      <input type="text" id="ing-aerolinea" name="ing_aerolinea" class="form-input" placeholder="Ej. Avianca, LATAM…">
+                      <input type="text" id="ing-aerolinea" name="ing_aerolinea" class="form-input" placeholder="Ej. Avianca, LATAM…" oninput="capFirst(this)">
                     </div>
                     <div>
                       <label class="form-label" for="ing-vuelo">Número de vuelo</label>
-                      <input type="text" id="ing-vuelo" name="ing_vuelo" class="form-input" placeholder="Ej. AV204">
+                      <input type="text" id="ing-vuelo" name="ing_vuelo" class="form-input" placeholder="Ej. AV204" oninput="upperAll(this)">
                     </div>
                   </div>
                 </div>
 
                 <!-- Condicional terrestre ingreso -->
                 <div id="cond-ingreso-terrestre" class="cond-fields">
-                  <label class="form-label" for="ing-cruce">Estado / punto de cruce fronterizo</label>
-                  <input type="text" id="ing-cruce" name="ing_cruce" class="form-input" placeholder="Ej. Tijuana, Ciudad Juárez…">
+                  <label class="form-label" for="ing-cruce">Punto de cruce fronterizo</label>
+                  <input type="text" id="ing-cruce" name="ing_cruce" class="form-input" placeholder="Ej. Tijuana, Ciudad Juárez…" oninput="capFirst(this)">
                 </div>
 
                 <!-- Condicional marítimo ingreso -->
                 <div id="cond-ingreso-maritimo" class="cond-fields">
                   <label class="form-label" for="ing-puerto">Puerto de ingreso</label>
-                  <input type="text" id="ing-puerto" name="ing_puerto" class="form-input" placeholder="Ej. Puerto de Veracruz">
+                  <input type="text" id="ing-puerto" name="ing_puerto" class="form-input" placeholder="Ej. Puerto de Veracruz" oninput="capFirst(this)">
                 </div>
 
                 <div>
@@ -1314,36 +1351,37 @@
                   <div>
                     <label class="form-label" for="sal-aeropuerto">Aeropuerto de salida</label>
                     <input type="text" id="sal-aeropuerto" name="sal_aeropuerto" class="form-input"
-                           placeholder="Ej. AICM — Ciudad de México">
+                           placeholder="Ej. AICM — Ciudad de México" oninput="capFirst(this)">
                   </div>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label class="form-label" for="sal-aerolinea">Aerolínea de regreso</label>
-                      <input type="text" id="sal-aerolinea" name="sal_aerolinea" class="form-input" placeholder="Ej. Avianca, LATAM…">
+                      <input type="text" id="sal-aerolinea" name="sal_aerolinea" class="form-input" placeholder="Ej. Avianca, LATAM…" oninput="capFirst(this)">
                     </div>
                     <div>
                       <label class="form-label" for="sal-vuelo">Número de vuelo</label>
-                      <input type="text" id="sal-vuelo" name="sal_vuelo" class="form-input" placeholder="Ej. AV205">
+                      <input type="text" id="sal-vuelo" name="sal_vuelo" class="form-input" placeholder="Ej. AV205" oninput="upperAll(this)">
                     </div>
                   </div>
                 </div>
 
                 <!-- Condicional terrestre salida -->
                 <div id="cond-salida-terrestre" class="cond-fields">
-                  <label class="form-label" for="sal-cruce">Estado / punto de cruce fronterizo</label>
-                  <input type="text" id="sal-cruce" name="sal_cruce" class="form-input" placeholder="Ej. Nuevo Laredo, Reynosa…">
+                  <label class="form-label" for="sal-cruce">Punto de cruce fronterizo</label>
+                  <input type="text" id="sal-cruce" name="sal_cruce" class="form-input" placeholder="Ej. Nuevo Laredo, Reynosa…" oninput="capFirst(this)">
                 </div>
 
                 <!-- Condicional marítimo salida -->
                 <div id="cond-salida-maritimo" class="cond-fields">
                   <label class="form-label" for="sal-puerto">Puerto de salida</label>
-                  <input type="text" id="sal-puerto" name="sal_puerto" class="form-input" placeholder="Ej. Puerto de Ensenada">
+                  <input type="text" id="sal-puerto" name="sal_puerto" class="form-input" placeholder="Ej. Puerto de Ensenada" oninput="capFirst(this)">
                 </div>
 
                 <div>
                   <label class="form-label" for="sal-fecha">Fecha de regreso <span class="req">*</span></label>
                   <input type="date" id="sal-fecha" name="sal_fecha" class="form-input" required min="2026-01-01" max="2031-12-31">
                   <p class="form-error" id="err-sal-fecha">Por favor indica la fecha de regreso.</p>
+                  <p class="form-error" id="warn-180" style="color:#991B1B;display:none;">⚠ La estancia máxima para turismo en México es de 180 días.</p>
                 </div>
 
               </div>
@@ -1503,7 +1541,63 @@
     }
   }
 
+  /* ── Gastos host toggle ── */
+  function onGastosHostToggle() {
+    const val = document.querySelector('input[name="gastos_anfitrion"]:checked')?.value;
+    document.getElementById('gastos-host-si').classList.toggle('selected', val === 'si');
+    document.getElementById('gastos-host-no').classList.toggle('selected', val === 'no');
+    document.getElementById('err-gastos-host')?.classList.remove('show');
+    const detail = document.getElementById('gastos-host-detail');
+    if (val === 'si') {
+      detail.classList.add('open');
+    } else {
+      detail.classList.remove('open');
+      detail.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; cb.closest('.radio-card')?.classList.remove('selected'); });
+      const otroContainer = document.getElementById('gastos-otro-container');
+      if (otroContainer) { otroContainer.classList.remove('open'); }
+      const otroText = document.getElementById('gastos-otro-texto');
+      if (otroText) { otroText.value = ''; otroText.classList.remove('error'); }
+      document.getElementById('err-gastos-conceptos')?.classList.remove('show');
+    }
+  }
+
+  function onGastosOtroToggle() {
+    const cb = document.querySelector('input[name="gastos_host_conceptos"][value="otro"]');
+    const container = document.getElementById('gastos-otro-container');
+    cb.closest('.radio-card')?.classList.toggle('selected', cb.checked);
+    if (cb.checked) {
+      container.classList.add('open');
+    } else {
+      container.classList.remove('open');
+      const txt = document.getElementById('gastos-otro-texto');
+      if (txt) { txt.value = ''; txt.classList.remove('error'); }
+    }
+    // Clear concept error if at least one is checked
+    if (document.querySelectorAll('input[name="gastos_host_conceptos"]:checked').length > 0) {
+      document.getElementById('err-gastos-conceptos')?.classList.remove('show');
+    }
+  }
+
   /* ── Conditional transport type fields ── */
+  function onAlojToggle() {
+    const val = document.querySelector('input[name="aloj_es_anfitrion"]:checked')?.value;
+    const container = document.getElementById('aloj-custom-container');
+    document.getElementById('aloj-host-si').classList.toggle('selected', val === 'si');
+    document.getElementById('aloj-host-no').classList.toggle('selected', val === 'no');
+    document.getElementById('err-aloj-toggle')?.classList.remove('show');
+    if (val === 'no') {
+      container.classList.add('open');
+    } else {
+      container.classList.remove('open');
+      // Clear values when hiding
+      container.querySelectorAll('.form-input').forEach(el => {
+        if (el.tagName === 'SELECT') el.selectedIndex = 0;
+        else el.value = '';
+        el.classList.remove('error');
+      });
+    }
+  }
+
   function onTransportType(prefix, value) {
     ['aereo','terrestre','maritimo'].forEach(type => {
       const el = document.getElementById(`cond-${prefix}-${type}`);
@@ -1564,7 +1658,41 @@
     if (n === TOTAL) buildReview();
   }
 
+  /* ── Text transform helpers ── */
+  function titleCase(el) {
+    const s = el.selectionStart, e = el.selectionEnd;
+    el.value = el.value.replace(/\b\w/g, c => c.toUpperCase());
+    el.setSelectionRange(s, e);
+  }
+  function capFirst(el) {
+    if (el.value.length > 0) {
+      const s = el.selectionStart, e = el.selectionEnd;
+      el.value = el.value.charAt(0).toUpperCase() + el.value.slice(1);
+      el.setSelectionRange(s, e);
+    }
+  }
+  function upperAll(el) {
+    const s = el.selectionStart, e = el.selectionEnd;
+    el.value = el.value.toUpperCase();
+    el.setSelectionRange(s, e);
+  }
+
   /* ── Validation helpers ── */
+  function nameReq(id, errId) {
+    const el = document.getElementById(id);
+    if (!el) return true;
+    const v = el.value.trim();
+    const ok = v.length > 0 && v.includes(' ');
+    el.classList.toggle('error', !ok);
+    if (errId) {
+      const errEl = document.getElementById(errId);
+      if (errEl) {
+        errEl.textContent = v.length === 0 ? 'Este campo es obligatorio.' : 'Por favor ingresa nombre(s) y apellidos completos.';
+        errEl.classList.toggle('show', !ok);
+      }
+    }
+    return ok;
+  }
   function req(id, errId) {
     const el = document.getElementById(id);
     if (!el) return true;
@@ -1640,7 +1768,7 @@
     let ok = true;
 
     if (n === 1) {
-      ok &= req('v-nombre',     'err-v-nombre');
+      ok &= nameReq('v-nombre',  'err-v-nombre');
       ok &= dateReq('v-nacimiento', 'err-v-nacimiento', 1900, new Date().getFullYear());
       ok &= selReq('v-nacionalidad', 'err-v-nacionalidad');
       ok &= req('v-pasaporte',  'err-v-pasaporte');
@@ -1652,7 +1780,7 @@
       ok &= req('v-ocupacion',  'err-v-ocupacion');
       ok &= emailReq('v-email', 'err-v-email');
     } else if (n === 2) {
-      ok &= req('a-nombre',     'err-a-nombre');
+      ok &= nameReq('a-nombre',  'err-a-nombre');
       ok &= dateReq('a-nacimiento', 'err-a-nacimiento', 1900, new Date().getFullYear());
       ok &= selReq('a-id-tipo', 'err-a-id-tipo');
       ok &= req('a-id-num',     'err-a-id-num');
@@ -1668,25 +1796,46 @@
       ok &= req('a-vinculo-detalle', 'err-a-vinculo-detalle');
     } else if (n === 3) {
       ok &= req('j-actividades', 'err-j-actividades');
-      ok &= req('j-al-calle',    'err-j-alojamiento');
-      ok &= req('j-al-colonia',  'err-j-alojamiento');
-      ok &= req('j-al-ciudad',   'err-j-alojamiento');
-      ok &= selReq('j-al-estado', 'err-j-alojamiento');
-      ok &= req('j-al-cp',       'err-j-alojamiento');
+      const alojToggle = document.querySelector('input[name="aloj_es_anfitrion"]:checked');
+      if (!alojToggle) {
+        document.getElementById('err-aloj-toggle').classList.add('show');
+        ok = false;
+      } else if (alojToggle.value === 'no') {
+        ok &= req('j-al-calle',       'err-j-alojamiento');
+        ok &= req('j-al-colonia',     'err-j-alojamiento');
+        ok &= req('j-al-delegacion',  'err-j-alojamiento');
+        ok &= req('j-al-ciudad',      'err-j-alojamiento');
+        ok &= selReq('j-al-estado',   'err-j-alojamiento');
+        ok &= req('j-al-cp',          'err-j-alojamiento');
+      }
     } else if (n === 4) {
-      const expenseGroups = ['g_hospedaje','g_alimentos','g_transporte','g_actividades','g_medicos'];
-      const expenseRows   = stepEl.querySelectorAll('.expense-row');
-      let expOk = true;
-      expenseGroups.forEach((name, i) => {
-        if (!document.querySelector(`input[name="${name}"]:checked`)) {
-          if (expenseRows[i]) expenseRows[i].classList.add('error');
-          expOk = false;
-        }
-      });
-      if (!expOk) {
-        document.getElementById('err-gastos').classList.add('show');
+      // Hospedaje radio
+      if (!document.querySelector('input[name="g_hospedaje"]:checked')) {
+        stepEl.querySelector('.expense-row')?.classList.add('error');
+        document.getElementById('err-gastos')?.classList.add('show');
         ok = false;
       }
+      // Host expenses question
+      const gastosHost = document.querySelector('input[name="gastos_anfitrion"]:checked');
+      if (!gastosHost) {
+        document.getElementById('err-gastos-host')?.classList.add('show');
+        ok = false;
+      } else if (gastosHost.value === 'si') {
+        const conceptos = document.querySelectorAll('input[name="gastos_host_conceptos"]:checked');
+        if (conceptos.length === 0) {
+          document.getElementById('err-gastos-conceptos')?.classList.add('show');
+          ok = false;
+        }
+        const otroChecked = document.querySelector('input[name="gastos_host_conceptos"][value="otro"]:checked');
+        if (otroChecked) {
+          const otroText = document.getElementById('gastos-otro-texto');
+          if (!otroText || !otroText.value.trim()) {
+            if (otroText) otroText.classList.add('error');
+            ok = false;
+          }
+        }
+      }
+      // Transport checkboxes
       const checked = document.querySelectorAll('input[name="transporte_mx"]:checked');
       if (checked.length === 0) {
         document.getElementById('err-transporte').classList.add('show');
@@ -1736,6 +1885,16 @@
         const errEl = document.getElementById('err-sal-fecha');
         if (errEl) { errEl.textContent = 'La fecha de regreso debe ser igual o posterior a la fecha de llegada.'; errEl.classList.add('show'); }
         ok = false;
+      }
+      // 180-day warning (non-blocking)
+      const warn180 = document.getElementById('warn-180');
+      if (warn180) {
+        if (ingFecha && salFecha && salFecha >= ingFecha) {
+          const days = Math.round((new Date(salFecha) - new Date(ingFecha)) / 86400000);
+          warn180.style.display = days > 180 ? 'block' : 'none';
+        } else {
+          warn180.style.display = 'none';
+        }
       }
     }
 
@@ -1864,24 +2023,39 @@
     ]);
 
     // El viaje
-    const alojAddr = [rval('j-al-calle'), rval('j-al-colonia'), rval('j-al-ciudad'), rval('j-al-estado'), rval('j-al-cp')].filter(v => v !== '—').join(', ');
-    const viaje = reviewCard('El viaje', [
-      ['Actividades', rval('j-actividades')],
-      ['Nombre del alojamiento', rval('j-aloj-nombre') !== '—' ? rval('j-aloj-nombre') : document.getElementById('j-aloj-nombre')?.value || '—'],
-      ['Dirección del alojamiento', alojAddr || '—'],
-    ]);
+    const alojToggle = document.querySelector('input[name="aloj_es_anfitrion"]:checked')?.value || '';
+    const viajeRows = [['Actividades', rval('j-actividades')]];
+    if (alojToggle === 'si') {
+      viajeRows.push(['Alojamiento', 'Dirección del anfitrión']);
+    } else {
+      const alojAddr = [rval('j-al-calle'), rval('j-al-colonia'), rval('j-al-delegacion'), rval('j-al-ciudad'), rval('j-al-estado'), rval('j-al-cp')].filter(v => v !== '—').join(', ');
+      const alojNombre = rval('j-aloj-nombre');
+      if (alojNombre !== '—') viajeRows.push(['Nombre del alojamiento', alojNombre]);
+      viajeRows.push(['Dirección del alojamiento', alojAddr || '—']);
+    }
+    const viaje = reviewCard('El viaje', viajeRows);
 
     // Gastos
     const getExp = name => { const r = document.querySelector(`input[name="${name}"]:checked`); return r ? r.value : '—'; };
     const modos = Array.from(document.querySelectorAll('input[name="transporte_mx"]:checked')).map(i => i.value).join(', ') || '—';
-    const gastos = reviewCard('Gastos', [
-      ['Hospedaje', getExp('g_hospedaje')],
-      ['Alimentos', getExp('g_alimentos')],
-      ['Transporte', getExp('g_transporte')],
-      ['Actividades', getExp('g_actividades')],
-      ['Atención médica', getExp('g_medicos')],
-      ['Transporte en México', modos],
-    ]);
+    const gastosRows = [['Hospedaje', getExp('g_hospedaje')]];
+    const gastosAnfitrion = document.querySelector('input[name="gastos_anfitrion"]:checked')?.value || '—';
+    gastosRows.push(['Gastos a cargo del anfitrión', gastosAnfitrion === 'si' ? 'Sí' : gastosAnfitrion === 'no' ? 'No' : '—']);
+    if (gastosAnfitrion === 'si') {
+      const conceptos = Array.from(document.querySelectorAll('input[name="gastos_host_conceptos"]:checked')).map(c => c.value);
+      const otroText = document.getElementById('gastos-otro-texto')?.value?.trim();
+      const conceptoLabels = conceptos.map(c => {
+        if (c === 'alimentos') return 'Alimentos';
+        if (c === 'transporte') return 'Transporte';
+        if (c === 'actividades') return 'Actividades turísticas';
+        if (c === 'medicos') return 'Gastos médicos o emergencia';
+        if (c === 'otro') return otroText ? `Otro: ${otroText}` : 'Otro';
+        return c;
+      });
+      gastosRows.push(['Conceptos cubiertos', conceptoLabels.join(', ') || '—']);
+    }
+    gastosRows.push(['Transporte en México', modos]);
+    const gastos = reviewCard('Gastos', gastosRows);
 
     // Vuelos
     const ingresoTipo = document.querySelector('input[name="ingreso_tipo"]:checked')?.value || '';
@@ -1908,17 +2082,22 @@
 
   /* ── Real-time field validation setup ── */
   function setupRealtimeValidation() {
+    // Name fields → validate on blur (require full name with space)
+    [['v-nombre','err-v-nombre'], ['a-nombre','err-a-nombre']].forEach(([id, errId]) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('blur', () => nameReq(id, errId));
+    });
     // Text / textarea → validate on blur
     [
-      ['v-nombre','err-v-nombre'], ['v-pasaporte','err-v-pasaporte'],
+      ['v-pasaporte','err-v-pasaporte'],
       ['v-residencia','err-v-residencia'], ['v-calle','err-v-domicilio'],
       ['v-ciudad','err-v-domicilio'], ['v-provincia','err-v-domicilio'], ['v-cp','err-v-domicilio'],
-      ['v-ocupacion','err-v-ocupacion'], ['a-nombre','err-a-nombre'],
+      ['v-ocupacion','err-v-ocupacion'],
       ['a-id-num','err-a-id-num'], ['a-calle','err-a-domicilio'],
       ['a-ciudad','err-a-domicilio'], ['a-cp','err-a-domicilio'],
       ['a-vinculo-detalle','err-a-vinculo-detalle'],
       ['j-actividades','err-j-actividades'], ['j-al-calle','err-j-alojamiento'],
-      ['j-al-ciudad','err-j-alojamiento'], ['j-al-cp','err-j-alojamiento'],
+      ['j-al-delegacion','err-j-alojamiento'], ['j-al-ciudad','err-j-alojamiento'], ['j-al-cp','err-j-alojamiento'],
     ].forEach(([id, errId]) => {
       const el = document.getElementById(id);
       if (el) el.addEventListener('blur', () => req(id, errId));

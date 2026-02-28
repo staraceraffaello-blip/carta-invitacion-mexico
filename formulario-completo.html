@@ -220,7 +220,7 @@
       max-height: 0; overflow: hidden; opacity: 0;
       transition: max-height 0.38s ease, opacity 0.3s ease, margin-top 0.25s ease;
     }
-    .cond-fields.open { max-height: 380px; opacity: 1; margin-top: 16px; }
+    .cond-fields.open { max-height: 800px; opacity: 1; margin-top: 16px; }
 
     /* ── Repeatable card (companion / destino) ── */
     .repeat-card {
@@ -402,11 +402,11 @@
           </div>
           <div class="step-pill">
             <div class="pill-dot" id="dot-4">4</div>
-            <div><div class="pill-label" id="pl-4">Gastos</div><div class="pill-sub">¿Quién cubre qué?</div></div>
+            <div><div class="pill-label" id="pl-4">Itinerario</div><div class="pill-sub">Destinos, entrada y salida</div></div>
           </div>
           <div class="step-pill">
             <div class="pill-dot" id="dot-5">5</div>
-            <div><div class="pill-label" id="pl-5">Itinerario</div><div class="pill-sub">Destinos, entrada y salida</div></div>
+            <div><div class="pill-label" id="pl-5">Gastos</div><div class="pill-sub">¿Quién cubre qué?</div></div>
           </div>
           <div class="step-pill">
             <div class="pill-dot" id="dot-6">6</div>
@@ -485,8 +485,9 @@
               <div>
                 <label class="form-label" for="v-nombre">Nombre completo del viajero <span class="req">*</span></label>
                 <input type="text" id="v-nombre" name="v_nombre" class="form-input"
-                       placeholder="Tal como aparece en el pasaporte" required autocomplete="name">
-                <p class="form-hint">Nombre(s) y apellidos completos.</p>
+                       placeholder="Ej. Juan Carlos Pérez López" required autocomplete="name"
+                       oninput="titleCase(this)">
+                <p class="form-hint warn">⚠ Tal como aparece en el pasaporte.</p>
                 <p class="form-error" id="err-v-nombre">Este campo es obligatorio.</p>
               </div>
 
@@ -587,7 +588,8 @@
               <div>
                 <label class="form-label" for="v-pasaporte">Número de pasaporte <span class="req">*</span></label>
                 <input type="text" id="v-pasaporte" name="v_pasaporte" class="form-input"
-                       placeholder="Ej. AB123456" required autocomplete="off">
+                       placeholder="Ej. AB123456" required autocomplete="off"
+                       oninput="upperAll(this)">
                 <p class="form-hint warn">⚠ Verifica que el pasaporte tenga al menos <strong>6 meses de vigencia</strong> a partir de la fecha de entrada a México.</p>
                 <p class="form-error" id="err-v-pasaporte">Por favor ingresa el número de pasaporte.</p>
               </div>
@@ -677,7 +679,7 @@
                     <option>Tuvalu</option><option>Vanuatu</option>
                   </optgroup>
                 </select>
-                <p class="form-hint">Puede ser diferente a tu nacionalidad.</p>
+                <p class="form-hint">Puede ser diferente a la nacionalidad.</p>
                 <p class="form-error" id="err-v-residencia">Por favor ingresa tu país de residencia.</p>
               </div>
 
@@ -687,10 +689,10 @@
                   <input type="text" id="v-calle" name="v_calle" class="form-input"
                          placeholder="Calle, número, e interior (si aplica)" required>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input type="text" id="v-ciudad" name="v_ciudad" class="form-input" placeholder="Ciudad" required>
-                    <input type="text" id="v-provincia" name="v_provincia" class="form-input" placeholder="Provincia / Estado / Región" required>
+                    <input type="text" id="v-ciudad" name="v_ciudad" class="form-input" placeholder="Ciudad" required oninput="capFirst(this)">
+                    <input type="text" id="v-provincia" name="v_provincia" class="form-input" placeholder="Provincia / Estado / Región" required oninput="capFirst(this)">
                   </div>
-                  <input type="text" id="v-cp" name="v_cp" class="form-input" placeholder="Código Postal" required>
+                  <input type="text" id="v-cp" name="v_cp" class="form-input" placeholder="Código Postal" required oninput="upperAll(this)">
                 </div>
                 <p class="form-error" id="err-v-domicilio">Por favor completa los campos de domicilio.</p>
               </div>
@@ -819,7 +821,9 @@
               <div>
                 <label class="form-label" for="a-nombre">Nombre completo del anfitrión <span class="req">*</span></label>
                 <input type="text" id="a-nombre" name="a_nombre" class="form-input"
-                       placeholder="Tal como aparece en tu identificación oficial" required>
+                       placeholder="Ej. María Elena García Torres" required
+                       oninput="titleCase(this)">
+                <p class="form-hint warn">⚠ Tal como aparece en la identificación oficial.</p>
                 <p class="form-error" id="err-a-nombre">Este campo es obligatorio.</p>
               </div>
 
@@ -845,20 +849,21 @@
               <div>
                 <label class="form-label" for="a-id-num">Número de identificación <span class="req">*</span></label>
                 <input type="text" id="a-id-num" name="a_id_num" class="form-input"
-                       placeholder="Número que aparece en tu identificación" required autocomplete="off">
+                       placeholder="Número que aparece en tu identificación" required autocomplete="off"
+                       oninput="upperAll(this)">
                 <p class="form-error" id="err-a-id-num">Por favor ingresa el número de identificación.</p>
               </div>
 
               <div>
                 <label class="form-label">Domicilio en México <span class="req">*</span></label>
                 <div class="space-y-3">
-                  <input type="text" id="a-calle" name="a_calle" class="form-input" placeholder="Calle y número" required>
+                  <input type="text" id="a-calle" name="a_calle" class="form-input" placeholder="Calle, número e interior (si aplica)" required>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" required>
-                    <input type="text" id="a-delegacion" name="a_delegacion" class="form-input" placeholder="Delegación o Municipio" required>
+                    <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" required oninput="capFirst(this)">
+                    <input type="text" id="a-delegacion" name="a_delegacion" class="form-input" placeholder="Delegación o Municipio" required oninput="capFirst(this)">
                   </div>
                   <div class="grid grid-cols-2 gap-3" style="overflow:hidden">
-                    <input type="text" id="a-ciudad" name="a_ciudad" class="form-input" placeholder="Ciudad" required autocomplete="off">
+                    <input type="text" id="a-ciudad" name="a_ciudad" class="form-input" placeholder="Ciudad" required autocomplete="off" oninput="capFirst(this)">
                     <select id="a-estado" name="a_estado" class="form-input" required>
                       <option value="" disabled selected>Estado</option>
                       <option>Aguascalientes</option>
@@ -895,7 +900,7 @@
                       <option>Zacatecas</option>
                     </select>
                   </div>
-                  <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal" required>
+                  <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal" required oninput="upperAll(this)">
                 </div>
                 <p class="form-hint warn mt-3">⚠ Se recomienda anexar a la carta de invitación un comprobante de domicilio del anfitrión con antigüedad no mayor a 3 meses.</p>
                 <p class="form-error" id="err-a-domicilio">Por favor completa el domicilio.</p>
@@ -964,9 +969,9 @@
 
 
           <!-- ═══════════════════════
-               STEP 4 — GASTOS
+               STEP 5 — GASTOS
           ═══════════════════════ -->
-          <section id="step-4" class="form-step p-6 sm:p-8">
+          <section id="step-5" class="form-step p-6 sm:p-8">
 
             <div class="flex items-start gap-4 mb-7">
               <div class="step-icon">
@@ -977,7 +982,7 @@
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 4 de 6</span>
+                <span class="section-label mb-1">Paso 5 de 6</span>
                 <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Gastos del viaje</h2>
                 <p class="text-sm mt-1" style="color:#6B7280;">¿Quién cubrirá los gastos durante la estancia en México?</p>
               </div>
@@ -987,6 +992,7 @@
               <strong>💡 Nota:</strong> Si el visitante cubre total o parcialmente sus propios gastos, se recomienda que pueda comprobar el equivalente de al menos <strong>USD $50 por día</strong> con efectivo, estado de cuenta bancario o de tarjeta.
             </div>
 
+            <!-- Hospedaje -->
             <div class="rounded-xl overflow-hidden mb-7" style="border:1.5px solid rgba(27,53,102,0.1);">
               <div class="px-4 py-3 flex items-center justify-between"
                    style="background:rgba(27,53,102,0.04);border-bottom:1px solid rgba(27,53,102,0.08);">
@@ -1002,42 +1008,68 @@
                     <label class="exp-radio"><input type="radio" name="g_hospedaje" value="ambos">Ambos</label>
                   </div>
                 </div>
-                <div class="expense-row">
-                  <span class="expense-concept">🍽️ Alimentos</span>
-                  <div class="expense-options">
-                    <label class="exp-radio"><input type="radio" name="g_alimentos" value="visitante">Visitante</label>
-                    <label class="exp-radio"><input type="radio" name="g_alimentos" value="anfitrion">Anfitrión</label>
-                    <label class="exp-radio"><input type="radio" name="g_alimentos" value="ambos">Ambos</label>
-                  </div>
-                </div>
-                <div class="expense-row">
-                  <span class="expense-concept">🚌 Transporte</span>
-                  <div class="expense-options">
-                    <label class="exp-radio"><input type="radio" name="g_transporte" value="visitante">Visitante</label>
-                    <label class="exp-radio"><input type="radio" name="g_transporte" value="anfitrion">Anfitrión</label>
-                    <label class="exp-radio"><input type="radio" name="g_transporte" value="ambos">Ambos</label>
-                  </div>
-                </div>
-                <div class="expense-row">
-                  <span class="expense-concept">🗺️ Actividades turísticas</span>
-                  <div class="expense-options">
-                    <label class="exp-radio"><input type="radio" name="g_actividades" value="visitante">Visitante</label>
-                    <label class="exp-radio"><input type="radio" name="g_actividades" value="anfitrion">Anfitrión</label>
-                    <label class="exp-radio"><input type="radio" name="g_actividades" value="ambos">Ambos</label>
-                  </div>
-                </div>
-                <div class="expense-row">
-                  <span class="expense-concept">🏥 Gastos médicos / emergencias</span>
-                  <div class="expense-options">
-                    <label class="exp-radio"><input type="radio" name="g_medicos" value="visitante">Visitante</label>
-                    <label class="exp-radio"><input type="radio" name="g_medicos" value="anfitrion">Anfitrión</label>
-                    <label class="exp-radio"><input type="radio" name="g_medicos" value="ambos">Ambos</label>
-                  </div>
-                </div>
               </div>
             </div>
-            <p class="form-error" id="err-gastos">Por favor selecciona quién cubre cada concepto.</p>
+            <p class="form-error" id="err-gastos">Por favor selecciona quién cubre el hospedaje.</p>
 
+            <!-- Host expenses question -->
+            <div class="space-y-5">
+              <div>
+                <label class="form-label">¿Hay algún gasto que será a cargo del anfitrión (sin incluir alojamiento)? <span class="req">*</span></label>
+                <div class="grid grid-cols-2 gap-3" style="max-width:320px;">
+                  <label class="radio-card" id="gastos-host-si">
+                    <input type="radio" name="gastos_anfitrion" value="si" onchange="onGastosHostToggle()">
+                    <span>Sí</span>
+                  </label>
+                  <label class="radio-card" id="gastos-host-no">
+                    <input type="radio" name="gastos_anfitrion" value="no" onchange="onGastosHostToggle()">
+                    <span>No</span>
+                  </label>
+                </div>
+                <p class="form-error" id="err-gastos-host">Por favor indica si el anfitrión cubrirá algún gasto.</p>
+              </div>
+
+              <!-- Warning + checkboxes (only when Sí) -->
+              <div id="gastos-host-detail" class="cond-fields">
+                <div class="rounded-xl p-4 mb-5 text-sm" style="background:rgba(220,38,38,0.06);border:1.5px solid rgba(220,38,38,0.3);color:#991B1B;line-height:1.65;">
+                  <strong>⚠ Importante:</strong> Si el anfitrión asume alguno de los gastos, se debe anexar documentación adicional de solvencia económica del anfitrión, como <strong>estados de cuenta bancarios</strong> o <strong>recibos de nómina</strong>, para demostrar que cuenta con los recursos para cubrir la estancia.
+                </div>
+
+                <label class="form-label">¿Cuáles gastos serán cubiertos por el anfitrión? <span class="req">*</span></label>
+                <p class="text-xs mb-3" style="color:#6B7280;">Selecciona todos los que apliquen.</p>
+                <div class="space-y-2.5">
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="alimentos" onchange="toggleTransportCard(this)">
+                    <span>🍽️ Alimentos</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="transporte" onchange="toggleTransportCard(this)">
+                    <span>🚌 Transporte</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="actividades" onchange="toggleTransportCard(this)">
+                    <span>🗺️ Actividades turísticas</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="medicos" onchange="toggleTransportCard(this)">
+                    <span>🏥 Gastos médicos o emergencia</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="otro" onchange="onGastosOtroToggle()">
+                    <span>🔹 Otro</span>
+                  </label>
+                </div>
+                <div id="gastos-otro-container" class="cond-fields" style="margin-top:8px;">
+                  <input type="text" id="gastos-otro-texto" name="gastos_otro_texto" class="form-input"
+                         placeholder="Describe el gasto adicional…">
+                </div>
+                <p class="form-error" id="err-gastos-conceptos">Por favor selecciona al menos un concepto.</p>
+              </div>
+            </div>
+
+            <div class="gold-rule my-6"></div>
+
+            <!-- Transport modes -->
             <div>
               <label class="form-label">Medios de transporte del visitante en México <span class="req">*</span></label>
               <p class="text-xs mb-3" style="color:#6B7280;">Selecciona todos los que apliquen.</p>
@@ -1047,8 +1079,8 @@
                   <span>✈️ Avión interno</span>
                 </label>
                 <label class="radio-card" id="tc-autobus">
-                  <input type="checkbox" name="transporte_mx" value="autobus" onchange="toggleTransportCard(this)">
-                  <span>🚌 Autobús</span>
+                  <input type="checkbox" name="transporte_mx" value="autobus_foraneo" onchange="toggleTransportCard(this)">
+                  <span>🚌 Autobús Foráneo</span>
                 </label>
                 <label class="radio-card" id="tc-auto">
                   <input type="checkbox" name="transporte_mx" value="auto_rentado" onchange="toggleTransportCard(this)">
@@ -1058,23 +1090,23 @@
                   <input type="checkbox" name="transporte_mx" value="anfitrion" onchange="toggleTransportCard(this)">
                   <span>🏠 Transporte del anfitrión</span>
                 </label>
-                <label class="radio-card" id="tc-otro">
-                  <input type="checkbox" name="transporte_mx" value="otro" onchange="toggleTransportCard(this)">
-                  <span>🔹 Otro</span>
+                <label class="radio-card" id="tc-publico">
+                  <input type="checkbox" name="transporte_mx" value="transporte_publico" onchange="toggleTransportCard(this)">
+                  <span>🚇 Transporte público</span>
                 </label>
               </div>
               <p class="form-error" id="err-transporte">Por favor selecciona al menos un medio de transporte.</p>
             </div>
 
             <div class="flex items-center justify-between mt-8 gap-3">
-              <button type="button" class="btn-back" onclick="goPrev(4)">
+              <button type="button" class="btn-back" onclick="goPrev(5)">
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                   <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Volver
               </button>
-              <button type="button" class="btn-gold" onclick="goNext(4)">
-                Continuar
+              <button type="button" class="btn-gold" onclick="goNext(5)" style="white-space:nowrap;font-size:0.9375rem;">
+                Revisar información
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -1084,9 +1116,9 @@
 
 
           <!-- ══════════════════════════════
-               STEP 5 — ITINERARIO Y VUELOS
+               STEP 4 — ITINERARIO Y VUELOS
           ══════════════════════════════ -->
-          <section id="step-5" class="form-step p-6 sm:p-8">
+          <section id="step-4" class="form-step p-6 sm:p-8">
 
             <div class="flex items-start gap-4 mb-7">
               <div class="step-icon">
@@ -1096,7 +1128,7 @@
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 5 de 6</span>
+                <span class="section-label mb-1">Paso 4 de 6</span>
                 <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Itinerario, entrada y salida</h2>
                 <p class="text-sm mt-1" style="color:#6B7280;">Ingreso, destinos planeados y salida de México.</p>
               </div>
@@ -1133,28 +1165,28 @@
                 <div id="cond-ingreso-aereo" class="cond-fields space-y-4">
                   <div>
                     <label class="form-label" for="ing-aeropuerto">Aeropuerto de ingreso</label>
-                    <input type="text" id="ing-aeropuerto" name="ing_aeropuerto" class="form-input" placeholder="Ej. AICM — Ciudad de México">
+                    <input type="text" id="ing-aeropuerto" name="ing_aeropuerto" class="form-input" placeholder="Ej. AICM — Ciudad de México" oninput="capFirst(this)">
                   </div>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label class="form-label" for="ing-aerolinea">Aerolínea de llegada</label>
-                      <input type="text" id="ing-aerolinea" name="ing_aerolinea" class="form-input" placeholder="Ej. Avianca, LATAM…">
+                      <input type="text" id="ing-aerolinea" name="ing_aerolinea" class="form-input" placeholder="Ej. Avianca, LATAM…" oninput="capFirst(this)">
                     </div>
                     <div>
                       <label class="form-label" for="ing-vuelo">Número de vuelo</label>
-                      <input type="text" id="ing-vuelo" name="ing_vuelo" class="form-input" placeholder="Ej. AV204">
+                      <input type="text" id="ing-vuelo" name="ing_vuelo" class="form-input" placeholder="Ej. AV204" oninput="upperAll(this)">
                     </div>
                   </div>
                 </div>
 
                 <div id="cond-ingreso-terrestre" class="cond-fields">
-                  <label class="form-label" for="ing-cruce">Estado / punto de cruce fronterizo</label>
-                  <input type="text" id="ing-cruce" name="ing_cruce" class="form-input" placeholder="Ej. Tijuana, Ciudad Juárez…">
+                  <label class="form-label" for="ing-cruce">Punto de cruce fronterizo</label>
+                  <input type="text" id="ing-cruce" name="ing_cruce" class="form-input" placeholder="Ej. Tijuana, Ciudad Juárez…" oninput="capFirst(this)">
                 </div>
 
                 <div id="cond-ingreso-maritimo" class="cond-fields">
                   <label class="form-label" for="ing-puerto">Puerto de ingreso</label>
-                  <input type="text" id="ing-puerto" name="ing_puerto" class="form-input" placeholder="Ej. Puerto de Veracruz">
+                  <input type="text" id="ing-puerto" name="ing_puerto" class="form-input" placeholder="Ej. Puerto de Veracruz" oninput="capFirst(this)">
                 </div>
 
                 <div>
@@ -1216,48 +1248,49 @@
                 <div id="cond-salida-aereo" class="cond-fields space-y-4">
                   <div>
                     <label class="form-label" for="sal-aeropuerto">Aeropuerto de salida</label>
-                    <input type="text" id="sal-aeropuerto" name="sal_aeropuerto" class="form-input" placeholder="Ej. AICM — Ciudad de México">
+                    <input type="text" id="sal-aeropuerto" name="sal_aeropuerto" class="form-input" placeholder="Ej. AICM — Ciudad de México" oninput="capFirst(this)">
                   </div>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label class="form-label" for="sal-aerolinea">Aerolínea de regreso</label>
-                      <input type="text" id="sal-aerolinea" name="sal_aerolinea" class="form-input" placeholder="Ej. Avianca, LATAM…">
+                      <input type="text" id="sal-aerolinea" name="sal_aerolinea" class="form-input" placeholder="Ej. Avianca, LATAM…" oninput="capFirst(this)">
                     </div>
                     <div>
                       <label class="form-label" for="sal-vuelo">Número de vuelo</label>
-                      <input type="text" id="sal-vuelo" name="sal_vuelo" class="form-input" placeholder="Ej. AV205">
+                      <input type="text" id="sal-vuelo" name="sal_vuelo" class="form-input" placeholder="Ej. AV205" oninput="upperAll(this)">
                     </div>
                   </div>
                 </div>
 
                 <div id="cond-salida-terrestre" class="cond-fields">
-                  <label class="form-label" for="sal-cruce">Estado / punto de cruce fronterizo</label>
-                  <input type="text" id="sal-cruce" name="sal_cruce" class="form-input" placeholder="Ej. Nuevo Laredo, Reynosa…">
+                  <label class="form-label" for="sal-cruce">Punto de cruce fronterizo</label>
+                  <input type="text" id="sal-cruce" name="sal_cruce" class="form-input" placeholder="Ej. Nuevo Laredo, Reynosa…" oninput="capFirst(this)">
                 </div>
 
                 <div id="cond-salida-maritimo" class="cond-fields">
                   <label class="form-label" for="sal-puerto">Puerto de salida</label>
-                  <input type="text" id="sal-puerto" name="sal_puerto" class="form-input" placeholder="Ej. Puerto de Ensenada">
+                  <input type="text" id="sal-puerto" name="sal_puerto" class="form-input" placeholder="Ej. Puerto de Ensenada" oninput="capFirst(this)">
                 </div>
 
                 <div>
                   <label class="form-label" for="sal-fecha">Fecha de regreso <span class="req">*</span></label>
                   <input type="date" id="sal-fecha" name="sal_fecha" class="form-input" required min="2026-01-01" max="2031-12-31">
                   <p class="form-error" id="err-sal-fecha">Por favor indica la fecha de regreso.</p>
+                  <p class="form-error" id="warn-180" style="color:#991B1B;display:none;">⚠ La estancia máxima para turismo en México es de 180 días.</p>
                 </div>
 
               </div>
             </div>
 
             <div class="flex items-center justify-between mt-8 gap-3">
-              <button type="button" class="btn-back" onclick="goPrev(5)">
+              <button type="button" class="btn-back" onclick="goPrev(4)">
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                   <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Volver
               </button>
-              <button type="button" class="btn-gold" onclick="goNext(5)" style="white-space:nowrap;font-size:0.9375rem;">
-                Revisar información
+              <button type="button" class="btn-gold" onclick="goNext(4)">
+                Continuar
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -1389,7 +1422,8 @@
       <div>
         <label class="form-label">Nombre completo del acompañante <span class="req">*</span></label>
         <input type="text" name="comp_nombre[]" class="form-input companion-nombre"
-               placeholder="Tal como aparece en el pasaporte" required>
+               placeholder="Ej. Juan Carlos Pérez López" required oninput="titleCase(this)">
+        <p class="form-hint warn">⚠ Tal como aparece en el pasaporte.</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
@@ -1398,16 +1432,8 @@
         </div>
         <div>
           <label class="form-label">Relación con el viajero principal <span class="req">*</span></label>
-          <select name="comp_relacion[]" class="form-input companion-relacion" required>
-            <option value="" disabled selected>Selecciona</option>
-            <option value="esposo">Esposo/a</option>
-            <option value="pareja">Pareja</option>
-            <option value="hijo">Hijo/a</option>
-            <option value="familiar">Familiar</option>
-            <option value="amigo">Amigo/a</option>
-            <option value="colega">Colega</option>
-            <option value="otro">Otro</option>
-          </select>
+          <input type="text" name="comp_relacion[]" class="form-input companion-relacion"
+                 placeholder="Ej. Esposa, Hijo, Amigo de la infancia…" required>
         </div>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1500,9 +1526,131 @@
         <div>
           <label class="form-label">Número de pasaporte <span class="req">*</span></label>
           <input type="text" name="comp_pasaporte[]" class="form-input companion-pasaporte"
-                 placeholder="Ej. AB123456" required autocomplete="off">
+                 placeholder="Ej. AB123456" required autocomplete="off" oninput="upperAll(this)">
           <p class="form-hint warn">⚠ Mín. 6 meses de vigencia desde la entrada.</p>
         </div>
+      </div>
+
+      <!-- Address section -->
+      <div>
+        <label class="form-label">¿Mismo domicilio que el viajero principal? <span class="req">*</span></label>
+        <div class="grid grid-cols-2 gap-3" style="max-width:320px;">
+          <label class="radio-card comp-addr-si">
+            <input type="radio" name="comp_mismo_domicilio[]" value="si" onchange="onCompAddrToggle(this)" checked>
+            <span>Sí</span>
+          </label>
+          <label class="radio-card comp-addr-no">
+            <input type="radio" name="comp_mismo_domicilio[]" value="no" onchange="onCompAddrToggle(this)">
+            <span>No</span>
+          </label>
+        </div>
+      </div>
+      <div class="comp-addr-custom cond-fields">
+        <div>
+          <label class="form-label">País de residencia <span class="req">*</span></label>
+          <select name="comp_residencia[]" class="form-input companion-residencia" required>
+            <option value="" disabled selected>Selecciona el país</option>
+            <optgroup label="América Latina y el Caribe">
+              <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option>
+              <option>Barbados</option><option>Belice</option><option>Bolivia</option>
+              <option>Brasil</option><option>Chile</option><option>Colombia</option>
+              <option>Costa Rica</option><option>Cuba</option><option>Dominica</option>
+              <option>Ecuador</option><option>El Salvador</option><option>Granada</option>
+              <option>Guatemala</option><option>Guyana</option><option>Haití</option>
+              <option>Honduras</option><option>Jamaica</option><option>Nicaragua</option>
+              <option>Panamá</option><option>Paraguay</option><option>Perú</option>
+              <option>República Dominicana</option><option>San Cristóbal y Nieves</option>
+              <option>San Vicente y las Granadinas</option><option>Santa Lucía</option>
+              <option>Surinam</option><option>Trinidad y Tobago</option>
+              <option>Uruguay</option><option>Venezuela</option>
+            </optgroup>
+            <optgroup label="Norteamérica">
+              <option>Canadá</option><option>Estados Unidos</option>
+            </optgroup>
+            <optgroup label="Europa">
+              <option>Albania</option><option>Alemania</option><option>Andorra</option>
+              <option>Austria</option><option>Bélgica</option><option>Bielorrusia</option>
+              <option>Bosnia y Herzegovina</option><option>Bulgaria</option><option>Chipre</option>
+              <option>Ciudad del Vaticano</option><option>Croacia</option><option>Dinamarca</option>
+              <option>Eslovaquia</option><option>Eslovenia</option><option>España</option>
+              <option>Estonia</option><option>Finlandia</option><option>Francia</option>
+              <option>Grecia</option><option>Hungría</option><option>Irlanda</option>
+              <option>Islandia</option><option>Italia</option><option>Kosovo</option>
+              <option>Letonia</option><option>Liechtenstein</option><option>Lituania</option>
+              <option>Luxemburgo</option><option>Malta</option><option>Moldavia</option>
+              <option>Mónaco</option><option>Montenegro</option><option>Noruega</option>
+              <option>Países Bajos</option><option>Polonia</option><option>Portugal</option>
+              <option>Reino Unido</option><option>República Checa</option><option>Rumanía</option>
+              <option>Rusia</option><option>San Marino</option><option>Serbia</option>
+              <option>Suecia</option><option>Suiza</option><option>Ucrania</option>
+            </optgroup>
+            <optgroup label="África">
+              <option>Argelia</option><option>Angola</option><option>Benín</option>
+              <option>Botsuana</option><option>Burkina Faso</option><option>Burundi</option>
+              <option>Cabo Verde</option><option>Camerún</option><option>Chad</option>
+              <option>Comoras</option><option>Congo</option><option>Costa de Marfil</option>
+              <option>Egipto</option><option>Eritrea</option><option>Etiopía</option>
+              <option>Gabón</option><option>Gambia</option><option>Ghana</option>
+              <option>Guinea</option><option>Guinea Ecuatorial</option><option>Guinea-Bisáu</option>
+              <option>Kenia</option><option>Lesoto</option><option>Liberia</option>
+              <option>Libia</option><option>Madagascar</option><option>Malaui</option>
+              <option>Mali</option><option>Marruecos</option><option>Mauricio</option>
+              <option>Mauritania</option><option>Mozambique</option><option>Namibia</option>
+              <option>Níger</option><option>Nigeria</option><option>República Centroafricana</option>
+              <option>República Democrática del Congo</option><option>Ruanda</option>
+              <option>Santo Tomé y Príncipe</option><option>Senegal</option>
+              <option>Seychelles</option><option>Sierra Leona</option><option>Somalia</option>
+              <option>Sudáfrica</option><option>Sudán</option><option>Sudán del Sur</option>
+              <option>Suazilandia</option><option>Tanzania</option><option>Togo</option>
+              <option>Túnez</option><option>Uganda</option><option>Yibuti</option>
+              <option>Zambia</option><option>Zimbabue</option>
+            </optgroup>
+            <optgroup label="Asia y Medio Oriente">
+              <option>Afganistán</option><option>Arabia Saudita</option><option>Armenia</option>
+              <option>Azerbaiyán</option><option>Bangladés</option><option>Brunéi</option>
+              <option>Bután</option><option>Camboya</option><option>Catar</option>
+              <option>China</option><option>Corea del Norte</option><option>Corea del Sur</option>
+              <option>Emiratos Árabes Unidos</option><option>Filipinas</option><option>Georgia</option>
+              <option>India</option><option>Indonesia</option><option>Irak</option>
+              <option>Irán</option><option>Israel</option><option>Japón</option>
+              <option>Jordania</option><option>Kazajistán</option><option>Kirguistán</option>
+              <option>Kuwait</option><option>Laos</option><option>Líbano</option>
+              <option>Malasia</option><option>Maldivas</option><option>Mongolia</option>
+              <option>Myanmar</option><option>Nepal</option><option>Omán</option>
+              <option>Pakistán</option><option>Palestina</option><option>Singapur</option>
+              <option>Siria</option><option>Sri Lanka</option><option>Tailandia</option>
+              <option>Tayikistán</option><option>Timor Oriental</option><option>Turkmenistán</option>
+              <option>Turquía</option><option>Uzbekistán</option><option>Vietnam</option>
+              <option>Yemen</option>
+            </optgroup>
+            <optgroup label="Oceanía">
+              <option>Australia</option><option>Fiyi</option><option>Islas Marshall</option>
+              <option>Islas Salomón</option><option>Kiribati</option><option>Micronesia</option>
+              <option>Nauru</option><option>Nueva Zelanda</option><option>Palaos</option>
+              <option>Papúa Nueva Guinea</option><option>Samoa</option><option>Tonga</option>
+              <option>Tuvalu</option><option>Vanuatu</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="space-y-3" style="margin-top:12px;">
+          <input type="text" name="comp_calle[]" class="form-input companion-calle"
+                 placeholder="Calle, número, e interior (si aplica)" required>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input type="text" name="comp_ciudad[]" class="form-input companion-ciudad"
+                   placeholder="Ciudad" required oninput="capFirst(this)">
+            <input type="text" name="comp_provincia[]" class="form-input companion-provincia"
+                   placeholder="Provincia / Estado / Región" required oninput="capFirst(this)">
+          </div>
+          <input type="text" name="comp_cp[]" class="form-input companion-cp"
+                 placeholder="Código Postal" required oninput="upperAll(this)">
+        </div>
+      </div>
+
+      <!-- Occupation -->
+      <div>
+        <label class="form-label">Actividad profesional u ocupación <span class="req">*</span></label>
+        <input type="text" name="comp_ocupacion[]" class="form-input companion-ocupacion"
+               placeholder="Ej. Ingeniero, Estudiante, Comerciante…" required>
       </div>
     </div>
   </div>
@@ -1524,9 +1672,9 @@
     <p class="form-error dest-card-err" style="margin:0 0 12px;">Completa todos los campos obligatorios de este destino.</p>
     <div class="repeat-card-body space-y-4">
       <div>
-        <label class="form-label">Ciudad o destino <span class="req">*</span></label>
+        <label class="form-label">Ciudad <span class="req">*</span></label>
         <input type="text" name="dest_ciudad[]" class="form-input dest-ciudad"
-               placeholder="Ej. Ciudad de México, CDMX" required>
+               placeholder="Ej. Ciudad de México, CDMX" required oninput="capFirst(this)">
       </div>
       <div>
         <label class="form-label">Actividades planeadas en este destino <span class="req">*</span></label>
@@ -1535,25 +1683,40 @@
         <p class="form-hint warn">⚠ Sé lo más específico posible: incluye nombres de lugares, eventos, razones del viaje y cualquier detalle relevante. Mientras más información proporciones, más completa será tu carta de invitación.</p>
       </div>
       <div>
+        <label class="form-label">¿El alojamiento es la dirección del anfitrión? <span class="req">*</span></label>
+        <div class="grid grid-cols-2 gap-3" style="max-width:320px;">
+          <label class="radio-card dest-aloj-host-si">
+            <input type="radio" name="dest_aloj_es_anfitrion[]" value="si" onchange="onDestAlojToggle(this)">
+            <span>Sí</span>
+          </label>
+          <label class="radio-card dest-aloj-host-no">
+            <input type="radio" name="dest_aloj_es_anfitrion[]" value="no" onchange="onDestAlojToggle(this)">
+            <span>No</span>
+          </label>
+        </div>
+        <p class="form-error dest-aloj-toggle-err">Por favor indica si el alojamiento es la dirección del anfitrión.</p>
+      </div>
+      <div class="dest-aloj-custom cond-fields">
+      <div>
         <label class="form-label">Nombre del alojamiento <span style="color:#9BAFD9;font-weight:400;">(si aplica, llenar solo en caso de ser hotel)</span></label>
         <input type="text" name="dest_aloj_nombre[]" class="form-input"
                placeholder="Hotel, Airbnb, casa particular…">
         <p class="form-hint">Se recomienda tener la reservación a la mano para mostrar a la autoridad migratoria.</p>
       </div>
-      <div>
+      <div style="margin-top:16px;">
         <label class="form-label">Dirección del alojamiento <span class="req">*</span></label>
         <div class="space-y-2.5">
           <input type="text" name="dest_aloj_calle[]" class="form-input dest-aloj-calle"
-                 placeholder="Calle y número" required>
+                 placeholder="Calle, número e interior (si aplica)" required>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <input type="text" name="dest_aloj_colonia[]" class="form-input dest-aloj-colonia"
-                   placeholder="Colonia" required>
+                   placeholder="Colonia" required oninput="capFirst(this)">
             <input type="text" name="dest_aloj_delegacion[]" class="form-input dest-aloj-delegacion"
-                   placeholder="Delegación o Municipio" required>
+                   placeholder="Delegación o Municipio" required oninput="capFirst(this)">
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <input type="text" name="dest_aloj_ciudad[]" class="form-input dest-aloj-ciudad"
-                   placeholder="Ciudad o Alcaldía" required>
+                   placeholder="Ciudad" required oninput="capFirst(this)">
             <select name="dest_aloj_estado[]" class="form-input dest-aloj-estado" required>
               <option value="" disabled selected>Estado</option>
               <option>Aguascalientes</option>
@@ -1591,9 +1754,10 @@
             </select>
           </div>
           <input type="text" name="dest_aloj_cp[]" class="form-input dest-aloj-cp"
-                 placeholder="Código Postal" required>
+                 placeholder="Código Postal" required oninput="upperAll(this)">
         </div>
       </div>
+      </div><!-- /dest-aloj-custom -->
       <div>
         <label class="form-label">Fechas de estadía en este destino <span class="req">*</span></label>
         <div class="date-range">
@@ -1618,8 +1782,8 @@
     'Paso 1 de 6 — El viajero',
     'Paso 2 de 6 — Acompañantes',
     'Paso 3 de 6 — El anfitrión',
-    'Paso 4 de 6 — Gastos',
-    'Paso 5 de 6 — Itinerario, entrada y salida',
+    'Paso 4 de 6 — Itinerario, entrada y salida',
+    'Paso 5 de 6 — Gastos',
     'Paso 6 de 6 — Revisión',
   ];
   let current = 1;
@@ -1643,7 +1807,80 @@
     }
   }
 
+  /* ── Gastos host toggle ── */
+  function onGastosHostToggle() {
+    const val = document.querySelector('input[name="gastos_anfitrion"]:checked')?.value;
+    document.getElementById('gastos-host-si').classList.toggle('selected', val === 'si');
+    document.getElementById('gastos-host-no').classList.toggle('selected', val === 'no');
+    document.getElementById('err-gastos-host')?.classList.remove('show');
+    const detail = document.getElementById('gastos-host-detail');
+    if (val === 'si') {
+      detail.classList.add('open');
+    } else {
+      detail.classList.remove('open');
+      detail.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; cb.closest('.radio-card')?.classList.remove('selected'); });
+      const otroContainer = document.getElementById('gastos-otro-container');
+      if (otroContainer) { otroContainer.classList.remove('open'); }
+      const otroText = document.getElementById('gastos-otro-texto');
+      if (otroText) { otroText.value = ''; otroText.classList.remove('error'); }
+      document.getElementById('err-gastos-conceptos')?.classList.remove('show');
+    }
+  }
+
+  function onGastosOtroToggle() {
+    const cb = document.querySelector('input[name="gastos_host_conceptos"][value="otro"]');
+    const container = document.getElementById('gastos-otro-container');
+    cb.closest('.radio-card')?.classList.toggle('selected', cb.checked);
+    if (cb.checked) {
+      container.classList.add('open');
+    } else {
+      container.classList.remove('open');
+      const txt = document.getElementById('gastos-otro-texto');
+      if (txt) { txt.value = ''; txt.classList.remove('error'); }
+    }
+    if (document.querySelectorAll('input[name="gastos_host_conceptos"]:checked').length > 0) {
+      document.getElementById('err-gastos-conceptos')?.classList.remove('show');
+    }
+  }
+
   /* ── Conditional transport type ── */
+  function onCompAddrToggle(radio) {
+    const card = radio.closest('[data-companion]');
+    const container = card.querySelector('.comp-addr-custom');
+    const val = radio.value;
+    card.querySelector('.comp-addr-si').classList.toggle('selected', val === 'si');
+    card.querySelector('.comp-addr-no').classList.toggle('selected', val === 'no');
+    if (val === 'no') {
+      container.classList.add('open');
+    } else {
+      container.classList.remove('open');
+      container.querySelectorAll('.form-input').forEach(el => {
+        if (el.tagName === 'SELECT') el.selectedIndex = 0;
+        else el.value = '';
+        el.classList.remove('error');
+      });
+    }
+  }
+
+  function onDestAlojToggle(radio) {
+    const card = radio.closest('[data-destino]');
+    const container = card.querySelector('.dest-aloj-custom');
+    const val = radio.value;
+    card.querySelector('.dest-aloj-host-si').classList.toggle('selected', val === 'si');
+    card.querySelector('.dest-aloj-host-no').classList.toggle('selected', val === 'no');
+    card.querySelector('.dest-aloj-toggle-err')?.classList.remove('show');
+    if (val === 'no') {
+      container.classList.add('open');
+    } else {
+      container.classList.remove('open');
+      container.querySelectorAll('.form-input').forEach(el => {
+        if (el.tagName === 'SELECT') el.selectedIndex = 0;
+        else el.value = '';
+        el.classList.remove('error');
+      });
+    }
+  }
+
   function onTransportType(prefix, value) {
     ['aereo','terrestre','maritimo'].forEach(type => {
       document.getElementById(`cond-${prefix}-${type}`)?.classList.remove('open');
@@ -1668,7 +1905,15 @@
     renumberCards('companions-container', '[data-companion]', 'Acompañante');
     // Attach real-time validation to the newly added card
     const card = document.getElementById('companions-container').lastElementChild;
-    card.querySelectorAll('.companion-nombre,.companion-pasaporte').forEach(el => {
+    card.querySelectorAll('.companion-nombre').forEach(el => {
+      el.addEventListener('blur', () => {
+        const ok = nameElReq(el);
+        if (!ok) document.getElementById('err-companions')?.classList.add('show');
+        else if (!card.closest('#companions-container').querySelector('.form-input.error'))
+          document.getElementById('err-companions')?.classList.remove('show');
+      });
+    });
+    card.querySelectorAll('.companion-pasaporte').forEach(el => {
       el.addEventListener('blur', () => {
         const ok = el.value.trim().length > 0;
         el.classList.toggle('error', !ok);
@@ -1686,10 +1931,14 @@
       el.addEventListener('change', validate);
       el.addEventListener('input', validate);
     });
-    card.querySelectorAll('.companion-relacion,.companion-nacionalidad').forEach(el => {
+    card.querySelectorAll('.companion-nacionalidad').forEach(el => {
       el.addEventListener('change', () => {
-        const ok = el.value !== '';
-        el.classList.toggle('error', !ok);
+        el.classList.toggle('error', el.value === '');
+      });
+    });
+    card.querySelectorAll('.companion-relacion,.companion-ocupacion').forEach(el => {
+      el.addEventListener('blur', () => {
+        el.classList.toggle('error', !el.value.trim());
       });
     });
   }
@@ -1784,7 +2033,48 @@
     if (n === TOTAL) buildReview();
   }
 
+  /* ── Text transform helpers ── */
+  function titleCase(el) {
+    const s = el.selectionStart, e = el.selectionEnd;
+    el.value = el.value.replace(/\b\w/g, c => c.toUpperCase());
+    el.setSelectionRange(s, e);
+  }
+  function capFirst(el) {
+    if (el.value.length > 0) {
+      const s = el.selectionStart, e = el.selectionEnd;
+      el.value = el.value.charAt(0).toUpperCase() + el.value.slice(1);
+      el.setSelectionRange(s, e);
+    }
+  }
+  function upperAll(el) {
+    const s = el.selectionStart, e = el.selectionEnd;
+    el.value = el.value.toUpperCase();
+    el.setSelectionRange(s, e);
+  }
+
   /* ── Validation helpers ── */
+  function nameReq(id, errId) {
+    const el = document.getElementById(id);
+    if (!el) return true;
+    const v = el.value.trim();
+    const ok = v.length > 0 && v.includes(' ');
+    el.classList.toggle('error', !ok);
+    if (errId) {
+      const errEl = document.getElementById(errId);
+      if (errEl) {
+        errEl.textContent = v.length === 0 ? 'Este campo es obligatorio.' : 'Por favor ingresa nombre(s) y apellidos completos.';
+        errEl.classList.toggle('show', !ok);
+      }
+    }
+    return ok;
+  }
+  function nameElReq(el) {
+    if (!el) return true;
+    const v = el.value.trim();
+    const ok = v.length > 0 && v.includes(' ');
+    el.classList.toggle('error', !ok);
+    return ok;
+  }
   function req(id, errId) {
     const el = document.getElementById(id);
     if (!el) return true;
@@ -1871,7 +2161,7 @@
     let ok = true;
 
     if (n === 1) {
-      ok &= req('v-nombre',     'err-v-nombre');
+      ok &= nameReq('v-nombre',  'err-v-nombre');
       ok &= dateReq('v-nacimiento', 'err-v-nacimiento', 1900, new Date().getFullYear());
       ok &= selReq('v-nacionalidad', 'err-v-nacionalidad');
       ok &= req('v-pasaporte',  'err-v-pasaporte');
@@ -1892,10 +2182,22 @@
         const relac  = card.querySelector('.companion-relacion');
         const nac2   = card.querySelector('.companion-nacionalidad');
         const pas    = card.querySelector('.companion-pasaporte');
-        [nombre, relac, nac2, pas].forEach(el => {
+        if (nombre && !nameElReq(nombre)) compOk = false;
+        [relac, nac2, pas].forEach(el => {
           if (el && !el.value.trim()) { el.classList.add('error'); compOk = false; }
         });
         if (nac && !dateElReq(nac, 1900, new Date().getFullYear())) compOk = false;
+        // Companion address (if "No" selected for same domicilio)
+        const addrRadio = card.querySelector('input[name="comp_mismo_domicilio[]"]:checked');
+        if (addrRadio && addrRadio.value === 'no') {
+          ['.companion-residencia', '.companion-calle', '.companion-ciudad', '.companion-provincia', '.companion-cp'].forEach(sel => {
+            const el = card.querySelector(sel);
+            if (el && !el.value.trim()) { el.classList.add('error'); compOk = false; }
+          });
+        }
+        // Companion occupation
+        const ocup = card.querySelector('.companion-ocupacion');
+        if (ocup && !ocup.value.trim()) { ocup.classList.add('error'); compOk = false; }
       });
       if (!compOk) {
         document.getElementById('err-companions').classList.add('show');
@@ -1903,7 +2205,7 @@
       }
 
     } else if (n === 3) {
-      ok &= req('a-nombre',     'err-a-nombre');
+      ok &= nameReq('a-nombre',  'err-a-nombre');
       ok &= dateReq('a-nacimiento', 'err-a-nacimiento', 1900, new Date().getFullYear());
       ok &= selReq('a-id-tipo', 'err-a-id-tipo');
       ok &= req('a-id-num',     'err-a-id-num');
@@ -1919,26 +2221,6 @@
       ok &= req('a-vinculo-detalle', 'err-a-vinculo-detalle');
 
     } else if (n === 4) {
-      const expenseGroups = ['g_hospedaje','g_alimentos','g_transporte','g_actividades','g_medicos'];
-      const expenseRows   = stepEl.querySelectorAll('.expense-row');
-      let expOk = true;
-      expenseGroups.forEach((name, i) => {
-        if (!document.querySelector(`input[name="${name}"]:checked`)) {
-          if (expenseRows[i]) expenseRows[i].classList.add('error');
-          expOk = false;
-        }
-      });
-      if (!expOk) {
-        document.getElementById('err-gastos').classList.add('show');
-        ok = false;
-      }
-      const checked = document.querySelectorAll('input[name="transporte_mx"]:checked');
-      if (checked.length === 0) {
-        document.getElementById('err-transporte').classList.add('show');
-        ok = false;
-      }
-
-    } else if (n === 5) {
       const ingreso = document.querySelector('input[name="ingreso_tipo"]:checked');
       const salida  = document.querySelector('input[name="salida_tipo"]:checked');
       if (!ingreso) { document.getElementById('err-ingreso-tipo').classList.add('show'); ok = false; }
@@ -1991,23 +2273,99 @@
         ok = false;
       } else {
         const cy = new Date().getFullYear();
-        destinos.forEach(card => {
+        let prevHasta = null;
+        destinos.forEach((card, idx) => {
           let cardOk = true;
-          ['.dest-ciudad', '.dest-actividades', '.dest-aloj-calle',
-           '.dest-aloj-colonia', '.dest-aloj-delegacion',
-           '.dest-aloj-ciudad', '.dest-aloj-estado', '.dest-aloj-cp'].forEach(sel => {
+          ['.dest-ciudad', '.dest-actividades'].forEach(sel => {
             const el = card.querySelector(sel);
             if (el && !el.value.trim()) { el.classList.add('error'); cardOk = false; ok = false; }
           });
+          // Check accommodation toggle
+          const alojRadio = card.querySelector('input[name="dest_aloj_es_anfitrion[]"]:checked');
+          if (!alojRadio) {
+            card.querySelector('.dest-aloj-toggle-err')?.classList.add('show');
+            cardOk = false; ok = false;
+          } else if (alojRadio.value === 'no') {
+            ['.dest-aloj-calle', '.dest-aloj-colonia', '.dest-aloj-delegacion',
+             '.dest-aloj-ciudad', '.dest-aloj-estado', '.dest-aloj-cp'].forEach(sel => {
+              const el = card.querySelector(sel);
+              if (el && !el.value.trim()) { el.classList.add('error'); cardOk = false; ok = false; }
+            });
+          }
           // Validate destino dates with year-range check
-          ['.dest-fecha-desde', '.dest-fecha-hasta'].forEach(sel => {
-            const el = card.querySelector(sel);
+          const desdeEl = card.querySelector('.dest-fecha-desde');
+          const hastaEl = card.querySelector('.dest-fecha-hasta');
+          [desdeEl, hastaEl].forEach(el => {
             if (!el) return;
             if (!dateElReq(el, cy, cy + 5)) { cardOk = false; ok = false; }
           });
+          // Cross-validate: destino 1 desde >= ing-fecha
+          if (idx === 0 && ingFecha && desdeEl?.value && desdeEl.value < ingFecha) {
+            desdeEl.classList.add('error');
+            cardOk = false; ok = false;
+          }
+          // Cross-validate: each destino desde >= previous destino hasta
+          if (idx > 0 && prevHasta && desdeEl?.value && desdeEl.value < prevHasta) {
+            desdeEl.classList.add('error');
+            cardOk = false; ok = false;
+          }
+          if (hastaEl?.value) prevHasta = hastaEl.value;
           const cardErr = card.querySelector('.dest-card-err');
           if (cardErr) cardErr.classList.toggle('show', !cardOk);
         });
+        // Cross-validate: sal-fecha must equal last destino hasta
+        if (salFecha && prevHasta && salFecha !== prevHasta) {
+          const salEl = document.getElementById('sal-fecha');
+          salEl?.classList.add('error');
+          const errEl = document.getElementById('err-sal-fecha');
+          if (errEl) { errEl.textContent = 'La fecha de regreso debe coincidir con la fecha de salida del último destino.'; errEl.classList.add('show'); }
+          ok = false;
+        }
+      }
+
+      // 180-day warning (non-blocking)
+      const warn180 = document.getElementById('warn-180');
+      if (warn180) {
+        if (ingFecha && salFecha && salFecha >= ingFecha) {
+          const days = Math.round((new Date(salFecha) - new Date(ingFecha)) / 86400000);
+          warn180.style.display = days > 180 ? 'block' : 'none';
+        } else {
+          warn180.style.display = 'none';
+        }
+      }
+
+    } else if (n === 5) {
+      // Hospedaje radio
+      if (!document.querySelector('input[name="g_hospedaje"]:checked')) {
+        stepEl.querySelector('.expense-row')?.classList.add('error');
+        document.getElementById('err-gastos')?.classList.add('show');
+        ok = false;
+      }
+      // Host expenses question
+      const gastosHost = document.querySelector('input[name="gastos_anfitrion"]:checked');
+      if (!gastosHost) {
+        document.getElementById('err-gastos-host')?.classList.add('show');
+        ok = false;
+      } else if (gastosHost.value === 'si') {
+        const conceptos = document.querySelectorAll('input[name="gastos_host_conceptos"]:checked');
+        if (conceptos.length === 0) {
+          document.getElementById('err-gastos-conceptos')?.classList.add('show');
+          ok = false;
+        }
+        const otroChecked = document.querySelector('input[name="gastos_host_conceptos"][value="otro"]:checked');
+        if (otroChecked) {
+          const otroText = document.getElementById('gastos-otro-texto');
+          if (!otroText || !otroText.value.trim()) {
+            if (otroText) otroText.classList.add('error');
+            ok = false;
+          }
+        }
+      }
+      // Transport checkboxes
+      const checked = document.querySelectorAll('input[name="transporte_mx"]:checked');
+      if (checked.length === 0) {
+        document.getElementById('err-transporte').classList.add('show');
+        ok = false;
       }
     }
 
@@ -2032,32 +2390,46 @@
     /* ── Companions (repeatable cards) ── */
     const companions = [];
     document.querySelectorAll('[data-companion]').forEach(card => {
-      companions.push({
+      const comp = {
         nombre:      card.querySelector('.companion-nombre')?.value.trim() || '',
         nacimiento:  card.querySelector('.companion-nacimiento')?.value || '',
-        relacion:    card.querySelector('.companion-relacion')?.value || '',
+        relacion:    card.querySelector('.companion-relacion')?.value.trim() || '',
         nacionalidad:card.querySelector('.companion-nacionalidad')?.value || '',
         pasaporte:   card.querySelector('.companion-pasaporte')?.value.trim() || '',
-      });
+        ocupacion:   card.querySelector('.companion-ocupacion')?.value.trim() || '',
+        mismo_domicilio: card.querySelector('input[name="comp_mismo_domicilio[]"]:checked')?.value || 'si',
+      };
+      if (comp.mismo_domicilio === 'no') {
+        comp.residencia = card.querySelector('.companion-residencia')?.value || '';
+        comp.calle      = card.querySelector('.companion-calle')?.value.trim() || '';
+        comp.ciudad     = card.querySelector('.companion-ciudad')?.value.trim() || '';
+        comp.provincia  = card.querySelector('.companion-provincia')?.value.trim() || '';
+        comp.cp         = card.querySelector('.companion-cp')?.value.trim() || '';
+      }
+      companions.push(comp);
     });
     if (companions.length) data.companions = companions;
 
     /* ── Destinos (repeatable cards) ── */
     const destinos = [];
     document.querySelectorAll('[data-destino]').forEach(card => {
-      destinos.push({
+      const dest = {
         ciudad:       card.querySelector('.dest-ciudad')?.value.trim() || '',
         actividades:  card.querySelector('.dest-actividades')?.value.trim() || '',
-        aloj_nombre:  card.querySelector('[name="dest_aloj_nombre[]"]')?.value.trim() || '',
-        aloj_calle:   card.querySelector('.dest-aloj-calle')?.value.trim() || '',
-        aloj_colonia: card.querySelector('.dest-aloj-colonia')?.value.trim() || '',
-        aloj_delegacion: card.querySelector('.dest-aloj-delegacion')?.value.trim() || '',
-        aloj_ciudad:  card.querySelector('.dest-aloj-ciudad')?.value.trim() || '',
-        aloj_estado:  card.querySelector('.dest-aloj-estado')?.value || '',
-        aloj_cp:      card.querySelector('.dest-aloj-cp')?.value.trim() || '',
+        aloj_es_anfitrion: card.querySelector('input[name="dest_aloj_es_anfitrion[]"]:checked')?.value || '',
         fecha_desde:  card.querySelector('.dest-fecha-desde')?.value || '',
         fecha_hasta:  card.querySelector('.dest-fecha-hasta')?.value || '',
-      });
+      };
+      if (dest.aloj_es_anfitrion === 'no') {
+        dest.aloj_nombre  = card.querySelector('[name="dest_aloj_nombre[]"]')?.value.trim() || '';
+        dest.aloj_calle   = card.querySelector('.dest-aloj-calle')?.value.trim() || '';
+        dest.aloj_colonia = card.querySelector('.dest-aloj-colonia')?.value.trim() || '';
+        dest.aloj_delegacion = card.querySelector('.dest-aloj-delegacion')?.value.trim() || '';
+        dest.aloj_ciudad  = card.querySelector('.dest-aloj-ciudad')?.value.trim() || '';
+        dest.aloj_estado  = card.querySelector('.dest-aloj-estado')?.value || '';
+        dest.aloj_cp      = card.querySelector('.dest-aloj-cp')?.value.trim() || '';
+      }
+      destinos.push(dest);
     });
     if (destinos.length) data.destinos = destinos;
 
@@ -2156,13 +2528,30 @@
         `<div class="gold-rule" style="margin-bottom:14px;"></div>` +
         `<p style="font-size:0.875rem;color:#6B7280;margin:0;">Ninguno</p></div>`;
     } else {
-      acomp = Array.from(compCards).map((card, i) => reviewCard(`Acompañante ${i + 1}`, [
-        ['Nombre', card.querySelector('.companion-nombre')?.value || '—'],
-        ['Nacimiento', card.querySelector('.companion-nacimiento')?.value || '—'],
-        ['Relación', card.querySelector('.companion-relacion')?.value || '—'],
-        ['Nacionalidad', card.querySelector('.companion-nacionalidad')?.value || '—'],
-        ['Pasaporte', card.querySelector('.companion-pasaporte')?.value || '—'],
-      ])).join('');
+      acomp = Array.from(compCards).map((card, i) => {
+        const rows = [
+          ['Nombre', card.querySelector('.companion-nombre')?.value || '—'],
+          ['Nacimiento', card.querySelector('.companion-nacimiento')?.value || '—'],
+          ['Relación', card.querySelector('.companion-relacion')?.value || '—'],
+          ['Nacionalidad', card.querySelector('.companion-nacionalidad')?.value || '—'],
+          ['Pasaporte', card.querySelector('.companion-pasaporte')?.value || '—'],
+          ['Ocupación', card.querySelector('.companion-ocupacion')?.value || '—'],
+        ];
+        const mismoDom = card.querySelector('input[name="comp_mismo_domicilio[]"]:checked')?.value || 'si';
+        if (mismoDom === 'no') {
+          const compAddr = [
+            card.querySelector('.companion-calle')?.value,
+            card.querySelector('.companion-ciudad')?.value,
+            card.querySelector('.companion-provincia')?.value,
+            card.querySelector('.companion-cp')?.value
+          ].filter(v => v).join(', ');
+          rows.push(['País de residencia', card.querySelector('.companion-residencia')?.value || '—']);
+          rows.push(['Domicilio', compAddr || '—']);
+        } else {
+          rows.push(['Domicilio', 'Mismo que el viajero principal']);
+        }
+        return reviewCard(`Acompañante ${i + 1}`, rows);
+      }).join('');
     }
 
     // Anfitrión
@@ -2182,30 +2571,52 @@
     // Gastos
     const getExp = name => { const r = document.querySelector(`input[name="${name}"]:checked`); return r ? r.value : '—'; };
     const modos = Array.from(document.querySelectorAll('input[name="transporte_mx"]:checked')).map(i => i.value).join(', ') || '—';
-    const gastos = reviewCard('Gastos', [
-      ['Hospedaje', getExp('g_hospedaje')],
-      ['Alimentos', getExp('g_alimentos')],
-      ['Transporte', getExp('g_transporte')],
-      ['Actividades', getExp('g_actividades')],
-      ['Atención médica', getExp('g_medicos')],
-      ['Transporte en México', modos],
-    ]);
+    const gastosRows = [['Hospedaje', getExp('g_hospedaje')]];
+    const gastosAnfitrion = document.querySelector('input[name="gastos_anfitrion"]:checked')?.value || '—';
+    gastosRows.push(['Gastos a cargo del anfitrión', gastosAnfitrion === 'si' ? 'Sí' : gastosAnfitrion === 'no' ? 'No' : '—']);
+    if (gastosAnfitrion === 'si') {
+      const conceptos = Array.from(document.querySelectorAll('input[name="gastos_host_conceptos"]:checked')).map(c => c.value);
+      const otroText = document.getElementById('gastos-otro-texto')?.value?.trim();
+      const conceptoLabels = conceptos.map(c => {
+        if (c === 'alimentos') return 'Alimentos';
+        if (c === 'transporte') return 'Transporte';
+        if (c === 'actividades') return 'Actividades turísticas';
+        if (c === 'medicos') return 'Gastos médicos o emergencia';
+        if (c === 'otro') return otroText ? `Otro: ${otroText}` : 'Otro';
+        return c;
+      });
+      gastosRows.push(['Conceptos cubiertos', conceptoLabels.join(', ') || '—']);
+    }
+    gastosRows.push(['Transporte en México', modos]);
+    const gastos = reviewCard('Gastos', gastosRows);
 
     // Destinos
     const destinoCards = document.querySelectorAll('[data-destino]');
     const destinosHTML = Array.from(destinoCards).map((card, i) => {
       const ciudad = card.querySelector('.dest-ciudad')?.value || '—';
-      const alojCalle = card.querySelector('.dest-aloj-calle')?.value || '—';
-      const alojCiudad = card.querySelector('.dest-aloj-ciudad')?.value || '—';
-      const estado = card.querySelector('.dest-aloj-estado')?.value || '—';
-      return reviewCard(`Destino ${i + 1} — ${ciudad}`, [
+      const alojToggle = card.querySelector('input[name="dest_aloj_es_anfitrion[]"]:checked')?.value || '';
+      const rows = [
         ['Ciudad', ciudad],
         ['Actividades', card.querySelector('.dest-actividades')?.value || '—'],
-        ['Alojamiento', card.querySelector('[name="dest_aloj_nombre[]"]')?.value || '—'],
-        ['Dirección alojamiento', [alojCalle, alojCiudad, estado].filter(v => v !== '—').join(', ') || '—'],
-        ['Llegada', card.querySelector('.dest-fecha-desde')?.value || '—'],
-        ['Salida', card.querySelector('.dest-fecha-hasta')?.value || '—'],
-      ]);
+      ];
+      if (alojToggle === 'si') {
+        rows.push(['Alojamiento', 'Dirección del anfitrión']);
+      } else {
+        const alojNombre = card.querySelector('[name="dest_aloj_nombre[]"]')?.value || '';
+        const alojAddr = [
+          card.querySelector('.dest-aloj-calle')?.value,
+          card.querySelector('.dest-aloj-colonia')?.value,
+          card.querySelector('.dest-aloj-delegacion')?.value,
+          card.querySelector('.dest-aloj-ciudad')?.value,
+          card.querySelector('.dest-aloj-estado')?.value,
+          card.querySelector('.dest-aloj-cp')?.value,
+        ].filter(v => v).join(', ');
+        if (alojNombre) rows.push(['Alojamiento', alojNombre]);
+        rows.push(['Dirección alojamiento', alojAddr || '—']);
+      }
+      rows.push(['Llegada', card.querySelector('.dest-fecha-desde')?.value || '—']);
+      rows.push(['Salida', card.querySelector('.dest-fecha-hasta')?.value || '—']);
+      return reviewCard(`Destino ${i + 1} — ${ciudad}`, rows);
     }).join('');
 
     // Vuelos / ingreso-salida
@@ -2233,12 +2644,17 @@
 
   /* ── Real-time field validation setup ── */
   function setupRealtimeValidation() {
+    // Name fields → validate on blur (require full name with space)
+    [['v-nombre','err-v-nombre'], ['a-nombre','err-a-nombre']].forEach(([id, errId]) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('blur', () => nameReq(id, errId));
+    });
     // Text / textarea → validate on blur
     [
-      ['v-nombre','err-v-nombre'], ['v-pasaporte','err-v-pasaporte'],
+      ['v-pasaporte','err-v-pasaporte'],
       ['v-residencia','err-v-residencia'], ['v-calle','err-v-domicilio'],
       ['v-ciudad','err-v-domicilio'], ['v-provincia','err-v-domicilio'], ['v-cp','err-v-domicilio'],
-      ['v-ocupacion','err-v-ocupacion'], ['a-nombre','err-a-nombre'],
+      ['v-ocupacion','err-v-ocupacion'],
       ['a-id-num','err-a-id-num'], ['a-calle','err-a-domicilio'],
       ['a-ciudad','err-a-domicilio'], ['a-cp','err-a-domicilio'],
       ['a-vinculo-detalle','err-a-vinculo-detalle'],
