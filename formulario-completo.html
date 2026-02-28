@@ -2460,6 +2460,19 @@
     const el = document.getElementById(id);
     return el ? (el.value.trim() || '—') : '—';
   }
+  function rtext(id) {
+    const el = document.getElementById(id);
+    if (!el) return '—';
+    if (el.tagName === 'SELECT') return el.selectedIndex > 0 ? el.options[el.selectedIndex].text : '—';
+    return el.value.trim() || '—';
+  }
+  function fmtDate(val) {
+    if (!val || val === '—') return '—';
+    const [y, m, d] = val.split('-');
+    return `${d}/${m}/${y}`;
+  }
+  const TIPO_INGSAL = { aereo: 'Aéreo', terrestre: 'Terrestre', maritimo: 'Marítimo' };
+  const TRANSPORTE_LABELS = { auto_rentado: 'Auto rentado', anfitrion: 'Transporte del anfitrión', transporte_publico: 'Transporte público y/o taxis', avion: 'Avión interno', autobus_foraneo: 'Autobús Foráneo' };
   function reviewCard(title, rows) {
     const items = rows.map(([label, value]) =>
       `<div><dt style="font-size:0.75rem;color:#6B7280;font-weight:500;margin-bottom:2px;">${label}</dt>` +
@@ -2475,7 +2488,7 @@
     const addr = [rval('v-calle'), rval('v-ciudad'), rval('v-provincia'), rval('v-cp')].filter(v => v !== '—').join(', ');
     const viajero = reviewCard('El viajero', [
       ['Nombre completo', rval('v-nombre')],
-      ['Fecha de nacimiento', rval('v-nacimiento')],
+      ['Fecha de nacimiento', fmtDate(rval('v-nacimiento'))],
       ['Nacionalidad', rval('v-nacionalidad')],
       ['N.º de pasaporte', rval('v-pasaporte')],
       ['País de residencia', rval('v-residencia')],
@@ -2496,7 +2509,7 @@
       acomp = Array.from(compCards).map((card, i) => {
         const rows = [
           ['Nombre', card.querySelector('.companion-nombre')?.value || '—'],
-          ['Nacimiento', card.querySelector('.companion-nacimiento')?.value || '—'],
+          ['Nacimiento', fmtDate(card.querySelector('.companion-nacimiento')?.value || '—')],
           ['Relación', card.querySelector('.companion-relacion')?.value || '—'],
           ['Nacionalidad', card.querySelector('.companion-nacionalidad')?.value || '—'],
           ['Pasaporte', card.querySelector('.companion-pasaporte')?.value || '—'],
@@ -2523,18 +2536,18 @@
     const anfiAddr = [rval('a-calle'), rval('a-colonia'), rval('a-delegacion'), rval('a-ciudad'), rval('a-estado'), rval('a-cp')].filter(v => v !== '—').join(', ');
     const anfitrion = reviewCard('El anfitrión', [
       ['Nombre completo', rval('a-nombre')],
-      ['Fecha de nacimiento', rval('a-nacimiento')],
-      ['Tipo de ID', rval('a-id-tipo')],
+      ['Fecha de nacimiento', fmtDate(rval('a-nacimiento'))],
+      ['Tipo de ID', rtext('a-id-tipo')],
       ['N.º de ID', rval('a-id-num')],
       ['Domicilio en México', anfiAddr || '—'],
       ['Teléfono', rval('a-telefono')],
-      ['Vínculo con el viajero', rval('a-vinculo')],
-      ['¿Quién llena?', rval('a-perspectiva')],
+      ['Vínculo con el viajero', rtext('a-vinculo')],
+      ['¿Quién llena?', rtext('a-perspectiva')],
       ['Detalle del vínculo', rval('a-vinculo-detalle')],
     ]);
 
     // Gastos
-    const modos = Array.from(document.querySelectorAll('input[name="transporte_mx"]:checked')).map(i => i.value).join(', ') || '—';
+    const modos = Array.from(document.querySelectorAll('input[name="transporte_mx"]:checked')).map(i => TRANSPORTE_LABELS[i.value] || i.value).join(', ') || '—';
     const gastosRows = [];
     const gastosAnfitrion = document.querySelector('input[name="gastos_anfitrion"]:checked')?.value || '—';
     gastosRows.push(['Gastos a cargo del anfitrión', gastosAnfitrion === 'si' ? 'Sí' : gastosAnfitrion === 'no' ? 'No' : '—']);
@@ -2578,8 +2591,8 @@
         if (alojNombre) rows.push(['Alojamiento', alojNombre]);
         rows.push(['Dirección alojamiento', alojAddr || '—']);
       }
-      rows.push(['Llegada', card.querySelector('.dest-fecha-desde')?.value || '—']);
-      rows.push(['Salida', card.querySelector('.dest-fecha-hasta')?.value || '—']);
+      rows.push(['Llegada', fmtDate(card.querySelector('.dest-fecha-desde')?.value || '—')]);
+      rows.push(['Salida', fmtDate(card.querySelector('.dest-fecha-hasta')?.value || '—')]);
       return reviewCard(`Destino ${i + 1} — ${ciudad}`, rows);
     }).join('');
 
@@ -2595,12 +2608,12 @@
     else if (salidaTipo === 'terrestre') salidaDetail = rval('sal-cruce');
     else if (salidaTipo === 'maritimo') salidaDetail = rval('sal-puerto');
     const vuelos = reviewCard('Entrada y salida', [
-      ['Tipo de ingreso', ingresoTipo || '—'],
+      ['Tipo de ingreso', TIPO_INGSAL[ingresoTipo] || '—'],
       ['Detalle ingreso', ingresoDetail],
-      ['Fecha de llegada', rval('ing-fecha')],
-      ['Tipo de salida', salidaTipo || '—'],
+      ['Fecha de llegada', fmtDate(rval('ing-fecha'))],
+      ['Tipo de salida', TIPO_INGSAL[salidaTipo] || '—'],
       ['Detalle salida', salidaDetail],
-      ['Fecha de regreso', rval('sal-fecha')],
+      ['Fecha de regreso', fmtDate(rval('sal-fecha'))],
     ]);
 
     document.getElementById('review-content').innerHTML = viajero + acomp + anfitrion + gastos + destinosHTML + vuelos;
@@ -2686,6 +2699,19 @@
     document.querySelectorAll('[data-dynamic-date="birth"]').forEach(el => { el.max = y + '-12-31'; });
   })();
   setupRealtimeValidation();
+
+  /* ── Auto-trim: no leading/trailing spaces ── */
+  document.querySelectorAll('input[type="text"], textarea').forEach(el => {
+    el.addEventListener('blur', () => { el.value = el.value.trim(); });
+  });
+  // Also handle dynamically added fields via delegation
+  document.addEventListener('blur', e => {
+    const el = e.target;
+    if ((el.tagName === 'INPUT' && el.type === 'text') || el.tagName === 'TEXTAREA') {
+      el.value = el.value.trim();
+    }
+  }, true);
+
   showStep(1);
   addDestino(); // start with one destination pre-filled
 </script>
