@@ -543,13 +543,14 @@
       <article class="lift rounded-2xl p-8 bg-white" style="box-shadow:0 2px 18px rgba(27,53,102,0.06);">
         <div class="icon-box mb-5">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-            <rect x="2" y="7" width="14" height="10" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
-            <path d="M16 10.5l4-1.5v5l-4-1.5" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M11 2v3M11 17v3M2 11h3M17 11h3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="11" cy="11" r="7" stroke="#C9A84C" stroke-width="1.5"/>
+            <path d="M11 7v4.5l2.5 1.5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h3 class="font-bold text-lg mb-2" style="color:var(--c-navy);">Sin complicaciones</h3>
+        <h3 class="font-bold text-lg mb-2" style="color:var(--c-navy);">¿Tu vuelo es mañana?</h3>
         <p style="color:#6B7280;line-height:1.72;font-size:0.9375rem;">
-          Sin burocracia, sin citas, sin visitas a oficinas. Todo 100% en línea desde cualquier dispositivo.
+          Sin problema. Recibes tu carta en minutos, no en días. Otros servicios requieren hasta 72 horas. Nosotros entregamos de forma inmediata, 24/7.
         </p>
       </article>
 
@@ -570,6 +571,33 @@
       </article>
 
     </div>
+  </div>
+</section>
+
+<div class="gold-rule max-w-5xl mx-auto px-6"></div>
+
+
+<!-- ════════════════════════════════════════
+     ¿SABÍAS QUE…? — SOFT FEAR SECTION
+════════════════════════════════════════ -->
+<section class="py-16 px-4 sm:px-6 bg-white" aria-labelledby="sabias-title">
+  <div class="max-w-3xl mx-auto text-center">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-6"
+         style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="#C9A84C" stroke-width="1.5"/>
+        <path d="M12 8v4.5M12 15.5v.5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h2 id="sabias-title" class="heading-display text-2xl md:text-3xl font-semibold mb-5">
+      ¿Sabías que…?
+    </h2>
+    <p class="text-base md:text-lg max-w-2xl mx-auto mb-4" style="color:#4B5563;line-height:1.75;">
+      Cada año, miles de turistas son devueltos en el aeropuerto de México porque no pudieron demostrar el motivo de su visita ni dónde se hospedarían.
+    </p>
+    <p class="text-base md:text-lg max-w-2xl mx-auto" style="color:#4B5563;line-height:1.75;">
+      Una carta de invitación es la forma más sencilla de evitar esa situación. Por menos de lo que cuesta un café en el aeropuerto, llegas con un documento que respalda tu viaje.
+    </p>
   </div>
 </section>
 
@@ -657,8 +685,11 @@
       <h2 id="pricing-title" class="heading-display text-3xl md:text-4xl font-semibold mb-4">
         Planes y Precios
       </h2>
-      <p class="text-base max-w-md mx-auto" style="color:#6B7280;line-height:1.72;">
+      <p class="text-base max-w-md mx-auto mb-3" style="color:#6B7280;line-height:1.72;">
         Sin suscripciones. Sin sorpresas. Paga solo una vez por lo que necesitas.
+      </p>
+      <p class="text-sm max-w-md mx-auto" style="color:#9CA3AF;line-height:1.6;">
+        Servicios similares con abogados migratorios cobran entre $200 y $300 USD por el mismo documento.
       </p>
     </div>
 
@@ -700,6 +731,10 @@
             PDF profesional · Descarga inmediata
           </li>
         </ul>
+
+        <p class="text-xs mb-6 text-center" style="color:#9BAFD9;">
+          ¿Te equivocaste en algún dato? Te lo corregimos sin costo.
+        </p>
 
         <a href="/formulario-esencial" class="btn-navy w-full text-base mt-auto">Obtener Plan Esencial</a>
       </article>
@@ -751,6 +786,10 @@
             Ciudades y actividades planeadas
           </li>
         </ul>
+
+        <p class="text-xs mb-6 text-center" style="color:rgba(255,255,255,0.4);">
+          ¿Te equivocaste en algún dato? Te lo corregimos sin costo.
+        </p>
 
         <a href="/formulario-completo" class="btn-gold w-full text-base mt-auto">Obtener Plan Completo</a>
       </article>
@@ -835,6 +874,12 @@
       </article>
 
     </div>
+
+    <!-- Nationality social proof -->
+    <p class="text-center mt-10 text-sm" style="color:rgba(255,255,255,0.4);">
+      Usado por viajeros de Venezuela, Colombia, Perú, Argentina, Ecuador, Bolivia, Brasil, República Dominicana y más de 15 países.
+    </p>
+
   </div>
 </section>
 
@@ -958,6 +1003,24 @@
                itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
             <div itemprop="text">
               Sí. Los datos del formulario se transmiten de forma segura (HTTPS). Los pagos se procesan exclusivamente por Stripe, uno de los procesadores más seguros del mundo. No almacenamos datos de tarjetas de crédito.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <details>
+          <summary class="flex items-center justify-between gap-4 px-6 py-5 font-semibold"
+                   style="color:var(--c-navy);">
+            <span itemprop="name">¿Necesito que la carta esté notariada?</span>
+            <svg class="faq-arrow" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path d="M4.5 7L9 11.5l4.5-4.5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 pt-1 text-sm" style="color:#6B7280;line-height:1.75;"
+               itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">
+              No. No existe base legal que indique que una carta notariada tenga mayor validez ante el INM que una carta firmada correctamente. Lo importante es que el documento contenga la información correcta, esté bien redactado, incluya todos los detalles del viaje y sea coherente con lo que declares en el filtro migratorio. Eso es exactamente lo que nuestro servicio garantiza.
             </div>
           </div>
         </details>
@@ -1115,7 +1178,7 @@
     </h2>
 
     <p class="text-lg mb-10 max-w-xl mx-auto" style="color:rgba(255,255,255,0.65);line-height:1.72;font-weight:300;">
-      Únete a más de 2,400 viajeros que llegaron a México con su documentación en orden. Proceso 100% en línea, desde $5 USD.
+      No dejes tu tranquilidad al azar. En menos de 5 minutos tendrás un documento profesional que respalda tu viaje. Si migración te pide algo, ya lo tienes.
     </p>
 
     <a href="#planes-cards" class="btn-gold gap-3 text-base" style="font-size:1.05rem;">
@@ -1319,6 +1382,14 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Sí. Los datos del formulario se transmiten de forma segura (HTTPS). Los pagos se procesan exclusivamente por Stripe, uno de los procesadores más seguros del mundo. No almacenamos datos de tarjetas de crédito."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Necesito que la carta esté notariada?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. No existe base legal que indique que una carta notariada tenga mayor validez ante el INM que una carta firmada correctamente. Lo importante es que el documento contenga la información correcta, esté bien redactado, incluya todos los detalles del viaje y sea coherente con lo que declares en el filtro migratorio."
       }
     },
     {
