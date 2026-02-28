@@ -551,24 +551,33 @@
 <!-- ════════════════════════════════════════
      ¿SABÍAS QUE…? — SOFT FEAR SECTION
 ════════════════════════════════════════ -->
-<section class="py-16 px-4 sm:px-6 bg-white" aria-labelledby="sabias-title">
-  <div class="max-w-3xl mx-auto text-center">
-    <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-6"
-         style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <circle cx="12" cy="12" r="10" stroke="#C9A84C" stroke-width="1.5"/>
-        <path d="M12 8v4.5M12 15.5v.5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
+<section class="py-16 px-4 sm:px-6 grain relative overflow-hidden" style="background:var(--c-navy);" aria-labelledby="sabias-title">
+  <div class="seal-ring-1" style="width:400px;height:400px;top:-100px;right:-100px;"></div>
+  <div class="max-w-4xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+
+      <!-- Left: stat -->
+      <div class="text-center md:text-left">
+        <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:var(--c-gold);letter-spacing:0.12em;">¿Sabías que…?</p>
+        <p class="font-display text-5xl md:text-6xl font-bold mb-3" style="color:white;line-height:1.1;">
+          Miles <span style="color:var(--c-gold);">de turistas</span>
+        </p>
+        <p class="text-lg md:text-xl font-medium" style="color:rgba(255,255,255,0.7);line-height:1.5;" id="sabias-title">
+          son devueltos cada año en el aeropuerto de México.
+        </p>
+      </div>
+
+      <!-- Right: explanation + CTA -->
+      <div class="rounded-2xl p-7 md:p-8" style="background:rgba(255,255,255,0.06);border:1px solid rgba(201,168,76,0.15);">
+        <p class="text-base mb-4" style="color:rgba(255,255,255,0.85);line-height:1.75;">
+          No pudieron demostrar el motivo de su visita ni dónde se hospedarían. Una carta de invitación evita esa situación.
+        </p>
+        <p class="text-sm font-medium" style="color:var(--c-gold);">
+          Por menos de lo que cuesta un café en el aeropuerto, llegas respaldado.
+        </p>
+      </div>
+
     </div>
-    <h2 id="sabias-title" class="heading-display text-2xl md:text-3xl font-semibold mb-5">
-      ¿Sabías que…?
-    </h2>
-    <p class="text-base md:text-lg max-w-2xl mx-auto mb-4" style="color:#4B5563;line-height:1.75;">
-      Cada año, miles de turistas son devueltos en el aeropuerto de México porque no pudieron demostrar el motivo de su visita ni dónde se hospedarían.
-    </p>
-    <p class="text-base md:text-lg max-w-2xl mx-auto" style="color:#4B5563;line-height:1.75;">
-      Una carta de invitación es la forma más sencilla de evitar esa situación. Por menos de lo que cuesta un café en el aeropuerto, llegas con un documento que respalda tu viaje.
-    </p>
   </div>
 </section>
 
@@ -1035,12 +1044,6 @@
 
     </div>
 
-    <div class="text-center mt-10">
-      <a href="/#faq" class="text-sm font-semibold" style="color:var(--c-gold);">
-        Ver todas las preguntas frecuentes →
-      </a>
-    </div>
-
   </div>
 </section>
 
@@ -1128,6 +1131,13 @@
       </article>
 
     </div>
+
+    <div class="text-center mt-10">
+      <a href="/articulos" class="text-sm font-semibold" style="color:var(--c-gold);">
+        Ver todos los artículos →
+      </a>
+    </div>
+
   </div>
 </section>
 
