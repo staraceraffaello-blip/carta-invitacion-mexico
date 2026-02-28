@@ -467,7 +467,7 @@
 
               <div>
                 <label class="form-label" for="v-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
-                <input type="date" id="v-nacimiento" name="v_nacimiento" class="form-input" required min="1900-01-01" max="2026-12-31">
+                <input type="date" id="v-nacimiento" name="v_nacimiento" class="form-input" required min="1900-01-01" data-dynamic-date="birth">
                 <p class="form-error" id="err-v-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
               </div>
 
@@ -803,7 +803,7 @@
 
               <div>
                 <label class="form-label" for="a-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
-                <input type="date" id="a-nacimiento" name="a_nacimiento" class="form-input" required min="1900-01-01" max="2026-12-31">
+                <input type="date" id="a-nacimiento" name="a_nacimiento" class="form-input" required min="1900-01-01" data-dynamic-date="birth">
                 <p class="form-hint">El anfitrión debe ser mayor de edad (18 años o más).</p>
                 <p class="form-error" id="err-a-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
               </div>
@@ -1145,7 +1145,7 @@
 
                 <div>
                   <label class="form-label" for="ing-fecha">Fecha de llegada a México <span class="req">*</span></label>
-                  <input type="date" id="ing-fecha" name="ing_fecha" class="form-input" required min="2026-01-01" max="2031-12-31">
+                  <input type="date" id="ing-fecha" name="ing_fecha" class="form-input" required data-dynamic-date="travel">
                   <p class="form-error" id="err-ing-fecha">Por favor indica la fecha de llegada.</p>
                 </div>
 
@@ -1228,7 +1228,7 @@
 
                 <div>
                   <label class="form-label" for="sal-fecha">Fecha de regreso <span class="req">*</span></label>
-                  <input type="date" id="sal-fecha" name="sal_fecha" class="form-input" required min="2026-01-01" max="2031-12-31">
+                  <input type="date" id="sal-fecha" name="sal_fecha" class="form-input" required data-dynamic-date="travel">
                   <p class="form-error" id="err-sal-fecha">Por favor indica la fecha de regreso.</p>
                   <p class="form-error" id="warn-180" style="color:#991B1B;display:none;">⚠ La estancia máxima para turismo en México es de 180 días.</p>
                 </div>
@@ -1382,7 +1382,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label class="form-label">Fecha de nacimiento <span class="req">*</span></label>
-          <input type="date" name="comp_nacimiento[]" class="form-input companion-nacimiento" required min="1900-01-01" max="2026-12-31">
+          <input type="date" name="comp_nacimiento[]" class="form-input companion-nacimiento" required min="1900-01-01" data-dynamic-date="birth">
         </div>
         <div>
           <label class="form-label">Relación con el viajero principal <span class="req">*</span></label>
@@ -1717,11 +1717,11 @@
         <div class="date-range">
           <div>
             <p class="text-xs mb-1.5" style="color:#6B7280;">Llegada</p>
-            <input type="date" name="dest_fecha_desde[]" class="form-input dest-fecha-desde" required min="2026-01-01" max="2031-12-31">
+            <input type="date" name="dest_fecha_desde[]" class="form-input dest-fecha-desde" required data-dynamic-date="travel">
           </div>
           <div>
             <p class="text-xs mb-1.5" style="color:#6B7280;">Salida</p>
-            <input type="date" name="dest_fecha_hasta[]" class="form-input dest-fecha-hasta" required min="2026-01-01" max="2031-12-31">
+            <input type="date" name="dest_fecha_hasta[]" class="form-input dest-fecha-hasta" required data-dynamic-date="travel">
           </div>
         </div>
       </div>
@@ -1876,6 +1876,8 @@
           document.getElementById('err-companions')?.classList.remove('show');
       });
     });
+    // Set dynamic max on companion birth date inputs
+    card.querySelectorAll('[data-dynamic-date="birth"]').forEach(el => { el.max = new Date().getFullYear() + '-12-31'; });
     // Companion birth date: validate on change + input with year-range check
     card.querySelectorAll('.companion-nacimiento').forEach(el => {
       const validate = () => {
@@ -1919,6 +1921,9 @@
     card.querySelectorAll('.dest-ciudad,.dest-actividades,.dest-aloj-calle,.dest-aloj-ciudad').forEach(el => {
       el.addEventListener('blur', () => el.classList.toggle('error', !el.value.trim()));
     });
+    // Set dynamic min/max on new destino date inputs
+    const dy = new Date().getFullYear();
+    card.querySelectorAll('[data-dynamic-date="travel"]').forEach(el => { el.min = dy + '-01-01'; el.max = (dy + 5) + '-12-31'; });
     // Destino dates: validate on change + input with year-range check
     card.querySelectorAll('.dest-fecha-desde,.dest-fecha-hasta').forEach(el => {
       const validate = () => {
@@ -2662,6 +2667,12 @@
   }
 
   /* ── Init: add first destino automatically ── */
+  // Set dynamic min/max on travel date inputs
+  (function() {
+    const y = new Date().getFullYear();
+    document.querySelectorAll('[data-dynamic-date="travel"]').forEach(el => { el.min = y + '-01-01'; el.max = (y + 5) + '-12-31'; });
+    document.querySelectorAll('[data-dynamic-date="birth"]').forEach(el => { el.max = y + '-12-31'; });
+  })();
   setupRealtimeValidation();
   showStep(1);
   addDestino(); // start with one destination pre-filled
