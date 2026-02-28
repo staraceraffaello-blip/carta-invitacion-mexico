@@ -1724,6 +1724,7 @@
             <input type="date" name="dest_fecha_hasta[]" class="form-input dest-fecha-hasta" required data-dynamic-date="travel">
           </div>
         </div>
+        <p class="form-error dest-date-err"></p>
       </div>
     </div>
   </div>
@@ -2254,20 +2255,31 @@
           // Validate destino dates with year-range check
           const desdeEl = card.querySelector('.dest-fecha-desde');
           const hastaEl = card.querySelector('.dest-fecha-hasta');
+          const dateErr = card.querySelector('.dest-date-err');
+          let dateMsg = '';
           [desdeEl, hastaEl].forEach(el => {
             if (!el) return;
-            if (!dateElReq(el, cy, cy + 5)) { cardOk = false; ok = false; }
+            if (!dateElReq(el, cy, cy + 5)) { cardOk = false; ok = false; if (!dateMsg) dateMsg = 'Por favor ingresa fechas válidas de estadía.'; }
           });
           // Cross-validate: destino 1 desde >= ing-fecha
           if (idx === 0 && ingFecha && desdeEl?.value && desdeEl.value < ingFecha) {
             desdeEl.classList.add('error');
             cardOk = false; ok = false;
+            dateMsg = 'La fecha de llegada al destino no puede ser anterior a la fecha de ingreso a México.';
           }
           // Cross-validate: each destino desde >= previous destino hasta
           if (idx > 0 && prevHasta && desdeEl?.value && desdeEl.value < prevHasta) {
             desdeEl.classList.add('error');
             cardOk = false; ok = false;
+            dateMsg = 'La fecha de llegada debe ser igual o posterior a la fecha de salida del destino anterior.';
           }
+          // Cross-validate: hasta >= desde within same destino
+          if (desdeEl?.value && hastaEl?.value && hastaEl.value < desdeEl.value) {
+            hastaEl.classList.add('error');
+            cardOk = false; ok = false;
+            dateMsg = 'La fecha de salida del destino debe ser igual o posterior a la fecha de llegada.';
+          }
+          if (dateErr) { dateErr.textContent = dateMsg; dateErr.classList.toggle('show', !!dateMsg); }
           if (hastaEl?.value) prevHasta = hastaEl.value;
           const cardErr = card.querySelector('.dest-card-err');
           if (cardErr) cardErr.classList.toggle('show', !cardOk);
