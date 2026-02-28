@@ -2064,6 +2064,26 @@
         el.addEventListener('input', validate);
       }
     });
+    // Cross-validate sal-fecha vs ing-fecha in real time
+    const ingEl = document.getElementById('ing-fecha');
+    const salEl = document.getElementById('sal-fecha');
+    const crossValidateDates = () => {
+      if (!ingEl?.value || !salEl?.value) return;
+      const errEl = document.getElementById('err-sal-fecha');
+      const warn180 = document.getElementById('warn-180');
+      if (salEl.value < ingEl.value) {
+        salEl.classList.add('error');
+        if (errEl) { errEl.textContent = 'La fecha de regreso debe ser igual o posterior a la fecha de llegada.'; errEl.classList.add('show'); }
+        if (warn180) warn180.style.display = 'none';
+      } else {
+        salEl.classList.remove('error');
+        if (errEl) errEl.classList.remove('show');
+        const days = Math.round((new Date(salEl.value) - new Date(ingEl.value)) / 86400000);
+        if (warn180) warn180.style.display = days > 180 ? 'block' : 'none';
+      }
+    };
+    if (ingEl) { ingEl.addEventListener('change', crossValidateDates); ingEl.addEventListener('input', crossValidateDates); }
+    if (salEl) { salEl.addEventListener('change', crossValidateDates); salEl.addEventListener('input', crossValidateDates); }
     // Select inputs → validate on change
     [
       ['v-nacionalidad','err-v-nacionalidad'],
