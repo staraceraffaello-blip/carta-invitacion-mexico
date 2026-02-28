@@ -9,6 +9,9 @@ node_modules/
 .env.local
 .env.production
 
+# Tailwind build output
+dist/
+
 # Vercel
 .vercel
 
