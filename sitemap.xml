@@ -131,7 +131,6 @@
     <priority>0.7</priority>
   </url>
 
-
   <!-- Páginas legales -->
   <url>
     <loc>https://cartadeinvitacionmexico.com/privacidad</loc>
@@ -141,7 +140,7 @@
   </url>
   <url>
     <loc>https://cartadeinvitacionmexico.com/terminos</loc>
-    <lastmod>2026-02-27</lastmod>
+    <lastmod>2025-06-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
