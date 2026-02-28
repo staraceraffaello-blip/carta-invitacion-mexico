@@ -966,26 +966,6 @@
               <strong>💡 Nota:</strong> Si el visitante cubre total o parcialmente sus propios gastos, se recomienda que pueda comprobar el equivalente de al menos <strong>USD $50 por día</strong> con efectivo, estado de cuenta bancario o de tarjeta.
             </div>
 
-            <!-- Hospedaje -->
-            <div class="rounded-xl overflow-hidden mb-7" style="border:1.5px solid rgba(27,53,102,0.1);">
-              <div class="px-4 py-3 flex items-center justify-between"
-                   style="background:rgba(27,53,102,0.04);border-bottom:1px solid rgba(27,53,102,0.08);">
-                <span class="text-xs font-bold uppercase tracking-wider" style="color:var(--c-mid);">Concepto</span>
-                <span class="text-xs font-bold uppercase tracking-wider" style="color:var(--c-mid);">¿Quién cubre?</span>
-              </div>
-              <div class="px-4 bg-white">
-                <div class="expense-row">
-                  <span class="expense-concept">🏨 Hospedaje</span>
-                  <div class="expense-options">
-                    <label class="exp-radio"><input type="radio" name="g_hospedaje" value="visitante">Visitante</label>
-                    <label class="exp-radio"><input type="radio" name="g_hospedaje" value="anfitrion">Anfitrión</label>
-                    <label class="exp-radio"><input type="radio" name="g_hospedaje" value="ambos">Ambos</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p class="form-error" id="err-gastos">Por favor selecciona quién cubre el hospedaje.</p>
-
             <!-- Host expenses question -->
             <div class="space-y-5">
               <div>
@@ -2309,12 +2289,6 @@
       }
 
     } else if (n === 5) {
-      // Hospedaje radio
-      if (!document.querySelector('input[name="g_hospedaje"]:checked')) {
-        stepEl.querySelector('.expense-row')?.classList.add('error');
-        document.getElementById('err-gastos')?.classList.add('show');
-        ok = false;
-      }
       // Host expenses question
       const gastosHost = document.querySelector('input[name="gastos_anfitrion"]:checked');
       if (!gastosHost) {
@@ -2543,9 +2517,8 @@
     ]);
 
     // Gastos
-    const getExp = name => { const r = document.querySelector(`input[name="${name}"]:checked`); return r ? r.value : '—'; };
     const modos = Array.from(document.querySelectorAll('input[name="transporte_mx"]:checked')).map(i => i.value).join(', ') || '—';
-    const gastosRows = [['Hospedaje', getExp('g_hospedaje')]];
+    const gastosRows = [];
     const gastosAnfitrion = document.querySelector('input[name="gastos_anfitrion"]:checked')?.value || '—';
     gastosRows.push(['Gastos a cargo del anfitrión', gastosAnfitrion === 'si' ? 'Sí' : gastosAnfitrion === 'no' ? 'No' : '—']);
     if (gastosAnfitrion === 'si') {
