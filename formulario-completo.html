@@ -753,7 +753,7 @@
                 <label class="form-label" for="v-ocupacion">Actividad profesional u ocupación <span class="req">*</span></label>
                 <input type="text" id="v-ocupacion" name="v_ocupacion" class="form-input"
                        placeholder="Ej. Ingeniero, Estudiante, Comerciante…" required>
-                <p class="form-hint">En tu país de residencia.</p>
+                <p class="form-hint">En tu país de residencia. Tu actividad profesional ayuda a demostrar que tienes motivos para regresar después del viaje.</p>
                 <p class="form-error" id="err-v-ocupacion">Por favor ingresa tu ocupación.</p>
               </div>
 
@@ -969,6 +969,22 @@
               </div>
 
               <div>
+                <label class="form-label" for="a-email">Correo electrónico del anfitrión <span class="req">*</span></label>
+                <input type="email" id="a-email" name="a_email" class="form-input"
+                       placeholder="anfitrion@ejemplo.com" required autocomplete="email">
+                <p class="form-hint">Un correo de contacto que aparecerá en la carta.</p>
+                <p class="form-error" id="err-a-email">Por favor ingresa un correo electrónico válido.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-ocupacion">Ocupación o cargo del anfitrión <span class="req">*</span></label>
+                <input type="text" id="a-ocupacion" name="a_ocupacion" class="form-input"
+                       placeholder="Ej. Ingeniero en Pemex, Gerente en Grupo Bimbo, Médico independiente…" required>
+                <p class="form-hint">Esto ayuda a demostrar estabilidad y respaldo económico ante migración.</p>
+                <p class="form-error" id="err-a-ocupacion">Por favor ingresa la ocupación del anfitrión.</p>
+              </div>
+
+              <div>
                 <label class="form-label" for="a-vinculo">Vínculo con el viajero <span class="req">*</span></label>
                 <select id="a-vinculo" name="a_vinculo" class="form-input" required>
                   <option value="" disabled selected>¿Cuál es tu relación?</option>
@@ -995,10 +1011,55 @@
               <div>
                 <label class="form-label" for="a-vinculo-detalle">Describe brevemente el vínculo <span class="req">*</span></label>
                 <textarea id="a-vinculo-detalle" name="a_vinculo_detalle" class="form-input"
-                          placeholder="Ej. Relación de amistad de 10 años · Tío de mi esposa · Compañeros de universidad desde 2015…"
+                          placeholder="Ej. Amigos de la universidad · Tío de mi esposa · Compañeros de trabajo en la misma empresa…"
                           required rows="2"></textarea>
                 <p class="form-hint warn">⚠ Entre más detalle proporciones sobre la relación, más personalizada y convincente será tu carta de invitación.</p>
                 <p class="form-error" id="err-a-vinculo-detalle">Por favor describe el vínculo entre ambas personas.</p>
+              </div>
+
+              <div>
+                <label class="form-label">¿Desde hace cuánto se conocen? <span class="req">*</span></label>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                  <div>
+                    <select id="a-tiempo-anios" name="a_tiempo_anios" class="form-input" required>
+                      <option value="" disabled selected>Años</option>
+                      <option value="0">Menos de 1 año</option>
+                      <option value="1">1 año</option>
+                      <option value="2">2 años</option>
+                      <option value="3">3 años</option>
+                      <option value="4">4 años</option>
+                      <option value="5">5 años</option>
+                      <option value="6">6 años</option>
+                      <option value="7">7 años</option>
+                      <option value="8">8 años</option>
+                      <option value="9">9 años</option>
+                      <option value="10">10 años</option>
+                      <option value="15">10–15 años</option>
+                      <option value="20">15–20 años</option>
+                      <option value="25">20–25 años</option>
+                      <option value="30">25–30 años</option>
+                      <option value="99">Más de 30 años</option>
+                    </select>
+                  </div>
+                  <div>
+                    <select id="a-tiempo-meses" name="a_tiempo_meses" class="form-input" required>
+                      <option value="" disabled selected>Meses</option>
+                      <option value="0">0 meses</option>
+                      <option value="1">1 mes</option>
+                      <option value="2">2 meses</option>
+                      <option value="3">3 meses</option>
+                      <option value="4">4 meses</option>
+                      <option value="5">5 meses</option>
+                      <option value="6">6 meses</option>
+                      <option value="7">7 meses</option>
+                      <option value="8">8 meses</option>
+                      <option value="9">9 meses</option>
+                      <option value="10">10 meses</option>
+                      <option value="11">11 meses</option>
+                    </select>
+                  </div>
+                </div>
+                <p class="form-error" id="err-a-tiempo">Por favor indica el tiempo aproximado de la relación.</p>
               </div>
 
             </div>
@@ -1309,6 +1370,7 @@
                   <input type="date" id="sal-fecha" name="sal_fecha" class="form-input" required data-dynamic-date="travel">
                   <p class="form-error" id="err-sal-fecha">Por favor indica la fecha de regreso.</p>
                   <p class="form-error" id="warn-180" style="color:#991B1B;display:none;">⚠ La estancia máxima para turismo en México es de 180 días.</p>
+                  <p class="form-hint warn">⚠ Asegúrate de que estas fechas coincidan exactamente con tus boletos de avión o transporte. El agente migratorio verificará la coherencia.</p>
                 </div>
 
               </div>
@@ -1384,8 +1446,15 @@
               <!-- Populated by buildReview() -->
             </div>
 
+            <!-- Responsibility note -->
+            <div class="rounded-xl p-4 mt-6 mb-4" style="background:#F0F4FF;border-left:3px solid var(--c-navy);">
+              <p class="text-xs" style="color:#374151;line-height:1.65;margin:0;">
+                <strong style="color:var(--c-navy);">Nota:</strong> Al generar esta carta, el anfitrión declara que la información proporcionada es verídica y se compromete a recibir al visitante durante las fechas indicadas. Es importante que toda la información coincida con lo que el viajero declare ante el agente migratorio.
+              </p>
+            </div>
+
             <!-- CTA box — repeated at the bottom after review cards -->
-            <div class="rounded-2xl p-5 mt-6" style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);">
+            <div class="rounded-2xl p-5" style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);">
               <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">¿Todo correcto?</p>
               <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Revisa tus datos abajo y confirma para proceder al pago seguro. Tu carta PDF llegará a tu correo en minutos.</p>
               <div class="flex items-center gap-2 text-xs mb-5" style="color:#6B7280;">
@@ -2276,9 +2345,13 @@
       ok &= selReq('a-estado',    'err-a-domicilio');
       ok &= req('a-cp',           'err-a-domicilio');
       ok &= phoneReq('a-telefono', 'err-a-telefono');
+      ok &= emailReq('a-email', 'err-a-email');
+      ok &= req('a-ocupacion',  'err-a-ocupacion');
       ok &= selReq('a-vinculo',   'err-a-vinculo');
       ok &= selReq('a-perspectiva', 'err-a-perspectiva');
       ok &= req('a-vinculo-detalle', 'err-a-vinculo-detalle');
+      ok &= selReq('a-tiempo-anios', 'err-a-tiempo');
+      ok &= selReq('a-tiempo-meses', 'err-a-tiempo');
 
     } else if (n === 4) {
       const ingreso = document.querySelector('input[name="ingreso_tipo"]:checked');
@@ -2801,13 +2874,31 @@
   setupRealtimeValidation();
 
   /* ── Auto-trim: no leading/trailing spaces ── */
-  document.querySelectorAll('input[type="text"], textarea').forEach(el => {
+  function applyTrimListeners(el) {
+    el.addEventListener('input', () => {
+      const start = el.selectionStart;
+      const before = el.value;
+      el.value = el.value.replace(/^\s+/, '');
+      const diff = before.length - el.value.length;
+      el.selectionStart = el.selectionEnd = Math.max(0, start - diff);
+    });
     el.addEventListener('blur', () => { el.value = el.value.trim(); });
-  });
+  }
+  document.querySelectorAll('input[type="text"], input[type="email"], textarea').forEach(applyTrimListeners);
   // Also handle dynamically added fields via delegation
+  document.addEventListener('input', e => {
+    const el = e.target;
+    if ((el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'email')) || el.tagName === 'TEXTAREA') {
+      const start = el.selectionStart;
+      const before = el.value;
+      el.value = el.value.replace(/^\s+/, '');
+      const diff = before.length - el.value.length;
+      el.selectionStart = el.selectionEnd = Math.max(0, start - diff);
+    }
+  }, true);
   document.addEventListener('blur', e => {
     const el = e.target;
-    if ((el.tagName === 'INPUT' && el.type === 'text') || el.tagName === 'TEXTAREA') {
+    if ((el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'email')) || el.tagName === 'TEXTAREA') {
       el.value = el.value.trim();
     }
   }, true);
