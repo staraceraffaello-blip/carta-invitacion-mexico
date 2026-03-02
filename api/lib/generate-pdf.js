@@ -101,14 +101,36 @@ export default function generatePDF(formData, plan) {
     const hostIdNum = d['a-id-num'] || '';
     const hostAddr = [d['a-calle'], d['a-colonia'], d['a-delegacion'], d['a-ciudad'], d['a-estado'], d['a-cp']].filter(Boolean).join(', ');
     const vinculo = d['a-vinculo'] || 'conocido';
+    const hostOcupacion = d['a-ocupacion'] || '';
+    const hostEmpresa = d['a-empresa'] || '';
+    const tiempoAnios = parseInt(d['a-tiempo-anios'], 10) || 0;
+    const tiempoMeses = parseInt(d['a-tiempo-meses'], 10) || 0;
+    const tiempoStr = tiempoAnios >= 99 ? 'más de 30 años'
+      : tiempoAnios > 0 && tiempoMeses > 0 ? `${tiempoAnios} año${tiempoAnios > 1 ? 's' : ''} y ${tiempoMeses} mes${tiempoMeses > 1 ? 'es' : ''}`
+      : tiempoAnios > 0 ? `${tiempoAnios} año${tiempoAnios > 1 ? 's' : ''}`
+      : tiempoMeses > 0 ? `${tiempoMeses} mes${tiempoMeses > 1 ? 'es' : ''}`
+      : '';
 
     doc.fontSize(10).fillColor('#1F2937').font('Helvetica')
       .text(
         `Yo, ${hostName}, con ${hostIdTipo} número ${hostIdNum}, ` +
-        `con domicilio en ${hostAddr}, por medio de la presente me permito extender una cordial ` +
+        `con domicilio en ${hostAddr}` +
+        `${hostOcupacion ? ', de ocupación ' + hostOcupacion + (hostEmpresa ? ' en ' + hostEmpresa : '') : ''}, ` +
+        `por medio de la presente me permito extender una cordial ` +
         `invitación a la(s) persona(s) que a continuación se detalla(n), con quien(es) mantengo una ` +
-        `relación de ${vinculo}, para que visite(n) los Estados Unidos Mexicanos con fines turísticos ` +
+        `relación de ${vinculo}` +
+        `${tiempoStr ? ' desde hace aproximadamente ' + tiempoStr : ''}, ` +
+        `para que visite(n) los Estados Unidos Mexicanos con fines turísticos ` +
         `y/o personales.`,
+        { lineGap: 3 }
+      );
+    doc.moveDown(0.6);
+
+    doc.fontSize(10).fillColor('#1F2937').font('Helvetica')
+      .text(
+        `Me comprometo a brindar hospedaje durante su estancia, a hacerme responsable de sus actos ` +
+        `durante su permanencia en territorio mexicano y a asegurar que retorne(n) a su país de origen ` +
+        `al finalizar su visita.`,
         { lineGap: 3 }
       );
     doc.moveDown(1);
@@ -162,7 +184,11 @@ export default function generatePDF(formData, plan) {
     field('Identificación:', `${hostIdTipo} — ${hostIdNum}`);
     field('Domicilio:', hostAddr);
     field('Teléfono de contacto:', d['a-telefono']);
+    if (d['a-email']) field('Correo electrónico:', d['a-email']);
+    if (hostOcupacion) field('Ocupación / cargo:', hostOcupacion);
+    if (hostEmpresa) field('Empresa / lugar de trabajo:', hostEmpresa);
     field('Vínculo con el visitante:', vinculo);
+    if (tiempoStr) field('Tiempo de conocerse:', tiempoStr);
 
     /* ─── Trip details ─── */
     if (plan === 'esencial') {

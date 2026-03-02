@@ -959,6 +959,12 @@
               </div>
 
               <div>
+                <label class="form-label" for="a-empresa">Empresa o lugar de trabajo <span class="text-xs font-normal" style="color:#6B7280;">(opcional)</span></label>
+                <input type="text" id="a-empresa" name="a_empresa" class="form-input"
+                       placeholder="Ej. Pemex, Grupo Bimbo, Hospital Ángeles, Independiente…">
+              </div>
+
+              <div>
                 <label class="form-label" for="a-vinculo">Vínculo con el viajero <span class="req">*</span></label>
                 <select id="a-vinculo" name="a_vinculo" class="form-input" required>
                   <option value="" disabled selected>¿Cuál es tu relación?</option>
@@ -2140,6 +2146,9 @@
 
     // Anfitrión
     const anfiAddr = [rval('a-calle'), rval('a-colonia'), rval('a-delegacion'), rval('a-ciudad'), rval('a-estado'), rval('a-cp')].filter(v => v !== '—').join(', ');
+    const tiempoAnios = rtext('a-tiempo-anios');
+    const tiempoMeses = rtext('a-tiempo-meses');
+    const tiempoStr = (tiempoAnios !== '—' || tiempoMeses !== '—') ? `${tiempoAnios}${tiempoMeses !== '—' && tiempoMeses !== '0 meses' ? ', ' + tiempoMeses : ''}` : '—';
     const anfitrion = reviewCard('El anfitrión', [
       ['Nombre completo', rval('a-nombre')],
       ['Fecha de nacimiento', fmtDate(rval('a-nacimiento'))],
@@ -2147,9 +2156,13 @@
       ['N.º de ID', rval('a-id-num')],
       ['Domicilio en México', anfiAddr || '—'],
       ['Teléfono', rval('a-telefono')],
+      ['Correo electrónico', rval('a-email')],
+      ['Ocupación / cargo', rval('a-ocupacion')],
+      ['Empresa', rval('a-empresa') !== '—' ? rval('a-empresa') : '—'],
       ['Vínculo con el viajero', rtext('a-vinculo')],
       ['¿Quién llena?', rtext('a-perspectiva')],
       ['Detalle del vínculo', rval('a-vinculo-detalle')],
+      ['Tiempo de conocerse', tiempoStr],
     ]);
 
     // El viaje
@@ -2225,6 +2238,7 @@
       ['a-id-num','err-a-id-num'], ['a-calle','err-a-domicilio'],
       ['a-ciudad','err-a-domicilio'], ['a-cp','err-a-domicilio'],
       ['a-vinculo-detalle','err-a-vinculo-detalle'],
+      ['a-ocupacion','err-a-ocupacion'],
       ['j-actividades','err-j-actividades'], ['j-al-calle','err-j-alojamiento'],
       ['j-al-delegacion','err-j-alojamiento'], ['j-al-ciudad','err-j-alojamiento'], ['j-al-cp','err-j-alojamiento'],
     ].forEach(([id, errId]) => {

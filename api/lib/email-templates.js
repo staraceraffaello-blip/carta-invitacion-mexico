@@ -273,10 +273,21 @@ export function deliveryConfirmation({ guestName, planLabel, orderDate, orderId 
       summaryRow('Orden', orderId || '\u2014', { mono: true }),
     ].join('')),
 
-    calloutBox('Recomendaciones', [
-      'Imprime la carta o tenla disponible en tu celular al momento de llegar a M\u00E9xico.',
-      'Lleva tambi\u00E9n copia de la identificaci\u00F3n del anfitri\u00F3n y comprobante de domicilio.',
-      'Ten a la mano tu reservaci\u00F3n de vuelo de regreso y comprobante de hospedaje.',
+    calloutBox('Pasos importantes', [
+      '<strong>Imprime</strong> la carta y <strong>f\u00EDrmala con tinta azul</strong> (la firma es del anfitri\u00F3n).',
+      'Escanea el documento firmado y env\u00EDalo al viajero.',
+      'El viajero debe <strong>imprimir la carta firmada</strong> y llevarla al momento de su viaje.',
+    ]),
+
+    calloutBox('Documentos recomendados para acompa\u00F1ar la carta', [
+      '<strong>Del anfitri\u00F3n:</strong> Copia de identificaci\u00F3n oficial (INE o pasaporte), comprobante de domicilio reciente, comprobante de empleo o ingresos (opcional pero recomendado).',
+      '<strong>Del viajero:</strong> Pasaporte vigente, boletos de avi\u00F3n ida y vuelta, comprobante de empleo o negocio en su pa\u00EDs de origen, estados de cuenta bancarios o tarjetas de cr\u00E9dito.',
+    ]),
+
+    calloutBox('Prep\u00E1rate para el filtro migratorio', [
+      '<strong>Memoriza</strong> los datos clave de la carta: direcci\u00F3n del anfitri\u00F3n, su ocupaci\u00F3n, las fechas exactas del viaje y las actividades planeadas.',
+      'El agente migratorio puede hacer preguntas para verificar que tus respuestas <strong>coincidan con la carta</strong>.',
+      'Mant\u00E9n la calma, s\u00E9 honesto y coherente con la informaci\u00F3n que presentas.',
     ]),
 
     goldButton('Visitar nuestro sitio', 'https://cartadeinvitacionmexico.com'),
