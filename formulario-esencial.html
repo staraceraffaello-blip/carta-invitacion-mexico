@@ -513,7 +513,7 @@
             <circle cx="7" cy="7" r="5.5" stroke="#C9A84C" stroke-width="1.1"/>
             <path d="M4.5 7l2 2 3.5-3.5" stroke="#C9A84C" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Recibes tu PDF en minutos tras el pago
+          PDF listo en minutos tras el pago
         </div>
         <div class="flex items-start gap-2.5 text-xs" style="color:#6B7280;">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex-shrink:0;margin-top:1px;">
@@ -584,7 +584,7 @@
               <div>
                 <label class="form-label" for="v-nacionalidad">Nacionalidad <span class="req">*</span></label>
                 <select id="v-nacionalidad" name="v_nacionalidad" class="form-input" required>
-                  <option value="" disabled selected>La que aparece en tu pasaporte</option>
+                  <option value="" disabled selected>La que aparece en el pasaporte del viajero</option>
                   <optgroup label="América Latina y el Caribe">
                     <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option>
                     <option>Barbados</option><option>Belice</option><option>Bolivia</option>
@@ -764,7 +764,7 @@
                   </optgroup>
                 </select>
                 <p class="form-hint">Puede ser diferente a la nacionalidad.</p>
-                <p class="form-error" id="err-v-residencia">Por favor ingresa tu país de residencia.</p>
+                <p class="form-error" id="err-v-residencia">Por favor ingresa el país de residencia del viajero.</p>
               </div>
 
               <div>
@@ -785,8 +785,8 @@
                 <label class="form-label" for="v-ocupacion">Actividad profesional u ocupación <span class="req">*</span></label>
                 <input type="text" id="v-ocupacion" name="v_ocupacion" class="form-input"
                        placeholder="Ej. Ingeniero, Estudiante, Comerciante…" required>
-                <p class="form-hint">En tu país de residencia. Tu actividad profesional ayuda a demostrar que tienes motivos para regresar después del viaje.</p>
-                <p class="form-error" id="err-v-ocupacion">Por favor ingresa tu ocupación.</p>
+                <p class="form-hint">En el país de residencia del viajero. La actividad profesional ayuda a demostrar motivos para regresar después del viaje.</p>
+                <p class="form-error" id="err-v-ocupacion">Por favor ingresa la ocupación del viajero.</p>
               </div>
 
               <div>
@@ -795,8 +795,7 @@
                        placeholder="nombre@correo.com" required autocomplete="email"
                        oninput="this.value=this.value.replace(/\s/g,'')"
                        onblur="emailReq('v-email','err-v-email')">
-                <p class="form-hint">Te enviaremos tu carta en PDF a este correo.</p>
-                <p class="form-error" id="err-v-email">Por favor ingresa un correo electrónico válido (ej. nombre@correo.com).</p>
+                                <p class="form-error" id="err-v-email">Por favor ingresa un correo electrónico válido (ej. nombre@correo.com).</p>
               </div>
 
             </div>
@@ -805,9 +804,9 @@
             <div style="margin-top:1.5rem;padding:12px 16px;background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(27,53,102,0.05));border:1px solid rgba(201,168,76,0.25);border-radius:10px;display:flex;align-items:flex-start;gap:10px;">
               <span style="font-size:1.1rem;line-height:1;">👥</span>
               <p style="font-size:0.8rem;color:#4A5568;line-height:1.55;margin:0;">
-                <strong style="color:var(--c-navy);">¿Viajan más personas contigo?</strong> Con el
+                <strong style="color:var(--c-navy);">¿Viajan más personas con el viajero?</strong> Con el
                 <a href="formulario-completo.html" style="color:var(--c-gold);font-weight:600;text-decoration:underline;text-underline-offset:2px;">Plan Completo</a>
-                puedes incluir acompañantes en la misma carta de invitación.
+                se pueden incluir acompañantes en la misma carta de invitación.
               </p>
             </div>
 
@@ -875,7 +874,7 @@
               <div>
                 <label class="form-label" for="a-id-num">Número de identificación <span class="req">*</span></label>
                 <input type="text" id="a-id-num" name="a_id_num" class="form-input"
-                       placeholder="Número que aparece en tu identificación" required autocomplete="off"
+                       placeholder="Número que aparece en la identificación del anfitrión" required autocomplete="off"
                        oninput="upperAll(this)">
                 <p class="form-error" id="err-a-id-num">Por favor ingresa el número de identificación.</p>
               </div>
@@ -938,7 +937,7 @@
                        placeholder="55 1234 5678" required autocomplete="tel" maxlength="12"
                        oninput="this.value=this.value.replace(/[^\d]/g,'').replace(/^(\d{2})(\d{0,4})(\d{0,4})$/,(_,a,b,c)=>[a,b,c].filter(Boolean).join(' ')).slice(0,12)">
                 <p class="form-hint">10 dígitos sin LADA internacional.</p>
-                <p class="form-hint warn">⚠ Migración puede llamar a este número exactamente al momento del arribo del visitante. Es fundamental que esté disponible durante las fechas del viaje.</p>
+                <p class="form-hint warn">⚠ Migración puede llamar a este número exactamente al momento del arribo del visitante. Es fundamental que el anfitrión esté disponible en este número durante las fechas del viaje.</p>
                 <p class="form-error" id="err-a-telefono">Por favor ingresa un teléfono válido de 10 dígitos.</p>
               </div>
 
@@ -967,7 +966,7 @@
               <div>
                 <label class="form-label" for="a-vinculo">Vínculo con el viajero <span class="req">*</span></label>
                 <select id="a-vinculo" name="a_vinculo" class="form-input" required>
-                  <option value="" disabled selected>¿Cuál es tu relación?</option>
+                  <option value="" disabled selected>Selecciona el vínculo</option>
                   <option value="familiar">Familiar</option>
                   <option value="pareja">Pareja</option>
                   <option value="amistad">Amistad</option>
@@ -993,7 +992,7 @@
                 <textarea id="a-vinculo-detalle" name="a_vinculo_detalle" class="form-input"
                           placeholder="Ej. Amigos de la universidad · Tío de mi esposa · Compañeros de trabajo en la misma empresa…"
                           required rows="2"></textarea>
-                <p class="form-hint warn">⚠ Entre más detalle proporciones sobre la relación, más personalizada y convincente será tu carta de invitación.</p>
+                <p class="form-hint warn">⚠ Entre más detalle se proporcione sobre la relación, más personalizada y convincente será la carta de invitación.</p>
                 <p class="form-error" id="err-a-vinculo-detalle">Por favor describe el vínculo entre ambas personas.</p>
               </div>
 
@@ -1088,7 +1087,7 @@
                 <textarea id="j-actividades" name="j_actividades" class="form-input"
                           placeholder="Ej. Turismo en Ciudad de México, visita a familiares en Guadalajara, asistencia a la boda del anfitrión y celebraciones correspondientes, recorridos culturales en Oaxaca…"
                           required rows="3"></textarea>
-                <p class="form-hint warn">⚠ Sé lo más específico posible: incluye nombres de lugares, eventos, razones del viaje y cualquier detalle relevante. Mientras más información proporciones, más completa será tu carta de invitación.</p>
+                <p class="form-hint warn">⚠ Sé lo más específico posible: incluye nombres de lugares, eventos, razones del viaje y cualquier detalle relevante. Mientras más información se proporcione, más completa será la carta de invitación.</p>
                 <p class="form-error" id="err-j-actividades">Por favor describe las actividades planeadas.</p>
               </div>
 
@@ -1178,9 +1177,9 @@
             <div style="margin-top:1.5rem;padding:12px 16px;background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(27,53,102,0.05));border:1px solid rgba(201,168,76,0.25);border-radius:10px;display:flex;align-items:flex-start;gap:10px;">
               <span style="font-size:1.1rem;line-height:1;">🗺️</span>
               <p style="font-size:0.8rem;color:#4A5568;line-height:1.55;margin:0;">
-                <strong style="color:var(--c-navy);">¿Visitarás varias ciudades o tendrás más de un alojamiento?</strong> Con el
+                <strong style="color:var(--c-navy);">¿El viajero visitará varias ciudades o tendrá más de un alojamiento?</strong> Con el
                 <a href="formulario-completo.html" style="color:var(--c-gold);font-weight:600;text-decoration:underline;text-underline-offset:2px;">Plan Completo</a>
-                puedes agregar un itinerario multi-destino con múltiples alojamientos.
+                se puede agregar un itinerario multi-destino con múltiples alojamientos.
               </p>
             </div>
 
@@ -1481,7 +1480,7 @@
                   <input type="date" id="sal-fecha" name="sal_fecha" class="form-input" required data-dynamic-date="travel">
                   <p class="form-error" id="err-sal-fecha">Por favor indica la fecha de regreso.</p>
                   <p class="form-error" id="warn-180" style="color:#991B1B;display:none;">⚠ La estancia máxima para turismo en México es de 180 días.</p>
-                  <p class="form-hint warn">⚠ Asegúrate de que estas fechas coincidan exactamente con tus boletos de avión o transporte. El agente migratorio verificará la coherencia.</p>
+                  <p class="form-hint warn">⚠ Estas fechas deben coincidir exactamente con los boletos de avión o transporte del viajero. El agente migratorio verificará la coherencia.</p>
                 </div>
 
               </div>
@@ -1519,7 +1518,7 @@
               </div>
               <div>
                 <span class="section-label mb-1">Paso 6 de 6</span>
-                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Revisa tu información</h2>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Revisión final</h2>
                 <p class="text-sm mt-1" style="color:#6B7280;">Verifica que todos los datos sean correctos antes de proceder al pago.</p>
               </div>
             </div>
@@ -1527,7 +1526,7 @@
             <!-- CTA box — visible immediately on arrival at step 6 -->
             <div class="rounded-2xl p-5 mb-6" style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);">
               <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">¿Todo correcto?</p>
-              <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Revisa tus datos abajo y confirma para proceder al pago seguro. Tu carta PDF llegará a tu correo en minutos.</p>
+              <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Revisa los datos abajo y confirma para proceder al pago seguro. La carta PDF llegará al correo del viajero y del anfitrión en minutos.</p>
               <div class="flex items-center gap-2 text-xs mb-5" style="color:#6B7280;">
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
                   <rect x="1.5" y="5.5" width="10" height="7" rx="1.5" stroke="#C9A84C" stroke-width="1.1"/>
@@ -1567,7 +1566,7 @@
             <!-- CTA box — repeated at the bottom after review cards -->
             <div class="rounded-2xl p-5" style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);">
               <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">¿Todo correcto?</p>
-              <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Revisa tus datos abajo y confirma para proceder al pago seguro. Tu carta PDF llegará a tu correo en minutos.</p>
+              <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Revisa los datos abajo y confirma para proceder al pago seguro. La carta PDF llegará al correo del viajero y del anfitrión en minutos.</p>
               <div class="flex items-center gap-2 text-xs mb-5" style="color:#6B7280;">
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
                   <rect x="1.5" y="5.5" width="10" height="7" rx="1.5" stroke="#C9A84C" stroke-width="1.1"/>
