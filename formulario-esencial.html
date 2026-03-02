@@ -357,6 +357,73 @@
     @media (max-width: 639px) {
       .expense-row { flex-direction: column; align-items: flex-start; }
     }
+
+    /* ── Mobile Date Picker (drum/wheel) ── */
+    .dp-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.45);
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .dp-sheet {
+      width: 100%; max-width: 420px;
+      background: var(--c-navy);
+      border-radius: 20px 20px 0 0;
+      padding: 0 0 env(safe-area-inset-bottom, 12px);
+      transform: translateY(0);
+      animation: dpSlideUp 0.28s ease-out;
+    }
+    @keyframes dpSlideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .dp-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 20px 8px;
+    }
+    .dp-header button {
+      background: none; border: none; font-size: 1rem; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; padding: 8px 4px; min-width: 44px; min-height: 44px;
+    }
+    #dp-cancel { color: rgba(250,248,244,0.7); }
+    #dp-ok { color: var(--c-gold); font-weight: 700; }
+    .dp-body-wrap {
+      position: relative; padding: 0 12px;
+    }
+    .dp-body {
+      display: flex; gap: 0; height: 200px; overflow: hidden;
+    }
+    .dp-col {
+      flex: 1; height: 200px; overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .dp-col::-webkit-scrollbar { display: none; }
+    .dp-item {
+      height: 40px; line-height: 40px; text-align: center;
+      font-size: 1.125rem; font-family: 'DM Sans', sans-serif;
+      color: rgba(255,255,255,0.35);
+      scroll-snap-align: center;
+      transition: color 0.15s ease, transform 0.15s ease;
+      user-select: none;
+    }
+    .dp-item.dp-active {
+      color: #fff; font-weight: 600; transform: scale(1.08);
+    }
+    .dp-sel-bar {
+      position: absolute; left: 12px; right: 12px;
+      top: 80px; height: 40px;
+      border-top: 1.5px solid var(--c-gold);
+      border-bottom: 1.5px solid var(--c-gold);
+      border-radius: 8px;
+      pointer-events: none;
+      background: rgba(201,168,76,0.06);
+    }
+    .dp-trigger {
+      cursor: pointer;
+      caret-color: transparent;
+    }
+    input[type="date"].error + .dp-trigger {
+      border-color: #E53E3E;
+      box-shadow: 0 0 0 3px rgba(229,62,62,0.1);
+    }
   </style>
   <link rel="stylesheet" href="/dist/tailwind.css">
 </head>
@@ -1473,6 +1540,24 @@
 
 </div><!-- /max-w -->
 
+<!-- ── Mobile Date Picker ── -->
+<div id="dp-overlay" class="dp-overlay" style="display:none" role="dialog" aria-modal="true" aria-label="Selector de fecha">
+  <div class="dp-sheet">
+    <div class="dp-header">
+      <button type="button" id="dp-cancel">Cancelar</button>
+      <button type="button" id="dp-ok">OK</button>
+    </div>
+    <div class="dp-body-wrap">
+      <div class="dp-sel-bar"></div>
+      <div class="dp-body">
+        <div class="dp-col" id="dp-day"></div>
+        <div class="dp-col" id="dp-month"></div>
+        <div class="dp-col" id="dp-year"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </main>
 
 
@@ -2144,6 +2229,185 @@
       el.value = el.value.trim();
     }
   }, true);
+
+  /* ── Mobile Date Picker (drum/wheel) ── */
+  (function() {
+    const isMobile = () => window.matchMedia('(max-width: 639px)').matches;
+    if (!isMobile()) return; // Desktop — do nothing
+
+    const MONTHS = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    const overlay = document.getElementById('dp-overlay');
+    const dayCol = document.getElementById('dp-day');
+    const monthCol = document.getElementById('dp-month');
+    const yearCol = document.getElementById('dp-year');
+    const ITEM_H = 40;
+    const PAD = 2; // empty items top & bottom so first/last can center
+    let activeInput = null;
+    let yearList = [];
+    let currentMaxDay = 31;
+
+    function daysInMonth(m, y) { return new Date(y, m + 1, 0).getDate(); }
+
+    function buildCol(col, items, selIdx) {
+      let html = '';
+      for (let i = 0; i < PAD; i++) html += '<div class="dp-item" data-pad></div>';
+      items.forEach((txt, i) => {
+        html += '<div class="dp-item" data-idx="' + i + '">' + txt + '</div>';
+      });
+      for (let i = 0; i < PAD; i++) html += '<div class="dp-item" data-pad></div>';
+      col.innerHTML = html;
+      col.scrollTop = selIdx * ITEM_H;
+    }
+
+    function getSelIdx(col) {
+      return Math.round(col.scrollTop / ITEM_H);
+    }
+
+    function highlightActive(col) {
+      const idx = getSelIdx(col);
+      col.querySelectorAll('.dp-item').forEach((el, i) => {
+        el.classList.toggle('dp-active', i === idx + PAD);
+      });
+    }
+
+    function updateDays() {
+      const m = getSelIdx(monthCol);
+      const yIdx = getSelIdx(yearCol);
+      const y = yearList[yIdx] || new Date().getFullYear();
+      const max = daysInMonth(m, y);
+      if (max === currentMaxDay) return;
+      const curDay = Math.min(getSelIdx(dayCol) + 1, max);
+      const days = [];
+      for (let d = 1; d <= max; d++) days.push(d);
+      currentMaxDay = max;
+      buildCol(dayCol, days, curDay - 1);
+      highlightActive(dayCol);
+    }
+
+    let scrollTimers = {};
+    function onColScroll(col, id, cb) {
+      col.addEventListener('scroll', () => {
+        highlightActive(col);
+        clearTimeout(scrollTimers[id]);
+        scrollTimers[id] = setTimeout(() => {
+          // Snap to nearest item
+          const idx = getSelIdx(col);
+          col.scrollTo({ top: idx * ITEM_H, behavior: 'smooth' });
+          highlightActive(col);
+          if (cb) cb();
+        }, 80);
+      }, { passive: true });
+    }
+
+    onColScroll(dayCol, 'd');
+    onColScroll(monthCol, 'm', updateDays);
+    onColScroll(yearCol, 'y', updateDays);
+
+    function openPicker(inputEl) {
+      activeInput = inputEl;
+      const dtype = inputEl.getAttribute('data-dynamic-date');
+      const now = new Date();
+      const cy = now.getFullYear();
+      let minY = dtype === 'birth' ? 1920 : cy;
+      let maxY = dtype === 'birth' ? cy : cy + 5;
+      // Override with min/max attrs
+      if (inputEl.min) { const my = parseInt(inputEl.min.split('-')[0]); if (my > minY) minY = my; }
+      if (inputEl.max) { const my = parseInt(inputEl.max.split('-')[0]); if (my < maxY) maxY = my; }
+
+      yearList = [];
+      for (let y = minY; y <= maxY; y++) yearList.push(y);
+
+      // Parse current value or default
+      let selD = 1, selM = 0, selY = dtype === 'birth' ? 1990 : cy;
+      const val = inputEl.value;
+      if (val) {
+        const [py, pm, pd] = val.split('-').map(Number);
+        selY = py; selM = pm - 1; selD = pd;
+      } else if (dtype !== 'birth') {
+        selM = now.getMonth(); selD = now.getDate();
+      }
+
+      // Clamp year
+      if (selY < minY) selY = minY;
+      if (selY > maxY) selY = maxY;
+
+      const days = [];
+      currentMaxDay = daysInMonth(selM, selY);
+      for (let d = 1; d <= currentMaxDay; d++) days.push(d);
+      if (selD > currentMaxDay) selD = currentMaxDay;
+
+      buildCol(dayCol, days, selD - 1);
+      buildCol(monthCol, MONTHS, selM);
+      buildCol(yearCol, yearList, yearList.indexOf(selY));
+
+      // Defer scroll positioning until after layout (double rAF for reliability)
+      overlay.style.display = 'flex';
+      requestAnimationFrame(() => { requestAnimationFrame(() => {
+        dayCol.scrollTop = (selD - 1) * ITEM_H;
+        monthCol.scrollTop = selM * ITEM_H;
+        yearCol.scrollTop = yearList.indexOf(selY) * ITEM_H;
+        highlightActive(dayCol);
+        highlightActive(monthCol);
+        highlightActive(yearCol);
+      }); });
+
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePicker(confirm) {
+      if (confirm && activeInput) {
+        const d = getSelIdx(dayCol) + 1;
+        const m = getSelIdx(monthCol);
+        const yIdx = getSelIdx(yearCol);
+        const y = yearList[yIdx];
+        const iso = y + '-' + String(m + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+        activeInput.value = iso;
+        activeInput.dispatchEvent(new Event('change', { bubbles: true }));
+        activeInput.dispatchEvent(new Event('input', { bubbles: true }));
+        // Update the visible trigger
+        const trigger = activeInput.nextElementSibling;
+        if (trigger && trigger.classList.contains('dp-trigger')) {
+          trigger.value = String(d).padStart(2, '0') + '/' + String(m + 1).padStart(2, '0') + '/' + y;
+        }
+        activeInput.classList.remove('error');
+      }
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+      activeInput = null;
+    }
+
+    document.getElementById('dp-cancel').addEventListener('click', () => closePicker(false));
+    document.getElementById('dp-ok').addEventListener('click', () => closePicker(true));
+    overlay.addEventListener('click', e => { if (e.target === overlay) closePicker(false); });
+
+    // Convert date inputs to trigger + hidden pattern
+    function convertDateInput(dateEl) {
+      if (dateEl.dataset.dpReady) return;
+      dateEl.dataset.dpReady = '1';
+      const trigger = document.createElement('input');
+      trigger.type = 'text';
+      trigger.readOnly = true;
+      trigger.className = dateEl.className + ' dp-trigger';
+      trigger.placeholder = 'DD/MM/AAAA';
+      trigger.setAttribute('inputmode', 'none');
+      trigger.tabIndex = dateEl.tabIndex;
+      if (dateEl.value) {
+        const [y, m, d] = dateEl.value.split('-');
+        trigger.value = d + '/' + m + '/' + y;
+      }
+      dateEl.style.display = 'none';
+      dateEl.insertAdjacentElement('afterend', trigger);
+      trigger.addEventListener('click', () => openPicker(dateEl));
+      trigger.addEventListener('focus', () => openPicker(dateEl));
+    }
+
+    // Convert all existing date inputs
+    document.querySelectorAll('input[type="date"]').forEach(convertDateInput);
+
+    // Expose for dynamically added date inputs
+    window._dpConvert = convertDateInput;
+    window._dpIsMobile = isMobile;
+  })();
 
   showStep(1);
 </script>
