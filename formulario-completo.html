@@ -2024,6 +2024,10 @@
     const tpl = document.getElementById('companion-tpl');
     const clone = tpl.content.cloneNode(true);
     clone.querySelector('.card-num').textContent = companionCount;
+    // Make radio names unique per card to avoid cross-card interference
+    clone.querySelectorAll('input[name="comp_mismo_domicilio[]"]').forEach(r => {
+      r.setAttribute('name', `comp_mismo_domicilio_${companionCount}`);
+    });
     document.getElementById('companions-container').appendChild(clone);
     document.getElementById('companions-empty').style.display = 'none';
     renumberCards('companions-container', '[data-companion]', 'Acompañante');
@@ -2105,6 +2109,10 @@
     const tpl = document.getElementById('destino-tpl');
     const clone = tpl.content.cloneNode(true);
     clone.querySelector('.card-num').textContent = destinoCount;
+    // Make radio names unique per card to avoid cross-card interference
+    clone.querySelectorAll('input[name="dest_aloj_es_anfitrion[]"]').forEach(r => {
+      r.setAttribute('name', `dest_aloj_es_anfitrion_${destinoCount}`);
+    });
     document.getElementById('destinos-container').appendChild(clone);
     document.getElementById('err-destinos').classList.remove('show');
     renumberCards('destinos-container', '[data-destino]', 'Destino');
@@ -2344,7 +2352,7 @@
         });
         if (nac && !dateElReq(nac, 1900, new Date().getFullYear())) compOk = false;
         // Companion address (if "No" selected for same domicilio)
-        const addrRadio = card.querySelector('input[name="comp_mismo_domicilio[]"]:checked');
+        const addrRadio = card.querySelector('input[name^="comp_mismo_domicilio"]:checked');
         if (addrRadio && addrRadio.value === 'no') {
           ['.companion-residencia', '.companion-calle', '.companion-ciudad', '.companion-provincia', '.companion-cp'].forEach(sel => {
             const el = card.querySelector(sel);
@@ -2441,7 +2449,7 @@
             if (el && !el.value.trim()) { el.classList.add('error'); cardOk = false; ok = false; }
           });
           // Check accommodation toggle
-          const alojRadio = card.querySelector('input[name="dest_aloj_es_anfitrion[]"]:checked');
+          const alojRadio = card.querySelector('input[name^="dest_aloj_es_anfitrion"]:checked');
           if (!alojRadio) {
             card.querySelector('.dest-aloj-toggle-err')?.classList.add('show');
             cardOk = false; ok = false;
@@ -2562,7 +2570,7 @@
         nacionalidad:card.querySelector('.companion-nacionalidad')?.value || '',
         pasaporte:   card.querySelector('.companion-pasaporte')?.value.trim() || '',
         ocupacion:   card.querySelector('.companion-ocupacion')?.value.trim() || '',
-        mismo_domicilio: card.querySelector('input[name="comp_mismo_domicilio[]"]:checked')?.value || 'si',
+        mismo_domicilio: card.querySelector('input[name^="comp_mismo_domicilio"]:checked')?.value || 'si',
       };
       if (comp.mismo_domicilio === 'no') {
         comp.residencia = card.querySelector('.companion-residencia')?.value || '';
@@ -2581,7 +2589,7 @@
       const dest = {
         ciudad:       card.querySelector('.dest-ciudad')?.value.trim() || '',
         actividades:  card.querySelector('.dest-actividades')?.value.trim() || '',
-        aloj_es_anfitrion: card.querySelector('input[name="dest_aloj_es_anfitrion[]"]:checked')?.value || '',
+        aloj_es_anfitrion: card.querySelector('input[name^="dest_aloj_es_anfitrion"]:checked')?.value || '',
         fecha_desde:  card.querySelector('.dest-fecha-desde')?.value || '',
         fecha_hasta:  card.querySelector('.dest-fecha-hasta')?.value || '',
       };
@@ -2706,7 +2714,7 @@
         if (comp.pasaporte) card.querySelector('.companion-pasaporte').value = comp.pasaporte;
         if (comp.ocupacion) card.querySelector('.companion-ocupacion').value = comp.ocupacion;
         if (comp.mismo_domicilio === 'no') {
-          const noRadio = card.querySelector('input[name="comp_mismo_domicilio[]"][value="no"]');
+          const noRadio = card.querySelector('input[name^="comp_mismo_domicilio"][value="no"]');
           if (noRadio) { noRadio.checked = true; onCompAddrToggle(noRadio); }
           if (comp.residencia) card.querySelector('.companion-residencia').value = comp.residencia;
           if (comp.calle) card.querySelector('.companion-calle').value = comp.calle;
@@ -2736,7 +2744,7 @@
           }
         }
         if (dest.aloj_es_anfitrion) {
-          const alojRadio = card.querySelector(`input[name="dest_aloj_es_anfitrion[]"][value="${dest.aloj_es_anfitrion}"]`);
+          const alojRadio = card.querySelector(`input[name^="dest_aloj_es_anfitrion"][value="${dest.aloj_es_anfitrion}"]`);
           if (alojRadio) { alojRadio.checked = true; onDestAlojToggle(alojRadio); }
         }
         if (dest.aloj_es_anfitrion === 'no') {
@@ -2828,7 +2836,7 @@
           ['Pasaporte', card.querySelector('.companion-pasaporte')?.value || '—'],
           ['Ocupación', card.querySelector('.companion-ocupacion')?.value || '—'],
         ];
-        const mismoDom = card.querySelector('input[name="comp_mismo_domicilio[]"]:checked')?.value || 'si';
+        const mismoDom = card.querySelector('input[name^="comp_mismo_domicilio"]:checked')?.value || 'si';
         if (mismoDom === 'no') {
           const compAddr = [
             card.querySelector('.companion-calle')?.value,
@@ -2891,7 +2899,7 @@
     const destinoCards = document.querySelectorAll('[data-destino]');
     const destinosHTML = Array.from(destinoCards).map((card, i) => {
       const ciudad = card.querySelector('.dest-ciudad')?.value || '—';
-      const alojToggle = card.querySelector('input[name="dest_aloj_es_anfitrion[]"]:checked')?.value || '';
+      const alojToggle = card.querySelector('input[name^="dest_aloj_es_anfitrion"]:checked')?.value || '';
       const rows = [
         ['Ciudad', ciudad],
         ['Actividades', card.querySelector('.dest-actividades')?.value || '—'],
