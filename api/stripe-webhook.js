@@ -109,10 +109,16 @@ export default async function handler(req, res) {
           console.log('[webhook] PDF uploaded, URL:', pdfUrl);
         }
 
-        // Send email
-        console.log('[webhook] Sending email to:', submission.email);
-        await sendEmail(submission.email, pdfBuffer, submission.plan, guestName);
-        console.log('[webhook] Email sent successfully');
+        // Send PDF + recommendations email to both viajero and anfitrión
+        const viajeroEmail = submission.form_data['v-email'] || '';
+        const anfitrionEmail = submission.form_data['a-email'] || '';
+        const recipients = [...new Set([viajeroEmail, anfitrionEmail].filter(Boolean))];
+
+        console.log('[webhook] Sending PDF email to recipients:', recipients.join(', '));
+        await Promise.all(
+          recipients.map(addr => sendEmail(addr, pdfBuffer, submission.plan, guestName))
+        );
+        console.log('[webhook] All emails sent successfully');
 
         const { error: deliverErr } = await supabase
           .from('submissions')

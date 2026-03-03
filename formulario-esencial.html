@@ -2052,7 +2052,9 @@
 
     try {
       const formData = collectFormData();
-      const email = formData['v-email'] || '';
+      const email = formData['a-perspectiva'] === 'visitante'
+        ? (formData['v-email'] || '')
+        : (formData['a-email'] || '');
 
       const res = await fetch('/api/submit', {
         method: 'POST',

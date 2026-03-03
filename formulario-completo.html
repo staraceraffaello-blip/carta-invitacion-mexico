@@ -2079,6 +2079,26 @@
     }
   }
 
+  /* ── Sync destino arrival dates ── */
+  function syncDestinoArrivalDates() {
+    const cards = document.querySelectorAll('[data-destino]');
+    const ingVal = document.getElementById('ing-fecha')?.value || '';
+    cards.forEach((card, idx) => {
+      const desdeEl = card.querySelector('.dest-fecha-desde');
+      if (!desdeEl) return;
+      if (idx === 0) {
+        desdeEl.value = ingVal;
+      } else {
+        const prevCard = cards[idx - 1];
+        desdeEl.value = prevCard?.querySelector('.dest-fecha-hasta')?.value || '';
+      }
+      desdeEl.readOnly = true;
+      desdeEl.style.backgroundColor = '#f1f5f9';
+      desdeEl.style.cursor = 'not-allowed';
+      desdeEl.classList.remove('error');
+    });
+  }
+
   /* ── Add destino ── */
   function addDestino() {
     destinoCount++;
@@ -2097,14 +2117,16 @@
     const dy = new Date().getFullYear();
     card.querySelectorAll('[data-dynamic-date="travel"]').forEach(el => { el.min = dy + '-01-01'; el.max = (dy + 5) + '-12-31'; });
     // Destino dates: validate on change + input with year-range check
-    card.querySelectorAll('.dest-fecha-desde,.dest-fecha-hasta').forEach(el => {
+    card.querySelectorAll('.dest-fecha-hasta').forEach(el => {
       const validate = () => {
         if (!el.value) return;
         dateElReq(el, new Date().getFullYear(), new Date().getFullYear() + 5);
       };
-      el.addEventListener('change', validate);
-      el.addEventListener('input', validate);
+      el.addEventListener('change', () => { validate(); syncDestinoArrivalDates(); });
+      el.addEventListener('input', () => { validate(); syncDestinoArrivalDates(); });
     });
+    // Sync arrival dates (sets readonly + auto-populates)
+    syncDestinoArrivalDates();
     // Convert date inputs for mobile picker
     if (window._dpConvert) card.querySelectorAll('input[type="date"]').forEach(window._dpConvert);
   }
@@ -2112,6 +2134,7 @@
   function removeDestino(btn) {
     btn.closest('[data-destino]').remove();
     renumberCards('destinos-container', '[data-destino]', 'Destino');
+    syncDestinoArrivalDates();
   }
 
   /* ── Re-number cards after add/remove ── */
@@ -2588,7 +2611,9 @@
 
     try {
       const formData = collectFormData();
-      const email = formData['v-email'] || '';
+      const email = formData['a-perspectiva'] === 'visitante'
+        ? (formData['v-email'] || '')
+        : (formData['a-email'] || '');
 
       const res = await fetch('/api/submit', {
         method: 'POST',
@@ -2857,7 +2882,7 @@
         if (warn180) warn180.style.display = days > 180 ? 'block' : 'none';
       }
     };
-    if (ingEl) { ingEl.addEventListener('change', crossValidateDates); ingEl.addEventListener('input', crossValidateDates); }
+    if (ingEl) { ingEl.addEventListener('change', () => { crossValidateDates(); syncDestinoArrivalDates(); }); ingEl.addEventListener('input', () => { crossValidateDates(); syncDestinoArrivalDates(); }); }
     if (salEl) { salEl.addEventListener('change', crossValidateDates); salEl.addEventListener('input', crossValidateDates); }
     // Select inputs → validate on change
     [

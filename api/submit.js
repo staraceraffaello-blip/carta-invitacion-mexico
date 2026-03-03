@@ -49,10 +49,13 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Error al guardar los datos.' });
     }
 
-    // 2. Crear Stripe Checkout Session
+    // 2. Crear Stripe Customer para pre-popular email (editable en checkout)
+    const customer = await stripe.customers.create({ email });
+
+    // 3. Crear Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      customer_email: email,
+      customer: customer.id,
       line_items: [
         {
           price_data: {
@@ -76,13 +79,13 @@ export default async function handler(req, res) {
       cancel_url: `${req.headers.origin || process.env.SITE_URL || 'https://carta-invitacion-mexico-tawny.vercel.app'}/checkout?status=cancelled&plan=${plan}`,
     });
 
-    // 3. Guardar stripe session ID en el registro
+    // 4. Guardar stripe session ID en el registro
     await supabase
       .from('submissions')
       .update({ stripe_session: session.id })
       .eq('id', submission.id);
 
-    // 4. Devolver URL de Stripe Checkout
+    // 5. Devolver URL de Stripe Checkout
     return res.status(200).json({ url: session.url });
 
   } catch (err) {
