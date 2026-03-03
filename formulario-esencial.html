@@ -2165,8 +2165,8 @@
   const TRANSPORTE_LABELS = { auto_rentado: 'Auto rentado', anfitrion: 'Transporte del anfitrión', transporte_publico: 'Transporte público y/o taxis' };
   function reviewCard(title, rows) {
     const items = rows.map(([label, value]) =>
-      `<div><dt style="font-size:0.75rem;color:#6B7280;font-weight:500;margin-bottom:2px;">${label}</dt>` +
-      `<dd style="font-size:0.875rem;color:var(--c-navy);font-weight:600;margin:0;">${value || '—'}</dd></div>`
+      `<div style="min-width:0;"><dt style="font-size:0.75rem;color:#6B7280;font-weight:500;margin-bottom:2px;">${label}</dt>` +
+      `<dd style="font-size:0.875rem;color:var(--c-navy);font-weight:600;margin:0;overflow-wrap:break-word;word-break:break-word;">${value || '—'}</dd></div>`
     ).join('');
     return `<div style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);border-radius:16px;padding:20px;">` +
       `<p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--c-gold);margin:0 0 8px;">${title}</p>` +

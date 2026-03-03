@@ -49,10 +49,9 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Error al guardar los datos.' });
     }
 
-    // 2. Crear Stripe Checkout Session (customer_email pre-fills but stays editable)
+    // 2. Crear Stripe Checkout Session (email field left empty so user can enter freely)
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      customer_email: email,
       line_items: [
         {
           price_data: {
