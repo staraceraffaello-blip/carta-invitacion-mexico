@@ -49,13 +49,10 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Error al guardar los datos.' });
     }
 
-    // 2. Crear Stripe Customer para pre-popular email (editable en checkout)
-    const customer = await stripe.customers.create({ email });
-
-    // 3. Crear Stripe Checkout Session
+    // 2. Crear Stripe Checkout Session (customer_email pre-fills but stays editable)
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      customer: customer.id,
+      customer_email: email,
       line_items: [
         {
           price_data: {
