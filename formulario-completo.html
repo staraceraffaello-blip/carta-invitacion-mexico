@@ -2631,6 +2631,12 @@
         throw new Error(result.error || 'Error al procesar la solicitud.');
       }
 
+      // Save form data to localStorage before redirecting to Stripe
+      localStorage.setItem('carta_form_completo', JSON.stringify({
+        formData,
+        step: current,
+      }));
+
       window.location.href = result.url;
 
     } catch (err) {
@@ -2639,6 +2645,111 @@
         confirmBtn.disabled = false;
         confirmBtn.innerHTML = 'Confirmar y pagar';
       }
+    }
+  }
+
+  /* ── Restore form data from localStorage ── */
+  function restoreFormData(data) {
+    // Text / select / textarea / date / email / number / tel by ID
+    Object.entries(data).forEach(([key, val]) => {
+      if (typeof val !== 'string') return;
+      const el = document.getElementById(key);
+      if (el) {
+        el.value = val;
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+        // Sync date-picker trigger if present
+        const trigger = el.nextElementSibling;
+        if (trigger?.classList.contains('dp-trigger') && val) {
+          const [y, m, d] = val.split('-');
+          if (y && m && d) trigger.value = d + '/' + m + '/' + y;
+        }
+      }
+      // Also try as radio button name
+      const radio = document.querySelector(`input[name="${key}"][value="${CSS.escape(val)}"]`);
+      if (radio && !radio.checked) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+    // Checkbox arrays (exclude companions/destinos which are handled separately)
+    Object.entries(data).forEach(([key, val]) => {
+      if (!Array.isArray(val) || key === 'companions' || key === 'destinos') return;
+      val.forEach(v => {
+        const cb = document.querySelector(`input[name="${key}"][value="${CSS.escape(v)}"]`);
+        if (cb) {
+          cb.checked = true;
+          cb.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+    });
+
+    // Restore companions
+    if (data.companions?.length) {
+      document.querySelectorAll('[data-companion]').forEach(el => el.remove());
+      companionCount = 0;
+      data.companions.forEach((comp) => {
+        addCompanion();
+        const card = document.getElementById('companions-container').lastElementChild;
+        if (comp.nombre) card.querySelector('.companion-nombre').value = comp.nombre;
+        if (comp.nacimiento) {
+          const nacEl = card.querySelector('.companion-nacimiento');
+          nacEl.value = comp.nacimiento;
+          const trigger = nacEl.nextElementSibling;
+          if (trigger?.classList.contains('dp-trigger')) {
+            const [y, m, d] = comp.nacimiento.split('-');
+            if (y && m && d) trigger.value = d + '/' + m + '/' + y;
+          }
+        }
+        if (comp.relacion) card.querySelector('.companion-relacion').value = comp.relacion;
+        if (comp.nacionalidad) card.querySelector('.companion-nacionalidad').value = comp.nacionalidad;
+        if (comp.pasaporte) card.querySelector('.companion-pasaporte').value = comp.pasaporte;
+        if (comp.ocupacion) card.querySelector('.companion-ocupacion').value = comp.ocupacion;
+        if (comp.mismo_domicilio === 'no') {
+          const noRadio = card.querySelector('input[name="comp_mismo_domicilio[]"][value="no"]');
+          if (noRadio) { noRadio.checked = true; onCompAddrToggle(noRadio); }
+          if (comp.residencia) card.querySelector('.companion-residencia').value = comp.residencia;
+          if (comp.calle) card.querySelector('.companion-calle').value = comp.calle;
+          if (comp.ciudad) card.querySelector('.companion-ciudad').value = comp.ciudad;
+          if (comp.provincia) card.querySelector('.companion-provincia').value = comp.provincia;
+          if (comp.cp) card.querySelector('.companion-cp').value = comp.cp;
+        }
+      });
+    }
+
+    // Restore destinos
+    if (data.destinos?.length) {
+      document.querySelectorAll('[data-destino]').forEach(el => el.remove());
+      destinoCount = 0;
+      data.destinos.forEach((dest) => {
+        addDestino();
+        const card = document.getElementById('destinos-container').lastElementChild;
+        if (dest.ciudad) card.querySelector('.dest-ciudad').value = dest.ciudad;
+        if (dest.actividades) card.querySelector('.dest-actividades').value = dest.actividades;
+        if (dest.fecha_hasta) {
+          const hastaEl = card.querySelector('.dest-fecha-hasta');
+          hastaEl.value = dest.fecha_hasta;
+          const trigger = hastaEl.nextElementSibling;
+          if (trigger?.classList.contains('dp-trigger')) {
+            const [y, m, d] = dest.fecha_hasta.split('-');
+            if (y && m && d) trigger.value = d + '/' + m + '/' + y;
+          }
+        }
+        if (dest.aloj_es_anfitrion) {
+          const alojRadio = card.querySelector(`input[name="dest_aloj_es_anfitrion[]"][value="${dest.aloj_es_anfitrion}"]`);
+          if (alojRadio) { alojRadio.checked = true; onDestAlojToggle(alojRadio); }
+        }
+        if (dest.aloj_es_anfitrion === 'no') {
+          if (dest.aloj_nombre) card.querySelector('[name="dest_aloj_nombre[]"]').value = dest.aloj_nombre;
+          if (dest.aloj_calle) card.querySelector('.dest-aloj-calle').value = dest.aloj_calle;
+          if (dest.aloj_colonia) card.querySelector('.dest-aloj-colonia').value = dest.aloj_colonia;
+          if (dest.aloj_delegacion) card.querySelector('.dest-aloj-delegacion').value = dest.aloj_delegacion;
+          if (dest.aloj_ciudad) card.querySelector('.dest-aloj-ciudad').value = dest.aloj_ciudad;
+          if (dest.aloj_estado) card.querySelector('.dest-aloj-estado').value = dest.aloj_estado;
+          if (dest.aloj_cp) card.querySelector('.dest-aloj-cp').value = dest.aloj_cp;
+        }
+      });
+      syncDestinoArrivalDates();
     }
   }
 
@@ -3119,10 +3230,34 @@
     window._dpIsMobile = isMobile;
   })();
 
-  addDestino(); // start with one destination pre-filled
+  // Restore form data from localStorage if available
+  const _savedForm = localStorage.getItem('carta_form_completo');
+  if (_savedForm) {
+    try {
+      const _parsed = JSON.parse(_savedForm);
+      if (_parsed.formData) {
+        // Add default destino first (restore will replace it if saved data has destinos)
+        if (!_parsed.formData.destinos?.length) addDestino();
+        restoreFormData(_parsed.formData);
+      } else {
+        addDestino();
+      }
+    } catch (e) { addDestino(); }
+  } else {
+    addDestino(); // start with one destination pre-filled
+  }
+
   // Check hash for step override (e.g. #step=6 from Stripe cancel)
   const _hashStep = parseInt(new URLSearchParams(location.hash.slice(1)).get('step'));
-  if (_hashStep >= 1 && _hashStep <= TOTAL) { current = _hashStep; showStep(_hashStep); }
+  if (_savedForm && _hashStep >= 1 && _hashStep <= TOTAL) { current = _hashStep; showStep(_hashStep); }
+  else if (_savedForm) {
+    try {
+      const _s = JSON.parse(_savedForm).step;
+      if (_s >= 1 && _s <= TOTAL) { current = _s; showStep(_s); }
+      else { showStep(1); }
+    } catch (e) { showStep(1); }
+  }
+  else if (_hashStep >= 1 && _hashStep <= TOTAL) { current = _hashStep; showStep(_hashStep); }
   else { showStep(1); }
 </script>
 

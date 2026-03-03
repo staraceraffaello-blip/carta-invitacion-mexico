@@ -460,6 +460,9 @@ const plan = PLANS[planKey];
 if (params.get('status') === 'success') {
   document.getElementById('success-overlay').classList.add('show');
   document.body.style.overflow = 'hidden';
+  // Clear saved form data after successful payment
+  localStorage.removeItem('carta_form_esencial');
+  localStorage.removeItem('carta_form_completo');
 }
 
 /* ── Pre-fill email from URL param ── */
