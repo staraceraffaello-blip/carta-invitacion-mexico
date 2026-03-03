@@ -681,7 +681,7 @@
               <div>
                 <label class="form-label" for="v-residencia">País de residencia <span class="req">*</span></label>
                 <select id="v-residencia" name="v_residencia" class="form-input" required>
-                  <option value="" disabled selected>País donde resides actualmente</option>
+                  <option value="" disabled selected>Donde reside el viajero actualmente</option>
                   <optgroup label="América Latina y el Caribe">
                     <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option>
                     <option>Barbados</option><option>Belice</option><option>Bolivia</option>
@@ -771,12 +771,12 @@
                 <label class="form-label">Domicilio completo en país de residencia <span class="req">*</span></label>
                 <div class="space-y-3">
                   <input type="text" id="v-calle" name="v_calle" class="form-input"
-                         placeholder="Calle, número, e interior (si aplica)" required>
+                         placeholder="Calle, número, e interior (si aplica)" autocomplete="off" required>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input type="text" id="v-ciudad" name="v_ciudad" class="form-input" placeholder="Ciudad" required oninput="capFirst(this)">
-                    <input type="text" id="v-provincia" name="v_provincia" class="form-input" placeholder="Provincia / Estado / Región" required oninput="capFirst(this)">
+                    <input type="text" id="v-ciudad" name="v_ciudad" class="form-input" placeholder="Ciudad" autocomplete="off" required oninput="capFirst(this)">
+                    <input type="text" id="v-provincia" name="v_provincia" class="form-input" placeholder="Provincia / Estado / Región" autocomplete="off" required oninput="capFirst(this)">
                   </div>
-                  <input type="text" id="v-cp" name="v_cp" class="form-input" placeholder="Código Postal" required oninput="upperAll(this)">
+                  <input type="text" id="v-cp" name="v_cp" class="form-input" placeholder="Código Postal" autocomplete="off" required oninput="upperAll(this)">
                 </div>
                 <p class="form-error" id="err-v-domicilio">Por favor completa los campos de domicilio.</p>
               </div>
@@ -882,10 +882,10 @@
               <div>
                 <label class="form-label">Domicilio en México <span class="req">*</span></label>
                 <div class="space-y-3">
-                  <input type="text" id="a-calle" name="a_calle" class="form-input" placeholder="Calle, número e interior (si aplica)" required>
+                  <input type="text" id="a-calle" name="a_calle" class="form-input" placeholder="Calle, número e interior (si aplica)" autocomplete="off" required>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" required oninput="capFirst(this)">
-                    <input type="text" id="a-delegacion" name="a_delegacion" class="form-input" placeholder="Delegación o Municipio" required oninput="capFirst(this)">
+                    <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" autocomplete="off" required oninput="capFirst(this)">
+                    <input type="text" id="a-delegacion" name="a_delegacion" class="form-input" placeholder="Delegación o Municipio" autocomplete="off" required oninput="capFirst(this)">
                   </div>
                   <div class="grid grid-cols-2 gap-3" style="overflow:hidden">
                     <input type="text" id="a-ciudad" name="a_ciudad" class="form-input" placeholder="Ciudad" required autocomplete="off" oninput="capFirst(this)">
@@ -925,7 +925,7 @@
                       <option>Zacatecas</option>
                     </select>
                   </div>
-                  <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal" required oninput="upperAll(this)">
+                  <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal" autocomplete="off" required oninput="upperAll(this)">
                 </div>
                 <p class="form-hint warn mt-3">⚠ Se recomienda anexar a la carta de invitación un comprobante de domicilio del anfitrión con antigüedad no mayor a 3 meses.</p>
                 <p class="form-error" id="err-a-domicilio">Por favor completa el domicilio.</p>
@@ -952,7 +952,7 @@
               <div>
                 <label class="form-label" for="a-ocupacion">Ocupación o cargo del anfitrión <span class="req">*</span></label>
                 <input type="text" id="a-ocupacion" name="a_ocupacion" class="form-input"
-                       placeholder="Ej. Ingeniero en Pemex, Gerente en Grupo Bimbo, Médico independiente…" required>
+                       placeholder="Ej. Ingeniero, Gerente, Médico, Profesor…" required>
                 <p class="form-hint">Esto ayuda a demostrar estabilidad y respaldo económico ante migración.</p>
                 <p class="form-error" id="err-a-ocupacion">Por favor ingresa la ocupación del anfitrión.</p>
               </div>
@@ -998,11 +998,11 @@
 
               <div>
                 <label class="form-label">¿Desde hace cuánto se conocen? <span class="req">*</span></label>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;">
                   <div>
                     <select id="a-tiempo-anios" name="a_tiempo_anios" class="form-input" required>
                       <option value="" disabled selected>Años</option>
-                      <option value="0">Menos de 1 año</option>
+                      <option value="0">0 años</option>
                       <option value="1">1 año</option>
                       <option value="2">2 años</option>
                       <option value="3">3 años</option>
@@ -1020,6 +1020,7 @@
                       <option value="99">Más de 30 años</option>
                     </select>
                   </div>
+                  <span style="font-size:0.95rem;color:#64748b;">y</span>
                   <div>
                     <select id="a-tiempo-meses" name="a_tiempo_meses" class="form-input" required>
                       <option value="" disabled selected>Meses</option>
@@ -1527,21 +1528,20 @@
             <div class="rounded-2xl p-5 mb-6" style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);">
               <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">¿Todo correcto?</p>
               <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Revisa los datos abajo y confirma para proceder al pago seguro. La carta PDF llegará al correo del viajero y del anfitrión en minutos.</p>
-              <div class="flex items-center gap-2 text-xs mb-5" style="color:#6B7280;">
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+              <p class="text-xs mb-5" style="color:#6B7280;">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" style="display:inline;vertical-align:-1px;margin-right:4px;">
                   <rect x="1.5" y="5.5" width="10" height="7" rx="1.5" stroke="#C9A84C" stroke-width="1.1"/>
                   <path d="M4 5.5V4a2.5 2.5 0 015 0v1.5" stroke="#C9A84C" stroke-width="1.1"/>
-                </svg>
-                Pago procesado por <strong>Stripe</strong>. No almacenamos datos de tarjeta.
-              </div>
-              <div class="flex items-center justify-between gap-3">
+                </svg>Pago procesado por Stripe. No almacenamos datos de tarjeta.
+              </p>
+              <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
                 <button type="button" class="btn-back" onclick="goPrev(6)">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
                     <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   Volver y editar
                 </button>
-                <button type="button" class="btn-navy" onclick="goNext(6)" style="white-space:nowrap;font-size:0.9375rem;">
+                <button type="button" class="btn-navy" onclick="goNext(6)" style="font-size:0.9375rem;">
                   Confirmar y pagar · $5 USD
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                     <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1567,21 +1567,20 @@
             <div class="rounded-2xl p-5" style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);">
               <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">¿Todo correcto?</p>
               <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Revisa los datos abajo y confirma para proceder al pago seguro. La carta PDF llegará al correo del viajero y del anfitrión en minutos.</p>
-              <div class="flex items-center gap-2 text-xs mb-5" style="color:#6B7280;">
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+              <p class="text-xs mb-5" style="color:#6B7280;">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" style="display:inline;vertical-align:-1px;margin-right:4px;">
                   <rect x="1.5" y="5.5" width="10" height="7" rx="1.5" stroke="#C9A84C" stroke-width="1.1"/>
                   <path d="M4 5.5V4a2.5 2.5 0 015 0v1.5" stroke="#C9A84C" stroke-width="1.1"/>
-                </svg>
-                Pago procesado por <strong>Stripe</strong>. No almacenamos datos de tarjeta.
-              </div>
-              <div class="flex items-center justify-between gap-3">
+                </svg>Pago procesado por Stripe. No almacenamos datos de tarjeta.
+              </p>
+              <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
                 <button type="button" class="btn-back" onclick="goPrev(6)">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
                     <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   Volver y editar
                 </button>
-                <button type="button" class="btn-navy" onclick="goNext(6)" style="white-space:nowrap;font-size:0.9375rem;">
+                <button type="button" class="btn-navy" onclick="goNext(6)" style="font-size:0.9375rem;">
                   Confirmar y pagar · $5 USD
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                     <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
