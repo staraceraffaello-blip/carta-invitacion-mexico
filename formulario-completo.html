@@ -3119,8 +3119,11 @@
     window._dpIsMobile = isMobile;
   })();
 
-  showStep(1);
   addDestino(); // start with one destination pre-filled
+  // Check hash for step override (e.g. #step=6 from Stripe cancel)
+  const _hashStep = parseInt(new URLSearchParams(location.hash.slice(1)).get('step'));
+  if (_hashStep >= 1 && _hashStep <= TOTAL) { current = _hashStep; showStep(_hashStep); }
+  else { showStep(1); }
 </script>
 
 </body>
