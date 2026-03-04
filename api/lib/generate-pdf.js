@@ -46,7 +46,6 @@ function fmtDateShort(iso) {
 function buildTiempoStr(anios, meses) {
   const a = parseInt(anios, 10) || 0;
   const m = parseInt(meses, 10) || 0;
-  if (a >= 99) return 'más de 30 años';
   const parts = [];
   if (a > 0) parts.push(`${a} año${a > 1 ? 's' : ''}`);
   if (m > 0) parts.push(`${m} mes${m > 1 ? 'es' : ''}`);

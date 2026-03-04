@@ -1054,38 +1054,6 @@
                   <div>
                     <select id="a-tiempo-anios" name="a_tiempo_anios" class="form-input" required>
                       <option value="" disabled selected>Años</option>
-                      <option value="0">0 años</option>
-                      <option value="1">1 año</option>
-                      <option value="2">2 años</option>
-                      <option value="3">3 años</option>
-                      <option value="4">4 años</option>
-                      <option value="5">5 años</option>
-                      <option value="6">6 años</option>
-                      <option value="7">7 años</option>
-                      <option value="8">8 años</option>
-                      <option value="9">9 años</option>
-                      <option value="10">10 años</option>
-                      <option value="11">11 años</option>
-                      <option value="12">12 años</option>
-                      <option value="13">13 años</option>
-                      <option value="14">14 años</option>
-                      <option value="15">15 años</option>
-                      <option value="16">16 años</option>
-                      <option value="17">17 años</option>
-                      <option value="18">18 años</option>
-                      <option value="19">19 años</option>
-                      <option value="20">20 años</option>
-                      <option value="21">21 años</option>
-                      <option value="22">22 años</option>
-                      <option value="23">23 años</option>
-                      <option value="24">24 años</option>
-                      <option value="25">25 años</option>
-                      <option value="26">26 años</option>
-                      <option value="27">27 años</option>
-                      <option value="28">28 años</option>
-                      <option value="29">29 años</option>
-                      <option value="30">30 años</option>
-                      <option value="99">Más de 30 años</option>
                     </select>
                   </div>
                   <span style="font-size:0.95rem;color:#64748b;">y</span>
@@ -3133,6 +3101,18 @@
     document.querySelectorAll('[data-dynamic-date="travel"]').forEach(el => { el.min = y + '-01-01'; el.max = (y + 5) + '-12-31'; });
     document.querySelectorAll('[data-dynamic-date="birth"]').forEach(el => { el.max = y + '-12-31'; });
   })();
+
+  // Populate años dropdown (0–99) dynamically
+  (function() {
+    const sel = document.getElementById('a-tiempo-anios');
+    for (let i = 0; i <= 99; i++) {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = i === 1 ? '1 año' : `${i} años`;
+      sel.appendChild(opt);
+    }
+  })();
+
   setupRealtimeValidation();
 
   /* ── Auto-trim: no leading/trailing spaces ── */
