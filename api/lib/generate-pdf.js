@@ -380,7 +380,7 @@ export default function generatePDF(formData, plan) {
 
       d.destinos.forEach((dest, i) => {
         const alojAddr = [dest.aloj_calle, dest.aloj_colonia, dest.aloj_delegacion, dest.aloj_ciudad, dest.aloj_estado, 'C.P. ' + (dest.aloj_cp || '')].filter(Boolean).join(', ');
-        const alojStr = dest.aloj_nombre || alojAddr;
+        const alojStr = dest.aloj_nombre ? `${dest.aloj_nombre}, ${alojAddr}` : alojAddr;
         doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica-Bold')
           .text(`Destino ${i + 1}: ${dest.ciudad}`, { lineGap: 1 });
         doc.font('Helvetica')
