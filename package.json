@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/staraceraffaello-blip/carta-invitacion-mexico#readme",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
     "@supabase/supabase-js": "^2.98.0",
     "micro": "^10.0.1",
     "pdfkit": "^0.17.2",

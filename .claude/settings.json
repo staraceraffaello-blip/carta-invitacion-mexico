@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grep -rn 'favicon' *.html | grep -v 'logo-simple.png' && echo 'WARNING: Unexpected favicon reference found' || true",
+            "timeout": 30,
+            "statusMessage": "Checking favicon consistency..."
+          }
+        ]
+      }
+    ]
+  }
+}

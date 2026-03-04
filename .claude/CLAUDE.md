@@ -66,3 +66,25 @@
 - Do not stop after one screenshot pass.
 - Do not use `transition-all`.
 - Do not use default Tailwind blue/indigo as primary color.
+
+## Git & Deployment
+- After making file changes, always commit and push to the repository unless told otherwise.
+- When pushing to git, check that the remote is already configured before running `git remote add` to avoid errors.
+
+## File Changes Across Multiple HTML Pages
+- This project has ~27-30 HTML files that often need the same change (favicons, footers, copyright years, schema markup). When making a change to one HTML file, always ask or check if the same change applies to all HTML files in the project.
+- Use parallel agents (Task tool) for bulk multi-file changes.
+
+## Forms
+- This project has TWO Spanish-language form files that must always be kept in sync. When modifying validation, dropdowns, labels, or fields in one form, apply the same change to the other form file.
+- Always verify that dropdown option values exactly match the label map keys used in processing logic.
+
+## Email & Logo Rendering
+- SVG logos do NOT render in email clients. When building email templates, always use hosted PNG images for logos from the start.
+- Verify email recipient addresses before sending test emails or drafts.
+
+## Analytics
+- **GA4 Property ID:** `526320486` (cartadeinvitacionmexico.com)
+- When pulling analytics reports, invoke the `analytics-report` skill at `.claude/skills/analytics-report/skill.md`.
+- Always show two tables: ALL sessions and Engaged-only (humans) sessions.
+

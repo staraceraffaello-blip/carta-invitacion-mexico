@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
 import { buffer } from 'micro';
 import generatePDF from './lib/generate-pdf.js';
+import polishFields from './lib/polish-fields.js';
 import sendEmail from './lib/send-email.js';
 import mexicoNow from './lib/mexico-now.js';
 
@@ -81,10 +82,12 @@ export default async function handler(req, res) {
       console.log('[webhook] RESEND_API_KEY set:', !!process.env.RESEND_API_KEY);
       console.log('[webhook] RESEND_FROM_EMAIL:', process.env.RESEND_FROM_EMAIL || '(not set, using default)');
 
-      // 3. Generate PDF, upload to storage, and send email
+      // 3. Polish fields, generate PDF, upload to storage, and send email
       try {
+        console.log('[webhook] Polishing text fields with Haiku...');
+        const polishedData = await polishFields(submission.form_data);
         console.log('[webhook] Generating PDF...');
-        const pdfBuffer = await generatePDF(submission.form_data, submission.plan);
+        const pdfBuffer = await generatePDF(polishedData, submission.plan);
         console.log('[webhook] PDF generated, size:', pdfBuffer.length, 'bytes');
 
         // Upload PDF to Supabase Storage

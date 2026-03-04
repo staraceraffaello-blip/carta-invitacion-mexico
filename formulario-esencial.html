@@ -853,6 +853,32 @@
               </div>
 
               <div>
+                <label class="form-label" for="a-nacionalidad">Nacionalidad del anfitrión <span class="req">*</span></label>
+                <select id="a-nacionalidad" name="a_nacionalidad" class="form-input" required>
+                  <option value="" disabled selected>Selecciona la nacionalidad</option>
+                  <optgroup label="América Latina y el Caribe">
+                    <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option><option>Barbados</option><option>Belice</option><option>Bolivia</option><option>Brasil</option><option>Chile</option><option>Colombia</option><option>Costa Rica</option><option>Cuba</option><option>Dominica</option><option>Ecuador</option><option>El Salvador</option><option>Granada</option><option>Guatemala</option><option>Guyana</option><option>Haití</option><option>Honduras</option><option>Jamaica</option><option>Mexicana</option><option>Nicaragua</option><option>Panamá</option><option>Paraguay</option><option>Perú</option><option>República Dominicana</option><option>San Cristóbal y Nieves</option><option>San Vicente y las Granadinas</option><option>Santa Lucía</option><option>Surinam</option><option>Trinidad y Tobago</option><option>Uruguay</option><option>Venezuela</option>
+                  </optgroup>
+                  <optgroup label="Norteamérica">
+                    <option>Canadá</option><option>Estados Unidos</option>
+                  </optgroup>
+                  <optgroup label="Europa">
+                    <option>Albania</option><option>Alemania</option><option>Andorra</option><option>Austria</option><option>Bélgica</option><option>Bielorrusia</option><option>Bosnia y Herzegovina</option><option>Bulgaria</option><option>Chipre</option><option>Ciudad del Vaticano</option><option>Croacia</option><option>Dinamarca</option><option>Eslovaquia</option><option>Eslovenia</option><option>España</option><option>Estonia</option><option>Finlandia</option><option>Francia</option><option>Grecia</option><option>Hungría</option><option>Irlanda</option><option>Islandia</option><option>Italia</option><option>Kosovo</option><option>Letonia</option><option>Liechtenstein</option><option>Lituania</option><option>Luxemburgo</option><option>Malta</option><option>Moldavia</option><option>Mónaco</option><option>Montenegro</option><option>Noruega</option><option>Países Bajos</option><option>Polonia</option><option>Portugal</option><option>Reino Unido</option><option>República Checa</option><option>Rumanía</option><option>Rusia</option><option>San Marino</option><option>Serbia</option><option>Suecia</option><option>Suiza</option><option>Ucrania</option>
+                  </optgroup>
+                  <optgroup label="África">
+                    <option>Argelia</option><option>Angola</option><option>Benín</option><option>Botsuana</option><option>Burkina Faso</option><option>Burundi</option><option>Cabo Verde</option><option>Camerún</option><option>Chad</option><option>Comoras</option><option>Congo</option><option>Costa de Marfil</option><option>Egipto</option><option>Eritrea</option><option>Etiopía</option><option>Gabón</option><option>Gambia</option><option>Ghana</option><option>Guinea</option><option>Guinea Ecuatorial</option><option>Guinea-Bisáu</option><option>Kenia</option><option>Lesoto</option><option>Liberia</option><option>Libia</option><option>Madagascar</option><option>Malaui</option><option>Mali</option><option>Marruecos</option><option>Mauricio</option><option>Mauritania</option><option>Mozambique</option><option>Namibia</option><option>Níger</option><option>Nigeria</option><option>República Centroafricana</option><option>República Democrática del Congo</option><option>Ruanda</option><option>Santo Tomé y Príncipe</option><option>Senegal</option><option>Seychelles</option><option>Sierra Leona</option><option>Somalia</option><option>Sudáfrica</option><option>Sudán</option><option>Sudán del Sur</option><option>Suazilandia</option><option>Tanzania</option><option>Togo</option><option>Túnez</option><option>Uganda</option><option>Yibuti</option><option>Zambia</option><option>Zimbabue</option>
+                  </optgroup>
+                  <optgroup label="Asia y Medio Oriente">
+                    <option>Afganistán</option><option>Arabia Saudita</option><option>Armenia</option><option>Azerbaiyán</option><option>Bangladés</option><option>Brunéi</option><option>Bután</option><option>Camboya</option><option>Catar</option><option>China</option><option>Corea del Norte</option><option>Corea del Sur</option><option>Emiratos Árabes Unidos</option><option>Filipinas</option><option>Georgia</option><option>India</option><option>Indonesia</option><option>Irak</option><option>Irán</option><option>Israel</option><option>Japón</option><option>Jordania</option><option>Kazajistán</option><option>Kirguistán</option><option>Kuwait</option><option>Laos</option><option>Líbano</option><option>Malasia</option><option>Maldivas</option><option>Mongolia</option><option>Myanmar</option><option>Nepal</option><option>Omán</option><option>Pakistán</option><option>Palestina</option><option>Singapur</option><option>Siria</option><option>Sri Lanka</option><option>Tailandia</option><option>Tayikistán</option><option>Timor Oriental</option><option>Turkmenistán</option><option>Turquía</option><option>Uzbekistán</option><option>Vietnam</option><option>Yemen</option>
+                  </optgroup>
+                  <optgroup label="Oceanía">
+                    <option>Australia</option><option>Fiyi</option><option>Islas Marshall</option><option>Islas Salomón</option><option>Kiribati</option><option>Micronesia</option><option>Nauru</option><option>Nueva Zelanda</option><option>Palaos</option><option>Papúa Nueva Guinea</option><option>Samoa</option><option>Tonga</option><option>Tuvalu</option><option>Vanuatu</option>
+                  </optgroup>
+                </select>
+                <p class="form-error" id="err-a-nacionalidad">Por favor selecciona la nacionalidad del anfitrión.</p>
+              </div>
+
+              <div>
                 <label class="form-label" for="a-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
                 <input type="date" id="a-nacimiento" name="a_nacimiento" class="form-input" required min="1900-01-01" data-dynamic-date="birth">
                 <p class="form-hint">El anfitrión debe ser mayor de edad (18 años o más).</p>
@@ -864,7 +890,7 @@
                 <select id="a-id-tipo" name="a_id_tipo" class="form-input" required>
                   <option value="" disabled selected>Selecciona el tipo</option>
                   <option value="pasaporte">Pasaporte mexicano</option>
-                  <option value="ine">INE / IFE</option>
+                  <option value="ine">INE</option>
                   <option value="residente">Tarjeta de residente</option>
                 </select>
                 <p class="form-hint warn">⚠ Se deberá anexar copia de esta identificación a la carta de invitación.</p>
@@ -990,9 +1016,9 @@
               <div>
                 <label class="form-label" for="a-vinculo-detalle">Describe brevemente el vínculo <span class="req">*</span></label>
                 <textarea id="a-vinculo-detalle" name="a_vinculo_detalle" class="form-input"
-                          placeholder="Ej. Amigos de la universidad · Tío de mi esposa · Compañeros de trabajo en la misma empresa…"
+                          placeholder="Ej. Somos amigos desde la universidad · Es sobrino de mi esposa · Trabajamos juntos en la misma empresa…"
                           required rows="2"></textarea>
-                <p class="form-hint warn">⚠ Entre más detalle se proporcione sobre la relación, más personalizada y convincente será la carta de invitación.</p>
+                <p class="form-hint warn">⚠ Describe la relación como si el anfitrión la estuviera explicando, sin importar quién llene el formulario. Este texto aparecerá directamente en la carta de invitación. Entre más detalle, más personalizada será la carta.</p>
                 <p class="form-error" id="err-a-vinculo-detalle">Por favor describe el vínculo entre ambas personas.</p>
               </div>
 
@@ -1013,10 +1039,26 @@
                       <option value="8">8 años</option>
                       <option value="9">9 años</option>
                       <option value="10">10 años</option>
-                      <option value="15">10–15 años</option>
-                      <option value="20">15–20 años</option>
-                      <option value="25">20–25 años</option>
-                      <option value="30">25–30 años</option>
+                      <option value="11">11 años</option>
+                      <option value="12">12 años</option>
+                      <option value="13">13 años</option>
+                      <option value="14">14 años</option>
+                      <option value="15">15 años</option>
+                      <option value="16">16 años</option>
+                      <option value="17">17 años</option>
+                      <option value="18">18 años</option>
+                      <option value="19">19 años</option>
+                      <option value="20">20 años</option>
+                      <option value="21">21 años</option>
+                      <option value="22">22 años</option>
+                      <option value="23">23 años</option>
+                      <option value="24">24 años</option>
+                      <option value="25">25 años</option>
+                      <option value="26">26 años</option>
+                      <option value="27">27 años</option>
+                      <option value="28">28 años</option>
+                      <option value="29">29 años</option>
+                      <option value="30">30 años</option>
                       <option value="99">Más de 30 años</option>
                     </select>
                   </div>
@@ -1082,6 +1124,22 @@
             </div>
 
             <div class="space-y-5">
+
+              <div>
+                <label class="form-label" for="j-motivo">Motivo del viaje <span class="req">*</span></label>
+                <select id="j-motivo" name="j_motivo" class="form-input" required>
+                  <option value="" disabled selected>Selecciona el motivo principal</option>
+                  <option value="turismo">Turismo</option>
+                  <option value="negocios">Negocios</option>
+                  <option value="estudios">Estudios</option>
+                  <option value="actividades_no_remuneradas">Actividades no remuneradas</option>
+                  <option value="transito">Tránsito</option>
+                  <option value="tratamientos_medicos">Tratamientos médicos</option>
+                </select>
+                <p class="form-hint">Esto determina el propósito que se indicará en la carta de invitación.</p>
+                <p class="form-hint warn">⚠ La estancia máxima para visitantes en México es de 180 días.</p>
+                <p class="form-error" id="err-j-motivo">Por favor selecciona el motivo del viaje.</p>
+              </div>
 
               <div>
                 <label class="form-label" for="j-actividades">Actividades que realizará en México <span class="req">*</span></label>
@@ -1253,6 +1311,10 @@
                 <label class="form-label">¿Cuáles gastos serán cubiertos por el anfitrión? <span class="req">*</span></label>
                 <p class="text-xs mb-3" style="color:#6B7280;">Selecciona todos los que apliquen.</p>
                 <div class="space-y-2.5">
+                  <label class="radio-card" id="gasto-alojamiento-card" style="display:none;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="alojamiento" onchange="toggleTransportCard(this)">
+                    <span>🏨 Alojamiento</span>
+                  </label>
                   <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
                     <input type="checkbox" name="gastos_host_conceptos" value="alimentos" onchange="toggleTransportCard(this)">
                     <span>🍽️ Alimentos</span>
@@ -1719,6 +1781,18 @@
         el.classList.remove('error');
       });
     }
+    // Show/hide alojamiento expense option
+    const alojGasto = document.getElementById('gasto-alojamiento-card');
+    if (alojGasto) {
+      if (val === 'no') {
+        alojGasto.style.display = 'flex';
+      } else {
+        alojGasto.style.display = 'none';
+        // Uncheck if hidden
+        const cb = alojGasto.querySelector('input[type="checkbox"]');
+        if (cb) { cb.checked = false; alojGasto.classList.remove('selected'); }
+      }
+    }
   }
 
   function onTransportType(prefix, value) {
@@ -1904,6 +1978,7 @@
       ok &= emailReq('v-email', 'err-v-email');
     } else if (n === 2) {
       ok &= nameReq('a-nombre',  'err-a-nombre');
+      ok &= selReq('a-nacionalidad', 'err-a-nacionalidad');
       ok &= dateReq('a-nacimiento', 'err-a-nacimiento', 1900, new Date().getFullYear());
       ok &= selReq('a-id-tipo', 'err-a-id-tipo');
       ok &= req('a-id-num',     'err-a-id-num');
@@ -1922,6 +1997,7 @@
       ok &= selReq('a-tiempo-anios', 'err-a-tiempo');
       ok &= selReq('a-tiempo-meses', 'err-a-tiempo');
     } else if (n === 3) {
+      ok &= selReq('j-motivo', 'err-j-motivo');
       ok &= req('j-actividades', 'err-j-actividades');
       const alojToggle = document.querySelector('input[name="aloj_es_anfitrion"]:checked');
       if (!alojToggle) {
@@ -2194,6 +2270,7 @@
     const tiempoStr = (tiempoAnios !== '—' || tiempoMeses !== '—') ? `${tiempoAnios}${tiempoMeses !== '—' && tiempoMeses !== '0 meses' ? ', ' + tiempoMeses : ''}` : '—';
     const anfitrion = reviewCard('El anfitrión', [
       ['Nombre completo', rval('a-nombre')],
+      ['Nacionalidad', rval('a-nacionalidad')],
       ['Fecha de nacimiento', fmtDate(rval('a-nacimiento'))],
       ['Tipo de ID', rtext('a-id-tipo')],
       ['N.º de ID', rval('a-id-num')],
@@ -2210,7 +2287,7 @@
 
     // El viaje
     const alojToggle = document.querySelector('input[name="aloj_es_anfitrion"]:checked')?.value || '';
-    const viajeRows = [['Actividades', rval('j-actividades')]];
+    const viajeRows = [['Motivo del viaje', rtext('j-motivo')], ['Actividades', rval('j-actividades')]];
     if (alojToggle === 'si') {
       viajeRows.push(['Alojamiento', 'Dirección del anfitrión']);
     } else {
@@ -2230,6 +2307,7 @@
       const conceptos = Array.from(document.querySelectorAll('input[name="gastos_host_conceptos"]:checked')).map(c => c.value);
       const otroText = document.getElementById('gastos-otro-texto')?.value?.trim();
       const conceptoLabels = conceptos.map(c => {
+        if (c === 'alojamiento') return 'Alojamiento';
         if (c === 'alimentos') return 'Alimentos';
         if (c === 'transporte') return 'Transporte';
         if (c === 'actividades') return 'Actividades turísticas';
@@ -2326,9 +2404,11 @@
     // Select inputs → validate on change
     [
       ['v-nacionalidad','err-v-nacionalidad'],
+      ['a-nacionalidad','err-a-nacionalidad'],
       ['a-id-tipo','err-a-id-tipo'],
       ['a-vinculo','err-a-vinculo'],
       ['a-perspectiva','err-a-perspectiva'],
+      ['j-motivo','err-j-motivo'],
       ['j-al-estado','err-j-alojamiento'],
     ].forEach(([id, errId]) => {
       const el = document.getElementById(id);
