@@ -83,6 +83,16 @@
 - SVG logos do NOT render in email clients. When building email templates, always use hosted PNG images for logos from the start.
 - Verify email recipient addresses before sending test emails or drafts.
 
+## Articles & Blog Content
+- **Mid-article CTA required:** Every article must have TWO CTAs — one mid-article (after the first `<h2>` section) and one at the bottom.
+  - Articles ≤7 min: use **Style A "inline sutil"** (`.cta-inline` — left gold border, text link, no button)
+  - Articles ≥8 min: use **Style B "card compacta"** (`.cta-mid` — centered cream card with btn-gold, max-width 480px)
+  - CTA button text must use first person: "Crear mi carta" (not "Crea tu carta")
+  - Mid-article CTA copy must be **different** from the bottom CTA to avoid redundancy
+  - Adapt the headline/copy to the article's specific topic (contextual, not generic)
+- **CURP:** Never mention CURP in articles. The service does not collect it. Use "número de identificación oficial (INE, pasaporte mexicano o tarjeta de residente)" instead.
+- **Consistency with the service:** Do not claim the carta includes data fields that the forms don't actually collect. When in doubt, check `formulario-esencial.html` and `formulario-completo.html`.
+
 ## Analytics
 - **GA4 Property ID:** `526320486` (cartadeinvitacionmexico.com)
 - When pulling analytics reports, invoke the `analytics-report` skill at `.claude/skills/analytics-report/skill.md`.
