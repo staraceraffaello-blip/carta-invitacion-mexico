@@ -154,13 +154,15 @@ export default function generatePDF(formData, plan) {
     const actividades = d['j-actividades'] || '';
     const fechaLlegada = fmtDate(d['ing-fecha']);
     const fechaSalida = fmtDate(d['sal-fecha']);
+    const totalDias = Math.round((new Date(d['sal-fecha']) - new Date(d['ing-fecha'])) / 86400000) + 1;
+    const diasStr = totalDias === 1 ? '1 día' : `${totalDias} días`;
 
     const ingresoTipo = d['ingreso_tipo'] || '';
     const salidaTipo = d['salida_tipo'] || '';
 
     /* ─── Intro paragraph ─── */
     let empresaStr = '';
-    if (hostEmpresa) empresaStr = ` (empresa/institución: ${hostEmpresa})`;
+    if (hostEmpresa) empresaStr = ` en ${hostEmpresa}`;
 
     doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
       .text(
@@ -213,7 +215,7 @@ export default function generatePDF(formData, plan) {
     const actividadesClean = actividades.replace(/\.+$/, '');
     doc.text(
       `La presente invitación tiene como objeto que ${visitorName} visite México ` +
-      `${motivoPhrase}, del ${fechaLlegada} al ${fechaSalida}. ` +
+      `${motivoPhrase}, del ${fechaLlegada} al ${fechaSalida}, por un total de ${diasStr}. ` +
       `Durante su estancia, realizará las siguientes actividades: ${actividadesClean}.`,
       { lineGap: LINE_GAP, align: 'justify' }
     );
