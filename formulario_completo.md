@@ -103,10 +103,10 @@ These fields describe the relationship between the anfitrion and Viajero 1. They
 | # | Campo | `name` / `id` | Tipo | Requerido | Validacion | Placeholder / Detalle |
 |---|-------|---------------|------|-----------|------------|----------------------|
 | 10 | **Vinculo con el anfitrion** | `a_vinculo` / `a-vinculo` | select | Si | `selReq()`. | Default: `"Selecciona el vinculo"` (disabled). Label: "Vinculo con el anfitrion". |
-| 11 | **Tipo de parentesco** *(conditional)* | `a_parentesco` / `a-parentesco` | select | Si (when familiar) | `selReq()`. Shown only when vinculo = `familiar`. | Default: `"Selecciona el parentesco"` (disabled). See **Dropdown: Parentesco** below. |
+| 11 | **Tipo de parentesco** *(conditional)* | `a_parentesco` / `a-parentesco` | select | Si (when familiar or pareja) | `selReq()`. Shown when vinculo = `familiar` (17 family options) or `pareja` (3 partner options). Options dynamically populated. | Default: `"Selecciona..."` (disabled). See **Dropdown: Parentesco** in esencial doc. |
 | 12 | **Especifica el parentesco** *(conditional)* | `a_parentesco_otro` / `a-parentesco-otro` | text | Si (when otro_familiar) | `req()`. Shown only when parentesco = `otro_familiar`. | `Ej. primo segundo, bisnieto, tio abuelo...` |
-| 13 | **Describe brevemente el vinculo** | `a_vinculo_detalle` / `a-vinculo-detalle` | textarea | Si | `req()`. `rows="2"`. | `Ej. Somos amigos desde la universidad . Es sobrino de mi esposa . Trabajamos juntos en la misma empresa...` |
-| 14 | **Desde hace cuanto se conocen?** *(conditional)* | (group) | — | Si | Both selects validated with `selReq()`. Hidden when vinculo = `familiar` AND parentesco is consanguineous. | — |
+| 13 | **Describe brevemente el vinculo** *(conditional)* | `a_vinculo_detalle` / `a-vinculo-detalle` | textarea | Conditional | `req()`. `rows="2"`. Hidden for familiar and pareja (except pareja→novio). Shown for amistad, laboral, otro, and pareja→novio. | `Ej. Somos amigos desde la universidad . Es sobrino de mi esposa . Trabajamos juntos en la misma empresa...` |
+| 14 | **Desde hace cuanto se conocen?** *(conditional)* | (group) | — | Conditional | Both selects validated with `selReq()`. Hidden ONLY when vinculo = `familiar` AND parentesco is consanguineous. Shown for everything else (including all pareja types). | — |
 | 14a | — Anos | `a_tiempo_anios` / `a-tiempo-anios` | select | Si | `selReq()`. | Default: `"Anos"` (disabled). |
 | 14b | — Meses | `a_tiempo_meses` / `a-tiempo-meses` | select | Si | `selReq()`. | Default: `"Meses"` (disabled). |
 
@@ -153,10 +153,10 @@ Each additional viajero has its own full vinculo system, identical in structure 
 | # | Campo | Class | Tipo | Requerido | Validacion | Placeholder / Detalle |
 |---|-------|-------|------|-----------|------------|----------------------|
 | 8 | **Vinculo con el anfitrion** | `.companion-vinculo` | select | Si | Must select a value. | Same options as `a-vinculo`: familiar, pareja, amistad, laboral, otro. |
-| 9 | **Tipo de parentesco** *(conditional)* | `.companion-parentesco` | select | Si (when familiar) | Must select a value. Shown only when companion-vinculo = `familiar`. | Same options as `a-parentesco`. Label: "El viajero es mi..." |
+| 9 | **Tipo de parentesco** *(conditional)* | `.companion-parentesco` | select | Si (when familiar or pareja) | Must select a value. Shown when vinculo = `familiar` (17 options) or `pareja` (3 options). Dynamically populated. Label: "El viajero es mi..." |
 | 10 | **Especifica el parentesco** *(conditional)* | `.companion-parentesco-otro` | text | Si (when otro_familiar) | `req()`. | `Ej. primo segundo, bisnieto, tio abuelo...` |
-| 11 | **Describe brevemente el vinculo** | `.companion-vinculo-detalle` | textarea | Si | `req()`. `rows="2"`. | `Ej. Es sobrino de mi esposa . Es amigo de la infancia . Trabajamos juntos...` |
-| 12 | **Desde hace cuanto se conocen?** *(conditional)* | (group) | — | Si | Hidden when vinculo = `familiar` AND parentesco is consanguineous. | — |
+| 11 | **Describe brevemente el vinculo** *(conditional)* | `.companion-vinculo-detalle` | textarea | Conditional | `req()`. `rows="2"`. Hidden for familiar and pareja (except novio). Shown for amistad, laboral, otro, and pareja→novio. | `Ej. Es sobrino de mi esposa . Es amigo de la infancia . Trabajamos juntos...` |
+| 12 | **Desde hace cuanto se conocen?** *(conditional)* | (group) | — | Conditional | Hidden ONLY when vinculo = `familiar` AND parentesco is consanguineous. Shown for everything else. | — |
 | 12a | — Anos | `.companion-tiempo-anios` | select | Si | Must select a value. | Same 0--99 anos. |
 | 12b | — Meses | `.companion-tiempo-meses` | select | Si | Must select a value. | Same 0--11 meses. |
 

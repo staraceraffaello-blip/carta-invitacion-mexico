@@ -38,6 +38,10 @@ const PARENTESCO_LABELS = {
   padrastro:   { m: 'padrastro',   f: 'madrastra' },
   hijastro:    { m: 'hijastro',    f: 'hijastra' },
   hermanastro: { m: 'hermanastro', f: 'hermanastra' },
+  // Pareja sub-types
+  conyuge:     { m: 'cónyuge',     f: 'cónyuge' },
+  concubino:   { m: 'concubino',   f: 'concubina' },
+  novio:       { m: 'novio',       f: 'novia' },
 };
 
 
@@ -258,7 +262,7 @@ export default function generatePDF(formData, plan) {
         const compParentescoLabel = compParentescoRaw === 'otro_familiar'
           ? compParentescoOtro
           : (PARENTESCO_LABELS[compParentescoRaw]?.[compGKey] || '');
-        const compRelLabel = (compVinculo === 'familiar' && compParentescoLabel)
+        const compRelLabel = ((compVinculo === 'familiar' || compVinculo === 'pareja') && compParentescoLabel)
           ? compParentescoLabel
           : (compVinculo || '—');
 
@@ -273,7 +277,7 @@ export default function generatePDF(formData, plan) {
 
     /* ─── Vínculo paragraph ─── */
     let vinculoPara;
-    if (vinculo === 'familiar' && parentescoLabel) {
+    if ((vinculo === 'familiar' || vinculo === 'pareja') && parentescoLabel) {
       vinculoPara = `${visitorName} es mi ${parentescoLabel}.`;
     } else {
       vinculoPara = `${visitorName} y quien suscribe mantenemos una relación de ${vinculo}.`;
@@ -301,7 +305,7 @@ export default function generatePDF(formData, plan) {
           : (PARENTESCO_LABELS[compParentescoRaw]?.[compGKey] || '');
 
         let compVinculoPara;
-        if (compVinculo === 'familiar' && compParentescoLabel) {
+        if ((compVinculo === 'familiar' || compVinculo === 'pareja') && compParentescoLabel) {
           compVinculoPara = `${compName} es mi ${compParentescoLabel}.`;
         } else {
           compVinculoPara = `${compName} y quien suscribe mantenemos una relación de ${compVinculo}.`;

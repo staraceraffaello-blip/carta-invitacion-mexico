@@ -90,7 +90,7 @@ const sampleEsencialB = {
   'a-parentesco': 'hermano',
   'a-tiempo-anios': '', // consanguineous — tiempo hidden
   'a-tiempo-meses': '',
-  'a-vinculo-detalle': '',
+  'a-vinculo-detalle': '', // familiar — detalle hidden
   'j-motivo': 'negocios',
 };
 
@@ -107,7 +107,7 @@ const sampleCompleto = {
       vinculo: 'familiar',
       parentesco: 'sobrino',
       parentesco_otro: '',
-      vinculo_detalle: 'Es el hijo de mi hermana mayor, lo conozco desde que nació',
+      vinculo_detalle: '', // familiar — detalle hidden
       tiempo_anios: '30',
       tiempo_meses: '0',
     },
@@ -117,12 +117,12 @@ const sampleCompleto = {
       nacimiento: '2015-06-20',
       nacionalidad: 'Venezolana',
       pasaporte: 'EF1112233',
-      vinculo: 'familiar',
-      parentesco: 'hijo',
+      vinculo: 'pareja',
+      parentesco: 'conyuge',
       parentesco_otro: '',
-      vinculo_detalle: 'Es la hija de mi amiga María Alejandra',
-      tiempo_anios: '',
-      tiempo_meses: '',
+      vinculo_detalle: '', // pareja cónyuge — detalle hidden
+      tiempo_anios: '5',
+      tiempo_meses: '3',
     },
   ],
   destinos: [

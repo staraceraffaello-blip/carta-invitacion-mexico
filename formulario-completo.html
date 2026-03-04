@@ -93,12 +93,13 @@
     /* ── Hints & errors ── */
     .form-hint { font-size: 0.75rem; color: #6B7280; margin-top: 5px; line-height: 1.5; }
     .form-hint.warn {
-      color: #7B5A24;
-      background: rgba(201,168,76,0.1);
-      border-left: 2.5px solid var(--c-gold);
+      color: #B91C1C;
+      background: rgba(185,28,28,0.08);
+      border-left: 2.5px solid #DC2626;
       padding: 6px 10px;
       border-radius: 0 6px 6px 0;
       margin-top: 8px;
+      font-weight: 500;
     }
     .form-error { font-size: 0.75rem; color: #C53030; margin-top: 5px; display: none; font-weight: 500; }
     .form-error.show { display: block; }
@@ -1010,7 +1011,7 @@
                   <p class="form-error" id="err-a-parentesco-otro">Por favor especifica el parentesco.</p>
                 </div>
 
-                <div>
+                <div id="vinculo-detalle-wrapper">
                   <label class="form-label" for="a-vinculo-detalle">Describe brevemente el vínculo <span class="req">*</span></label>
                   <textarea id="a-vinculo-detalle" name="a_vinculo_detalle" class="form-input"
                             placeholder="Ej. Somos amigos desde la universidad · Es sobrino de mi esposa · Trabajamos juntos en la misma empresa…"
@@ -1848,7 +1849,7 @@
         <p class="form-error companion-parentesco-otro-err">Por favor especifica el parentesco.</p>
       </div>
 
-      <div>
+      <div class="companion-vinculo-detalle-wrapper">
         <label class="form-label">Describe brevemente el vínculo <span class="req">*</span></label>
         <textarea class="form-input companion-vinculo-detalle" placeholder="Ej. Es sobrino de mi esposa · Es amigo de la infancia · Trabajamos juntos…" required rows="2"></textarea>
         <p class="form-hint warn">⚠ Entre más detalle, más personalizada será la carta.</p>
@@ -2217,20 +2218,66 @@
         tiempoAnios.appendChild(opt);
       }
     }
-    // Vínculo change handler per companion card
+    // Vínculo, detalle & tiempo handler per companion card
     const CONSANGUINEOUS = ['padre','hijo','hermano','abuelo','nieto','bisabuelo','tio','sobrino','primo'];
+    const FAMILIAR_OPTIONS = [
+      { value: 'padre', label: 'Padre / Madre' },
+      { value: 'hijo', label: 'Hijo(a)' },
+      { value: 'hermano', label: 'Hermano(a)' },
+      { value: 'abuelo', label: 'Abuelo(a)' },
+      { value: 'nieto', label: 'Nieto(a)' },
+      { value: 'bisabuelo', label: 'Bisabuelo(a)' },
+      { value: 'tio', label: 'Tío(a)' },
+      { value: 'sobrino', label: 'Sobrino(a)' },
+      { value: 'primo', label: 'Primo(a)' },
+      { value: 'suegro', label: 'Suegro(a)' },
+      { value: 'yerno', label: 'Yerno / Nuera' },
+      { value: 'cunado', label: 'Cuñado(a)' },
+      { value: 'concuno', label: 'Concuño(a)' },
+      { value: 'padrastro', label: 'Padrastro / Madrastra' },
+      { value: 'hijastro', label: 'Hijastro(a)' },
+      { value: 'hermanastro', label: 'Hermanastro(a)' },
+      { value: 'otro_familiar', label: 'Otro familiar' },
+    ];
+    const PAREJA_OPTIONS = [
+      { value: 'conyuge', label: 'Cónyuge' },
+      { value: 'concubino', label: 'Concubino/a (unión libre)' },
+      { value: 'novio', label: 'Novio / Novia' },
+    ];
+
     const compVinculo = card.querySelector('.companion-vinculo');
     const compParentescoWrap = card.querySelector('.companion-parentesco-wrapper');
     const compParentescoSel = card.querySelector('.companion-parentesco');
     const compParentescoOtroWrap = card.querySelector('.companion-parentesco-otro-wrapper');
     const compParentescoOtroInput = card.querySelector('.companion-parentesco-otro');
+    const compDetalleWrap = card.querySelector('.companion-vinculo-detalle-wrapper');
+    const compDetalleTextarea = card.querySelector('.companion-vinculo-detalle');
     const compTiempoWrap = card.querySelector('.companion-tiempo-wrapper');
     const compTiempoAniosEl = card.querySelector('.companion-tiempo-anios');
     const compTiempoMesesEl = card.querySelector('.companion-tiempo-meses');
 
-    function updateCompTiempo() {
-      const isFamiliar = compVinculo.value === 'familiar';
-      const isConsanguineous = isFamiliar && CONSANGUINEOUS.includes(compParentescoSel.value);
+    function populateCompParentesco(options) {
+      compParentescoSel.innerHTML = '<option value="" disabled selected>Selecciona…</option>' +
+        options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+    }
+
+    function updateCompVisibility() {
+      const v = compVinculo.value;
+      const p = compParentescoSel.value;
+      const isFamiliar = v === 'familiar';
+      const isPareja = v === 'pareja';
+      const isConsanguineous = isFamiliar && CONSANGUINEOUS.includes(p);
+      const isNovio = isPareja && p === 'novio';
+
+      const showDetalle = (!isFamiliar && !isPareja) || isNovio;
+      compDetalleWrap.style.display = showDetalle ? '' : 'none';
+      if (showDetalle) {
+        compDetalleTextarea.setAttribute('required', '');
+      } else {
+        compDetalleTextarea.removeAttribute('required');
+        compDetalleTextarea.value = '';
+      }
+
       if (isConsanguineous) {
         compTiempoWrap.style.display = 'none';
         compTiempoAniosEl.removeAttribute('required');
@@ -2245,7 +2292,9 @@
     }
 
     compVinculo.addEventListener('change', function() {
-      if (this.value === 'familiar') {
+      const v = this.value;
+      if (v === 'familiar' || v === 'pareja') {
+        populateCompParentesco(v === 'familiar' ? FAMILIAR_OPTIONS : PAREJA_OPTIONS);
         compParentescoWrap.style.display = '';
         compParentescoSel.setAttribute('required', '');
       } else {
@@ -2256,7 +2305,7 @@
         compParentescoOtroInput.removeAttribute('required');
         compParentescoOtroInput.value = '';
       }
-      updateCompTiempo();
+      updateCompVisibility();
     });
 
     compParentescoSel.addEventListener('change', function() {
@@ -2268,7 +2317,7 @@
         compParentescoOtroInput.removeAttribute('required');
         compParentescoOtroInput.value = '';
       }
-      updateCompTiempo();
+      updateCompVisibility();
     });
 
     // Convert date inputs for mobile picker
@@ -2563,13 +2612,15 @@
       ok &= emailReq('v-email', 'err-v-email');
       // Viajero 1 vínculo
       ok &= selReq('a-vinculo', 'err-a-vinculo');
-      ok &= req('a-vinculo-detalle', 'err-a-vinculo-detalle');
       const vinculoVal = document.getElementById('a-vinculo')?.value;
-      if (vinculoVal === 'familiar') {
+      if (vinculoVal === 'familiar' || vinculoVal === 'pareja') {
         ok &= selReq('a-parentesco', 'err-a-parentesco');
         if (document.getElementById('a-parentesco')?.value === 'otro_familiar') {
           ok &= req('a-parentesco-otro', 'err-a-parentesco-otro');
         }
+      }
+      if (document.getElementById('vinculo-detalle-wrapper')?.style.display !== 'none') {
+        ok &= req('a-vinculo-detalle', 'err-a-vinculo-detalle');
       }
       if (document.getElementById('tiempo-wrapper')?.style.display !== 'none') {
         ok &= selReq('a-tiempo-anios', 'err-a-tiempo');
@@ -2602,15 +2653,18 @@
         // Companion vínculo validation
         const compVinculo = card.querySelector('.companion-vinculo');
         if (!compVinculo?.value) showErr(compVinculo, 'companion-vinculo-err');
-        const compVinculoDetalle = card.querySelector('.companion-vinculo-detalle');
-        if (!compVinculoDetalle?.value.trim()) showErr(compVinculoDetalle, 'companion-vinculo-detalle-err');
-        if (compVinculo?.value === 'familiar') {
+        if (compVinculo?.value === 'familiar' || compVinculo?.value === 'pareja') {
           const compParentesco = card.querySelector('.companion-parentesco');
           if (!compParentesco?.value) showErr(compParentesco, 'companion-parentesco-err');
           if (compParentesco?.value === 'otro_familiar') {
             const compParentescoOtro = card.querySelector('.companion-parentesco-otro');
             if (!compParentescoOtro?.value.trim()) showErr(compParentescoOtro, 'companion-parentesco-otro-err');
           }
+        }
+        const compDetalleWrap = card.querySelector('.companion-vinculo-detalle-wrapper');
+        if (compDetalleWrap && compDetalleWrap.style.display !== 'none') {
+          const compVinculoDetalle = card.querySelector('.companion-vinculo-detalle');
+          if (!compVinculoDetalle?.value.trim()) showErr(compVinculoDetalle, 'companion-vinculo-detalle-err');
         }
         // Companion tiempo validation (only if wrapper visible)
         const compTiempoWrap = card.querySelector('.companion-tiempo-wrapper');
@@ -3087,9 +3141,11 @@
       ['Ocupación', rval('v-ocupacion')],
       ['Correo electrónico', rval('v-email')],
       ['Vínculo con el anfitrión', rtext('a-vinculo')],
-      ['Detalle del vínculo', rval('a-vinculo-detalle')],
-      ['Tiempo de conocerse', tiempoStr],
+      ['Parentesco / tipo', rtext('a-parentesco')],
     ];
+    const detalleVal = rval('a-vinculo-detalle');
+    if (detalleVal !== '—') viajeroRows.push(['Detalle del vínculo', detalleVal]);
+    if (tiempoStr !== '—') viajeroRows.push(['Tiempo de conocerse', tiempoStr]);
     const viajero = reviewCard('Viajero 1 (principal)', viajeroRows);
 
     // Additional viajeros
@@ -3121,16 +3177,19 @@
         const compVinculo = card.querySelector('.companion-vinculo')?.value || '—';
         const VINCULO_LABELS = { familiar: 'Familiar', pareja: 'Pareja', amistad: 'Amistad', laboral: 'Laboral', otro: 'Otro' };
         rows.push(['Vínculo con el anfitrión', VINCULO_LABELS[compVinculo] || compVinculo]);
-        rows.push(['Detalle del vínculo', card.querySelector('.companion-vinculo-detalle')?.value || '—']);
+        const compParentescoSel = card.querySelector('.companion-parentesco');
+        if (compParentescoSel && compParentescoSel.selectedIndex > 0) {
+          rows.push(['Parentesco / tipo', compParentescoSel.options[compParentescoSel.selectedIndex].text]);
+        }
+        const compDetalleVal = card.querySelector('.companion-vinculo-detalle')?.value?.trim();
+        if (compDetalleVal) rows.push(['Detalle del vínculo', compDetalleVal]);
         const cTiempoA = card.querySelector('.companion-tiempo-anios')?.value;
         const cTiempoM = card.querySelector('.companion-tiempo-meses')?.value;
-        let cTiempoStr = '—';
         if (cTiempoA !== '' && cTiempoA !== undefined) {
           const aText = cTiempoA == 1 ? '1 año' : `${cTiempoA} años`;
           const mText = cTiempoM && cTiempoM !== '0' ? `, ${cTiempoM} ${cTiempoM == 1 ? 'mes' : 'meses'}` : '';
-          cTiempoStr = aText + mText;
+          rows.push(['Tiempo de conocerse', aText + mText]);
         }
-        rows.push(['Tiempo de conocerse', cTiempoStr]);
         return reviewCard(`Viajero ${i + 2}`, rows);
       }).join('');
     }
@@ -3320,22 +3379,68 @@
     }
   })();
 
-  /* ── Parentesco & tiempo conditional logic ── */
+  /* ── Parentesco, detalle & tiempo conditional logic ── */
   (function() {
     const CONSANGUINEOUS = ['padre','hijo','hermano','abuelo','nieto','bisabuelo','tio','sobrino','primo'];
+    const FAMILIAR_OPTIONS = [
+      { value: 'padre', label: 'Padre / Madre' },
+      { value: 'hijo', label: 'Hijo(a)' },
+      { value: 'hermano', label: 'Hermano(a)' },
+      { value: 'abuelo', label: 'Abuelo(a)' },
+      { value: 'nieto', label: 'Nieto(a)' },
+      { value: 'bisabuelo', label: 'Bisabuelo(a)' },
+      { value: 'tio', label: 'Tío(a)' },
+      { value: 'sobrino', label: 'Sobrino(a)' },
+      { value: 'primo', label: 'Primo(a)' },
+      { value: 'suegro', label: 'Suegro(a)' },
+      { value: 'yerno', label: 'Yerno / Nuera' },
+      { value: 'cunado', label: 'Cuñado(a)' },
+      { value: 'concuno', label: 'Concuño(a)' },
+      { value: 'padrastro', label: 'Padrastro / Madrastra' },
+      { value: 'hijastro', label: 'Hijastro(a)' },
+      { value: 'hermanastro', label: 'Hermanastro(a)' },
+      { value: 'otro_familiar', label: 'Otro familiar' },
+    ];
+    const PAREJA_OPTIONS = [
+      { value: 'conyuge', label: 'Cónyuge' },
+      { value: 'concubino', label: 'Concubino/a (unión libre)' },
+      { value: 'novio', label: 'Novio / Novia' },
+    ];
+
     const vinculoSel = document.getElementById('a-vinculo');
     const parentescoWrap = document.getElementById('parentesco-wrapper');
     const parentescoSel = document.getElementById('a-parentesco');
     const parentescoLabel = document.getElementById('parentesco-label');
     const parentescoOtroWrap = document.getElementById('parentesco-otro-wrapper');
     const parentescoOtroInput = document.getElementById('a-parentesco-otro');
+    const detalleWrap = document.getElementById('vinculo-detalle-wrapper');
+    const detalleTextarea = document.getElementById('a-vinculo-detalle');
     const tiempoWrap = document.getElementById('tiempo-wrapper');
     const tiempoAnios = document.getElementById('a-tiempo-anios');
     const tiempoMeses = document.getElementById('a-tiempo-meses');
 
-    function updateTiempo() {
-      const isFamiliar = vinculoSel.value === 'familiar';
-      const isConsanguineous = isFamiliar && CONSANGUINEOUS.includes(parentescoSel.value);
+    function populateParentesco(options) {
+      parentescoSel.innerHTML = '<option value="" disabled selected>Selecciona…</option>' +
+        options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+    }
+
+    function updateVisibility() {
+      const v = vinculoSel.value;
+      const p = parentescoSel.value;
+      const isFamiliar = v === 'familiar';
+      const isPareja = v === 'pareja';
+      const isConsanguineous = isFamiliar && CONSANGUINEOUS.includes(p);
+      const isNovio = isPareja && p === 'novio';
+
+      const showDetalle = (!isFamiliar && !isPareja) || isNovio;
+      detalleWrap.style.display = showDetalle ? '' : 'none';
+      if (showDetalle) {
+        detalleTextarea.setAttribute('required', '');
+      } else {
+        detalleTextarea.removeAttribute('required');
+        detalleTextarea.value = '';
+      }
+
       if (isConsanguineous) {
         tiempoWrap.style.display = 'none';
         tiempoAnios.removeAttribute('required');
@@ -3350,10 +3455,11 @@
     }
 
     vinculoSel.addEventListener('change', function() {
-      if (this.value === 'familiar') {
+      const v = this.value;
+      if (v === 'familiar' || v === 'pareja') {
+        populateParentesco(v === 'familiar' ? FAMILIAR_OPTIONS : PAREJA_OPTIONS);
         parentescoWrap.style.display = '';
         parentescoSel.setAttribute('required', '');
-        parentescoLabel.innerHTML = 'El viajero es mi… <span class="req">*</span>';
       } else {
         parentescoWrap.style.display = 'none';
         parentescoSel.removeAttribute('required');
@@ -3362,7 +3468,7 @@
         parentescoOtroInput.removeAttribute('required');
         parentescoOtroInput.value = '';
       }
-      updateTiempo();
+      updateVisibility();
     });
 
     parentescoSel.addEventListener('change', function() {
@@ -3374,7 +3480,7 @@
         parentescoOtroInput.removeAttribute('required');
         parentescoOtroInput.value = '';
       }
-      updateTiempo();
+      updateVisibility();
     });
   })();
 

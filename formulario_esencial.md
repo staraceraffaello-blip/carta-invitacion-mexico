@@ -89,10 +89,10 @@ These fields describe the relationship between the anfitrion and the viajero. Th
 | # | Campo | ID / Name | Tipo | Requerido | Validacion | Placeholder / Detalle |
 |---|-------|-----------|------|-----------|------------|----------------------|
 | 10 | **Vinculo con el viajero** | `a-vinculo` / `a_vinculo` | select | Si | `selReq()`. | Default: `"Selecciona el vinculo"` (disabled). |
-| 11 | **Tipo de parentesco** *(conditional)* | `a-parentesco` / `a_parentesco` | select | Si (when familiar) | `selReq()`. Shown only when vinculo = `familiar`. | Default: `"Selecciona el parentesco"` (disabled). See **Dropdown: Parentesco** below. |
+| 11 | **Tipo de parentesco** *(conditional)* | `a-parentesco` / `a_parentesco` | select | Si (when familiar or pareja) | `selReq()`. Shown when vinculo = `familiar` (17 family options) or `pareja` (3 partner options). Options are dynamically populated. | Default: `"Selecciona..."` (disabled). See **Dropdown: Parentesco** below. |
 | 12 | **Especifica el parentesco** *(conditional)* | `a-parentesco-otro` / `a_parentesco_otro` | text | Si (when otro_familiar) | `req()`. Shown only when parentesco = `otro_familiar`. | `Ej. primo segundo, bisnieto, tio abuelo...` |
-| 13 | **Describe brevemente el vinculo** | `a-vinculo-detalle` / `a_vinculo_detalle` | textarea | Si | `req()`. `rows="2"`. | `Ej. Somos amigos desde la universidad . Es sobrino de mi esposa . Trabajamos juntos en la misma empresa...` |
-| 14 | **Desde hace cuanto se conocen?** *(conditional)* | (group) | — | Si | Both selects validated with `selReq()`. Hidden when vinculo = `familiar` AND parentesco is consanguineous. | — |
+| 13 | **Describe brevemente el vinculo** *(conditional)* | `a-vinculo-detalle` / `a_vinculo_detalle` | textarea | Conditional | `req()`. `rows="2"`. Hidden when vinculo = `familiar` or `pareja` (except pareja→novio). Shown for amistad, laboral, otro, and pareja→novio. | `Ej. Somos amigos desde la universidad . Es sobrino de mi esposa . Trabajamos juntos en la misma empresa...` |
+| 14 | **Desde hace cuanto se conocen?** *(conditional)* | (group) | — | Conditional | Both selects validated with `selReq()`. Hidden ONLY when vinculo = `familiar` AND parentesco is consanguineous. Shown for everything else (including all pareja types). | — |
 | 14a | — Anos | `a-tiempo-anios` / `a_tiempo_anios` | select | Si | `selReq()`. | Default: `"Anos"` (disabled). |
 | 14b | — Meses | `a-tiempo-meses` / `a_tiempo_meses` | select | Si | `selReq()`. | Default: `"Meses"` (disabled). |
 
@@ -108,7 +108,9 @@ These fields describe the relationship between the anfitrion and the viajero. Th
 
 ### Dropdown: Tipo de parentesco (`a-parentesco`)
 
-Shown only when `a-vinculo = "familiar"`. Label is always "El viajero es mi..." (no toggling, no perspectiva-based changes).
+Dynamically populated based on `a-vinculo` value. Label is always "El viajero es mi...".
+
+**When vinculo = `familiar`** (17 options):
 
 | Value | Label |
 |-------|-------|
@@ -130,11 +132,28 @@ Shown only when `a-vinculo = "familiar"`. Label is always "El viajero es mi..." 
 | `hermanastro` | Hermanastro(a) |
 | `otro_familiar` | Otro familiar |
 
+**When vinculo = `pareja`** (3 options):
+
+| Value | Label |
+|-------|-------|
+| `conyuge` | Conyuge |
+| `concubino` | Concubino/a (union libre) |
+| `novio` | Novio / Novia |
+
 **Consanguineous** (hide tiempo when selected): `padre`, `hijo`, `hermano`, `abuelo`, `nieto`, `bisabuelo`, `tio`, `sobrino`, `primo`.
 
 **Non-consanguineous** (show tiempo): `suegro`, `yerno`, `cunado`, `concuno`, `padrastro`, `hijastro`, `hermanastro`, `otro_familiar`.
 
-**No PDF inversion**: Since the perspectiva field was removed, parentesco values are always from the anfitrion's perspective and are never inverted.
+### Visibility rules
+
+| Vinculo | Sub-type | Detalle? | Tiempo? |
+|---------|----------|----------|---------|
+| familiar (consanguineous) | padre, hijo, hermano, etc. | Hidden | Hidden |
+| familiar (non-consanguineous) | suegro, cunado, etc. | Hidden | Shown |
+| pareja → conyuge | — | Hidden | Shown |
+| pareja → concubino | — | Hidden | Shown |
+| pareja → novio | — | Shown | Shown |
+| amistad / laboral / otro | — | Shown | Shown |
 
 ### Dropdown: Anos de conocerse (`a-tiempo-anios`)
 
