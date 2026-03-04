@@ -576,6 +576,15 @@
               </div>
 
               <div>
+                <label class="form-label">Sexo del viajero <span class="req">*</span></label>
+                <div style="display:flex;gap:24px;">
+                  <label class="radio-label"><input type="radio" name="v_genero" value="masculino" required> Masculino</label>
+                  <label class="radio-label"><input type="radio" name="v_genero" value="femenino" required> Femenino</label>
+                </div>
+                <p class="form-error" id="err-v-genero">Por favor selecciona el sexo.</p>
+              </div>
+
+              <div>
                 <label class="form-label" for="v-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
                 <input type="date" id="v-nacimiento" name="v_nacimiento" class="form-input" required min="1900-01-01" data-dynamic-date="birth">
                 <p class="form-error" id="err-v-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
@@ -853,6 +862,15 @@
               </div>
 
               <div>
+                <label class="form-label">Sexo del anfitrión <span class="req">*</span></label>
+                <div style="display:flex;gap:24px;">
+                  <label class="radio-label"><input type="radio" name="a_genero" value="masculino" required> Masculino</label>
+                  <label class="radio-label"><input type="radio" name="a_genero" value="femenino" required> Femenino</label>
+                </div>
+                <p class="form-error" id="err-a-genero">Por favor selecciona el sexo.</p>
+              </div>
+
+              <div>
                 <label class="form-label" for="a-nacionalidad">Nacionalidad del anfitrión <span class="req">*</span></label>
                 <select id="a-nacionalidad" name="a_nacionalidad" class="form-input" required>
                   <option value="" disabled selected>Selecciona la nacionalidad</option>
@@ -990,6 +1008,17 @@
               </div>
 
               <div>
+                <label class="form-label" for="a-perspectiva">¿Quién llena este formulario? <span class="req">*</span></label>
+                <select id="a-perspectiva" name="a_perspectiva" class="form-input" required>
+                  <option value="" disabled selected>Selecciona quién está describiendo</option>
+                  <option value="anfitrion">Yo soy el anfitrión</option>
+                  <option value="visitante">Yo soy el visitante</option>
+                </select>
+                <p class="form-hint">Esto nos ayuda a redactar correctamente la carta desde la perspectiva adecuada.</p>
+                <p class="form-error" id="err-a-perspectiva">Por favor indica quién llena el formulario.</p>
+              </div>
+
+              <div>
                 <label class="form-label" for="a-vinculo">Vínculo con el viajero <span class="req">*</span></label>
                 <select id="a-vinculo" name="a_vinculo" class="form-input" required>
                   <option value="" disabled selected>Selecciona el vínculo</option>
@@ -1002,15 +1031,36 @@
                 <p class="form-error" id="err-a-vinculo">Por favor indica el vínculo.</p>
               </div>
 
-              <div>
-                <label class="form-label" for="a-perspectiva">¿Quién llena este formulario? <span class="req">*</span></label>
-                <select id="a-perspectiva" name="a_perspectiva" class="form-input" required>
-                  <option value="" disabled selected>Selecciona quién está describiendo</option>
-                  <option value="anfitrion">Yo soy el anfitrión</option>
-                  <option value="visitante">Yo soy el visitante</option>
+              <div id="parentesco-wrapper" style="display:none;">
+                <label class="form-label" id="parentesco-label">Tipo de parentesco <span class="req">*</span></label>
+                <select id="a-parentesco" name="a_parentesco" class="form-input">
+                  <option value="" disabled selected>Selecciona el parentesco</option>
+                  <option value="padre">Padre / Madre</option>
+                  <option value="hijo">Hijo(a)</option>
+                  <option value="hermano">Hermano(a)</option>
+                  <option value="abuelo">Abuelo(a)</option>
+                  <option value="nieto">Nieto(a)</option>
+                  <option value="bisabuelo">Bisabuelo(a)</option>
+                  <option value="tio">Tío(a)</option>
+                  <option value="sobrino">Sobrino(a)</option>
+                  <option value="primo">Primo(a)</option>
+                  <option value="suegro">Suegro(a)</option>
+                  <option value="yerno">Yerno / Nuera</option>
+                  <option value="cunado">Cuñado(a)</option>
+                  <option value="concuno">Concuño(a)</option>
+                  <option value="padrastro">Padrastro / Madrastra</option>
+                  <option value="hijastro">Hijastro(a)</option>
+                  <option value="hermanastro">Hermanastro(a)</option>
+                  <option value="otro_familiar">Otro familiar</option>
                 </select>
-                <p class="form-hint">Esto nos ayuda a redactar correctamente la carta desde la perspectiva adecuada.</p>
-                <p class="form-error" id="err-a-perspectiva">Por favor indica quién llena el formulario.</p>
+                <p class="form-error" id="err-a-parentesco">Por favor selecciona el parentesco.</p>
+              </div>
+
+              <div id="parentesco-otro-wrapper" style="display:none;">
+                <label class="form-label" for="a-parentesco-otro">Especifica el parentesco <span class="req">*</span></label>
+                <input type="text" id="a-parentesco-otro" name="a_parentesco_otro" class="form-input"
+                       placeholder="Ej. primo segundo, bisnieto, tío abuelo…">
+                <p class="form-error" id="err-a-parentesco-otro">Por favor especifica el parentesco.</p>
               </div>
 
               <div>
@@ -1018,11 +1068,11 @@
                 <textarea id="a-vinculo-detalle" name="a_vinculo_detalle" class="form-input"
                           placeholder="Ej. Somos amigos desde la universidad · Es sobrino de mi esposa · Trabajamos juntos en la misma empresa…"
                           required rows="2"></textarea>
-                <p class="form-hint warn">⚠ Describe la relación como si el anfitrión la estuviera explicando, sin importar quién llene el formulario. Este texto aparecerá directamente en la carta de invitación. Entre más detalle, más personalizada será la carta.</p>
+                <p class="form-hint warn">⚠ Entre más detalle, más personalizada será la carta.</p>
                 <p class="form-error" id="err-a-vinculo-detalle">Por favor describe el vínculo entre ambas personas.</p>
               </div>
 
-              <div>
+              <div id="tiempo-wrapper">
                 <label class="form-label">¿Desde hace cuánto se conocen? <span class="req">*</span></label>
                 <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;">
                   <div>
@@ -2421,6 +2471,74 @@
       opt.textContent = i === 1 ? '1 año' : `${i} años`;
       sel.appendChild(opt);
     }
+  })();
+
+  /* ── Parentesco & tiempo conditional logic ── */
+  (function() {
+    const CONSANGUINEOUS = ['padre','hijo','hermano','abuelo','nieto','bisabuelo','tio','sobrino','primo'];
+    const vinculoSel = document.getElementById('a-vinculo');
+    const perspectivaSel = document.getElementById('a-perspectiva');
+    const parentescoWrap = document.getElementById('parentesco-wrapper');
+    const parentescoSel = document.getElementById('a-parentesco');
+    const parentescoLabel = document.getElementById('parentesco-label');
+    const parentescoOtroWrap = document.getElementById('parentesco-otro-wrapper');
+    const parentescoOtroInput = document.getElementById('a-parentesco-otro');
+    const tiempoWrap = document.getElementById('tiempo-wrapper');
+    const tiempoAnios = document.getElementById('a-tiempo-anios');
+    const tiempoMeses = document.getElementById('a-tiempo-meses');
+
+    function updateParentescoLabel() {
+      const p = perspectivaSel.value;
+      if (p === 'anfitrion') parentescoLabel.innerHTML = 'El viajero es mi… <span class="req">*</span>';
+      else if (p === 'visitante') parentescoLabel.innerHTML = 'El anfitrión es mi… <span class="req">*</span>';
+      else parentescoLabel.innerHTML = 'Tipo de parentesco <span class="req">*</span>';
+    }
+
+    function updateTiempo() {
+      const isFamiliar = vinculoSel.value === 'familiar';
+      const isConsanguineous = isFamiliar && CONSANGUINEOUS.includes(parentescoSel.value);
+      if (isConsanguineous) {
+        tiempoWrap.style.display = 'none';
+        tiempoAnios.removeAttribute('required');
+        tiempoMeses.removeAttribute('required');
+        tiempoAnios.value = '';
+        tiempoMeses.value = '';
+      } else {
+        tiempoWrap.style.display = '';
+        tiempoAnios.setAttribute('required', '');
+        tiempoMeses.setAttribute('required', '');
+      }
+    }
+
+    vinculoSel.addEventListener('change', function() {
+      if (this.value === 'familiar') {
+        parentescoWrap.style.display = '';
+        parentescoSel.setAttribute('required', '');
+        updateParentescoLabel();
+      } else {
+        parentescoWrap.style.display = 'none';
+        parentescoSel.removeAttribute('required');
+        parentescoSel.value = '';
+        parentescoOtroWrap.style.display = 'none';
+        parentescoOtroInput.removeAttribute('required');
+        parentescoOtroInput.value = '';
+      }
+      updateTiempo();
+    });
+
+    parentescoSel.addEventListener('change', function() {
+      if (this.value === 'otro_familiar') {
+        parentescoOtroWrap.style.display = '';
+        parentescoOtroInput.setAttribute('required', '');
+      } else {
+        parentescoOtroWrap.style.display = 'none';
+        parentescoOtroInput.removeAttribute('required');
+        parentescoOtroInput.value = '';
+      }
+      updateTiempo();
+    });
+
+    perspectivaSel.addEventListener('change', updateParentescoLabel);
   })();
 
   setupRealtimeValidation();

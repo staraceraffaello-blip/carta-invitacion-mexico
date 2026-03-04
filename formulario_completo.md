@@ -27,17 +27,18 @@
 | # | Campo | `name` / `id` | Tipo | Requerido | Validación | Placeholder / Detalle |
 |---|-------|---------------|------|-----------|------------|----------------------|
 | 1 | **Nombre completo del viajero** | `v_nombre` / `v-nombre` | text | Sí | `nameReq()` — non-empty + must contain a space (nombre y apellidos). `titleCase()` on input. | `Ej. Juan Carlos Pérez López` |
-| 2 | **Fecha de nacimiento** | `v_nacimiento` / `v-nacimiento` | date | Sí | `dateReq()` — year between 1900 and current year. `min="1900-01-01"`, `data-dynamic-date="birth"`. | Mobile: custom drum/wheel picker (DD/MM/AAAA). |
-| 3 | **Nacionalidad** | `v_nacionalidad` / `v-nacionalidad` | select | Sí | `selReq()`. | Default: `"La que aparece en el pasaporte del viajero"` (disabled). See **Dropdown: Países** below. |
-| 4 | **Número de pasaporte** | `v_pasaporte` / `v-pasaporte` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Ej. AB123456` |
-| 5 | **País de residencia** | `v_residencia` / `v-residencia` | select | Sí | `selReq()`. | Default: `"Donde reside el viajero actualmente"` (disabled). Same country list as Nacionalidad. |
-| 6 | **Domicilio completo en país de residencia** | (group) | — | Sí | All sub-fields validated with `req()`. | — |
-| 6a | — Calle, número, e interior | `v_calle` / `v-calle` | text | Sí | `req()`. `autocomplete="off"`. | `Calle, número, e interior (si aplica)` |
-| 6b | — Ciudad | `v_ciudad` / `v-ciudad` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
-| 6c | — Provincia / Estado / Región | `v_provincia` / `v-provincia` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Provincia / Estado / Región` |
-| 6d | — Código Postal | `v_cp` / `v-cp` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Código Postal` |
-| 7 | **Actividad profesional u ocupación** | `v_ocupacion` / `v-ocupacion` | text | Sí | `req()`. | `Ej. Ingeniero, Estudiante, Comerciante…` |
-| 8 | **Correo electrónico** | `v_email` / `v-email` | email | Sí | `emailReq()` — regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`. Whitespace stripped on input. Validated on blur. `autocomplete="email"`. | `nombre@correo.com` |
+| 2 | **Sexo del viajero** | `v_genero` | radio | Sí | Must select one. | Values: `masculino` / `femenino`. Inline radio buttons. Used for gendered Spanish in the PDF (invitado/invitada). |
+| 3 | **Fecha de nacimiento** | `v_nacimiento` / `v-nacimiento` | date | Sí | `dateReq()` — year between 1900 and current year. `min="1900-01-01"`, `data-dynamic-date="birth"`. | Mobile: custom drum/wheel picker (DD/MM/AAAA). |
+| 4 | **Nacionalidad** | `v_nacionalidad` / `v-nacionalidad` | select | Sí | `selReq()`. | Default: `"La que aparece en el pasaporte del viajero"` (disabled). See **Dropdown: Países** below. |
+| 5 | **Número de pasaporte** | `v_pasaporte` / `v-pasaporte` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Ej. AB123456` |
+| 6 | **País de residencia** | `v_residencia` / `v-residencia` | select | Sí | `selReq()`. | Default: `"Donde reside el viajero actualmente"` (disabled). Same country list as Nacionalidad. |
+| 7 | **Domicilio completo en país de residencia** | (group) | — | Sí | All sub-fields validated with `req()`. | — |
+| 7a | — Calle, número, e interior | `v_calle` / `v-calle` | text | Sí | `req()`. `autocomplete="off"`. | `Calle, número, e interior (si aplica)` |
+| 7b | — Ciudad | `v_ciudad` / `v-ciudad` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
+| 7c | — Provincia / Estado / Región | `v_provincia` / `v-provincia` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Provincia / Estado / Región` |
+| 7d | — Código Postal | `v_cp` / `v-cp` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Código Postal` |
+| 8 | **Actividad profesional u ocupación** | `v_ocupacion` / `v-ocupacion` | text | Sí | `req()`. | `Ej. Ingeniero, Estudiante, Comerciante…` |
+| 9 | **Correo electrónico** | `v_email` / `v-email` | email | Sí | `emailReq()` — regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`. Whitespace stripped on input. Validated on blur. `autocomplete="email"`. | `nombre@correo.com` |
 
 ### Warnings / Hints (Paso 1)
 - **Nombre:** "Tal como aparece en el pasaporte." (warn)
@@ -62,23 +63,24 @@ Button: **"Agregar acompañante"** (`addCompanion()`)
 | # | Campo | `name` | Tipo | Requerido | Validación | Placeholder / Detalle |
 |---|-------|--------|------|-----------|------------|----------------------|
 | 1 | **Nombre completo del acompañante** | `comp_nombre[]` | text | Sí | `nameReq()` — non-empty + space. `titleCase()` on input. | `Ej. Juan Carlos Pérez López` |
-| 2 | **Fecha de nacimiento** | `comp_nacimiento[]` | date | Sí | `dateReq()` — year 1900 to current. `min="1900-01-01"`, `data-dynamic-date="birth"`. | — |
-| 3 | **Relación con el viajero principal** | `comp_relacion[]` | text | Sí | `req()`. | `Ej. Esposa, Hijo, Amigo de la infancia…` |
-| 4 | **Nacionalidad** | `comp_nacionalidad[]` | select | Sí | `selReq()`. | Default: `"La que aparece en su pasaporte"` (disabled). Dropdown con países agrupados por región. |
-| 5 | **Número de pasaporte** | `comp_pasaporte[]` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Ej. AB123456` |
-| 6 | **¿Mismo domicilio de residencia que el viajero principal?** | `comp_mismo_domicilio[]` | radio | Sí | Must select one. Default: Sí. | Values: `si` / `no`. |
+| 2 | **Sexo** | `comp_genero_N` | radio | Sí | Must select one. Name is unique per card (`comp_genero_0`, `comp_genero_1`, etc.). | Values: `masculino` / `femenino`. Inline radio buttons. |
+| 3 | **Fecha de nacimiento** | `comp_nacimiento[]` | date | Sí | `dateReq()` — year 1900 to current. `min="1900-01-01"`, `data-dynamic-date="birth"`. | — |
+| 4 | **Relación con el viajero principal** | `comp_relacion[]` | text | Sí | `req()`. | `Ej. Esposa, Hijo, Amigo de la infancia…` |
+| 5 | **Nacionalidad** | `comp_nacionalidad[]` | select | Sí | `selReq()`. | Default: `"La que aparece en su pasaporte"` (disabled). Dropdown con países agrupados por región. |
+| 6 | **Número de pasaporte** | `comp_pasaporte[]` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Ej. AB123456` |
+| 7 | **¿Mismo domicilio de residencia que el viajero principal?** | `comp_mismo_domicilio[]` | radio | Sí | Must select one. Default: Sí. | Values: `si` / `no`. |
 
 ### Conditional: Domicilio diferente (shown when `comp_mismo_domicilio = "no"`)
 
 | # | Campo | `name` | Tipo | Requerido | Validación | Placeholder / Detalle |
 |---|-------|--------|------|-----------|------------|----------------------|
-| 6a | **País de residencia** | `comp_residencia[]` | select | Sí (if no) | `selReq()`. | Default: `"Selecciona el país"` (disabled). |
-| 6b | **Calle, número, e interior** | `comp_calle[]` | text | Sí (if no) | `req()`. `autocomplete="off"`. | `Calle, número, e interior (si aplica)` |
-| 6c | **Ciudad** | `comp_ciudad[]` | text | Sí (if no) | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
-| 6d | **Provincia / Estado / Región** | `comp_provincia[]` | text | Sí (if no) | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Provincia / Estado / Región` |
-| 6e | **Código Postal** | `comp_cp[]` | text | Sí (if no) | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Código Postal` |
+| 7a | **País de residencia** | `comp_residencia[]` | select | Sí (if no) | `selReq()`. | Default: `"Selecciona el país"` (disabled). |
+| 7b | **Calle, número, e interior** | `comp_calle[]` | text | Sí (if no) | `req()`. `autocomplete="off"`. | `Calle, número, e interior (si aplica)` |
+| 7c | **Ciudad** | `comp_ciudad[]` | text | Sí (if no) | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
+| 7d | **Provincia / Estado / Región** | `comp_provincia[]` | text | Sí (if no) | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Provincia / Estado / Región` |
+| 7e | **Código Postal** | `comp_cp[]` | text | Sí (if no) | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Código Postal` |
 
-| 7 | **Actividad profesional u ocupación** | `comp_ocupacion[]` | text | Sí | `req()`. | `Ej. Ingeniero, Estudiante, Comerciante…` |
+| 8 | **Actividad profesional u ocupación** | `comp_ocupacion[]` | text | Sí | `req()`. | `Ej. Ingeniero, Estudiante, Comerciante…` |
 
 ### Warnings / Hints (Paso 2)
 - **Nombre:** "Tal como aparece en el pasaporte." (warn)
@@ -91,27 +93,30 @@ Button: **"Agregar acompañante"** (`addCompanion()`)
 | # | Campo | `name` / `id` | Tipo | Requerido | Validación | Placeholder / Detalle |
 |---|-------|---------------|------|-----------|------------|----------------------|
 | 1 | **Nombre completo del anfitrión** | `a_nombre` / `a-nombre` | text | Sí | `nameReq()`. `titleCase()` on input. | `Ej. María Elena García Torres` |
-| 2 | **Nacionalidad del anfitrión** | `a_nacionalidad` / `a-nacionalidad` | select | Sí | `selReq()`. | Default: `"Selecciona la nacionalidad"` (disabled). Same country list as `v-nacionalidad`, with "Mexicana" included in América Latina. |
-| 3 | **Fecha de nacimiento** | `a_nacimiento` / `a-nacimiento` | date | Sí | `dateReq()` — year 1900 to current. `data-dynamic-date="birth"`. `min="1900-01-01"`. | — |
-| 4 | **Tipo de identificación oficial** | `a_id_tipo` / `a-id-tipo` | select | Sí | `selReq()`. | Default: `"Selecciona el tipo"` (disabled). |
-| 5 | **Número de identificación** | `a_id_num` / `a-id-num` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Número que aparece en la identificación del anfitrión` |
-| 6 | **Domicilio en México** | (group) | — | Sí | All sub-fields validated. | — |
-| 6a | — Calle, número e interior | `a_calle` / `a-calle` | text | Sí | `req()`. `autocomplete="off"`. | `Calle, número e interior (si aplica)` |
-| 6b | — Colonia | `a_colonia` / `a-colonia` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Colonia` |
-| 6c | — Delegación o Municipio | `a_delegacion` / `a-delegacion` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Delegación o Municipio` |
-| 6d | — Ciudad | `a_ciudad` / `a-ciudad` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
-| 6e | — Estado | `a_estado` / `a-estado` | select | Sí | `selReq()`. | Default: `"Estado"` (disabled). See **Dropdown: Estados de México** below. |
-| 6f | — Código Postal | `a_cp` / `a-cp` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Código Postal` |
-| 7 | **Teléfono de contacto** | `a_telefono` / `a-telefono` | tel | Sí | `phoneReq()` — exactly 10 digits. Auto-formatted `XX XXXX XXXX` on input. `maxlength="12"`. `autocomplete="tel"`. | `55 1234 5678` |
-| 8 | **Correo electrónico del anfitrión** | `a_email` / `a-email` | email | Sí | `emailReq()`. `autocomplete="email"`. | `anfitrion@ejemplo.com` |
-| 9 | **Ocupación o cargo del anfitrión** | `a_ocupacion` / `a-ocupacion` | text | Sí | `req()`. | `Ej. Ingeniero, Gerente, Médico, Profesor…` |
-| 10 | **Empresa o lugar de trabajo** | `a_empresa` / `a-empresa` | text | No | Not validated. | `Ej. Pemex, Grupo Bimbo, Hospital Ángeles, Independiente…` (labeled "(opcional)") |
-| 11 | **Vínculo con el viajero** | `a_vinculo` / `a-vinculo` | select | Sí | `selReq()`. | Default: `"Selecciona el vínculo"` (disabled). |
+| 2 | **Sexo del anfitrión** | `a_genero` | radio | Sí | Must select one. | Values: `masculino` / `femenino`. Inline radio buttons. Used for gendered Spanish in the PDF (portador/portadora). |
+| 3 | **Nacionalidad del anfitrión** | `a_nacionalidad` / `a-nacionalidad` | select | Sí | `selReq()`. | Default: `"Selecciona la nacionalidad"` (disabled). Same country list as `v-nacionalidad`, with "Mexicana" included in América Latina. |
+| 4 | **Fecha de nacimiento** | `a_nacimiento` / `a-nacimiento` | date | Sí | `dateReq()` — year 1900 to current. `data-dynamic-date="birth"`. `min="1900-01-01"`. | — |
+| 5 | **Tipo de identificación oficial** | `a_id_tipo` / `a-id-tipo` | select | Sí | `selReq()`. | Default: `"Selecciona el tipo"` (disabled). |
+| 6 | **Número de identificación** | `a_id_num` / `a-id-num` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Número que aparece en la identificación del anfitrión` |
+| 7 | **Domicilio en México** | (group) | — | Sí | All sub-fields validated. | — |
+| 7a | — Calle, número e interior | `a_calle` / `a-calle` | text | Sí | `req()`. `autocomplete="off"`. | `Calle, número e interior (si aplica)` |
+| 7b | — Colonia | `a_colonia` / `a-colonia` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Colonia` |
+| 7c | — Delegación o Municipio | `a_delegacion` / `a-delegacion` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Delegación o Municipio` |
+| 7d | — Ciudad | `a_ciudad` / `a-ciudad` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
+| 7e | — Estado | `a_estado` / `a-estado` | select | Sí | `selReq()`. | Default: `"Estado"` (disabled). See **Dropdown: Estados de México** below. |
+| 7f | — Código Postal | `a_cp` / `a-cp` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Código Postal` |
+| 8 | **Teléfono de contacto** | `a_telefono` / `a-telefono` | tel | Sí | `phoneReq()` — exactly 10 digits. Auto-formatted `XX XXXX XXXX` on input. `maxlength="12"`. `autocomplete="tel"`. | `55 1234 5678` |
+| 9 | **Correo electrónico del anfitrión** | `a_email` / `a-email` | email | Sí | `emailReq()`. `autocomplete="email"`. | `anfitrion@ejemplo.com` |
+| 10 | **Ocupación o cargo del anfitrión** | `a_ocupacion` / `a-ocupacion` | text | Sí | `req()`. | `Ej. Ingeniero, Gerente, Médico, Profesor…` |
+| 11 | **Empresa o lugar de trabajo** | `a_empresa` / `a-empresa` | text | No | Not validated. | `Ej. Pemex, Grupo Bimbo, Hospital Ángeles, Independiente…` (labeled "(opcional)") |
 | 12 | **¿Quién llena este formulario?** | `a_perspectiva` / `a-perspectiva` | select | Sí | `selReq()`. | Default: `"Selecciona quién está describiendo"` (disabled). |
-| 13 | **Describe brevemente el vínculo** | `a_vinculo_detalle` / `a-vinculo-detalle` | textarea | Sí | `req()`. `rows="2"`. | `Ej. Somos amigos desde la universidad · Es sobrino de mi esposa · Trabajamos juntos en la misma empresa…` |
-| 14 | **¿Desde hace cuánto se conocen?** | (group) | — | Sí | Both selects validated with `selReq()`. | — |
-| 14a | — Años | `a_tiempo_anios` / `a-tiempo-anios` | select | Sí | `selReq()`. | Default: `"Años"` (disabled). |
-| 14b | — Meses | `a_tiempo_meses` / `a-tiempo-meses` | select | Sí | `selReq()`. | Default: `"Meses"` (disabled). |
+| 13 | **Vínculo con el viajero** | `a_vinculo` / `a-vinculo` | select | Sí | `selReq()`. | Default: `"Selecciona el vínculo"` (disabled). |
+| 14 | **Tipo de parentesco** *(conditional)* | `a_parentesco` / `a-parentesco` | select | Sí (when familiar) | `selReq()`. Shown only when vínculo = `familiar`. | Default: `"Selecciona el parentesco"` (disabled). See **Dropdown: Parentesco** below. |
+| 15 | **Especifica el parentesco** *(conditional)* | `a_parentesco_otro` / `a-parentesco-otro` | text | Sí (when otro_familiar) | `req()`. Shown only when parentesco = `otro_familiar`. | `Ej. primo segundo, bisnieto, tío abuelo…` |
+| 16 | **Describe brevemente el vínculo** | `a_vinculo_detalle` / `a-vinculo-detalle` | textarea | Sí | `req()`. `rows="2"`. | `Ej. Somos amigos desde la universidad · Es sobrino de mi esposa · Trabajamos juntos en la misma empresa…` |
+| 17 | **¿Desde hace cuánto se conocen?** *(conditional)* | (group) | — | Sí | Both selects validated with `selReq()`. Hidden when vínculo = `familiar` AND parentesco is consanguineous. | — |
+| 17a | — Años | `a_tiempo_anios` / `a-tiempo-anios` | select | Sí | `selReq()`. | Default: `"Años"` (disabled). |
+| 17b | — Meses | `a_tiempo_meses` / `a-tiempo-meses` | select | Sí | `selReq()`. | Default: `"Meses"` (disabled). |
 
 ### Dropdown: Tipo de identificación oficial (`a-id-tipo`)
 
@@ -137,6 +142,38 @@ Button: **"Agregar acompañante"** (`addCompanion()`)
 |-------|-------|
 | `anfitrion` | Yo soy el anfitrión |
 | `visitante` | Yo soy el visitante |
+
+### Dropdown: Tipo de parentesco (`a-parentesco`)
+
+Shown only when `a-vinculo = "familiar"`. Label changes based on perspectiva:
+- `anfitrion` → "El viajero es mi..."
+- `visitante` → "El anfitrión es mi..."
+
+| Value | Label |
+|-------|-------|
+| `padre` | Padre / Madre |
+| `hijo` | Hijo(a) |
+| `hermano` | Hermano(a) |
+| `abuelo` | Abuelo(a) |
+| `nieto` | Nieto(a) |
+| `bisabuelo` | Bisabuelo(a) |
+| `tio` | Tío(a) |
+| `sobrino` | Sobrino(a) |
+| `primo` | Primo(a) |
+| `suegro` | Suegro(a) |
+| `yerno` | Yerno / Nuera |
+| `cunado` | Cuñado(a) |
+| `concuno` | Concuño(a) |
+| `padrastro` | Padrastro / Madrastra |
+| `hijastro` | Hijastro(a) |
+| `hermanastro` | Hermanastro(a) |
+| `otro_familiar` | Otro familiar |
+
+**Consanguineous** (hide tiempo when selected): `padre`, `hijo`, `hermano`, `abuelo`, `nieto`, `bisabuelo`, `tio`, `sobrino`, `primo`.
+
+**Non-consanguineous** (show tiempo): `suegro`, `yerno`, `cunado`, `concuno`, `padrastro`, `hijastro`, `hermanastro`, `otro_familiar`.
+
+**PDF inversion** (when `perspectiva=visitante`): Asymmetric pairs are inverted for the host's POV: padre↔hijo, abuelo↔nieto, bisabuelo↔bisnieto, tio↔sobrino, suegro↔yerno, padrastro↔hijastro. Symmetric pairs (hermano, primo, cunado, concuno, hermanastro) stay the same.
 
 ### Dropdown: Años de conocerse (`a-tiempo-anios`)
 
@@ -164,7 +201,7 @@ Button: **"Agregar acompañante"** (`addCompanion()`)
 - **Email:** "Un correo de contacto que aparecerá en la carta." (hint)
 - **Ocupación:** "Esto ayuda a demostrar estabilidad y respaldo económico ante migración." (hint)
 - **Perspectiva:** "Esto nos ayuda a redactar correctamente la carta desde la perspectiva adecuada." (hint)
-- **Vínculo detalle:** "Describe la relación como si el anfitrión la estuviera explicando, sin importar quién llene el formulario. Este texto aparecerá directamente en la carta de invitación. Entre más detalle, más personalizada será la carta." (warn)
+- **Vínculo detalle:** "Entre más detalle, más personalizada será la carta." (warn)
 
 ---
 
@@ -523,6 +560,13 @@ Set on page load via IIFE:
 | `salida_tipo` radio | `= "aereo"` | Show `#cond-salida-aereo` (airport, airline, flight) |
 | `salida_tipo` radio | `= "terrestre"` | Show `#cond-salida-terrestre` (border crossing) |
 | `salida_tipo` radio | `= "maritimo"` | Show `#cond-salida-maritimo` (port) |
+| `a-vinculo` select | `= "familiar"` | Show `#parentesco-wrapper` (parentesco dropdown), make required |
+| `a-vinculo` select | `≠ "familiar"` | Hide `#parentesco-wrapper`, reset value, remove required |
+| `a-parentesco` select | `= "otro_familiar"` | Show `#parentesco-otro-wrapper` (text input), make required |
+| `a-parentesco` select | `≠ "otro_familiar"` | Hide `#parentesco-otro-wrapper`, clear value |
+| `a-parentesco` select | consanguineous value | Hide `#tiempo-wrapper` (años/meses), remove required |
+| `a-parentesco` select | non-consanguineous value | Show `#tiempo-wrapper`, make required |
+| `a-perspectiva` select | changes | Update `#parentesco-label` text: anfitrion → "El viajero es mi...", visitante → "El anfitrión es mi..." |
 
 All conditional containers use CSS class `cond-fields` with `max-height: 0; overflow: hidden; opacity: 0` (hidden) and `cond-fields.open` with `max-height: 800px; opacity: 1` (visible), animated via CSS transitions.
 

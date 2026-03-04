@@ -20,6 +20,38 @@ const TRANSPORTE_LABELS = {
   transporte_publico: 'transporte público y/o taxis',
 };
 
+const PARENTESCO_LABELS = {
+  padre:       { m: 'padre',       f: 'madre' },
+  hijo:        { m: 'hijo',        f: 'hija' },
+  hermano:     { m: 'hermano',     f: 'hermana' },
+  abuelo:      { m: 'abuelo',      f: 'abuela' },
+  nieto:       { m: 'nieto',       f: 'nieta' },
+  bisabuelo:   { m: 'bisabuelo',   f: 'bisabuela' },
+  bisnieto:    { m: 'bisnieto',    f: 'bisnieta' },
+  tio:         { m: 'tío',         f: 'tía' },
+  sobrino:     { m: 'sobrino',     f: 'sobrina' },
+  primo:       { m: 'primo',       f: 'prima' },
+  suegro:      { m: 'suegro',      f: 'suegra' },
+  yerno:       { m: 'yerno',       f: 'nuera' },
+  cunado:      { m: 'cuñado',      f: 'cuñada' },
+  concuno:     { m: 'concuño',     f: 'concuña' },
+  padrastro:   { m: 'padrastro',   f: 'madrastra' },
+  hijastro:    { m: 'hijastro',    f: 'hijastra' },
+  hermanastro: { m: 'hermanastro', f: 'hermanastra' },
+};
+
+// When perspectiva=visitante, invert asymmetric parentesco for the host's perspective
+const PARENTESCO_INVERSION = {
+  padre: 'hijo', hijo: 'padre',
+  abuelo: 'nieto', nieto: 'abuelo',
+  bisabuelo: 'bisnieto', bisnieto: 'bisabuelo',
+  tio: 'sobrino', sobrino: 'tio',
+  suegro: 'yerno', yerno: 'suegro',
+  padrastro: 'hijastro', hijastro: 'padrastro',
+};
+
+const CONSANGUINEOUS = ['padre','hijo','hermano','abuelo','nieto','bisabuelo','bisnieto','tio','sobrino','primo'];
+
 const GASTOS_LABELS = {
   alojamiento: 'alojamiento',
   alimentos: 'alimentos',
@@ -145,9 +177,24 @@ export default function generatePDF(formData, plan) {
     const visitorResidencia = d['v-residencia'] || '';
     const visitorAddr = [d['v-calle'], d['v-ciudad'], d['v-provincia'], 'C.P. ' + (d['v-cp'] || ''), visitorResidencia].filter(Boolean).join(', ');
 
+    const hostGenero = d['a-genero'] || 'masculino';
+    const visitorGenero = d['v-genero'] || 'masculino';
+    const perspectiva = d['a-perspectiva'] || 'anfitrion';
+
     const vinculo = d['a-vinculo'] || 'conocido';
     const vinculoDetalle = d['a-vinculo-detalle'] || '';
     const tiempoStr = buildTiempoStr(d['a-tiempo-anios'], d['a-tiempo-meses']);
+
+    // Resolve parentesco for the letter (always from host's perspective)
+    let parentescoRaw = d['a-parentesco'] || '';
+    const parentescoOtro = d['a-parentesco-otro'] || '';
+    if (parentescoRaw && perspectiva === 'visitante' && PARENTESCO_INVERSION[parentescoRaw]) {
+      parentescoRaw = PARENTESCO_INVERSION[parentescoRaw];
+    }
+    const gKey = visitorGenero === 'femenino' ? 'f' : 'm';
+    const parentescoLabel = parentescoRaw === 'otro_familiar'
+      ? parentescoOtro
+      : (PARENTESCO_LABELS[parentescoRaw]?.[gKey] || '');
 
     const motivo = d['j-motivo'] || 'turismo';
     const motivoPhrase = buildMotivoParagraph(motivo);
@@ -168,7 +215,7 @@ export default function generatePDF(formData, plan) {
       .text(
         `Por medio de la presente, yo, ${hostName}, de nacionalidad ${hostNacionalidad}, ` +
         `con fecha de nacimiento ${hostNacimiento}, con domicilio en ${hostAddr}, ` +
-        `portador de ${hostIdTipo} número ${hostIdNum}, ` +
+        `${hostGenero === 'femenino' ? 'portadora' : 'portador'} de ${hostIdTipo} número ${hostIdNum}, ` +
         `de ocupación ${hostOcupacion}${empresaStr}, ` +
         `manifiesto bajo protesta de decir verdad que extiendo formal invitación a:`,
         { lineGap: LINE_GAP, align: 'justify' }
@@ -198,13 +245,46 @@ export default function generatePDF(formData, plan) {
     doc.font('Helvetica').text(visitorAddr, { lineGap: dataLineGap });
     doc.moveDown(0.5);
 
+    /* ─── Companion data blocks (Plan Completo) ─── */
+    if (plan === 'completo' && d.companions && d.companions.length) {
+      d.companions.forEach((comp, i) => {
+        doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica-Bold')
+          .text(`Acompañante ${i + 1}:`, { lineGap: dataLineGap });
+
+        doc.font('Helvetica-Bold')
+          .text('Nombre completo: ', { continued: true, lineGap: dataLineGap });
+        doc.font('Helvetica').text(comp.nombre || '—', { lineGap: dataLineGap });
+
+        doc.font('Helvetica-Bold')
+          .text('Fecha de nacimiento: ', { continued: true, lineGap: dataLineGap });
+        doc.font('Helvetica').text(`${fmtDateShort(comp.nacimiento)}   ·   `, { continued: true });
+        doc.font('Helvetica-Bold').text('Nacionalidad: ', { continued: true });
+        doc.font('Helvetica').text(`${comp.nacionalidad || '—'}   ·   `, { continued: true });
+        doc.font('Helvetica-Bold').text('Pasaporte N.º: ', { continued: true });
+        doc.font('Helvetica').text(comp.pasaporte || '—', { lineGap: dataLineGap });
+
+        doc.font('Helvetica-Bold')
+          .text('Parentesco con viajero principal: ', { continued: true, lineGap: dataLineGap });
+        doc.font('Helvetica').text(comp.relacion || '—', { lineGap: dataLineGap });
+
+        doc.moveDown(0.3);
+      });
+      doc.moveDown(0.2);
+    }
+
     /* ─── Vínculo paragraph ─── */
-    let vinculoPara = `${visitorName} y quien suscribe mantenemos una relación de ${vinculo}.`;
+    let vinculoPara;
+    if (vinculo === 'familiar' && parentescoLabel) {
+      vinculoPara = `${visitorName} es mi ${parentescoLabel}.`;
+    } else {
+      vinculoPara = `${visitorName} y quien suscribe mantenemos una relación de ${vinculo}.`;
+    }
     if (vinculoDetalle) {
       const detClean = vinculoDetalle.replace(/\.+$/, '');
       vinculoPara += ` ${detClean}.`;
     }
-    if (tiempoStr) vinculoPara += ` Nos conocemos desde hace ${tiempoStr}.`;
+    const isConsanguineous = vinculo === 'familiar' && CONSANGUINEOUS.includes(parentescoRaw);
+    if (tiempoStr && !isConsanguineous) vinculoPara += ` Nos conocemos desde hace ${tiempoStr}.`;
 
     doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
       .text(vinculoPara, { lineGap: LINE_GAP, align: 'justify' });
@@ -213,10 +293,13 @@ export default function generatePDF(formData, plan) {
     /* ─── Invitation purpose paragraph ─── */
     // Strip trailing period from activities to avoid double punctuation
     const actividadesClean = actividades.replace(/\.+$/, '');
+    const actividadesSuffix = actividadesClean
+      ? ` Durante su estancia, realizará las siguientes actividades: ${actividadesClean}.`
+      : '';
     doc.text(
       `La presente invitación tiene como objeto que ${visitorName} visite México ` +
-      `${motivoPhrase}, del ${fechaLlegada} al ${fechaSalida}, por un total de ${diasStr}. ` +
-      `Durante su estancia, realizará las siguientes actividades: ${actividadesClean}.`,
+      `${motivoPhrase}, del ${fechaLlegada} al ${fechaSalida}, por un total de ${diasStr}.` +
+      actividadesSuffix,
       { lineGap: LINE_GAP, align: 'justify' }
     );
     doc.moveDown(0.4);
@@ -318,15 +401,16 @@ export default function generatePDF(formData, plan) {
       const listaGastos = buildGastosList(gastosConceptos, gastosOtroTexto);
       doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
         .text(
-          `Me comprometo a sufragar los gastos de ${listaGastos} durante la estancia de la persona invitada. ` +
-          `Los demás gastos serán cubiertos por la propia persona invitada, ` +
+          `Me comprometo a sufragar los gastos de ${listaGastos} durante la estancia ` +
+          `${visitorGenero === 'femenino' ? 'de la invitada' : 'del invitado'}. ` +
+          `Los demás gastos serán cubiertos por ${visitorGenero === 'femenino' ? 'la propia invitada' : 'el propio invitado'}, ` +
           `quien cuenta con los medios económicos suficientes para ello.`,
           { lineGap: LINE_GAP, align: 'justify' }
         );
     } else {
       doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
         .text(
-          `La persona invitada cubrirá sus propios gastos durante la visita, ` +
+          `${visitorGenero === 'femenino' ? 'La invitada' : 'El invitado'} cubrirá sus propios gastos durante la visita, ` +
           `contando con los medios económicos suficientes para ello.`,
           { lineGap: LINE_GAP, align: 'justify' }
         );
