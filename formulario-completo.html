@@ -3102,6 +3102,23 @@
       const el = document.getElementById(id);
       if (el) el.addEventListener('change', () => selReq(id, errId));
     });
+    // Nationality → restrict ID type options
+    const nacEl = document.getElementById('a-nacionalidad');
+    const idTipoEl = document.getElementById('a-id-tipo');
+    if (nacEl && idTipoEl) {
+      nacEl.addEventListener('change', function() {
+        const isMx = this.value === 'Mexicana';
+        idTipoEl.querySelectorAll('option').forEach(opt => {
+          if (opt.value === 'pasaporte' || opt.value === 'ine') {
+            opt.disabled = !isMx;
+            opt.style.display = isMx ? '' : 'none';
+          }
+        });
+        if (!isMx && (idTipoEl.value === 'pasaporte' || idTipoEl.value === 'ine')) {
+          idTipoEl.value = '';
+        }
+      });
+    }
     // Phone → validate on blur
     const telEl = document.getElementById('a-telefono');
     if (telEl) telEl.addEventListener('blur', () => phoneReq('a-telefono', 'err-a-telefono'));
