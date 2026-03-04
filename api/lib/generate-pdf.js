@@ -40,15 +40,6 @@ const PARENTESCO_LABELS = {
   hermanastro: { m: 'hermanastro', f: 'hermanastra' },
 };
 
-// When perspectiva=visitante, invert asymmetric parentesco for the host's perspective
-const PARENTESCO_INVERSION = {
-  padre: 'hijo', hijo: 'padre',
-  abuelo: 'nieto', nieto: 'abuelo',
-  bisabuelo: 'bisnieto', bisnieto: 'bisabuelo',
-  tio: 'sobrino', sobrino: 'tio',
-  suegro: 'yerno', yerno: 'suegro',
-  padrastro: 'hijastro', hijastro: 'padrastro',
-};
 
 const CONSANGUINEOUS = ['padre','hijo','hermano','abuelo','nieto','bisabuelo','bisnieto','tio','sobrino','primo'];
 
@@ -179,18 +170,14 @@ export default function generatePDF(formData, plan) {
 
     const hostGenero = d['a-genero'] || 'masculino';
     const visitorGenero = d['v-genero'] || 'masculino';
-    const perspectiva = d['a-perspectiva'] || 'anfitrion';
 
     const vinculo = d['a-vinculo'] || 'conocido';
     const vinculoDetalle = d['a-vinculo-detalle'] || '';
     const tiempoStr = buildTiempoStr(d['a-tiempo-anios'], d['a-tiempo-meses']);
 
-    // Resolve parentesco for the letter (always from host's perspective)
-    let parentescoRaw = d['a-parentesco'] || '';
+    // Resolve parentesco for the letter (always from host's perspective — no inversion needed)
+    const parentescoRaw = d['a-parentesco'] || '';
     const parentescoOtro = d['a-parentesco-otro'] || '';
-    if (parentescoRaw && perspectiva === 'visitante' && PARENTESCO_INVERSION[parentescoRaw]) {
-      parentescoRaw = PARENTESCO_INVERSION[parentescoRaw];
-    }
     const gKey = visitorGenero === 'femenino' ? 'f' : 'm';
     const parentescoLabel = parentescoRaw === 'otro_familiar'
       ? parentescoOtro
@@ -263,9 +250,21 @@ export default function generatePDF(formData, plan) {
         doc.font('Helvetica-Bold').text('Pasaporte N.º: ', { continued: true });
         doc.font('Helvetica').text(comp.pasaporte || '—', { lineGap: dataLineGap });
 
+        // Resolve companion's relationship label
+        const compVinculo = comp.vinculo || '';
+        const compParentescoRaw = comp.parentesco || '';
+        const compParentescoOtro = comp.parentesco_otro || '';
+        const compGKey = comp.genero === 'femenino' ? 'f' : 'm';
+        const compParentescoLabel = compParentescoRaw === 'otro_familiar'
+          ? compParentescoOtro
+          : (PARENTESCO_LABELS[compParentescoRaw]?.[compGKey] || '');
+        const compRelLabel = (compVinculo === 'familiar' && compParentescoLabel)
+          ? compParentescoLabel
+          : (compVinculo || '—');
+
         doc.font('Helvetica-Bold')
-          .text('Parentesco con viajero principal: ', { continued: true, lineGap: dataLineGap });
-        doc.font('Helvetica').text(comp.relacion || '—', { lineGap: dataLineGap });
+          .text('Relación con el anfitrión: ', { continued: true, lineGap: dataLineGap });
+        doc.font('Helvetica').text(compRelLabel, { lineGap: dataLineGap });
 
         doc.moveDown(0.3);
       });
@@ -288,6 +287,37 @@ export default function generatePDF(formData, plan) {
 
     doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
       .text(vinculoPara, { lineGap: LINE_GAP, align: 'justify' });
+
+    /* ─── Companion vínculo paragraphs (Plan Completo) ─── */
+    if (plan === 'completo' && d.companions && d.companions.length) {
+      d.companions.forEach(comp => {
+        const compName = comp.nombre || '';
+        const compVinculo = comp.vinculo || 'conocido';
+        const compParentescoRaw = comp.parentesco || '';
+        const compParentescoOtro = comp.parentesco_otro || '';
+        const compGKey = comp.genero === 'femenino' ? 'f' : 'm';
+        const compParentescoLabel = compParentescoRaw === 'otro_familiar'
+          ? compParentescoOtro
+          : (PARENTESCO_LABELS[compParentescoRaw]?.[compGKey] || '');
+
+        let compVinculoPara;
+        if (compVinculo === 'familiar' && compParentescoLabel) {
+          compVinculoPara = `${compName} es mi ${compParentescoLabel}.`;
+        } else {
+          compVinculoPara = `${compName} y quien suscribe mantenemos una relación de ${compVinculo}.`;
+        }
+        const compDetalle = comp.vinculo_detalle || '';
+        if (compDetalle) {
+          const detClean = compDetalle.replace(/\.+$/, '');
+          compVinculoPara += ` ${detClean}.`;
+        }
+        const compTiempoStr = buildTiempoStr(comp.tiempo_anios, comp.tiempo_meses);
+        const compIsConsanguineous = compVinculo === 'familiar' && CONSANGUINEOUS.includes(compParentescoRaw);
+        if (compTiempoStr && !compIsConsanguineous) compVinculoPara += ` Nos conocemos desde hace ${compTiempoStr}.`;
+
+        doc.text(compVinculoPara, { lineGap: LINE_GAP, align: 'justify' });
+      });
+    }
     doc.moveDown(0.4);
 
     /* ─── Invitation purpose paragraph ─── */

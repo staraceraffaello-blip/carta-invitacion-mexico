@@ -19,7 +19,6 @@ export default async function polishFields(formData) {
   }
 
   const d = { ...formData };
-  const perspectiva = d['a-perspectiva'] || 'anfitrion';
   const vinculoDetalle = (d['a-vinculo-detalle'] || '').trim();
   const actividades = (d['j-actividades'] || '').trim();
 
@@ -29,7 +28,7 @@ export default async function polishFields(formData) {
   try {
     const client = new Anthropic({ apiKey });
 
-    const prompt = buildPrompt(perspectiva, vinculoDetalle, actividades);
+    const prompt = buildPrompt(vinculoDetalle, actividades);
 
     const response = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
@@ -58,16 +57,12 @@ export default async function polishFields(formData) {
   return d;
 }
 
-function buildPrompt(perspectiva, vinculoDetalle, actividades) {
+function buildPrompt(vinculoDetalle, actividades) {
   const parts = [];
 
   if (vinculoDetalle) {
-    const perspectivaNote = perspectiva === 'visitante'
-      ? 'Este texto fue escrito por el VISITANTE, pero la carta se redacta desde la perspectiva del ANFITRIÓN. Reformúlalo para que suene como si el anfitrión lo estuviera diciendo. Ejemplo: si el visitante escribió "Es mi tío", cámbialo a "Es mi sobrino" o equivalente apropiado.'
-      : 'Este texto ya está desde la perspectiva del anfitrión. Solo corrige gramática, ortografía y mejora la fluidez si es necesario.';
-
     parts.push(
-      `VÍNCULO:\n"${vinculoDetalle}"\n${perspectivaNote}\nReglas: mantén el tono formal pero natural. No inventes información. Si no puedes determinar la relación inversa, deja el texto lo más cercano al original.`
+      `VÍNCULO:\n"${vinculoDetalle}"\nEste texto ya está desde la perspectiva del anfitrión. Solo corrige gramática, ortografía y mejora la fluidez si es necesario.\nReglas: mantén el tono formal pero natural. No inventes información.`
     );
   }
 

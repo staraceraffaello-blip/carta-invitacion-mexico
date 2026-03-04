@@ -474,11 +474,11 @@
         <div id="sidebar-steps">
           <div class="step-pill" id="sp-1">
             <div class="pill-dot" id="dot-1">1</div>
-            <div><div class="pill-label" id="pl-1">El viajero</div><div class="pill-sub">Datos del extranjero</div></div>
+            <div><div class="pill-label" id="pl-1">El anfitrión</div><div class="pill-sub">Quien firma en México</div></div>
           </div>
           <div class="step-pill" id="sp-2">
             <div class="pill-dot" id="dot-2">2</div>
-            <div><div class="pill-label" id="pl-2">El anfitrión</div><div class="pill-sub">Quien firma en México</div></div>
+            <div><div class="pill-label" id="pl-2">El viajero</div><div class="pill-sub">Datos del extranjero</div></div>
           </div>
           <div class="step-pill" id="sp-3">
             <div class="pill-dot" id="dot-3">3</div>
@@ -531,7 +531,7 @@
       <!-- Mobile: progress bar -->
       <div class="md:hidden mb-5">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-xs font-semibold" style="color:var(--c-gold);" id="mob-label">Paso 1 de 6 — El viajero</span>
+          <span class="text-xs font-semibold" style="color:var(--c-gold);" id="mob-label">Paso 1 de 6 — El anfitrión</span>
           <span class="text-xs font-bold px-2.5 py-1 rounded-full" style="background:rgba(201,168,76,0.1);color:var(--c-gold);border:1px solid rgba(201,168,76,0.22);">$5 USD</span>
         </div>
         <div class="mob-progress-track">
@@ -546,9 +546,199 @@
         <form id="main-form" novalidate>
 
           <!-- ═══════════════════════════
-               STEP 1 — EL VIAJERO
+               STEP 1 — EL ANFITRIÓN
           ═══════════════════════════ -->
           <section id="step-1" class="form-step active p-6 sm:p-8">
+
+            <div class="flex items-start gap-4 mb-7">
+              <div class="step-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                  <path d="M3 9l8-5.5L19 9v9a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M9 19v-6h4v6" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <span class="section-label mb-1">Paso 1 de 6</span>
+                <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">El anfitrión</h1>
+                <p class="text-sm mt-1" style="color:#6B7280;">Datos del mexicano o residente en México que firmará la carta.</p>
+              </div>
+            </div>
+
+            <div class="space-y-5">
+
+              <div>
+                <label class="form-label" for="a-nombre">Nombre completo del anfitrión <span class="req">*</span></label>
+                <input type="text" id="a-nombre" name="a_nombre" class="form-input"
+                       placeholder="Ej. María Elena García Torres" required
+                       oninput="titleCase(this)">
+                <p class="form-hint warn">⚠ Tal como aparece en la identificación oficial.</p>
+                <p class="form-error" id="err-a-nombre">Este campo es obligatorio.</p>
+              </div>
+
+              <div>
+                <label class="form-label">Sexo del anfitrión <span class="req">*</span></label>
+                <div style="display:flex;gap:24px;">
+                  <label class="radio-label"><input type="radio" name="a_genero" value="masculino" required> Masculino</label>
+                  <label class="radio-label"><input type="radio" name="a_genero" value="femenino" required> Femenino</label>
+                </div>
+                <p class="form-error" id="err-a-genero">Por favor selecciona el sexo.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-nacionalidad">Nacionalidad del anfitrión <span class="req">*</span></label>
+                <select id="a-nacionalidad" name="a_nacionalidad" class="form-input" required>
+                  <option value="" disabled selected>Selecciona la nacionalidad</option>
+                  <optgroup label="América Latina y el Caribe">
+                    <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option><option>Barbados</option><option>Belice</option><option>Bolivia</option><option>Brasil</option><option>Chile</option><option>Colombia</option><option>Costa Rica</option><option>Cuba</option><option>Dominica</option><option>Ecuador</option><option>El Salvador</option><option>Granada</option><option>Guatemala</option><option>Guyana</option><option>Haití</option><option>Honduras</option><option>Jamaica</option><option>Mexicana</option><option>Nicaragua</option><option>Panamá</option><option>Paraguay</option><option>Perú</option><option>República Dominicana</option><option>San Cristóbal y Nieves</option><option>San Vicente y las Granadinas</option><option>Santa Lucía</option><option>Surinam</option><option>Trinidad y Tobago</option><option>Uruguay</option><option>Venezuela</option>
+                  </optgroup>
+                  <optgroup label="Norteamérica">
+                    <option>Canadá</option><option>Estados Unidos</option>
+                  </optgroup>
+                  <optgroup label="Europa">
+                    <option>Albania</option><option>Alemania</option><option>Andorra</option><option>Austria</option><option>Bélgica</option><option>Bielorrusia</option><option>Bosnia y Herzegovina</option><option>Bulgaria</option><option>Chipre</option><option>Ciudad del Vaticano</option><option>Croacia</option><option>Dinamarca</option><option>Eslovaquia</option><option>Eslovenia</option><option>España</option><option>Estonia</option><option>Finlandia</option><option>Francia</option><option>Grecia</option><option>Hungría</option><option>Irlanda</option><option>Islandia</option><option>Italia</option><option>Kosovo</option><option>Letonia</option><option>Liechtenstein</option><option>Lituania</option><option>Luxemburgo</option><option>Malta</option><option>Moldavia</option><option>Mónaco</option><option>Montenegro</option><option>Noruega</option><option>Países Bajos</option><option>Polonia</option><option>Portugal</option><option>Reino Unido</option><option>República Checa</option><option>Rumanía</option><option>Rusia</option><option>San Marino</option><option>Serbia</option><option>Suecia</option><option>Suiza</option><option>Ucrania</option>
+                  </optgroup>
+                  <optgroup label="África">
+                    <option>Argelia</option><option>Angola</option><option>Benín</option><option>Botsuana</option><option>Burkina Faso</option><option>Burundi</option><option>Cabo Verde</option><option>Camerún</option><option>Chad</option><option>Comoras</option><option>Congo</option><option>Costa de Marfil</option><option>Egipto</option><option>Eritrea</option><option>Etiopía</option><option>Gabón</option><option>Gambia</option><option>Ghana</option><option>Guinea</option><option>Guinea Ecuatorial</option><option>Guinea-Bisáu</option><option>Kenia</option><option>Lesoto</option><option>Liberia</option><option>Libia</option><option>Madagascar</option><option>Malaui</option><option>Mali</option><option>Marruecos</option><option>Mauricio</option><option>Mauritania</option><option>Mozambique</option><option>Namibia</option><option>Níger</option><option>Nigeria</option><option>República Centroafricana</option><option>República Democrática del Congo</option><option>Ruanda</option><option>Santo Tomé y Príncipe</option><option>Senegal</option><option>Seychelles</option><option>Sierra Leona</option><option>Somalia</option><option>Sudáfrica</option><option>Sudán</option><option>Sudán del Sur</option><option>Suazilandia</option><option>Tanzania</option><option>Togo</option><option>Túnez</option><option>Uganda</option><option>Yibuti</option><option>Zambia</option><option>Zimbabue</option>
+                  </optgroup>
+                  <optgroup label="Asia y Medio Oriente">
+                    <option>Afganistán</option><option>Arabia Saudita</option><option>Armenia</option><option>Azerbaiyán</option><option>Bangladés</option><option>Brunéi</option><option>Bután</option><option>Camboya</option><option>Catar</option><option>China</option><option>Corea del Norte</option><option>Corea del Sur</option><option>Emiratos Árabes Unidos</option><option>Filipinas</option><option>Georgia</option><option>India</option><option>Indonesia</option><option>Irak</option><option>Irán</option><option>Israel</option><option>Japón</option><option>Jordania</option><option>Kazajistán</option><option>Kirguistán</option><option>Kuwait</option><option>Laos</option><option>Líbano</option><option>Malasia</option><option>Maldivas</option><option>Mongolia</option><option>Myanmar</option><option>Nepal</option><option>Omán</option><option>Pakistán</option><option>Palestina</option><option>Singapur</option><option>Siria</option><option>Sri Lanka</option><option>Tailandia</option><option>Tayikistán</option><option>Timor Oriental</option><option>Turkmenistán</option><option>Turquía</option><option>Uzbekistán</option><option>Vietnam</option><option>Yemen</option>
+                  </optgroup>
+                  <optgroup label="Oceanía">
+                    <option>Australia</option><option>Fiyi</option><option>Islas Marshall</option><option>Islas Salomón</option><option>Kiribati</option><option>Micronesia</option><option>Nauru</option><option>Nueva Zelanda</option><option>Palaos</option><option>Papúa Nueva Guinea</option><option>Samoa</option><option>Tonga</option><option>Tuvalu</option><option>Vanuatu</option>
+                  </optgroup>
+                </select>
+                <p class="form-error" id="err-a-nacionalidad">Por favor selecciona la nacionalidad del anfitrión.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
+                <input type="date" id="a-nacimiento" name="a_nacimiento" class="form-input" required min="1900-01-01" data-dynamic-date="birth">
+                <p class="form-hint">El anfitrión debe ser mayor de edad (18 años o más).</p>
+                <p class="form-error" id="err-a-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-id-tipo">Tipo de identificación oficial <span class="req">*</span></label>
+                <select id="a-id-tipo" name="a_id_tipo" class="form-input" required>
+                  <option value="" disabled selected>Selecciona el tipo</option>
+                  <option value="pasaporte">Pasaporte mexicano</option>
+                  <option value="ine">INE</option>
+                  <option value="residente">Tarjeta de residente</option>
+                </select>
+                <p class="form-hint warn">⚠ Se deberá anexar copia de esta identificación a la carta de invitación.</p>
+                <p class="form-error" id="err-a-id-tipo">Por favor selecciona el tipo de identificación.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-id-num">Número de identificación <span class="req">*</span></label>
+                <input type="text" id="a-id-num" name="a_id_num" class="form-input"
+                       placeholder="Número que aparece en la identificación del anfitrión" required autocomplete="off"
+                       oninput="upperAll(this)">
+                <p class="form-error" id="err-a-id-num">Por favor ingresa el número de identificación.</p>
+              </div>
+
+              <div>
+                <label class="form-label">Domicilio en México <span class="req">*</span></label>
+                <div class="space-y-3">
+                  <input type="text" id="a-calle" name="a_calle" class="form-input" placeholder="Calle, número e interior (si aplica)" autocomplete="off" required>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" autocomplete="off" required oninput="capFirst(this)">
+                    <input type="text" id="a-delegacion" name="a_delegacion" class="form-input" placeholder="Delegación o Municipio" autocomplete="off" required oninput="capFirst(this)">
+                  </div>
+                  <div class="grid grid-cols-2 gap-3" style="overflow:hidden">
+                    <input type="text" id="a-ciudad" name="a_ciudad" class="form-input" placeholder="Ciudad" required autocomplete="off" oninput="capFirst(this)">
+                    <select id="a-estado" name="a_estado" class="form-input" required>
+                      <option value="" disabled selected>Estado</option>
+                      <option>Aguascalientes</option>
+                      <option>Baja California</option>
+                      <option>Baja California Sur</option>
+                      <option>Campeche</option>
+                      <option>Chiapas</option>
+                      <option>Chihuahua</option>
+                      <option>Ciudad de México</option>
+                      <option>Coahuila</option>
+                      <option>Colima</option>
+                      <option>Durango</option>
+                      <option>Guanajuato</option>
+                      <option>Guerrero</option>
+                      <option>Hidalgo</option>
+                      <option>Jalisco</option>
+                      <option>México</option>
+                      <option>Michoacán</option>
+                      <option>Morelos</option>
+                      <option>Nayarit</option>
+                      <option>Nuevo León</option>
+                      <option>Oaxaca</option>
+                      <option>Puebla</option>
+                      <option>Querétaro</option>
+                      <option>Quintana Roo</option>
+                      <option>San Luis Potosí</option>
+                      <option>Sinaloa</option>
+                      <option>Sonora</option>
+                      <option>Tabasco</option>
+                      <option>Tamaulipas</option>
+                      <option>Tlaxcala</option>
+                      <option>Veracruz</option>
+                      <option>Yucatán</option>
+                      <option>Zacatecas</option>
+                    </select>
+                  </div>
+                  <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal" autocomplete="off" required oninput="upperAll(this)">
+                </div>
+                <p class="form-hint warn mt-3">⚠ Se recomienda anexar a la carta de invitación un comprobante de domicilio del anfitrión con antigüedad no mayor a 3 meses.</p>
+                <p class="form-error" id="err-a-domicilio">Por favor completa el domicilio.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-telefono">Teléfono de contacto <span class="req">*</span></label>
+                <input type="tel" id="a-telefono" name="a_telefono" class="form-input"
+                       placeholder="55 1234 5678" required autocomplete="tel" maxlength="12"
+                       oninput="this.value=this.value.replace(/[^\d]/g,'').replace(/^(\d{2})(\d{0,4})(\d{0,4})$/,(_,a,b,c)=>[a,b,c].filter(Boolean).join(' ')).slice(0,12)">
+                <p class="form-hint">10 dígitos sin LADA internacional.</p>
+                <p class="form-hint warn">⚠ Migración puede llamar a este número exactamente al momento del arribo del visitante. Es fundamental que el anfitrión esté disponible en este número durante las fechas del viaje.</p>
+                <p class="form-error" id="err-a-telefono">Por favor ingresa un teléfono válido de 10 dígitos.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-email">Correo electrónico del anfitrión <span class="req">*</span></label>
+                <input type="email" id="a-email" name="a_email" class="form-input"
+                       placeholder="anfitrion@ejemplo.com" required autocomplete="email">
+                <p class="form-hint">Un correo de contacto que aparecerá en la carta.</p>
+                <p class="form-error" id="err-a-email">Por favor ingresa un correo electrónico válido.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-ocupacion">Ocupación o cargo del anfitrión <span class="req">*</span></label>
+                <input type="text" id="a-ocupacion" name="a_ocupacion" class="form-input"
+                       placeholder="Ej. Ingeniero, Gerente, Médico, Profesor…" required>
+                <p class="form-hint">Esto ayuda a demostrar estabilidad y respaldo económico ante migración.</p>
+                <p class="form-error" id="err-a-ocupacion">Por favor ingresa la ocupación del anfitrión.</p>
+              </div>
+
+              <div>
+                <label class="form-label" for="a-empresa">Empresa o lugar de trabajo <span class="text-xs font-normal" style="color:#6B7280;">(opcional)</span></label>
+                <input type="text" id="a-empresa" name="a_empresa" class="form-input"
+                       placeholder="Ej. Pemex, Grupo Bimbo, Hospital Ángeles, Independiente…">
+              </div>
+
+            </div>
+
+            <div class="flex justify-end mt-8">
+              <button type="button" class="btn-gold" onclick="goNext(1)">
+                Continuar
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+
+          </section>
+
+
+          <!-- ═══════════════════════════
+               STEP 2 — EL VIAJERO
+          ═══════════════════════════ -->
+          <section id="step-2" class="form-step p-6 sm:p-8">
 
             <div class="flex items-start gap-4 mb-7">
               <div class="step-icon">
@@ -558,8 +748,8 @@
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 1 de 6</span>
-                <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">El viajero</h1>
+                <span class="section-label mb-1">Paso 2 de 6</span>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">El viajero</h2>
                 <p class="text-sm mt-1" style="color:#6B7280;">Datos de la persona que visitará México, tal como aparecen en su pasaporte.</p>
               </div>
             </div>
@@ -819,204 +1009,8 @@
               </p>
             </div>
 
-            <div class="flex justify-end mt-8">
-              <button type="button" class="btn-gold" onclick="goNext(1)">
-                Continuar
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
-
-          </section>
-
-
-          <!-- ═══════════════════════════
-               STEP 2 — EL ANFITRIÓN
-          ═══════════════════════════ -->
-          <section id="step-2" class="form-step p-6 sm:p-8">
-
-            <div class="flex items-start gap-4 mb-7">
-              <div class="step-icon">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-                  <path d="M3 9l8-5.5L19 9v9a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
-                  <path d="M9 19v-6h4v6" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div>
-                <span class="section-label mb-1">Paso 2 de 6</span>
-                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">El anfitrión</h2>
-                <p class="text-sm mt-1" style="color:#6B7280;">Datos del mexicano o residente en México que firmará la carta.</p>
-              </div>
-            </div>
-
-            <div class="space-y-5">
-
-              <div>
-                <label class="form-label" for="a-nombre">Nombre completo del anfitrión <span class="req">*</span></label>
-                <input type="text" id="a-nombre" name="a_nombre" class="form-input"
-                       placeholder="Ej. María Elena García Torres" required
-                       oninput="titleCase(this)">
-                <p class="form-hint warn">⚠ Tal como aparece en la identificación oficial.</p>
-                <p class="form-error" id="err-a-nombre">Este campo es obligatorio.</p>
-              </div>
-
-              <div>
-                <label class="form-label">Sexo del anfitrión <span class="req">*</span></label>
-                <div style="display:flex;gap:24px;">
-                  <label class="radio-label"><input type="radio" name="a_genero" value="masculino" required> Masculino</label>
-                  <label class="radio-label"><input type="radio" name="a_genero" value="femenino" required> Femenino</label>
-                </div>
-                <p class="form-error" id="err-a-genero">Por favor selecciona el sexo.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="a-nacionalidad">Nacionalidad del anfitrión <span class="req">*</span></label>
-                <select id="a-nacionalidad" name="a_nacionalidad" class="form-input" required>
-                  <option value="" disabled selected>Selecciona la nacionalidad</option>
-                  <optgroup label="América Latina y el Caribe">
-                    <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option><option>Barbados</option><option>Belice</option><option>Bolivia</option><option>Brasil</option><option>Chile</option><option>Colombia</option><option>Costa Rica</option><option>Cuba</option><option>Dominica</option><option>Ecuador</option><option>El Salvador</option><option>Granada</option><option>Guatemala</option><option>Guyana</option><option>Haití</option><option>Honduras</option><option>Jamaica</option><option>Mexicana</option><option>Nicaragua</option><option>Panamá</option><option>Paraguay</option><option>Perú</option><option>República Dominicana</option><option>San Cristóbal y Nieves</option><option>San Vicente y las Granadinas</option><option>Santa Lucía</option><option>Surinam</option><option>Trinidad y Tobago</option><option>Uruguay</option><option>Venezuela</option>
-                  </optgroup>
-                  <optgroup label="Norteamérica">
-                    <option>Canadá</option><option>Estados Unidos</option>
-                  </optgroup>
-                  <optgroup label="Europa">
-                    <option>Albania</option><option>Alemania</option><option>Andorra</option><option>Austria</option><option>Bélgica</option><option>Bielorrusia</option><option>Bosnia y Herzegovina</option><option>Bulgaria</option><option>Chipre</option><option>Ciudad del Vaticano</option><option>Croacia</option><option>Dinamarca</option><option>Eslovaquia</option><option>Eslovenia</option><option>España</option><option>Estonia</option><option>Finlandia</option><option>Francia</option><option>Grecia</option><option>Hungría</option><option>Irlanda</option><option>Islandia</option><option>Italia</option><option>Kosovo</option><option>Letonia</option><option>Liechtenstein</option><option>Lituania</option><option>Luxemburgo</option><option>Malta</option><option>Moldavia</option><option>Mónaco</option><option>Montenegro</option><option>Noruega</option><option>Países Bajos</option><option>Polonia</option><option>Portugal</option><option>Reino Unido</option><option>República Checa</option><option>Rumanía</option><option>Rusia</option><option>San Marino</option><option>Serbia</option><option>Suecia</option><option>Suiza</option><option>Ucrania</option>
-                  </optgroup>
-                  <optgroup label="África">
-                    <option>Argelia</option><option>Angola</option><option>Benín</option><option>Botsuana</option><option>Burkina Faso</option><option>Burundi</option><option>Cabo Verde</option><option>Camerún</option><option>Chad</option><option>Comoras</option><option>Congo</option><option>Costa de Marfil</option><option>Egipto</option><option>Eritrea</option><option>Etiopía</option><option>Gabón</option><option>Gambia</option><option>Ghana</option><option>Guinea</option><option>Guinea Ecuatorial</option><option>Guinea-Bisáu</option><option>Kenia</option><option>Lesoto</option><option>Liberia</option><option>Libia</option><option>Madagascar</option><option>Malaui</option><option>Mali</option><option>Marruecos</option><option>Mauricio</option><option>Mauritania</option><option>Mozambique</option><option>Namibia</option><option>Níger</option><option>Nigeria</option><option>República Centroafricana</option><option>República Democrática del Congo</option><option>Ruanda</option><option>Santo Tomé y Príncipe</option><option>Senegal</option><option>Seychelles</option><option>Sierra Leona</option><option>Somalia</option><option>Sudáfrica</option><option>Sudán</option><option>Sudán del Sur</option><option>Suazilandia</option><option>Tanzania</option><option>Togo</option><option>Túnez</option><option>Uganda</option><option>Yibuti</option><option>Zambia</option><option>Zimbabue</option>
-                  </optgroup>
-                  <optgroup label="Asia y Medio Oriente">
-                    <option>Afganistán</option><option>Arabia Saudita</option><option>Armenia</option><option>Azerbaiyán</option><option>Bangladés</option><option>Brunéi</option><option>Bután</option><option>Camboya</option><option>Catar</option><option>China</option><option>Corea del Norte</option><option>Corea del Sur</option><option>Emiratos Árabes Unidos</option><option>Filipinas</option><option>Georgia</option><option>India</option><option>Indonesia</option><option>Irak</option><option>Irán</option><option>Israel</option><option>Japón</option><option>Jordania</option><option>Kazajistán</option><option>Kirguistán</option><option>Kuwait</option><option>Laos</option><option>Líbano</option><option>Malasia</option><option>Maldivas</option><option>Mongolia</option><option>Myanmar</option><option>Nepal</option><option>Omán</option><option>Pakistán</option><option>Palestina</option><option>Singapur</option><option>Siria</option><option>Sri Lanka</option><option>Tailandia</option><option>Tayikistán</option><option>Timor Oriental</option><option>Turkmenistán</option><option>Turquía</option><option>Uzbekistán</option><option>Vietnam</option><option>Yemen</option>
-                  </optgroup>
-                  <optgroup label="Oceanía">
-                    <option>Australia</option><option>Fiyi</option><option>Islas Marshall</option><option>Islas Salomón</option><option>Kiribati</option><option>Micronesia</option><option>Nauru</option><option>Nueva Zelanda</option><option>Palaos</option><option>Papúa Nueva Guinea</option><option>Samoa</option><option>Tonga</option><option>Tuvalu</option><option>Vanuatu</option>
-                  </optgroup>
-                </select>
-                <p class="form-error" id="err-a-nacionalidad">Por favor selecciona la nacionalidad del anfitrión.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="a-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
-                <input type="date" id="a-nacimiento" name="a_nacimiento" class="form-input" required min="1900-01-01" data-dynamic-date="birth">
-                <p class="form-hint">El anfitrión debe ser mayor de edad (18 años o más).</p>
-                <p class="form-error" id="err-a-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="a-id-tipo">Tipo de identificación oficial <span class="req">*</span></label>
-                <select id="a-id-tipo" name="a_id_tipo" class="form-input" required>
-                  <option value="" disabled selected>Selecciona el tipo</option>
-                  <option value="pasaporte">Pasaporte mexicano</option>
-                  <option value="ine">INE</option>
-                  <option value="residente">Tarjeta de residente</option>
-                </select>
-                <p class="form-hint warn">⚠ Se deberá anexar copia de esta identificación a la carta de invitación.</p>
-                <p class="form-error" id="err-a-id-tipo">Por favor selecciona el tipo de identificación.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="a-id-num">Número de identificación <span class="req">*</span></label>
-                <input type="text" id="a-id-num" name="a_id_num" class="form-input"
-                       placeholder="Número que aparece en la identificación del anfitrión" required autocomplete="off"
-                       oninput="upperAll(this)">
-                <p class="form-error" id="err-a-id-num">Por favor ingresa el número de identificación.</p>
-              </div>
-
-              <div>
-                <label class="form-label">Domicilio en México <span class="req">*</span></label>
-                <div class="space-y-3">
-                  <input type="text" id="a-calle" name="a_calle" class="form-input" placeholder="Calle, número e interior (si aplica)" autocomplete="off" required>
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input type="text" id="a-colonia" name="a_colonia" class="form-input" placeholder="Colonia" autocomplete="off" required oninput="capFirst(this)">
-                    <input type="text" id="a-delegacion" name="a_delegacion" class="form-input" placeholder="Delegación o Municipio" autocomplete="off" required oninput="capFirst(this)">
-                  </div>
-                  <div class="grid grid-cols-2 gap-3" style="overflow:hidden">
-                    <input type="text" id="a-ciudad" name="a_ciudad" class="form-input" placeholder="Ciudad" required autocomplete="off" oninput="capFirst(this)">
-                    <select id="a-estado" name="a_estado" class="form-input" required>
-                      <option value="" disabled selected>Estado</option>
-                      <option>Aguascalientes</option>
-                      <option>Baja California</option>
-                      <option>Baja California Sur</option>
-                      <option>Campeche</option>
-                      <option>Chiapas</option>
-                      <option>Chihuahua</option>
-                      <option>Ciudad de México</option>
-                      <option>Coahuila</option>
-                      <option>Colima</option>
-                      <option>Durango</option>
-                      <option>Guanajuato</option>
-                      <option>Guerrero</option>
-                      <option>Hidalgo</option>
-                      <option>Jalisco</option>
-                      <option>México</option>
-                      <option>Michoacán</option>
-                      <option>Morelos</option>
-                      <option>Nayarit</option>
-                      <option>Nuevo León</option>
-                      <option>Oaxaca</option>
-                      <option>Puebla</option>
-                      <option>Querétaro</option>
-                      <option>Quintana Roo</option>
-                      <option>San Luis Potosí</option>
-                      <option>Sinaloa</option>
-                      <option>Sonora</option>
-                      <option>Tabasco</option>
-                      <option>Tamaulipas</option>
-                      <option>Tlaxcala</option>
-                      <option>Veracruz</option>
-                      <option>Yucatán</option>
-                      <option>Zacatecas</option>
-                    </select>
-                  </div>
-                  <input type="text" id="a-cp" name="a_cp" class="form-input" placeholder="Código Postal" autocomplete="off" required oninput="upperAll(this)">
-                </div>
-                <p class="form-hint warn mt-3">⚠ Se recomienda anexar a la carta de invitación un comprobante de domicilio del anfitrión con antigüedad no mayor a 3 meses.</p>
-                <p class="form-error" id="err-a-domicilio">Por favor completa el domicilio.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="a-telefono">Teléfono de contacto <span class="req">*</span></label>
-                <input type="tel" id="a-telefono" name="a_telefono" class="form-input"
-                       placeholder="55 1234 5678" required autocomplete="tel" maxlength="12"
-                       oninput="this.value=this.value.replace(/[^\d]/g,'').replace(/^(\d{2})(\d{0,4})(\d{0,4})$/,(_,a,b,c)=>[a,b,c].filter(Boolean).join(' ')).slice(0,12)">
-                <p class="form-hint">10 dígitos sin LADA internacional.</p>
-                <p class="form-hint warn">⚠ Migración puede llamar a este número exactamente al momento del arribo del visitante. Es fundamental que el anfitrión esté disponible en este número durante las fechas del viaje.</p>
-                <p class="form-error" id="err-a-telefono">Por favor ingresa un teléfono válido de 10 dígitos.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="a-email">Correo electrónico del anfitrión <span class="req">*</span></label>
-                <input type="email" id="a-email" name="a_email" class="form-input"
-                       placeholder="anfitrion@ejemplo.com" required autocomplete="email">
-                <p class="form-hint">Un correo de contacto que aparecerá en la carta.</p>
-                <p class="form-error" id="err-a-email">Por favor ingresa un correo electrónico válido.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="a-ocupacion">Ocupación o cargo del anfitrión <span class="req">*</span></label>
-                <input type="text" id="a-ocupacion" name="a_ocupacion" class="form-input"
-                       placeholder="Ej. Ingeniero, Gerente, Médico, Profesor…" required>
-                <p class="form-hint">Esto ayuda a demostrar estabilidad y respaldo económico ante migración.</p>
-                <p class="form-error" id="err-a-ocupacion">Por favor ingresa la ocupación del anfitrión.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="a-empresa">Empresa o lugar de trabajo <span class="text-xs font-normal" style="color:#6B7280;">(opcional)</span></label>
-                <input type="text" id="a-empresa" name="a_empresa" class="form-input"
-                       placeholder="Ej. Pemex, Grupo Bimbo, Hospital Ángeles, Independiente…">
-              </div>
-
-              <div>
-                <label class="form-label" for="a-perspectiva">¿Quién llena este formulario? <span class="req">*</span></label>
-                <select id="a-perspectiva" name="a_perspectiva" class="form-input" required>
-                  <option value="" disabled selected>Selecciona quién está describiendo</option>
-                  <option value="anfitrion">Yo soy el anfitrión</option>
-                  <option value="visitante">Yo soy el visitante</option>
-                </select>
-                <p class="form-hint">Esto nos ayuda a redactar correctamente la carta desde la perspectiva adecuada.</p>
-                <p class="form-error" id="err-a-perspectiva">Por favor indica quién llena el formulario.</p>
-              </div>
+            <!-- Vínculo fields (moved from anfitrión) -->
+            <div class="space-y-5" style="margin-top:1.5rem;">
 
               <div>
                 <label class="form-label" for="a-vinculo">Vínculo con el viajero <span class="req">*</span></label>
@@ -1032,7 +1026,7 @@
               </div>
 
               <div id="parentesco-wrapper" style="display:none;">
-                <label class="form-label" id="parentesco-label">Tipo de parentesco <span class="req">*</span></label>
+                <label class="form-label" id="parentesco-label">El viajero es mi… <span class="req">*</span></label>
                 <select id="a-parentesco" name="a_parentesco" class="form-input">
                   <option value="" disabled selected>Selecciona el parentesco</option>
                   <option value="padre">Padre / Madre</option>
@@ -1069,6 +1063,7 @@
                           placeholder="Ej. Somos amigos desde la universidad · Es sobrino de mi esposa · Trabajamos juntos en la misma empresa…"
                           required rows="2"></textarea>
                 <p class="form-hint warn">⚠ Entre más detalle, más personalizada será la carta.</p>
+                <p class="form-hint" style="color:#C53030;font-weight:500;">⚠ Describe la relación desde la perspectiva del anfitrión (quien firma la carta).</p>
                 <p class="form-error" id="err-a-vinculo-detalle">Por favor describe el vínculo entre ambas personas.</p>
               </div>
 
@@ -1717,8 +1712,8 @@
 <script>
   const TOTAL = 6;
   const LABELS = [
-    'Paso 1 de 6 — El viajero',
-    'Paso 2 de 6 — El anfitrión',
+    'Paso 1 de 6 — El anfitrión',
+    'Paso 2 de 6 — El viajero',
     'Paso 3 de 6 — El viaje',
     'Paso 4 de 6 — Gastos',
     'Paso 5 de 6 — Entrada y salida',
@@ -1983,18 +1978,6 @@
     let ok = true;
 
     if (n === 1) {
-      ok &= nameReq('v-nombre',  'err-v-nombre');
-      ok &= dateReq('v-nacimiento', 'err-v-nacimiento', 1900, new Date().getFullYear());
-      ok &= selReq('v-nacionalidad', 'err-v-nacionalidad');
-      ok &= req('v-pasaporte',  'err-v-pasaporte');
-      ok &= selReq('v-residencia', 'err-v-residencia');
-      ok &= req('v-calle',      'err-v-domicilio');
-      ok &= req('v-ciudad',     'err-v-domicilio');
-      ok &= req('v-provincia',  'err-v-domicilio');
-      ok &= req('v-cp',         'err-v-domicilio');
-      ok &= req('v-ocupacion',  'err-v-ocupacion');
-      ok &= emailReq('v-email', 'err-v-email');
-    } else if (n === 2) {
       ok &= nameReq('a-nombre',  'err-a-nombre');
       ok &= selReq('a-nacionalidad', 'err-a-nacionalidad');
       ok &= dateReq('a-nacimiento', 'err-a-nacimiento', 1900, new Date().getFullYear());
@@ -2009,11 +1992,33 @@
       ok &= phoneReq('a-telefono', 'err-a-telefono');
       ok &= emailReq('a-email', 'err-a-email');
       ok &= req('a-ocupacion',  'err-a-ocupacion');
-      ok &= selReq('a-vinculo',   'err-a-vinculo');
-      ok &= selReq('a-perspectiva', 'err-a-perspectiva');
+    } else if (n === 2) {
+      ok &= nameReq('v-nombre',  'err-v-nombre');
+      ok &= dateReq('v-nacimiento', 'err-v-nacimiento', 1900, new Date().getFullYear());
+      ok &= selReq('v-nacionalidad', 'err-v-nacionalidad');
+      ok &= req('v-pasaporte',  'err-v-pasaporte');
+      ok &= selReq('v-residencia', 'err-v-residencia');
+      ok &= req('v-calle',      'err-v-domicilio');
+      ok &= req('v-ciudad',     'err-v-domicilio');
+      ok &= req('v-provincia',  'err-v-domicilio');
+      ok &= req('v-cp',         'err-v-domicilio');
+      ok &= req('v-ocupacion',  'err-v-ocupacion');
+      ok &= emailReq('v-email', 'err-v-email');
+      ok &= selReq('a-vinculo', 'err-a-vinculo');
       ok &= req('a-vinculo-detalle', 'err-a-vinculo-detalle');
-      ok &= selReq('a-tiempo-anios', 'err-a-tiempo');
-      ok &= selReq('a-tiempo-meses', 'err-a-tiempo');
+      // Parentesco validation (only if familiar)
+      const vinculoVal = document.getElementById('a-vinculo')?.value;
+      if (vinculoVal === 'familiar') {
+        ok &= selReq('a-parentesco', 'err-a-parentesco');
+        if (document.getElementById('a-parentesco')?.value === 'otro_familiar') {
+          ok &= req('a-parentesco-otro', 'err-a-parentesco-otro');
+        }
+      }
+      // Tiempo validation (only if wrapper is visible)
+      if (document.getElementById('tiempo-wrapper')?.style.display !== 'none') {
+        ok &= selReq('a-tiempo-anios', 'err-a-tiempo');
+        ok &= selReq('a-tiempo-meses', 'err-a-tiempo');
+      }
     } else if (n === 3) {
       ok &= selReq('j-motivo', 'err-j-motivo');
       ok &= req('j-actividades', 'err-j-actividades');
@@ -2146,9 +2151,7 @@
 
     try {
       const formData = collectFormData();
-      const email = formData['a-perspectiva'] === 'visitante'
-        ? (formData['v-email'] || '')
-        : (formData['a-email'] || '');
+      const email = formData['a-email'] || '';
 
       const res = await fetch('/api/submit', {
         method: 'POST',
@@ -2268,24 +2271,13 @@
       `<dl style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px 16px;margin:0;">${items}</dl></div>`;
   }
   function buildReview() {
-    // Viajero
-    const addr = [rval('v-calle'), rval('v-ciudad'), rval('v-provincia'), rval('v-cp')].filter(v => v !== '—').join(', ');
-    const viajero = reviewCard('El viajero', [
-      ['Nombre completo', rval('v-nombre')],
-      ['Fecha de nacimiento', fmtDate(rval('v-nacimiento'))],
-      ['Nacionalidad', rval('v-nacionalidad')],
-      ['N.º de pasaporte', rval('v-pasaporte')],
-      ['País de residencia', rval('v-residencia')],
-      ['Domicilio', addr || '—'],
-      ['Ocupación', rval('v-ocupacion')],
-      ['Correo electrónico', rval('v-email')],
-    ]);
-
-    // Anfitrión
-    const anfiAddr = [rval('a-calle'), rval('a-colonia'), rval('a-delegacion'), rval('a-ciudad'), rval('a-estado'), rval('a-cp')].filter(v => v !== '—').join(', ');
+    // Tiempo calculation (needed by viajero card)
     const tiempoAnios = rtext('a-tiempo-anios');
     const tiempoMeses = rtext('a-tiempo-meses');
     const tiempoStr = (tiempoAnios !== '—' || tiempoMeses !== '—') ? `${tiempoAnios}${tiempoMeses !== '—' && tiempoMeses !== '0 meses' ? ', ' + tiempoMeses : ''}` : '—';
+
+    // Anfitrión
+    const anfiAddr = [rval('a-calle'), rval('a-colonia'), rval('a-delegacion'), rval('a-ciudad'), rval('a-estado'), rval('a-cp')].filter(v => v !== '—').join(', ');
     const anfitrion = reviewCard('El anfitrión', [
       ['Nombre completo', rval('a-nombre')],
       ['Nacionalidad', rval('a-nacionalidad')],
@@ -2297,8 +2289,20 @@
       ['Correo electrónico', rval('a-email')],
       ['Ocupación / cargo', rval('a-ocupacion')],
       ['Empresa', rval('a-empresa') !== '—' ? rval('a-empresa') : '—'],
+    ]);
+
+    // Viajero
+    const addr = [rval('v-calle'), rval('v-ciudad'), rval('v-provincia'), rval('v-cp')].filter(v => v !== '—').join(', ');
+    const viajero = reviewCard('El viajero', [
+      ['Nombre completo', rval('v-nombre')],
+      ['Fecha de nacimiento', fmtDate(rval('v-nacimiento'))],
+      ['Nacionalidad', rval('v-nacionalidad')],
+      ['N.º de pasaporte', rval('v-pasaporte')],
+      ['País de residencia', rval('v-residencia')],
+      ['Domicilio', addr || '—'],
+      ['Ocupación', rval('v-ocupacion')],
+      ['Correo electrónico', rval('v-email')],
       ['Vínculo con el viajero', rtext('a-vinculo')],
-      ['¿Quién llena?', rtext('a-perspectiva')],
       ['Detalle del vínculo', rval('a-vinculo-detalle')],
       ['Tiempo de conocerse', tiempoStr],
     ]);
@@ -2358,7 +2362,7 @@
       ['Fecha de regreso', fmtDate(rval('sal-fecha'))],
     ]);
 
-    document.getElementById('review-content').innerHTML = viajero + anfitrion + viaje + gastos + vuelos;
+    document.getElementById('review-content').innerHTML = anfitrion + viajero + viaje + gastos + vuelos;
   }
 
   /* ── Real-time field validation setup ── */
@@ -2425,7 +2429,6 @@
       ['a-nacionalidad','err-a-nacionalidad'],
       ['a-id-tipo','err-a-id-tipo'],
       ['a-vinculo','err-a-vinculo'],
-      ['a-perspectiva','err-a-perspectiva'],
       ['j-motivo','err-j-motivo'],
       ['j-al-estado','err-j-alojamiento'],
     ].forEach(([id, errId]) => {
@@ -2477,7 +2480,6 @@
   (function() {
     const CONSANGUINEOUS = ['padre','hijo','hermano','abuelo','nieto','bisabuelo','tio','sobrino','primo'];
     const vinculoSel = document.getElementById('a-vinculo');
-    const perspectivaSel = document.getElementById('a-perspectiva');
     const parentescoWrap = document.getElementById('parentesco-wrapper');
     const parentescoSel = document.getElementById('a-parentesco');
     const parentescoLabel = document.getElementById('parentesco-label');
@@ -2488,10 +2490,7 @@
     const tiempoMeses = document.getElementById('a-tiempo-meses');
 
     function updateParentescoLabel() {
-      const p = perspectivaSel.value;
-      if (p === 'anfitrion') parentescoLabel.innerHTML = 'El viajero es mi… <span class="req">*</span>';
-      else if (p === 'visitante') parentescoLabel.innerHTML = 'El anfitrión es mi… <span class="req">*</span>';
-      else parentescoLabel.innerHTML = 'Tipo de parentesco <span class="req">*</span>';
+      parentescoLabel.innerHTML = 'El viajero es mi… <span class="req">*</span>';
     }
 
     function updateTiempo() {
@@ -2538,7 +2537,6 @@
       updateTiempo();
     });
 
-    perspectivaSel.addEventListener('change', updateParentescoLabel);
   })();
 
   setupRealtimeValidation();

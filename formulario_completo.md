@@ -1,124 +1,58 @@
-# Formulario — Carta de Invitación para Visitantes a México
+# Formulario — Carta de Invitacion para Visitantes a Mexico
 ## Plan Completo
 
-> Este formulario incluye todos los campos del Plan Esencial más: acompañantes, itinerario multi-ciudad con múltiples alojamientos, y ciudades y actividades planeadas.
+> Este formulario incluye todos los campos del Plan Esencial mas: acompanantes (viajeros adicionales), itinerario multi-ciudad con multiples alojamientos, y ciudades y actividades planeadas.
 >
-> Formulario de 6 pasos + revisión final. Precio: **$9 USD**. Archivo: `formulario-completo.html`.
+> Formulario de 5 pasos + revision final. Precio: **$9 USD**. Archivo: `formulario-completo.html`.
 
 ---
 
 ## Overview
 
-- Multi-step form (`#main-form`) with 6 sections, HTML attribute `novalidate` (JS-driven validation).
-- Steps are `<section>` elements (`#step-1` through `#step-6`), toggled via `.form-step.active`.
+- Multi-step form (`#main-form`) with 5 sections, HTML attribute `novalidate` (JS-driven validation).
+- Steps are `<section>` elements (`#step-1` through `#step-5`), toggled via `.form-step.active`.
 - Step transitions animate with `stepIn` keyframe (opacity + translateY).
 - Sidebar (desktop) shows step progress with numbered dots (pending / active / done states); completed steps become clickable for navigation.
-- Mobile shows a progress bar (`mob-progress-track` / `mob-progress-fill`) with label "Paso N de 6 — Title".
-- Form data is saved to `localStorage` key `carta_form_completo` before Stripe redirect and restored on page load.
+- Mobile shows a progress bar (`mob-progress-track` / `mob-progress-fill`) with label "Paso N de 5 — Title".
+- Form data is saved to `localStorage` key `carta_form_completo` (with `version: 2`) before Stripe redirect and restored on page load. On restore, if the saved version is not `2`, old data is cleared.
 - Hash parameter `#step=N` allows returning to a specific step (used by Stripe cancel redirect).
 - GA4 tracking: `G-3W7EBYNBQ1`.
 - Page is `noindex, nofollow`.
-- **Note**: The HTML section order is: step-1, step-2, step-3, step-5, step-4, step-6. However the sidebar and navigation use the logical order 1→2→3→4→5→6 where Step 4 = Itinerario and Step 5 = Gastos.
+- **Step structure (5 steps)**:
+  - Step 1: El anfitrion (personal data only)
+  - Step 2: Los viajeros (Viajero 1 mandatory + additional viajeros dynamically added)
+  - Step 3: Itinerario, entrada y salida
+  - Step 4: Gastos
+  - Step 5: Revision final
+- **No perspectiva field**: The `a-perspectiva` field has been removed. All descriptions are always from the host's (anfitrion's) perspective. There is no inversion logic.
 
 ---
 
-## Paso 1 — El viajero (Información del extranjero que visitará México)
+## Paso 1 — El anfitrion (Mexicano/a o residente en Mexico que firmara la carta)
 
-| # | Campo | `name` / `id` | Tipo | Requerido | Validación | Placeholder / Detalle |
+| # | Campo | `name` / `id` | Tipo | Requerido | Validacion | Placeholder / Detalle |
 |---|-------|---------------|------|-----------|------------|----------------------|
-| 1 | **Nombre completo del viajero** | `v_nombre` / `v-nombre` | text | Sí | `nameReq()` — non-empty + must contain a space (nombre y apellidos). `titleCase()` on input. | `Ej. Juan Carlos Pérez López` |
-| 2 | **Sexo del viajero** | `v_genero` | radio | Sí | Must select one. | Values: `masculino` / `femenino`. Inline radio buttons. Used for gendered Spanish in the PDF (invitado/invitada). |
-| 3 | **Fecha de nacimiento** | `v_nacimiento` / `v-nacimiento` | date | Sí | `dateReq()` — year between 1900 and current year. `min="1900-01-01"`, `data-dynamic-date="birth"`. | Mobile: custom drum/wheel picker (DD/MM/AAAA). |
-| 4 | **Nacionalidad** | `v_nacionalidad` / `v-nacionalidad` | select | Sí | `selReq()`. | Default: `"La que aparece en el pasaporte del viajero"` (disabled). See **Dropdown: Países** below. |
-| 5 | **Número de pasaporte** | `v_pasaporte` / `v-pasaporte` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Ej. AB123456` |
-| 6 | **País de residencia** | `v_residencia` / `v-residencia` | select | Sí | `selReq()`. | Default: `"Donde reside el viajero actualmente"` (disabled). Same country list as Nacionalidad. |
-| 7 | **Domicilio completo en país de residencia** | (group) | — | Sí | All sub-fields validated with `req()`. | — |
-| 7a | — Calle, número, e interior | `v_calle` / `v-calle` | text | Sí | `req()`. `autocomplete="off"`. | `Calle, número, e interior (si aplica)` |
-| 7b | — Ciudad | `v_ciudad` / `v-ciudad` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
-| 7c | — Provincia / Estado / Región | `v_provincia` / `v-provincia` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Provincia / Estado / Región` |
-| 7d | — Código Postal | `v_cp` / `v-cp` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Código Postal` |
-| 8 | **Actividad profesional u ocupación** | `v_ocupacion` / `v-ocupacion` | text | Sí | `req()`. | `Ej. Ingeniero, Estudiante, Comerciante…` |
-| 9 | **Correo electrónico** | `v_email` / `v-email` | email | Sí | `emailReq()` — regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`. Whitespace stripped on input. Validated on blur. `autocomplete="email"`. | `nombre@correo.com` |
+| 1 | **Nombre completo del anfitrion** | `a_nombre` / `a-nombre` | text | Si | `nameReq()`. `titleCase()` on input. | `Ej. Maria Elena Garcia Torres` |
+| 2 | **Sexo del anfitrion** | `a_genero` | radio | Si | Must select one. | Values: `masculino` / `femenino`. Inline radio buttons. Used for gendered Spanish in the PDF (portador/portadora). |
+| 3 | **Nacionalidad del anfitrion** | `a_nacionalidad` / `a-nacionalidad` | select | Si | `selReq()`. | Default: `"Selecciona la nacionalidad"` (disabled). Same country list as `v-nacionalidad`, with "Mexicana" included in America Latina. |
+| 4 | **Fecha de nacimiento** | `a_nacimiento` / `a-nacimiento` | date | Si | `dateReq()` — year 1900 to current. `data-dynamic-date="birth"`. `min="1900-01-01"`. | — |
+| 5 | **Tipo de identificacion oficial** | `a_id_tipo` / `a-id-tipo` | select | Si | `selReq()`. | Default: `"Selecciona el tipo"` (disabled). |
+| 6 | **Numero de identificacion** | `a_id_num` / `a-id-num` | text | Si | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Numero que aparece en la identificacion del anfitrion` |
+| 7 | **Domicilio en Mexico** | (group) | — | Si | All sub-fields validated. | — |
+| 7a | — Calle, numero e interior | `a_calle` / `a-calle` | text | Si | `req()`. `autocomplete="off"`. | `Calle, numero e interior (si aplica)` |
+| 7b | — Colonia | `a_colonia` / `a-colonia` | text | Si | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Colonia` |
+| 7c | — Delegacion o Municipio | `a_delegacion` / `a-delegacion` | text | Si | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Delegacion o Municipio` |
+| 7d | — Ciudad | `a_ciudad` / `a-ciudad` | text | Si | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
+| 7e | — Estado | `a_estado` / `a-estado` | select | Si | `selReq()`. | Default: `"Estado"` (disabled). See **Dropdown: Estados de Mexico** below. |
+| 7f | — Codigo Postal | `a_cp` / `a-cp` | text | Si | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Codigo Postal` |
+| 8 | **Telefono de contacto** | `a_telefono` / `a-telefono` | tel | Si | `phoneReq()` — exactly 10 digits. Auto-formatted `XX XXXX XXXX` on input. `maxlength="12"`. `autocomplete="tel"`. | `55 1234 5678` |
+| 9 | **Correo electronico del anfitrion** | `a_email` / `a-email` | email | Si | `emailReq()`. `autocomplete="email"`. | `anfitrion@ejemplo.com` |
+| 10 | **Ocupacion o cargo del anfitrion** | `a_ocupacion` / `a-ocupacion` | text | Si | `req()`. | `Ej. Ingeniero, Gerente, Medico, Profesor...` |
+| 11 | **Empresa o lugar de trabajo** | `a_empresa` / `a-empresa` | text | No | Not validated. | `Ej. Pemex, Grupo Bimbo, Hospital Angeles, Independiente...` (labeled "(opcional)") |
 
-### Warnings / Hints (Paso 1)
-- **Nombre:** "Tal como aparece en el pasaporte." (warn)
-- **Pasaporte:** "Verifica que el pasaporte tenga al menos **6 meses de vigencia** a partir de la fecha de entrada a México." (warn)
-- **Residencia:** "Puede ser diferente a la nacionalidad." (hint)
-- **Ocupación:** "En el país de residencia del viajero. La actividad profesional ayuda a demostrar motivos para regresar después del viaje." (hint)
+**Note**: This step contains ONLY the anfitrion's personal data. The vinculo fields are in Step 2, within each viajero's section.
 
----
-
-## Paso 2 — Acompañantes *(exclusivo Plan Completo)*
-
-> Los acompañantes viajan junto al invitado principal y quedan incluidos en la misma carta. Sección repetible — agregar un bloque por cada acompañante. Si el viajero viene solo, se puede omitir este paso.
-
-Callout: "Exclusivo Plan Completo. Si el viajero viene solo, se puede omitir este paso y continuar."
-
-Empty state (when no companions): "Sin acompañantes por ahora / Si alguien viaja con el invitado principal, agrégalo aquí."
-
-Button: **"Agregar acompañante"** (`addCompanion()`)
-
-### Campos por cada acompañante (template `#companion-tpl`)
-
-| # | Campo | `name` | Tipo | Requerido | Validación | Placeholder / Detalle |
-|---|-------|--------|------|-----------|------------|----------------------|
-| 1 | **Nombre completo del acompañante** | `comp_nombre[]` | text | Sí | `nameReq()` — non-empty + space. `titleCase()` on input. | `Ej. Juan Carlos Pérez López` |
-| 2 | **Sexo** | `comp_genero_N` | radio | Sí | Must select one. Name is unique per card (`comp_genero_0`, `comp_genero_1`, etc.). | Values: `masculino` / `femenino`. Inline radio buttons. |
-| 3 | **Fecha de nacimiento** | `comp_nacimiento[]` | date | Sí | `dateReq()` — year 1900 to current. `min="1900-01-01"`, `data-dynamic-date="birth"`. | — |
-| 4 | **Relación con el viajero principal** | `comp_relacion[]` | text | Sí | `req()`. | `Ej. Esposa, Hijo, Amigo de la infancia…` |
-| 5 | **Nacionalidad** | `comp_nacionalidad[]` | select | Sí | `selReq()`. | Default: `"La que aparece en su pasaporte"` (disabled). Dropdown con países agrupados por región. |
-| 6 | **Número de pasaporte** | `comp_pasaporte[]` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Ej. AB123456` |
-| 7 | **¿Mismo domicilio de residencia que el viajero principal?** | `comp_mismo_domicilio[]` | radio | Sí | Must select one. Default: Sí. | Values: `si` / `no`. |
-
-### Conditional: Domicilio diferente (shown when `comp_mismo_domicilio = "no"`)
-
-| # | Campo | `name` | Tipo | Requerido | Validación | Placeholder / Detalle |
-|---|-------|--------|------|-----------|------------|----------------------|
-| 7a | **País de residencia** | `comp_residencia[]` | select | Sí (if no) | `selReq()`. | Default: `"Selecciona el país"` (disabled). |
-| 7b | **Calle, número, e interior** | `comp_calle[]` | text | Sí (if no) | `req()`. `autocomplete="off"`. | `Calle, número, e interior (si aplica)` |
-| 7c | **Ciudad** | `comp_ciudad[]` | text | Sí (if no) | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
-| 7d | **Provincia / Estado / Región** | `comp_provincia[]` | text | Sí (if no) | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Provincia / Estado / Región` |
-| 7e | **Código Postal** | `comp_cp[]` | text | Sí (if no) | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Código Postal` |
-
-| 8 | **Actividad profesional u ocupación** | `comp_ocupacion[]` | text | Sí | `req()`. | `Ej. Ingeniero, Estudiante, Comerciante…` |
-
-### Warnings / Hints (Paso 2)
-- **Nombre:** "Tal como aparece en el pasaporte." (warn)
-- **Pasaporte:** "Mín. 6 meses de vigencia desde la entrada." (warn)
-
----
-
-## Paso 3 — El anfitrión (Mexicano/a o residente en México que firmará la carta)
-
-| # | Campo | `name` / `id` | Tipo | Requerido | Validación | Placeholder / Detalle |
-|---|-------|---------------|------|-----------|------------|----------------------|
-| 1 | **Nombre completo del anfitrión** | `a_nombre` / `a-nombre` | text | Sí | `nameReq()`. `titleCase()` on input. | `Ej. María Elena García Torres` |
-| 2 | **Sexo del anfitrión** | `a_genero` | radio | Sí | Must select one. | Values: `masculino` / `femenino`. Inline radio buttons. Used for gendered Spanish in the PDF (portador/portadora). |
-| 3 | **Nacionalidad del anfitrión** | `a_nacionalidad` / `a-nacionalidad` | select | Sí | `selReq()`. | Default: `"Selecciona la nacionalidad"` (disabled). Same country list as `v-nacionalidad`, with "Mexicana" included in América Latina. |
-| 4 | **Fecha de nacimiento** | `a_nacimiento` / `a-nacimiento` | date | Sí | `dateReq()` — year 1900 to current. `data-dynamic-date="birth"`. `min="1900-01-01"`. | — |
-| 5 | **Tipo de identificación oficial** | `a_id_tipo` / `a-id-tipo` | select | Sí | `selReq()`. | Default: `"Selecciona el tipo"` (disabled). |
-| 6 | **Número de identificación** | `a_id_num` / `a-id-num` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Número que aparece en la identificación del anfitrión` |
-| 7 | **Domicilio en México** | (group) | — | Sí | All sub-fields validated. | — |
-| 7a | — Calle, número e interior | `a_calle` / `a-calle` | text | Sí | `req()`. `autocomplete="off"`. | `Calle, número e interior (si aplica)` |
-| 7b | — Colonia | `a_colonia` / `a-colonia` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Colonia` |
-| 7c | — Delegación o Municipio | `a_delegacion` / `a-delegacion` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Delegación o Municipio` |
-| 7d | — Ciudad | `a_ciudad` / `a-ciudad` | text | Sí | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
-| 7e | — Estado | `a_estado` / `a-estado` | select | Sí | `selReq()`. | Default: `"Estado"` (disabled). See **Dropdown: Estados de México** below. |
-| 7f | — Código Postal | `a_cp` / `a-cp` | text | Sí | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Código Postal` |
-| 8 | **Teléfono de contacto** | `a_telefono` / `a-telefono` | tel | Sí | `phoneReq()` — exactly 10 digits. Auto-formatted `XX XXXX XXXX` on input. `maxlength="12"`. `autocomplete="tel"`. | `55 1234 5678` |
-| 9 | **Correo electrónico del anfitrión** | `a_email` / `a-email` | email | Sí | `emailReq()`. `autocomplete="email"`. | `anfitrion@ejemplo.com` |
-| 10 | **Ocupación o cargo del anfitrión** | `a_ocupacion` / `a-ocupacion` | text | Sí | `req()`. | `Ej. Ingeniero, Gerente, Médico, Profesor…` |
-| 11 | **Empresa o lugar de trabajo** | `a_empresa` / `a-empresa` | text | No | Not validated. | `Ej. Pemex, Grupo Bimbo, Hospital Ángeles, Independiente…` (labeled "(opcional)") |
-| 12 | **¿Quién llena este formulario?** | `a_perspectiva` / `a-perspectiva` | select | Sí | `selReq()`. | Default: `"Selecciona quién está describiendo"` (disabled). |
-| 13 | **Vínculo con el viajero** | `a_vinculo` / `a-vinculo` | select | Sí | `selReq()`. | Default: `"Selecciona el vínculo"` (disabled). |
-| 14 | **Tipo de parentesco** *(conditional)* | `a_parentesco` / `a-parentesco` | select | Sí (when familiar) | `selReq()`. Shown only when vínculo = `familiar`. | Default: `"Selecciona el parentesco"` (disabled). See **Dropdown: Parentesco** below. |
-| 15 | **Especifica el parentesco** *(conditional)* | `a_parentesco_otro` / `a-parentesco-otro` | text | Sí (when otro_familiar) | `req()`. Shown only when parentesco = `otro_familiar`. | `Ej. primo segundo, bisnieto, tío abuelo…` |
-| 16 | **Describe brevemente el vínculo** | `a_vinculo_detalle` / `a-vinculo-detalle` | textarea | Sí | `req()`. `rows="2"`. | `Ej. Somos amigos desde la universidad · Es sobrino de mi esposa · Trabajamos juntos en la misma empresa…` |
-| 17 | **¿Desde hace cuánto se conocen?** *(conditional)* | (group) | — | Sí | Both selects validated with `selReq()`. Hidden when vínculo = `familiar` AND parentesco is consanguineous. | — |
-| 17a | — Años | `a_tiempo_anios` / `a-tiempo-anios` | select | Sí | `selReq()`. | Default: `"Años"` (disabled). |
-| 17b | — Meses | `a_tiempo_meses` / `a-tiempo-meses` | select | Sí | `selReq()`. | Default: `"Meses"` (disabled). |
-
-### Dropdown: Tipo de identificación oficial (`a-id-tipo`)
+### Dropdown: Tipo de identificacion oficial (`a-id-tipo`)
 
 | Value | Label |
 |-------|-------|
@@ -126,95 +60,123 @@ Button: **"Agregar acompañante"** (`addCompanion()`)
 | `ine` | INE |
 | `residente` | Tarjeta de residente |
 
-### Dropdown: Vínculo con el viajero (`a-vinculo`)
-
-| Value | Label |
-|-------|-------|
-| `familiar` | Familiar |
-| `pareja` | Pareja |
-| `amistad` | Amistad |
-| `laboral` | Laboral |
-| `otro` | Otro |
-
-### Dropdown: ¿Quién llena este formulario? (`a-perspectiva`)
-
-| Value | Label |
-|-------|-------|
-| `anfitrion` | Yo soy el anfitrión |
-| `visitante` | Yo soy el visitante |
-
-### Dropdown: Tipo de parentesco (`a-parentesco`)
-
-Shown only when `a-vinculo = "familiar"`. Label changes based on perspectiva:
-- `anfitrion` → "El viajero es mi..."
-- `visitante` → "El anfitrión es mi..."
-
-| Value | Label |
-|-------|-------|
-| `padre` | Padre / Madre |
-| `hijo` | Hijo(a) |
-| `hermano` | Hermano(a) |
-| `abuelo` | Abuelo(a) |
-| `nieto` | Nieto(a) |
-| `bisabuelo` | Bisabuelo(a) |
-| `tio` | Tío(a) |
-| `sobrino` | Sobrino(a) |
-| `primo` | Primo(a) |
-| `suegro` | Suegro(a) |
-| `yerno` | Yerno / Nuera |
-| `cunado` | Cuñado(a) |
-| `concuno` | Concuño(a) |
-| `padrastro` | Padrastro / Madrastra |
-| `hijastro` | Hijastro(a) |
-| `hermanastro` | Hermanastro(a) |
-| `otro_familiar` | Otro familiar |
-
-**Consanguineous** (hide tiempo when selected): `padre`, `hijo`, `hermano`, `abuelo`, `nieto`, `bisabuelo`, `tio`, `sobrino`, `primo`.
-
-**Non-consanguineous** (show tiempo): `suegro`, `yerno`, `cunado`, `concuno`, `padrastro`, `hijastro`, `hermanastro`, `otro_familiar`.
-
-**PDF inversion** (when `perspectiva=visitante`): Asymmetric pairs are inverted for the host's POV: padre↔hijo, abuelo↔nieto, bisabuelo↔bisnieto, tio↔sobrino, suegro↔yerno, padrastro↔hijastro. Symmetric pairs (hermano, primo, cunado, concuno, hermanastro) stay the same.
-
-### Dropdown: Años de conocerse (`a-tiempo-anios`)
-
-| Value | Label |
-|-------|-------|
-| `0` | 0 años |
-| `1` | 1 año |
-| `2` – `99` | 2 años – 99 años |
-
-### Dropdown: Meses de conocerse (`a-tiempo-meses`)
-
-| Value | Label |
-|-------|-------|
-| `0` | 0 meses |
-| `1` | 1 mes |
-| `2` – `11` | 2 meses – 11 meses |
-
-### Warnings / Hints (Paso 3)
-- **Nombre:** "Tal como aparece en la identificación oficial." (warn)
-- **Nacionalidad:** "La nacionalidad del anfitrión ayuda a determinar la capacidad de respaldar al visitante." (hint)
-- **Nacimiento:** "El anfitrión debe ser mayor de edad (18 años o más)." (hint)
-- **Tipo de ID:** "Se deberá anexar copia de esta identificación a la carta de invitación." (warn)
-- **Domicilio:** "Se recomienda anexar a la carta de invitación un comprobante de domicilio del anfitrión con antigüedad no mayor a 3 meses." (warn)
-- **Teléfono:** "10 dígitos sin LADA internacional." (hint) + "Migración puede llamar a este número exactamente al momento del arribo del visitante. Es fundamental que el anfitrión esté disponible en este número durante las fechas del viaje." (warn)
-- **Email:** "Un correo de contacto que aparecerá en la carta." (hint)
-- **Ocupación:** "Esto ayuda a demostrar estabilidad y respaldo económico ante migración." (hint)
-- **Perspectiva:** "Esto nos ayuda a redactar correctamente la carta desde la perspectiva adecuada." (hint)
-- **Vínculo detalle:** "Entre más detalle, más personalizada será la carta." (warn)
+### Warnings / Hints (Paso 1)
+- **Nombre:** "Tal como aparece en la identificacion oficial." (warn)
+- **Nacionalidad:** "La nacionalidad del anfitrion ayuda a determinar la capacidad de respaldar al visitante." (hint)
+- **Nacimiento:** "El anfitrion debe ser mayor de edad (18 anos o mas)." (hint)
+- **Tipo de ID:** "Se debera anexar copia de esta identificacion a la carta de invitacion." (warn)
+- **Domicilio:** "Se recomienda anexar a la carta de invitacion un comprobante de domicilio del anfitrion con antiguedad no mayor a 3 meses." (warn)
+- **Telefono:** "10 digitos sin LADA internacional." (hint) + "Migracion puede llamar a este numero exactamente al momento del arribo del visitante. Es fundamental que el anfitrion este disponible en este numero durante las fechas del viaje." (warn)
+- **Email:** "Un correo de contacto que aparecera en la carta." (hint)
+- **Ocupacion:** "Esto ayuda a demostrar estabilidad y respaldo economico ante migracion." (hint)
 
 ---
 
-## Paso 4 — Itinerario, entrada y salida *(exclusivo Plan Completo)*
+## Paso 2 — Los viajeros (Datos de las personas que visitaran Mexico)
+
+This step combines the primary traveler (Viajero 1) and any additional travelers into a single step. The section heading is "Los viajeros".
+
+### Viajero 1 (mandatory, non-removable card)
+
+Card title: "Viajero 1 (principal)" — displayed with gold accent styling.
+
+| # | Campo | `name` / `id` | Tipo | Requerido | Validacion | Placeholder / Detalle |
+|---|-------|---------------|------|-----------|------------|----------------------|
+| 1 | **Nombre completo del viajero** | `v_nombre` / `v-nombre` | text | Si | `nameReq()` — non-empty + must contain a space (nombre y apellidos). `titleCase()` on input. | `Ej. Juan Carlos Perez Lopez` |
+| 2 | **Sexo del viajero** | `v_genero` | radio | Si | Must select one. | Values: `masculino` / `femenino`. Inline radio buttons. Used for gendered Spanish in the PDF (invitado/invitada). |
+| 3 | **Fecha de nacimiento** | `v_nacimiento` / `v-nacimiento` | date | Si | `dateReq()` — year between 1900 and current year. `min="1900-01-01"`, `data-dynamic-date="birth"`. | Mobile: custom drum/wheel picker (DD/MM/AAAA). |
+| 4 | **Nacionalidad** | `v_nacionalidad` / `v-nacionalidad` | select | Si | `selReq()`. | Default: `"La que aparece en el pasaporte del viajero"` (disabled). See **Dropdown: Paises** below. |
+| 5 | **Numero de pasaporte** | `v_pasaporte` / `v-pasaporte` | text | Si | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Ej. AB123456` |
+| 6 | **Pais de residencia** | `v_residencia` / `v-residencia` | select | Si | `selReq()`. | Default: `"Donde reside el viajero actualmente"` (disabled). Same country list as Nacionalidad. |
+| 7 | **Domicilio completo en pais de residencia** | (group) | — | Si | All sub-fields validated with `req()`. | — |
+| 7a | — Calle, numero, e interior | `v_calle` / `v-calle` | text | Si | `req()`. `autocomplete="off"`. | `Calle, numero, e interior (si aplica)` |
+| 7b | — Ciudad | `v_ciudad` / `v-ciudad` | text | Si | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
+| 7c | — Provincia / Estado / Region | `v_provincia` / `v-provincia` | text | Si | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Provincia / Estado / Region` |
+| 7d | — Codigo Postal | `v_cp` / `v-cp` | text | Si | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Codigo Postal` |
+| 8 | **Actividad profesional u ocupacion** | `v_ocupacion` / `v-ocupacion` | text | Si | `req()`. | `Ej. Ingeniero, Estudiante, Comerciante...` |
+| 9 | **Correo electronico** | `v_email` / `v-email` | email | Si | `emailReq()` — regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`. Whitespace stripped on input. Validated on blur. `autocomplete="email"`. | `nombre@correo.com` |
+
+#### Viajero 1: Vinculo fields (after personal data)
+
+These fields describe the relationship between the anfitrion and Viajero 1. They are always written from the anfitrion's perspective (a red note reminds: "Describe la relacion desde la perspectiva del anfitrion (quien firma la carta)").
+
+| # | Campo | `name` / `id` | Tipo | Requerido | Validacion | Placeholder / Detalle |
+|---|-------|---------------|------|-----------|------------|----------------------|
+| 10 | **Vinculo con el anfitrion** | `a_vinculo` / `a-vinculo` | select | Si | `selReq()`. | Default: `"Selecciona el vinculo"` (disabled). Label: "Vinculo con el anfitrion". |
+| 11 | **Tipo de parentesco** *(conditional)* | `a_parentesco` / `a-parentesco` | select | Si (when familiar) | `selReq()`. Shown only when vinculo = `familiar`. | Default: `"Selecciona el parentesco"` (disabled). See **Dropdown: Parentesco** below. |
+| 12 | **Especifica el parentesco** *(conditional)* | `a_parentesco_otro` / `a-parentesco-otro` | text | Si (when otro_familiar) | `req()`. Shown only when parentesco = `otro_familiar`. | `Ej. primo segundo, bisnieto, tio abuelo...` |
+| 13 | **Describe brevemente el vinculo** | `a_vinculo_detalle` / `a-vinculo-detalle` | textarea | Si | `req()`. `rows="2"`. | `Ej. Somos amigos desde la universidad . Es sobrino de mi esposa . Trabajamos juntos en la misma empresa...` |
+| 14 | **Desde hace cuanto se conocen?** *(conditional)* | (group) | — | Si | Both selects validated with `selReq()`. Hidden when vinculo = `familiar` AND parentesco is consanguineous. | — |
+| 14a | — Anos | `a_tiempo_anios` / `a-tiempo-anios` | select | Si | `selReq()`. | Default: `"Anos"` (disabled). |
+| 14b | — Meses | `a_tiempo_meses` / `a-tiempo-meses` | select | Si | `selReq()`. | Default: `"Meses"` (disabled). |
+
+### Warnings / Hints (Viajero 1)
+- **Nombre:** "Tal como aparece en el pasaporte." (warn)
+- **Pasaporte:** "Verifica que el pasaporte tenga al menos **6 meses de vigencia** a partir de la fecha de entrada a Mexico." (warn)
+- **Residencia:** "Puede ser diferente a la nacionalidad." (hint)
+- **Ocupacion:** "En el pais de residencia del viajero. La actividad profesional ayuda a demostrar motivos para regresar despues del viaje." (hint)
+- **Vinculo detalle:** "Entre mas detalle, mas personalizada sera la carta." (warn)
+- **Vinculo detalle (red note):** "Describe la relacion desde la perspectiva del anfitrion (quien firma la carta)." (warn, red)
+
+### Additional Viajeros (optional, dynamically added)
+
+Button: **"Agregar viajero"** (`addCompanion()`)
+
+Companion cards are titled "Viajero N" where N starts at 2 (e.g., "Viajero 2", "Viajero 3", etc.). Each card can be removed via a delete button.
+
+#### Campos por cada viajero adicional (template `#companion-tpl`)
+
+| # | Campo | Class / `name` | Tipo | Requerido | Validacion | Placeholder / Detalle |
+|---|-------|----------------|------|-----------|------------|----------------------|
+| 1 | **Nombre completo** | `.companion-nombre` / `comp_nombre[]` | text | Si | `nameReq()` — non-empty + space. `titleCase()` on input. | `Ej. Juan Carlos Perez Lopez` |
+| 2 | **Sexo** | `comp_genero_N` | radio | Si | Must select one. Name is unique per card (`comp_genero_0`, `comp_genero_1`, etc.). | Values: `masculino` / `femenino`. Inline radio buttons. |
+| 3 | **Fecha de nacimiento** | `.companion-nacimiento` / `comp_nacimiento[]` | date | Si | `dateReq()` — year 1900 to current. `min="1900-01-01"`, `data-dynamic-date="birth"`. | — |
+| 4 | **Nacionalidad** | `.companion-nacionalidad` / `comp_nacionalidad[]` | select | Si | `selReq()`. | Default: `"La que aparece en su pasaporte"` (disabled). Dropdown con paises agrupados por region. |
+| 5 | **Numero de pasaporte** | `.companion-pasaporte` / `comp_pasaporte[]` | text | Si | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Ej. AB123456` |
+| 6 | **Mismo domicilio de residencia que el viajero principal?** | `comp_mismo_domicilio[]` | radio | Si | Must select one. Default: Si. | Values: `si` / `no`. |
+| 7 | **Actividad profesional u ocupacion** | `.companion-ocupacion` / `comp_ocupacion[]` | text | Si | `req()`. | `Ej. Ingeniero, Estudiante, Comerciante...` |
+
+##### Conditional: Domicilio diferente (shown when `comp_mismo_domicilio = "no"`)
+
+| # | Campo | Class / `name` | Tipo | Requerido | Validacion | Placeholder / Detalle |
+|---|-------|----------------|------|-----------|------------|----------------------|
+| 6a | **Pais de residencia** | `.companion-residencia` / `comp_residencia[]` | select | Si (if no) | `selReq()`. | Default: `"Selecciona el pais"` (disabled). |
+| 6b | **Calle, numero, e interior** | `.companion-calle` / `comp_calle[]` | text | Si (if no) | `req()`. `autocomplete="off"`. | `Calle, numero, e interior (si aplica)` |
+| 6c | **Ciudad** | `.companion-ciudad` / `comp_ciudad[]` | text | Si (if no) | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Ciudad` |
+| 6d | **Provincia / Estado / Region** | `.companion-provincia` / `comp_provincia[]` | text | Si (if no) | `req()`. `capFirst()` on input. `autocomplete="off"`. | `Provincia / Estado / Region` |
+| 6e | **Codigo Postal** | `.companion-cp` / `comp_cp[]` | text | Si (if no) | `req()`. `upperAll()` on input. `autocomplete="off"`. | `Codigo Postal` |
+
+##### Vinculo fields per additional viajero
+
+Each additional viajero has its own full vinculo system, identical in structure to Viajero 1's vinculo fields. All from the anfitrion's perspective with a red note reminder.
+
+| # | Campo | Class | Tipo | Requerido | Validacion | Placeholder / Detalle |
+|---|-------|-------|------|-----------|------------|----------------------|
+| 8 | **Vinculo con el anfitrion** | `.companion-vinculo` | select | Si | Must select a value. | Same options as `a-vinculo`: familiar, pareja, amistad, laboral, otro. |
+| 9 | **Tipo de parentesco** *(conditional)* | `.companion-parentesco` | select | Si (when familiar) | Must select a value. Shown only when companion-vinculo = `familiar`. | Same options as `a-parentesco`. Label: "El viajero es mi..." |
+| 10 | **Especifica el parentesco** *(conditional)* | `.companion-parentesco-otro` | text | Si (when otro_familiar) | `req()`. | `Ej. primo segundo, bisnieto, tio abuelo...` |
+| 11 | **Describe brevemente el vinculo** | `.companion-vinculo-detalle` | textarea | Si | `req()`. `rows="2"`. | `Ej. Es sobrino de mi esposa . Es amigo de la infancia . Trabajamos juntos...` |
+| 12 | **Desde hace cuanto se conocen?** *(conditional)* | (group) | — | Si | Hidden when vinculo = `familiar` AND parentesco is consanguineous. | — |
+| 12a | — Anos | `.companion-tiempo-anios` | select | Si | Must select a value. | Same 0--99 anos. |
+| 12b | — Meses | `.companion-tiempo-meses` | select | Si | Must select a value. | Same 0--11 meses. |
+
+### Warnings / Hints (Additional Viajeros)
+- **Nombre:** "Tal como aparece en el pasaporte." (warn)
+- **Pasaporte:** "Min. 6 meses de vigencia desde la entrada." (warn)
+- **Vinculo detalle (red note):** "Describe la relacion desde la perspectiva del anfitrion (quien firma la carta)." (warn, red)
+
+---
+
+## Paso 3 — Itinerario, entrada y salida *(exclusivo Plan Completo)*
 
 ### Info Note
-- "Se debe comprobar que se cuenta con reservación para el viaje de regreso al momento del ingreso a México."
+- "Se debe comprobar que se cuenta con reservacion para el viaje de regreso al momento del ingreso a Mexico."
 
 ### Motivo del viaje
 
-| # | Campo | `name` / `id` | Tipo | Requerido | Validación | Placeholder / Detalle |
+| # | Campo | `name` / `id` | Tipo | Requerido | Validacion | Placeholder / Detalle |
 |---|-------|---------------|------|-----------|------------|----------------------|
-| — | **Motivo del viaje** | `j_motivo` / `j-motivo` | select | Sí | `selReq()`. | Default: `"Selecciona el motivo principal"` (disabled). |
+| — | **Motivo del viaje** | `j_motivo` / `j-motivo` | select | Si | `selReq()`. | Default: `"Selecciona el motivo principal"` (disabled). |
 
 #### Dropdown: Motivo del viaje (`j-motivo`)
 
@@ -224,47 +186,47 @@ Shown only when `a-vinculo = "familiar"`. Label changes based on perspectiva:
 | `negocios` | Negocios |
 | `estudios` | Estudios |
 | `actividades_no_remuneradas` | Actividades no remuneradas |
-| `transito` | Tránsito |
-| `tratamientos_medicos` | Tratamientos médicos |
+| `transito` | Transito |
+| `tratamientos_medicos` | Tratamientos medicos |
 
 Hints:
-- "Esto determina el propósito que se indicará en la carta de invitación." (hint)
-- "La estancia máxima para visitantes en México es de 180 días." (warn)
+- "Esto determina el proposito que se indicara en la carta de invitacion." (hint)
+- "La estancia maxima para visitantes en Mexico es de 180 dias." (warn)
 
-### Ingreso a México
+### Ingreso a Mexico
 
-| # | Campo | `name` / `id` | Tipo | Requerido | Validación | Placeholder / Detalle |
+| # | Campo | `name` / `id` | Tipo | Requerido | Validacion | Placeholder / Detalle |
 |---|-------|---------------|------|-----------|------------|----------------------|
-| 1 | **¿Cómo será el ingreso a México?** | `ingreso_tipo` (radio) | radio | Sí | Must select one. | Three transport-type cards: Aéreo / Terrestre / Marítimo. |
-| 2 | **Fecha de llegada a México** | `ing_fecha` / `ing-fecha` | date | Sí | `dateReq()` — year between current and current+5. `data-dynamic-date="travel"`. | — |
+| 1 | **Como sera el ingreso a Mexico?** | `ingreso_tipo` (radio) | radio | Si | Must select one. | Three transport-type cards: Aereo / Terrestre / Maritimo. |
+| 2 | **Fecha de llegada a Mexico** | `ing_fecha` / `ing-fecha` | date | Si | `dateReq()` — year between current and current+5. `data-dynamic-date="travel"`. | — |
 
 #### Conditional fields by ingress type:
 
 | Tipo | Fields shown | Container ID |
 |------|-------------|-------------|
-| **Aéreo** (`aereo`) | Aeropuerto de ingreso, Aerolínea de llegada, Número de vuelo | `#cond-ingreso-aereo` |
+| **Aereo** (`aereo`) | Aeropuerto de ingreso, Aerolinea de llegada, Numero de vuelo | `#cond-ingreso-aereo` |
 | **Terrestre** (`terrestre`) | Punto de cruce fronterizo | `#cond-ingreso-terrestre` |
-| **Marítimo** (`maritimo`) | Puerto de ingreso | `#cond-ingreso-maritimo` |
+| **Maritimo** (`maritimo`) | Puerto de ingreso | `#cond-ingreso-maritimo` |
 
-##### Aéreo ingreso fields:
+##### Aereo ingreso fields:
 
 | Campo | ID / Name | Tipo | Requerido | Placeholder |
 |-------|-----------|------|-----------|-------------|
-| Aeropuerto de ingreso | `ing-aeropuerto` / `ing_aeropuerto` | text | Sí (when aéreo) | `Ej. AICM — Ciudad de México` |
-| Aerolínea de llegada | `ing-aerolinea` / `ing_aerolinea` | text | Sí (when aéreo) | `Ej. Avianca, LATAM…` |
-| Número de vuelo | `ing-vuelo` / `ing_vuelo` | text | Sí (when aéreo) | `Ej. AV204`. `upperAll()` on input. |
+| Aeropuerto de ingreso | `ing-aeropuerto` / `ing_aeropuerto` | text | Si (when aereo) | `Ej. AICM — Ciudad de Mexico` |
+| Aerolinea de llegada | `ing-aerolinea` / `ing_aerolinea` | text | Si (when aereo) | `Ej. Avianca, LATAM...` |
+| Numero de vuelo | `ing-vuelo` / `ing_vuelo` | text | Si (when aereo) | `Ej. AV204`. `upperAll()` on input. |
 
 ##### Terrestre ingreso fields:
 
 | Campo | ID / Name | Tipo | Requerido | Placeholder |
 |-------|-----------|------|-----------|-------------|
-| Punto de cruce fronterizo | `ing-cruce` / `ing_cruce` | text | Sí (when terrestre) | `Ej. Tijuana, Ciudad Juárez…` |
+| Punto de cruce fronterizo | `ing-cruce` / `ing_cruce` | text | Si (when terrestre) | `Ej. Tijuana, Ciudad Juarez...` |
 
-##### Marítimo ingreso fields:
+##### Maritimo ingreso fields:
 
 | Campo | ID / Name | Tipo | Requerido | Placeholder |
 |-------|-----------|------|-----------|-------------|
-| Puerto de ingreso | `ing-puerto` / `ing_puerto` | text | Sí (when marítimo) | `Ej. Puerto de Veracruz` |
+| Puerto de ingreso | `ing-puerto` / `ing_puerto` | text | Si (when maritimo) | `Ej. Puerto de Veracruz` |
 
 ### Destinos del itinerario *(repetible — agregar un bloque por cada ciudad o destino)*
 
@@ -274,73 +236,73 @@ One destino is auto-added on page load. Button: **"Agregar destino"** (`addDesti
 
 #### Destino N (template `#destino-tpl`)
 
-| # | Campo | `name` | Tipo | Requerido | Validación | Placeholder / Detalle |
+| # | Campo | `name` | Tipo | Requerido | Validacion | Placeholder / Detalle |
 |---|-------|--------|------|-----------|------------|----------------------|
-| 1 | **Ciudad** | `dest_ciudad[]` | text | Sí | `req()`. `capFirst()` on input. | `Ej. Ciudad de México, CDMX` |
-| 2 | **Actividades planeadas en este destino** | `dest_actividades[]` | textarea | Sí | `req()`. `rows="2"`. | `Ej. Turismo cultural, visita a museos, asistencia a la boda del anfitrión y celebraciones correspondientes, recorrido gastronómico…` |
-| 3 | **¿El alojamiento es la dirección del anfitrión?** | `dest_aloj_es_anfitrion[]` | radio | Sí | Must select one. | Values: `si` / `no`. |
+| 1 | **Ciudad** | `dest_ciudad[]` | text | Si | `req()`. `capFirst()` on input. | `Ej. Ciudad de Mexico, CDMX` |
+| 2 | **Actividades planeadas en este destino** | `dest_actividades[]` | textarea | Si | `req()`. `rows="2"`. | `Ej. Turismo cultural, visita a museos, asistencia a la boda del anfitrion y celebraciones correspondientes, recorrido gastronomico...` |
+| 3 | **El alojamiento es la direccion del anfitrion?** | `dest_aloj_es_anfitrion[]` | radio | Si | Must select one. | Values: `si` / `no`. |
 
 ##### Conditional: Custom accommodation (shown when `dest_aloj_es_anfitrion = "no"`)
 
-| # | Campo | `name` | Tipo | Requerido | Validación | Placeholder / Detalle |
+| # | Campo | `name` | Tipo | Requerido | Validacion | Placeholder / Detalle |
 |---|-------|--------|------|-----------|------------|----------------------|
-| 3a | **Nombre del alojamiento** | `dest_aloj_nombre[]` | text | No | Not validated. | `Hotel, Airbnb, casa particular…` (labeled "(si aplica, llenar solo en caso de ser hotel)") |
-| 3b | **Calle, número e interior** | `dest_aloj_calle[]` | text | Sí (if no) | `req()`. | `Calle, número e interior (si aplica)` |
-| 3c | **Colonia** | `dest_aloj_colonia[]` | text | Sí (if no) | `req()`. `capFirst()` on input. | `Colonia` |
-| 3d | **Delegación o Municipio** | `dest_aloj_delegacion[]` | text | Sí (if no) | `req()`. `capFirst()` on input. | `Delegación o Municipio` |
-| 3e | **Ciudad** | `dest_aloj_ciudad[]` | text | Sí (if no) | `req()`. `capFirst()` on input. | `Ciudad` |
-| 3f | **Estado** | `dest_aloj_estado[]` | select | Sí (if no) | `selReq()`. | 32 Mexican states dropdown. |
-| 3g | **Código Postal** | `dest_aloj_cp[]` | text | Sí (if no) | `req()`. `upperAll()` on input. | `Código Postal` |
+| 3a | **Nombre del alojamiento** | `dest_aloj_nombre[]` | text | No | Not validated. | `Hotel, Airbnb, casa particular...` (labeled "(si aplica, llenar solo en caso de ser hotel)") |
+| 3b | **Calle, numero e interior** | `dest_aloj_calle[]` | text | Si (if no) | `req()`. | `Calle, numero e interior (si aplica)` |
+| 3c | **Colonia** | `dest_aloj_colonia[]` | text | Si (if no) | `req()`. `capFirst()` on input. | `Colonia` |
+| 3d | **Delegacion o Municipio** | `dest_aloj_delegacion[]` | text | Si (if no) | `req()`. `capFirst()` on input. | `Delegacion o Municipio` |
+| 3e | **Ciudad** | `dest_aloj_ciudad[]` | text | Si (if no) | `req()`. `capFirst()` on input. | `Ciudad` |
+| 3f | **Estado** | `dest_aloj_estado[]` | select | Si (if no) | `selReq()`. | 32 Mexican states dropdown. |
+| 3g | **Codigo Postal** | `dest_aloj_cp[]` | text | Si (if no) | `req()`. `upperAll()` on input. | `Codigo Postal` |
 
-| 4 | **Fechas de estadía en este destino** | — | date range | Sí | — | — |
-| 4a | — Llegada | `dest_fecha_desde[]` | date | Sí | `dateReq()`. `data-dynamic-date="travel"`. | **Auto-synced and read-only**: Destino 1 arrival = `ing-fecha`; Destino N arrival = Destino N-1 departure. |
-| 4b | — Salida | `dest_fecha_hasta[]` | date | Sí | `dateReq()`. Must be >= arrival date. | Triggers `syncDestinoArrivalDates()` on change. |
+| 4 | **Fechas de estadia en este destino** | — | date range | Si | — | — |
+| 4a | — Llegada | `dest_fecha_desde[]` | date | Si | `dateReq()`. `data-dynamic-date="travel"`. | **Auto-synced and read-only**: Destino 1 arrival = `ing-fecha`; Destino N arrival = Destino N-1 departure. |
+| 4b | — Salida | `dest_fecha_hasta[]` | date | Si | `dateReq()`. Must be >= arrival date. | Triggers `syncDestinoArrivalDates()` on change. |
 
 ### Warnings / Hints (Destinos)
-- **Actividades:** "Sé lo más específico posible: incluye nombres de lugares, eventos, razones del viaje y cualquier detalle relevante. Mientras más información se proporcione, más completa será la carta de invitación." (warn)
-- **Nombre del alojamiento:** "Se recomienda tener la reservación a la mano para mostrar a la autoridad migratoria." (hint)
+- **Actividades:** "Se lo mas especifico posible: incluye nombres de lugares, eventos, razones del viaje y cualquier detalle relevante. Mientras mas informacion se proporcione, mas completa sera la carta de invitacion." (warn)
+- **Nombre del alojamiento:** "Se recomienda tener la reservacion a la mano para mostrar a la autoridad migratoria." (hint)
 
-### Salida de México
+### Salida de Mexico
 
-| # | Campo | `name` / `id` | Tipo | Requerido | Validación | Placeholder / Detalle |
+| # | Campo | `name` / `id` | Tipo | Requerido | Validacion | Placeholder / Detalle |
 |---|-------|---------------|------|-----------|------------|----------------------|
-| 1 | **¿Cómo será la salida de México?** | `salida_tipo` (radio) | radio | Sí | Must select one. | Three transport-type cards: Aéreo / Terrestre / Marítimo. |
-| 2 | **Fecha de regreso** | `sal_fecha` / `sal-fecha` | date | Sí | `dateReq()` — year between current and current+5. Must be >= `ing-fecha`. Must equal last destino's `dest_fecha_hasta`. `data-dynamic-date="travel"`. | — |
+| 1 | **Como sera la salida de Mexico?** | `salida_tipo` (radio) | radio | Si | Must select one. | Three transport-type cards: Aereo / Terrestre / Maritimo. |
+| 2 | **Fecha de regreso** | `sal_fecha` / `sal-fecha` | date | Si | `dateReq()` — year between current and current+5. Must be >= `ing-fecha`. Must equal last destino's `dest_fecha_hasta`. `data-dynamic-date="travel"`. | — |
 
 #### Conditional fields by exit type:
 
 | Tipo | Fields shown | Container ID |
 |------|-------------|-------------|
-| **Aéreo** (`aereo`) | Aeropuerto de salida, Aerolínea de regreso, Número de vuelo | `#cond-salida-aereo` |
+| **Aereo** (`aereo`) | Aeropuerto de salida, Aerolinea de regreso, Numero de vuelo | `#cond-salida-aereo` |
 | **Terrestre** (`terrestre`) | Punto de cruce fronterizo | `#cond-salida-terrestre` |
-| **Marítimo** (`maritimo`) | Puerto de salida | `#cond-salida-maritimo` |
+| **Maritimo** (`maritimo`) | Puerto de salida | `#cond-salida-maritimo` |
 
-##### Aéreo salida fields:
+##### Aereo salida fields:
 
 | Campo | ID / Name | Tipo | Requerido | Placeholder |
 |-------|-----------|------|-----------|-------------|
-| Aeropuerto de salida | `sal-aeropuerto` / `sal_aeropuerto` | text | Sí (when aéreo) | `Ej. AICM — Ciudad de México` |
-| Aerolínea de regreso | `sal-aerolinea` / `sal_aerolinea` | text | Sí (when aéreo) | `Ej. Avianca, LATAM…` |
-| Número de vuelo | `sal-vuelo` / `sal_vuelo` | text | Sí (when aéreo) | `Ej. AV205`. `upperAll()` on input. |
+| Aeropuerto de salida | `sal-aeropuerto` / `sal_aeropuerto` | text | Si (when aereo) | `Ej. AICM — Ciudad de Mexico` |
+| Aerolinea de regreso | `sal-aerolinea` / `sal_aerolinea` | text | Si (when aereo) | `Ej. Avianca, LATAM...` |
+| Numero de vuelo | `sal-vuelo` / `sal_vuelo` | text | Si (when aereo) | `Ej. AV205`. `upperAll()` on input. |
 
 ##### Terrestre salida fields:
 
 | Campo | ID / Name | Tipo | Requerido | Placeholder |
 |-------|-----------|------|-----------|-------------|
-| Punto de cruce fronterizo | `sal-cruce` / `sal_cruce` | text | Sí (when terrestre) | `Ej. Nuevo Laredo, Reynosa…` |
+| Punto de cruce fronterizo | `sal-cruce` / `sal_cruce` | text | Si (when terrestre) | `Ej. Nuevo Laredo, Reynosa...` |
 
-##### Marítimo salida fields:
+##### Maritimo salida fields:
 
 | Campo | ID / Name | Tipo | Requerido | Placeholder |
 |-------|-----------|------|-----------|-------------|
-| Puerto de salida | `sal-puerto` / `sal_puerto` | text | Sí (when marítimo) | `Ej. Puerto de Ensenada` |
+| Puerto de salida | `sal-puerto` / `sal_puerto` | text | Si (when maritimo) | `Ej. Puerto de Ensenada` |
 
-### Date Cross-Validation (Paso 4)
+### Date Cross-Validation (Paso 3)
 - `sal-fecha` must be >= `ing-fecha`.
 - `sal-fecha` must equal last destino's `dest_fecha_hasta`.
 - Each destino's `dest_fecha_hasta` must be >= its `dest_fecha_desde`.
-- **180-day warning** (`#warn-180`): Non-blocking warning displayed when stay exceeds 180 days: "La estancia máxima para turismo en México es de 180 días."
-- **Date coherence hint:** "Estas fechas deben coincidir exactamente con los boletos de avión o transporte del viajero. El agente migratorio verificará la coherencia." (warn)
+- **180-day warning** (`#warn-180`): Non-blocking warning displayed when stay exceeds 180 days: "La estancia maxima para turismo en Mexico es de 180 dias."
+- **Date coherence hint:** "Estas fechas deben coincidir exactamente con los boletos de avion o transporte del viajero. El agente migratorio verificara la coherencia." (warn)
 
 ### Auto-sync: Destino arrival dates (`syncDestinoArrivalDates()`)
 - **Destino 1** arrival (`dest_fecha_desde`) is auto-set to `ing-fecha` (arrival in Mexico).
@@ -350,133 +312,218 @@ One destino is auto-added on page load. Button: **"Agregar destino"** (`addDesti
 
 ---
 
-## Paso 5 — Gastos del viaje
+## Paso 4 — Gastos del viaje
 
 ### Info Note
-- "Si el visitante cubre total o parcialmente sus propios gastos, se recomienda que pueda comprobar el equivalente de al menos **USD $50 por día** con efectivo, estado de cuenta bancario o de tarjeta."
+- "Si el visitante cubre total o parcialmente sus propios gastos, se recomienda que pueda comprobar el equivalente de al menos **USD $50 por dia** con efectivo, estado de cuenta bancario o de tarjeta."
 
-### Pregunta principal: ¿Gastos a cargo del anfitrión?
+### Pregunta principal: Gastos a cargo del anfitrion?
 
-| # | Campo | `name` / `id` | Tipo | Requerido | Validación |
+| # | Campo | `name` / `id` | Tipo | Requerido | Validacion |
 |---|-------|---------------|------|-----------|------------|
-| 1 | **¿Hay algún gasto que será a cargo del anfitrión?** | `gastos_anfitrion` (radio) | radio | Sí | Must select one. Values: `si` / `no`. |
+| 1 | **Hay algun gasto que sera a cargo del anfitrion?** | `gastos_anfitrion` (radio) | radio | Si | Must select one. Values: `si` / `no`. |
 
-### Conditional: Detalle de gastos del anfitrión (shown when `gastos_anfitrion = "si"`)
+### Conditional: Detalle de gastos del anfitrion (shown when `gastos_anfitrion = "si"`)
 
 Container: `#gastos-host-detail` (class `cond-fields`, toggles `open`).
 
-**Warning box (red):** "Si el anfitrión asume alguno de los gastos, se debe anexar documentación adicional de solvencia económica del anfitrión, como **estados de cuenta bancarios** o **recibos de nómina**, para demostrar que cuenta con los recursos para cubrir la estancia."
+**Warning box (red):** "Si el anfitrion asume alguno de los gastos, se debe anexar documentacion adicional de solvencia economica del anfitrion, como **estados de cuenta bancarios** o **recibos de nomina**, para demostrar que cuenta con los recursos para cubrir la estancia."
 
-| # | Campo | Name | Tipo | Requerido | Validación |
+| # | Campo | Name | Tipo | Requerido | Validacion |
 |---|-------|------|------|-----------|------------|
-| 2 | **¿Cuáles gastos serán cubiertos por el anfitrión?** | `gastos_host_conceptos` | checkbox (multiple) | Sí (at least 1) | At least one checkbox must be checked. |
+| 2 | **Cuales gastos seran cubiertos por el anfitrion?** | `gastos_host_conceptos` | checkbox (multiple) | Si (at least 1) | At least one checkbox must be checked. |
 
 #### Checkbox options for `gastos_host_conceptos`:
 
 | Value | Label |
 |-------|-------|
-| `alojamiento` | 🏨 Alojamiento *(visible only when any destino has `dest_aloj_es_anfitrion = "no"`)* |
+| `alojamiento` | Alojamiento *(visible only when any destino has `dest_aloj_es_anfitrion = "no"`)* |
 | `alimentos` | Alimentos |
 | `transporte` | Transporte |
-| `actividades` | Actividades turísticas |
-| `medicos` | Gastos médicos o emergencia |
+| `actividades` | Actividades turisticas |
+| `medicos` | Gastos medicos o emergencia |
 | `otro` | Otro |
 
 #### Conditional: "Otro" gasto text (shown when `otro` is checked)
 
 | Campo | ID / Name | Tipo | Requerido | Placeholder |
 |-------|-----------|------|-----------|-------------|
-| Describe el gasto adicional | `gastos-otro-texto` / `gastos_otro_texto` | text | Sí (when "otro" checked) | `Describe el gasto adicional…` |
+| Describe el gasto adicional | `gastos-otro-texto` / `gastos_otro_texto` | text | Si (when "otro" checked) | `Describe el gasto adicional...` |
 
-### Medios de transporte del visitante en México
+### Medios de transporte del visitante en Mexico
 
-| # | Campo | Name | Tipo | Requerido | Validación |
+| # | Campo | Name | Tipo | Requerido | Validacion |
 |---|-------|------|------|-----------|------------|
-| 3 | **Medios de transporte en México** | `transporte_mx` | checkbox (multiple) | Sí (at least 1) | At least one checkbox must be checked. |
+| 3 | **Medios de transporte en Mexico** | `transporte_mx` | checkbox (multiple) | Si (at least 1) | At least one checkbox must be checked. |
 
 #### Checkbox options for `transporte_mx`:
 
 | Value | Label |
 |-------|-------|
-| `avion` | Avión interno |
-| `autobus_foraneo` | Autobús Foráneo |
+| `avion` | Avion interno |
+| `autobus_foraneo` | Autobus Foraneo |
 | `auto_rentado` | Auto rentado |
-| `anfitrion` | Transporte del anfitrión |
-| `transporte_publico` | Transporte público y/o taxis |
+| `anfitrion` | Transporte del anfitrion |
+| `transporte_publico` | Transporte publico y/o taxis |
 
 ---
 
-## Paso 6 — Revisión final
+## Paso 5 — Revision final
 
-No new form fields. Displays a read-only summary of all data entered in Steps 1–5, built dynamically by `buildReview()`.
+No new form fields. Displays a read-only summary of all data entered in Steps 1--4, built dynamically by `buildReview()`.
 
 ### CTA Box (appears twice — top and bottom of review)
-- Text: "¿Todo correcto? Revisa los datos abajo y confirma para proceder al pago seguro. La carta PDF llegará al correo del viajero y del anfitrión en minutos."
+- Text: "Todo correcto? Revisa los datos abajo y confirma para proceder al pago seguro. La carta PDF llegara al correo del viajero y del anfitrion en minutos."
 - Security note: "Pago procesado por Stripe. No almacenamos datos de tarjeta."
-- Buttons: "Volver y editar" (btn-back → `goPrev(6)`) | "Confirmar y pagar · $9 USD" (btn-navy → `goNext(6)`)
+- Buttons: "Volver y editar" (btn-back -> `goPrev(5)`) | "Confirmar y pagar . $9 USD" (btn-navy -> `goNext(5)`)
 
 ### Responsibility Note
-- "Al generar esta carta, el anfitrión declara que la información proporcionada es verídica y se compromete a recibir al visitante durante las fechas indicadas. Es importante que toda la información coincida con lo que el viajero declare ante el agente migratorio."
+- "Al generar esta carta, el anfitrion declara que la informacion proporcionada es veridica y se compromete a recibir al visitante durante las fechas indicadas. Es importante que toda la informacion coincida con lo que el viajero declare ante el agente migratorio."
 
 ### Review Cards Generated by `buildReview()`
 
-6 review sections:
+Review cards are rendered in this order:
 
-1. **El viajero** — Nombre completo, Fecha de nacimiento (DD/MM/YYYY), Nacionalidad, N.º de pasaporte, País de residencia, Domicilio (concatenated), Ocupación, Correo electrónico.
-2. **Acompañantes** — For each companion: Nombre, Nacimiento, Relación, Nacionalidad, Pasaporte, Ocupación, Domicilio (or "Mismo que el viajero principal").
-3. **El anfitrión** — Nombre completo, Nacionalidad, Fecha de nacimiento, Tipo de ID, N.º de ID, Domicilio en México (concatenated with colonia, delegación, ciudad, estado, CP), Teléfono, Correo electrónico, Ocupación / cargo, Empresa, Vínculo con el viajero, ¿Quién llena?, Detalle del vínculo, Tiempo de conocerse.
-4. **Gastos** — Gastos a cargo del anfitrión (Sí/No), Conceptos cubiertos (if Sí, with labels including Alojamiento), Transporte en México.
-5. **Destino N — [Ciudad]** — For each destino: Ciudad, Actividades, Alojamiento (or "Dirección del anfitrión"), Dirección alojamiento, Llegada, Salida.
-6. **Entrada y salida** — Motivo del viaje, Tipo de ingreso, Detalle ingreso (airport·airline·flight or crossing/port), Fecha de llegada, Tipo de salida, Detalle salida, Fecha de regreso.
+1. **El anfitrion** — Nombre completo, Nacionalidad, Fecha de nacimiento (DD/MM/YYYY), Tipo de ID, N.o de ID, Domicilio en Mexico (concatenated with colonia, delegacion, ciudad, estado, CP), Telefono, Correo electronico, Ocupacion / cargo, Empresa.
+2. **Viajero 1 (principal)** — Nombre completo, Fecha de nacimiento (DD/MM/YYYY), Nacionalidad, N.o de pasaporte, Pais de residencia, Domicilio (concatenated), Ocupacion, Correo electronico, Vinculo con el anfitrion, Detalle del vinculo, Tiempo de conocerse.
+3. **Viajero N** (for each additional viajero, N starting at 2) — Nombre, Nacimiento, Nacionalidad, Pasaporte, Ocupacion, Domicilio (or "Mismo que el viajero principal"), Vinculo con el anfitrion, Detalle del vinculo, Tiempo de conocerse.
+4. **Gastos** — Gastos a cargo del anfitrion (Si/No), Conceptos cubiertos (if Si, with labels including Alojamiento), Transporte en Mexico.
+5. **Destino N — [Ciudad]** — For each destino: Ciudad, Actividades, Alojamiento (or "Direccion del anfitrion"), Direccion alojamiento, Llegada, Salida.
+6. **Entrada y salida** — Motivo del viaje, Tipo de ingreso, Detalle ingreso (airport.airline.flight or crossing/port), Fecha de llegada, Tipo de salida, Detalle salida, Fecha de regreso.
 
 ---
 
-## Dropdown: Países (agrupados por región)
+## Dropdown: Paises (agrupados por region)
 
 Used for: `v-nacionalidad`, `v-residencia`, `comp_nacionalidad[]`, `comp_residencia[]`, `a-nacionalidad`.
 
-### América Latina y el Caribe
-Antigua y Barbuda, Argentina, Bahamas, Barbados, Belice, Bolivia, Brasil, Chile, Colombia, Costa Rica, Cuba, Dominica, Ecuador, El Salvador, Granada, Guatemala, Guyana, Haití, Honduras, Jamaica, México, Nicaragua, Panamá, Paraguay, Perú, República Dominicana, San Cristóbal y Nieves, San Vicente y las Granadinas, Santa Lucía, Surinam, Trinidad y Tobago, Uruguay, Venezuela
+### America Latina y el Caribe
+Antigua y Barbuda, Argentina, Bahamas, Barbados, Belice, Bolivia, Brasil, Chile, Colombia, Costa Rica, Cuba, Dominica, Ecuador, El Salvador, Granada, Guatemala, Guyana, Haiti, Honduras, Jamaica, Mexico, Nicaragua, Panama, Paraguay, Peru, Republica Dominicana, San Cristobal y Nieves, San Vicente y las Granadinas, Santa Lucia, Surinam, Trinidad y Tobago, Uruguay, Venezuela
 
-### Norteamérica
-Canadá, Estados Unidos
+### Norteamerica
+Canada, Estados Unidos
 
 ### Europa
-Albania, Alemania, Andorra, Austria, Bélgica, Bielorrusia, Bosnia y Herzegovina, Bulgaria, Chipre, Ciudad del Vaticano, Croacia, Dinamarca, Eslovaquia, Eslovenia, España, Estonia, Finlandia, Francia, Grecia, Hungría, Irlanda, Islandia, Italia, Kosovo, Letonia, Liechtenstein, Lituania, Luxemburgo, Malta, Moldavia, Mónaco, Montenegro, Noruega, Países Bajos, Polonia, Portugal, Reino Unido, República Checa, Rumanía, Rusia, San Marino, Serbia, Suecia, Suiza, Ucrania
+Albania, Alemania, Andorra, Austria, Belgica, Bielorrusia, Bosnia y Herzegovina, Bulgaria, Chipre, Ciudad del Vaticano, Croacia, Dinamarca, Eslovaquia, Eslovenia, Espana, Estonia, Finlandia, Francia, Grecia, Hungria, Irlanda, Islandia, Italia, Kosovo, Letonia, Liechtenstein, Lituania, Luxemburgo, Malta, Moldavia, Monaco, Montenegro, Noruega, Paises Bajos, Polonia, Portugal, Reino Unido, Republica Checa, Rumania, Rusia, San Marino, Serbia, Suecia, Suiza, Ucrania
 
-### África
-Argelia, Angola, Benín, Botsuana, Burkina Faso, Burundi, Cabo Verde, Camerún, Chad, Comoras, Congo, Costa de Marfil, Egipto, Eritrea, Etiopía, Gabón, Gambia, Ghana, Guinea, Guinea Ecuatorial, Guinea-Bisáu, Kenia, Lesoto, Liberia, Libia, Madagascar, Malaui, Mali, Marruecos, Mauricio, Mauritania, Mozambique, Namibia, Níger, Nigeria, República Centroafricana, República Democrática del Congo, Ruanda, Santo Tomé y Príncipe, Senegal, Seychelles, Sierra Leona, Somalia, Sudáfrica, Sudán, Sudán del Sur, Suazilandia, Tanzania, Togo, Túnez, Uganda, Yibuti, Zambia, Zimbabue
+### Africa
+Argelia, Angola, Benin, Botsuana, Burkina Faso, Burundi, Cabo Verde, Camerun, Chad, Comoras, Congo, Costa de Marfil, Egipto, Eritrea, Etiopia, Gabon, Gambia, Ghana, Guinea, Guinea Ecuatorial, Guinea-Bisau, Kenia, Lesoto, Liberia, Libia, Madagascar, Malaui, Mali, Marruecos, Mauricio, Mauritania, Mozambique, Namibia, Niger, Nigeria, Republica Centroafricana, Republica Democratica del Congo, Ruanda, Santo Tome y Principe, Senegal, Seychelles, Sierra Leona, Somalia, Sudafrica, Sudan, Sudan del Sur, Suazilandia, Tanzania, Togo, Tunez, Uganda, Yibuti, Zambia, Zimbabue
 
 ### Asia y Medio Oriente
-Afganistán, Arabia Saudita, Armenia, Azerbaiyán, Bangladés, Brunéi, Bután, Camboya, Catar, China, Corea del Norte, Corea del Sur, Emiratos Árabes Unidos, Filipinas, Georgia, India, Indonesia, Irak, Irán, Israel, Japón, Jordania, Kazajistán, Kirguistán, Kuwait, Laos, Líbano, Malasia, Maldivas, Mongolia, Myanmar, Nepal, Omán, Pakistán, Palestina, Singapur, Siria, Sri Lanka, Tailandia, Tayikistán, Timor Oriental, Turkmenistán, Turquía, Uzbekistán, Vietnam, Yemen
+Afganistan, Arabia Saudita, Armenia, Azerbaiyan, Banglades, Brunei, Butan, Camboya, Catar, China, Corea del Norte, Corea del Sur, Emiratos Arabes Unidos, Filipinas, Georgia, India, Indonesia, Irak, Iran, Israel, Japon, Jordania, Kazajistan, Kirguistan, Kuwait, Laos, Libano, Malasia, Maldivas, Mongolia, Myanmar, Nepal, Oman, Pakistan, Palestina, Singapur, Siria, Sri Lanka, Tailandia, Tayikistan, Timor Oriental, Turkmenistan, Turquia, Uzbekistan, Vietnam, Yemen
 
-### Oceanía
-Australia, Fiyi, Islas Marshall, Islas Salomón, Kiribati, Micronesia, Nauru, Nueva Zelanda, Palaos, Papúa Nueva Guinea, Samoa, Tonga, Tuvalu, Vanuatu
+### Oceania
+Australia, Fiyi, Islas Marshall, Islas Salomon, Kiribati, Micronesia, Nauru, Nueva Zelanda, Palaos, Papua Nueva Guinea, Samoa, Tonga, Tuvalu, Vanuatu
 
 ---
 
-## Dropdown: Estados de México (used for `a-estado`, `dest_aloj_estado[]`)
+## Dropdown: Vinculo con el anfitrion (used for `a-vinculo` and `.companion-vinculo`)
 
-32 states: Aguascalientes, Baja California, Baja California Sur, Campeche, Chiapas, Chihuahua, Ciudad de México, Coahuila, Colima, Durango, Guanajuato, Guerrero, Hidalgo, Jalisco, México, Michoacán, Morelos, Nayarit, Nuevo León, Oaxaca, Puebla, Querétaro, Quintana Roo, San Luis Potosí, Sinaloa, Sonora, Tabasco, Tamaulipas, Tlaxcala, Veracruz, Yucatán, Zacatecas
+| Value | Label |
+|-------|-------|
+| `familiar` | Familiar |
+| `pareja` | Pareja |
+| `amistad` | Amistad |
+| `laboral` | Laboral |
+| `otro` | Otro |
+
+## Dropdown: Tipo de parentesco (used for `a-parentesco` and `.companion-parentesco`)
+
+Shown only when vinculo = `familiar`. Label is always "El viajero es mi..." (no toggling, no perspectiva-based changes).
+
+| Value | Label |
+|-------|-------|
+| `padre` | Padre / Madre |
+| `hijo` | Hijo(a) |
+| `hermano` | Hermano(a) |
+| `abuelo` | Abuelo(a) |
+| `nieto` | Nieto(a) |
+| `bisabuelo` | Bisabuelo(a) |
+| `tio` | Tio(a) |
+| `sobrino` | Sobrino(a) |
+| `primo` | Primo(a) |
+| `suegro` | Suegro(a) |
+| `yerno` | Yerno / Nuera |
+| `cunado` | Cunado(a) |
+| `concuno` | Concuno(a) |
+| `padrastro` | Padrastro / Madrastra |
+| `hijastro` | Hijastro(a) |
+| `hermanastro` | Hermanastro(a) |
+| `otro_familiar` | Otro familiar |
+
+**Consanguineous** (hide tiempo when selected): `padre`, `hijo`, `hermano`, `abuelo`, `nieto`, `bisabuelo`, `tio`, `sobrino`, `primo`.
+
+**Non-consanguineous** (show tiempo): `suegro`, `yerno`, `cunado`, `concuno`, `padrastro`, `hijastro`, `hermanastro`, `otro_familiar`.
+
+**No PDF inversion**: Since the perspectiva field was removed, parentesco values are always from the anfitrion's perspective and are never inverted.
+
+## Dropdown: Anos de conocerse
+
+| Value | Label |
+|-------|-------|
+| `0` | 0 anos |
+| `1` | 1 ano |
+| `2` -- `99` | 2 anos -- 99 anos |
+
+## Dropdown: Meses de conocerse
+
+| Value | Label |
+|-------|-------|
+| `0` | 0 meses |
+| `1` | 1 mes |
+| `2` -- `11` | 2 meses -- 11 meses |
+
+---
+
+## Dropdown: Estados de Mexico (used for `a-estado`, `dest_aloj_estado[]`)
+
+32 states: Aguascalientes, Baja California, Baja California Sur, Campeche, Chiapas, Chihuahua, Ciudad de Mexico, Coahuila, Colima, Durango, Guanajuato, Guerrero, Hidalgo, Jalisco, Mexico, Michoacan, Morelos, Nayarit, Nuevo Leon, Oaxaca, Puebla, Queretaro, Quintana Roo, San Luis Potosi, Sinaloa, Sonora, Tabasco, Tamaulipas, Tlaxcala, Veracruz, Yucatan, Zacatecas
 
 ---
 
 ## Payment Flow (Stripe Integration)
 
-1. User clicks "Confirmar y pagar · $9 USD" on Step 6.
-2. `goNext(6)` calls `submitToAPI()`.
+1. User clicks "Confirmar y pagar . $9 USD" on Step 5.
+2. `goNext(5)` calls `submitToAPI()`.
 3. Button is disabled and shows "Procesando..." spinner.
 4. `collectFormData()` gathers all form values into a JSON object (text/select/textarea by ID, radios by name, checkboxes as arrays by name, plus companion and destino arrays).
-5. **Email selection logic:** If `a-perspectiva === 'visitante'`, uses `v-email`; otherwise uses `a-email`. This determines the Stripe checkout email.
+5. **Email selection logic:** Always uses `a-email` (anfitrion's email) for the Stripe checkout email. No perspectiva-based logic.
 6. POST to `/api/submit` with body: `{ plan: 'completo', email, formData }`.
 7. Expects JSON response with `{ url }` (Stripe Checkout URL).
-8. Saves form data to `localStorage` key `carta_form_completo` (with current step number).
+8. Saves form data to `localStorage` key `carta_form_completo` (with `version: 2` and current step number).
 9. Redirects to `result.url` (Stripe Checkout).
 10. On error: shows `alert()` with error message, re-enables button.
 
+### collectFormData companion object structure
+
+Each companion in the companions array includes:
+```js
+{
+  nombre: '',
+  genero: '',
+  nacimiento: '',
+  nacionalidad: '',
+  pasaporte: '',
+  mismo_domicilio: 'si' | 'no',
+  residencia: '',       // only if mismo_domicilio = 'no'
+  calle: '',            // only if mismo_domicilio = 'no'
+  ciudad: '',           // only if mismo_domicilio = 'no'
+  provincia: '',        // only if mismo_domicilio = 'no'
+  cp: '',               // only if mismo_domicilio = 'no'
+  ocupacion: '',
+  vinculo: '',
+  parentesco: '',
+  parentesco_otro: '',
+  vinculo_detalle: '',
+  tiempo_anios: '',
+  tiempo_meses: ''
+}
+```
+
 ### Stripe Cancel / Return Flow
-- On page load, checks for `#step=N` hash parameter (e.g., `#step=6` from Stripe cancel).
+- On page load, checks for `#step=N` hash parameter (e.g., `#step=5` from Stripe cancel).
 - Restores form data from `localStorage` via `restoreFormData()`.
+- On restore, validates `version === 2`. If version mismatch, clears localStorage and does not restore.
 - `restoreFormData()` sets values by element ID, fires `input` and `change` events to trigger formatting and conditional logic, handles radio/checkbox arrays, and recreates companion/destino blocks.
 - Syncs mobile date picker trigger values (DD/MM/YYYY format) with hidden date inputs.
 
@@ -487,7 +534,7 @@ Australia, Fiyi, Islas Marshall, Islas Salomón, Kiribati, Micronesia, Nauru, Nu
 ### Text Transform Helpers
 | Function | Behavior | Used on |
 |----------|----------|---------|
-| `titleCase(el)` | Capitalizes first letter of every word | `v-nombre`, `a-nombre`, `comp_nombre[]` |
+| `titleCase(el)` | Capitalizes first letter of every word | `v-nombre`, `a-nombre`, companion nombres |
 | `capFirst(el)` | Capitalizes first letter only | City/province/colonia fields, dest_ciudad[] |
 | `upperAll(el)` | Converts entire value to uppercase | Passport numbers, ID number, postal codes, flight numbers |
 
@@ -520,7 +567,7 @@ Formats as `XX XXXX XXXX` (10 digits with spaces). `maxlength="12"`.
 ### Mobile Date Picker
 - Activated only on screens <= 639px width (`matchMedia`).
 - Converts all `<input type="date">` into hidden inputs + visible readonly trigger inputs with `DD/MM/AAAA` placeholder.
-- iOS-style drum/wheel picker with three scrollable columns: Day, Month (Ene–Dic), Year.
+- iOS-style drum/wheel picker with three scrollable columns: Day, Month (Ene--Dic), Year.
 - Year range determined by `data-dynamic-date` attribute:
   - `birth`: 1920 to current year (default selection: 1990).
   - `travel`: current year to current year + 5 (default selection: today).
@@ -534,8 +581,9 @@ Set on page load via IIFE:
 
 ### localStorage Persistence
 - Key: `carta_form_completo`
-- Saved before Stripe redirect: `{ formData: {...}, step: N }`
+- Saved before Stripe redirect: `{ version: 2, formData: {...}, step: N }`
 - Restored on page load if present (including companion/destino recreation).
+- On restore, if `version !== 2`, old data is cleared (`localStorage.removeItem`).
 - Hash `#step=N` overrides saved step number.
 
 ---
@@ -546,7 +594,13 @@ Set on page load via IIFE:
 |---------|-----------|----------------------|
 | `comp_mismo_domicilio[]` radio | `= "no"` | Show companion address fields (country, street, city, province, CP) |
 | `comp_mismo_domicilio[]` radio | `= "si"` | Hide companion address fields, clear values |
-| `dest_aloj_es_anfitrion[]` radio | `= "no"` | Show destino accommodation fields (name, street, colonia, delegación, city, state, CP) |
+| `.companion-vinculo` select | `= "familiar"` | Show `.companion-parentesco-wrapper`, make required |
+| `.companion-vinculo` select | `!= "familiar"` | Hide `.companion-parentesco-wrapper`, reset value |
+| `.companion-parentesco` select | `= "otro_familiar"` | Show `.companion-parentesco-otro-wrapper`, make required |
+| `.companion-parentesco` select | `!= "otro_familiar"` | Hide `.companion-parentesco-otro-wrapper`, clear value |
+| `.companion-parentesco` select | consanguineous value | Hide `.companion-tiempo-wrapper`, remove required |
+| `.companion-parentesco` select | non-consanguineous value | Show `.companion-tiempo-wrapper`, make required |
+| `dest_aloj_es_anfitrion[]` radio | `= "no"` | Show destino accommodation fields (name, street, colonia, delegacion, city, state, CP) |
 | `dest_aloj_es_anfitrion[]` radio | `= "si"` | Hide destino accommodation fields, clear values |
 | `dest_aloj_es_anfitrion[]` radio (any) | any `= "no"` | Show `#gasto-alojamiento-card` checkbox in gastos via `syncAlojGastoVisibility()` |
 | `dest_aloj_es_anfitrion[]` radio (all) | all `= "si"` | Hide `#gasto-alojamiento-card`, uncheck it |
@@ -561,14 +615,16 @@ Set on page load via IIFE:
 | `salida_tipo` radio | `= "terrestre"` | Show `#cond-salida-terrestre` (border crossing) |
 | `salida_tipo` radio | `= "maritimo"` | Show `#cond-salida-maritimo` (port) |
 | `a-vinculo` select | `= "familiar"` | Show `#parentesco-wrapper` (parentesco dropdown), make required |
-| `a-vinculo` select | `≠ "familiar"` | Hide `#parentesco-wrapper`, reset value, remove required |
+| `a-vinculo` select | `!= "familiar"` | Hide `#parentesco-wrapper`, reset value, remove required |
 | `a-parentesco` select | `= "otro_familiar"` | Show `#parentesco-otro-wrapper` (text input), make required |
-| `a-parentesco` select | `≠ "otro_familiar"` | Hide `#parentesco-otro-wrapper`, clear value |
-| `a-parentesco` select | consanguineous value | Hide `#tiempo-wrapper` (años/meses), remove required |
+| `a-parentesco` select | `!= "otro_familiar"` | Hide `#parentesco-otro-wrapper`, clear value |
+| `a-parentesco` select | consanguineous value | Hide `#tiempo-wrapper` (anos/meses), remove required |
 | `a-parentesco` select | non-consanguineous value | Show `#tiempo-wrapper`, make required |
-| `a-perspectiva` select | changes | Update `#parentesco-label` text: anfitrion → "El viajero es mi...", visitante → "El anfitrión es mi..." |
 
 All conditional containers use CSS class `cond-fields` with `max-height: 0; overflow: hidden; opacity: 0` (hidden) and `cond-fields.open` with `max-height: 800px; opacity: 1` (visible), animated via CSS transitions.
+
+**Removed conditional logic:**
+- No `a-perspectiva` select exists. The parentesco labels are always "El viajero es mi..." and never toggle.
 
 ---
 
@@ -576,22 +632,27 @@ All conditional containers use CSS class `cond-fields` with `max-height: 0; over
 
 ### `TIPO_INGSAL`
 ```js
-{ aereo: 'Aéreo', terrestre: 'Terrestre', maritimo: 'Marítimo' }
+{ aereo: 'Aereo', terrestre: 'Terrestre', maritimo: 'Maritimo' }
 ```
 
 ### `TRANSPORTE_LABELS`
 ```js
-{ avion: 'Avión interno', autobus_foraneo: 'Autobús Foráneo', auto_rentado: 'Auto rentado', anfitrion: 'Transporte del anfitrión', transporte_publico: 'Transporte público y/o taxis' }
+{ avion: 'Avion interno', autobus_foraneo: 'Autobus Foraneo', auto_rentado: 'Auto rentado', anfitrion: 'Transporte del anfitrion', transporte_publico: 'Transporte publico y/o taxis' }
+```
+
+### `VINCULO_LABELS` (used in companion review)
+```js
+{ familiar: 'Familiar', pareja: 'Pareja', amistad: 'Amistad', laboral: 'Laboral', otro: 'Otro' }
 ```
 
 ### Gastos conceptos labels (inline in `buildReview()`)
 ```js
-alojamiento → 'Alojamiento'
-alimentos → 'Alimentos'
-transporte → 'Transporte'
-actividades → 'Actividades turísticas'
-medicos → 'Gastos médicos o emergencia'
-otro → 'Otro: {text}' or 'Otro'
+alojamiento -> 'Alojamiento'
+alimentos -> 'Alimentos'
+transporte -> 'Transporte'
+actividades -> 'Actividades turisticas'
+medicos -> 'Gastos medicos o emergencia'
+otro -> 'Otro: {text}' or 'Otro'
 ```
 
 ---
@@ -604,9 +665,9 @@ otro → 'Otro: {text}' or 'Otro'
 - **Buttons:** `btn-gold` (primary continue), `btn-navy` (final CTA), `btn-back` (back navigation). Min-height 52px. Hover: translateY(-2px) + shadow.
 - **Accessibility:** Skip-to-content link, `aria-label` on logo, `aria-hidden="true"` on decorative SVGs, `focus-visible` outlines.
 - **Trust indicators (sidebar):** HTTPS secure, PDF ready in minutes, 2,400+ cartas generated, 4.9 stars.
-- **Footer links:** Privacidad, Términos, "Conexión segura HTTPS".
+- **Footer links:** Privacidad, Terminos, "Conexion segura HTTPS".
 - **Grain texture:** SVG noise filter overlay on sidebar card.
 
 ---
 
-*Fuentes: Embajada de México en Argentina (INM/SRE) · DIAM S.C. Abogados Migratorios · Migrans MX Guía 2025*
+*Fuentes: Embajada de Mexico en Argentina (INM/SRE) . DIAM S.C. Abogados Migratorios . Migrans MX Guia 2025*

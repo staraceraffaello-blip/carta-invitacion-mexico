@@ -442,27 +442,23 @@
         <div id="sidebar-steps">
           <div class="step-pill">
             <div class="pill-dot" id="dot-1">1</div>
-            <div><div class="pill-label" id="pl-1">El viajero</div><div class="pill-sub">Datos del extranjero</div></div>
+            <div><div class="pill-label" id="pl-1">El anfitrión</div><div class="pill-sub">Quien firma en México</div></div>
           </div>
           <div class="step-pill">
             <div class="pill-dot" id="dot-2">2</div>
-            <div><div class="pill-label" id="pl-2">Acompañantes</div><div class="pill-sub">Quién viaja con él/ella</div></div>
+            <div><div class="pill-label" id="pl-2">Los viajeros</div><div class="pill-sub">Quién visitará México</div></div>
           </div>
           <div class="step-pill">
             <div class="pill-dot" id="dot-3">3</div>
-            <div><div class="pill-label" id="pl-3">El anfitrión</div><div class="pill-sub">Quien firma en México</div></div>
+            <div><div class="pill-label" id="pl-3">Itinerario</div><div class="pill-sub">Destinos, entrada y salida</div></div>
           </div>
           <div class="step-pill">
             <div class="pill-dot" id="dot-4">4</div>
-            <div><div class="pill-label" id="pl-4">Itinerario</div><div class="pill-sub">Destinos, entrada y salida</div></div>
+            <div><div class="pill-label" id="pl-4">Gastos</div><div class="pill-sub">¿Quién cubre qué?</div></div>
           </div>
           <div class="step-pill">
             <div class="pill-dot" id="dot-5">5</div>
-            <div><div class="pill-label" id="pl-5">Gastos</div><div class="pill-sub">¿Quién cubre qué?</div></div>
-          </div>
-          <div class="step-pill">
-            <div class="pill-dot" id="dot-6">6</div>
-            <div><div class="pill-label" id="pl-6">Revisión</div><div class="pill-sub">Confirmar datos</div></div>
+            <div><div class="pill-label" id="pl-5">Revisión</div><div class="pill-sub">Confirmar datos</div></div>
           </div>
         </div>
       </div>
@@ -499,7 +495,7 @@
       <!-- Mobile progress -->
       <div class="md:hidden mb-5">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-xs font-semibold" style="color:var(--c-gold);" id="mob-label">Paso 1 de 6 — El viajero</span>
+          <span class="text-xs font-semibold" style="color:var(--c-gold);" id="mob-label">Paso 1 de 5 — El anfitrión</span>
           <span class="text-xs font-bold px-2.5 py-1 rounded-full" style="background:var(--c-gold);color:var(--c-navy);">$9 USD</span>
         </div>
         <div class="mob-progress-track">
@@ -514,353 +510,9 @@
         <form id="main-form" novalidate>
 
           <!-- ═══════════════════════
-               STEP 1 — EL VIAJERO
+               STEP 1 — EL ANFITRIÓN
           ═══════════════════════ -->
           <section id="step-1" class="form-step active p-6 sm:p-8">
-
-            <div class="flex items-start gap-4 mb-7">
-              <div class="step-icon">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <circle cx="11" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/>
-                  <path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div>
-                <span class="section-label mb-1">Paso 1 de 6</span>
-                <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">El viajero</h1>
-                <p class="text-sm mt-1" style="color:#6B7280;">Datos de la persona principal que visitará México.</p>
-              </div>
-            </div>
-
-            <div class="space-y-5">
-
-              <div>
-                <label class="form-label" for="v-nombre">Nombre completo del viajero <span class="req">*</span></label>
-                <input type="text" id="v-nombre" name="v_nombre" class="form-input"
-                       placeholder="Ej. Juan Carlos Pérez López" required autocomplete="name"
-                       oninput="titleCase(this)">
-                <p class="form-hint warn">⚠ Tal como aparece en el pasaporte.</p>
-                <p class="form-error" id="err-v-nombre">Este campo es obligatorio.</p>
-              </div>
-
-              <div>
-                <label class="form-label">Sexo del viajero <span class="req">*</span></label>
-                <div style="display:flex;gap:24px;">
-                  <label class="radio-label"><input type="radio" name="v_genero" value="masculino" required> Masculino</label>
-                  <label class="radio-label"><input type="radio" name="v_genero" value="femenino" required> Femenino</label>
-                </div>
-                <p class="form-error" id="err-v-genero">Por favor selecciona el sexo.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="v-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
-                <input type="date" id="v-nacimiento" name="v_nacimiento" class="form-input" required min="1900-01-01" data-dynamic-date="birth">
-                <p class="form-error" id="err-v-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="v-nacionalidad">Nacionalidad <span class="req">*</span></label>
-                <select id="v-nacionalidad" name="v_nacionalidad" class="form-input" required>
-                  <option value="" disabled selected>La que aparece en el pasaporte del viajero</option>
-                  <optgroup label="América Latina y el Caribe">
-                    <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option>
-                    <option>Barbados</option><option>Belice</option><option>Bolivia</option>
-                    <option>Brasil</option><option>Chile</option><option>Colombia</option>
-                    <option>Costa Rica</option><option>Cuba</option><option>Dominica</option>
-                    <option>Ecuador</option><option>El Salvador</option><option>Granada</option>
-                    <option>Guatemala</option><option>Guyana</option><option>Haití</option>
-                    <option>Honduras</option><option>Jamaica</option><option>Nicaragua</option>
-                    <option>Panamá</option><option>Paraguay</option><option>Perú</option>
-                    <option>República Dominicana</option><option>San Cristóbal y Nieves</option>
-                    <option>San Vicente y las Granadinas</option><option>Santa Lucía</option>
-                    <option>Surinam</option><option>Trinidad y Tobago</option>
-                    <option>Uruguay</option><option>Venezuela</option>
-                  </optgroup>
-                  <optgroup label="Norteamérica">
-                    <option>Canadá</option><option>Estados Unidos</option>
-                  </optgroup>
-                  <optgroup label="Europa">
-                    <option>Albania</option><option>Alemania</option><option>Andorra</option>
-                    <option>Austria</option><option>Bélgica</option><option>Bielorrusia</option>
-                    <option>Bosnia y Herzegovina</option><option>Bulgaria</option><option>Chipre</option>
-                    <option>Ciudad del Vaticano</option><option>Croacia</option><option>Dinamarca</option>
-                    <option>Eslovaquia</option><option>Eslovenia</option><option>España</option>
-                    <option>Estonia</option><option>Finlandia</option><option>Francia</option>
-                    <option>Grecia</option><option>Hungría</option><option>Irlanda</option>
-                    <option>Islandia</option><option>Italia</option><option>Kosovo</option>
-                    <option>Letonia</option><option>Liechtenstein</option><option>Lituania</option>
-                    <option>Luxemburgo</option><option>Malta</option><option>Moldavia</option>
-                    <option>Mónaco</option><option>Montenegro</option><option>Noruega</option>
-                    <option>Países Bajos</option><option>Polonia</option><option>Portugal</option>
-                    <option>Reino Unido</option><option>República Checa</option><option>Rumanía</option>
-                    <option>Rusia</option><option>San Marino</option><option>Serbia</option>
-                    <option>Suecia</option><option>Suiza</option><option>Ucrania</option>
-                  </optgroup>
-                  <optgroup label="África">
-                    <option>Argelia</option><option>Angola</option><option>Benín</option>
-                    <option>Botsuana</option><option>Burkina Faso</option><option>Burundi</option>
-                    <option>Cabo Verde</option><option>Camerún</option><option>Chad</option>
-                    <option>Comoras</option><option>Congo</option><option>Costa de Marfil</option>
-                    <option>Egipto</option><option>Eritrea</option><option>Etiopía</option>
-                    <option>Gabón</option><option>Gambia</option><option>Ghana</option>
-                    <option>Guinea</option><option>Guinea Ecuatorial</option><option>Guinea-Bisáu</option>
-                    <option>Kenia</option><option>Lesoto</option><option>Liberia</option>
-                    <option>Libia</option><option>Madagascar</option><option>Malaui</option>
-                    <option>Mali</option><option>Marruecos</option><option>Mauricio</option>
-                    <option>Mauritania</option><option>Mozambique</option><option>Namibia</option>
-                    <option>Níger</option><option>Nigeria</option><option>República Centroafricana</option>
-                    <option>República Democrática del Congo</option><option>Ruanda</option>
-                    <option>Santo Tomé y Príncipe</option><option>Senegal</option>
-                    <option>Seychelles</option><option>Sierra Leona</option><option>Somalia</option>
-                    <option>Sudáfrica</option><option>Sudán</option><option>Sudán del Sur</option>
-                    <option>Suazilandia</option><option>Tanzania</option><option>Togo</option>
-                    <option>Túnez</option><option>Uganda</option><option>Yibuti</option>
-                    <option>Zambia</option><option>Zimbabue</option>
-                  </optgroup>
-                  <optgroup label="Asia y Medio Oriente">
-                    <option>Afganistán</option><option>Arabia Saudita</option><option>Armenia</option>
-                    <option>Azerbaiyán</option><option>Bangladés</option><option>Brunéi</option>
-                    <option>Bután</option><option>Camboya</option><option>Catar</option>
-                    <option>China</option><option>Corea del Norte</option><option>Corea del Sur</option>
-                    <option>Emiratos Árabes Unidos</option><option>Filipinas</option><option>Georgia</option>
-                    <option>India</option><option>Indonesia</option><option>Irak</option>
-                    <option>Irán</option><option>Israel</option><option>Japón</option>
-                    <option>Jordania</option><option>Kazajistán</option><option>Kirguistán</option>
-                    <option>Kuwait</option><option>Laos</option><option>Líbano</option>
-                    <option>Malasia</option><option>Maldivas</option><option>Mongolia</option>
-                    <option>Myanmar</option><option>Nepal</option><option>Omán</option>
-                    <option>Pakistán</option><option>Palestina</option><option>Singapur</option>
-                    <option>Siria</option><option>Sri Lanka</option><option>Tailandia</option>
-                    <option>Tayikistán</option><option>Timor Oriental</option><option>Turkmenistán</option>
-                    <option>Turquía</option><option>Uzbekistán</option><option>Vietnam</option>
-                    <option>Yemen</option>
-                  </optgroup>
-                  <optgroup label="Oceanía">
-                    <option>Australia</option><option>Fiyi</option><option>Islas Marshall</option>
-                    <option>Islas Salomón</option><option>Kiribati</option><option>Micronesia</option>
-                    <option>Nauru</option><option>Nueva Zelanda</option><option>Palaos</option>
-                    <option>Papúa Nueva Guinea</option><option>Samoa</option><option>Tonga</option>
-                    <option>Tuvalu</option><option>Vanuatu</option>
-                  </optgroup>
-                </select>
-                <p class="form-error" id="err-v-nacionalidad">Por favor selecciona una nacionalidad.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="v-pasaporte">Número de pasaporte <span class="req">*</span></label>
-                <input type="text" id="v-pasaporte" name="v_pasaporte" class="form-input"
-                       placeholder="Ej. AB123456" required autocomplete="off"
-                       oninput="upperAll(this)">
-                <p class="form-hint warn">⚠ Verifica que el pasaporte tenga al menos <strong>6 meses de vigencia</strong> a partir de la fecha de entrada a México.</p>
-                <p class="form-error" id="err-v-pasaporte">Por favor ingresa el número de pasaporte.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="v-residencia">País de residencia <span class="req">*</span></label>
-                <select id="v-residencia" name="v_residencia" class="form-input" required>
-                  <option value="" disabled selected>Donde reside el viajero actualmente</option>
-                  <optgroup label="América Latina y el Caribe">
-                    <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option>
-                    <option>Barbados</option><option>Belice</option><option>Bolivia</option>
-                    <option>Brasil</option><option>Chile</option><option>Colombia</option>
-                    <option>Costa Rica</option><option>Cuba</option><option>Dominica</option>
-                    <option>Ecuador</option><option>El Salvador</option><option>Granada</option>
-                    <option>Guatemala</option><option>Guyana</option><option>Haití</option>
-                    <option>Honduras</option><option>Jamaica</option><option>Nicaragua</option>
-                    <option>Panamá</option><option>Paraguay</option><option>Perú</option>
-                    <option>República Dominicana</option><option>San Cristóbal y Nieves</option>
-                    <option>San Vicente y las Granadinas</option><option>Santa Lucía</option>
-                    <option>Surinam</option><option>Trinidad y Tobago</option>
-                    <option>Uruguay</option><option>Venezuela</option>
-                  </optgroup>
-                  <optgroup label="Norteamérica">
-                    <option>Canadá</option><option>Estados Unidos</option>
-                  </optgroup>
-                  <optgroup label="Europa">
-                    <option>Albania</option><option>Alemania</option><option>Andorra</option>
-                    <option>Austria</option><option>Bélgica</option><option>Bielorrusia</option>
-                    <option>Bosnia y Herzegovina</option><option>Bulgaria</option><option>Chipre</option>
-                    <option>Ciudad del Vaticano</option><option>Croacia</option><option>Dinamarca</option>
-                    <option>Eslovaquia</option><option>Eslovenia</option><option>España</option>
-                    <option>Estonia</option><option>Finlandia</option><option>Francia</option>
-                    <option>Grecia</option><option>Hungría</option><option>Irlanda</option>
-                    <option>Islandia</option><option>Italia</option><option>Kosovo</option>
-                    <option>Letonia</option><option>Liechtenstein</option><option>Lituania</option>
-                    <option>Luxemburgo</option><option>Malta</option><option>Moldavia</option>
-                    <option>Mónaco</option><option>Montenegro</option><option>Noruega</option>
-                    <option>Países Bajos</option><option>Polonia</option><option>Portugal</option>
-                    <option>Reino Unido</option><option>República Checa</option><option>Rumanía</option>
-                    <option>Rusia</option><option>San Marino</option><option>Serbia</option>
-                    <option>Suecia</option><option>Suiza</option><option>Ucrania</option>
-                  </optgroup>
-                  <optgroup label="África">
-                    <option>Argelia</option><option>Angola</option><option>Benín</option>
-                    <option>Botsuana</option><option>Burkina Faso</option><option>Burundi</option>
-                    <option>Cabo Verde</option><option>Camerún</option><option>Chad</option>
-                    <option>Comoras</option><option>Congo</option><option>Costa de Marfil</option>
-                    <option>Egipto</option><option>Eritrea</option><option>Etiopía</option>
-                    <option>Gabón</option><option>Gambia</option><option>Ghana</option>
-                    <option>Guinea</option><option>Guinea Ecuatorial</option><option>Guinea-Bisáu</option>
-                    <option>Kenia</option><option>Lesoto</option><option>Liberia</option>
-                    <option>Libia</option><option>Madagascar</option><option>Malaui</option>
-                    <option>Mali</option><option>Marruecos</option><option>Mauricio</option>
-                    <option>Mauritania</option><option>Mozambique</option><option>Namibia</option>
-                    <option>Níger</option><option>Nigeria</option><option>República Centroafricana</option>
-                    <option>República Democrática del Congo</option><option>Ruanda</option>
-                    <option>Santo Tomé y Príncipe</option><option>Senegal</option>
-                    <option>Seychelles</option><option>Sierra Leona</option><option>Somalia</option>
-                    <option>Sudáfrica</option><option>Sudán</option><option>Sudán del Sur</option>
-                    <option>Suazilandia</option><option>Tanzania</option><option>Togo</option>
-                    <option>Túnez</option><option>Uganda</option><option>Yibuti</option>
-                    <option>Zambia</option><option>Zimbabue</option>
-                  </optgroup>
-                  <optgroup label="Asia y Medio Oriente">
-                    <option>Afganistán</option><option>Arabia Saudita</option><option>Armenia</option>
-                    <option>Azerbaiyán</option><option>Bangladés</option><option>Brunéi</option>
-                    <option>Bután</option><option>Camboya</option><option>Catar</option>
-                    <option>China</option><option>Corea del Norte</option><option>Corea del Sur</option>
-                    <option>Emiratos Árabes Unidos</option><option>Filipinas</option><option>Georgia</option>
-                    <option>India</option><option>Indonesia</option><option>Irak</option>
-                    <option>Irán</option><option>Israel</option><option>Japón</option>
-                    <option>Jordania</option><option>Kazajistán</option><option>Kirguistán</option>
-                    <option>Kuwait</option><option>Laos</option><option>Líbano</option>
-                    <option>Malasia</option><option>Maldivas</option><option>Mongolia</option>
-                    <option>Myanmar</option><option>Nepal</option><option>Omán</option>
-                    <option>Pakistán</option><option>Palestina</option><option>Singapur</option>
-                    <option>Siria</option><option>Sri Lanka</option><option>Tailandia</option>
-                    <option>Tayikistán</option><option>Timor Oriental</option><option>Turkmenistán</option>
-                    <option>Turquía</option><option>Uzbekistán</option><option>Vietnam</option>
-                    <option>Yemen</option>
-                  </optgroup>
-                  <optgroup label="Oceanía">
-                    <option>Australia</option><option>Fiyi</option><option>Islas Marshall</option>
-                    <option>Islas Salomón</option><option>Kiribati</option><option>Micronesia</option>
-                    <option>Nauru</option><option>Nueva Zelanda</option><option>Palaos</option>
-                    <option>Papúa Nueva Guinea</option><option>Samoa</option><option>Tonga</option>
-                    <option>Tuvalu</option><option>Vanuatu</option>
-                  </optgroup>
-                </select>
-                <p class="form-hint">Puede ser diferente a la nacionalidad.</p>
-                <p class="form-error" id="err-v-residencia">Por favor ingresa el país de residencia del viajero.</p>
-              </div>
-
-              <div>
-                <label class="form-label">Domicilio completo en país de residencia <span class="req">*</span></label>
-                <div class="space-y-3">
-                  <input type="text" id="v-calle" name="v_calle" class="form-input"
-                         placeholder="Calle, número, e interior (si aplica)" autocomplete="off" required>
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input type="text" id="v-ciudad" name="v_ciudad" class="form-input" placeholder="Ciudad" autocomplete="off" required oninput="capFirst(this)">
-                    <input type="text" id="v-provincia" name="v_provincia" class="form-input" placeholder="Provincia / Estado / Región" autocomplete="off" required oninput="capFirst(this)">
-                  </div>
-                  <input type="text" id="v-cp" name="v_cp" class="form-input" placeholder="Código Postal" autocomplete="off" required oninput="upperAll(this)">
-                </div>
-                <p class="form-error" id="err-v-domicilio">Por favor completa los campos de domicilio.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="v-ocupacion">Actividad profesional u ocupación <span class="req">*</span></label>
-                <input type="text" id="v-ocupacion" name="v_ocupacion" class="form-input"
-                       placeholder="Ej. Ingeniero, Estudiante, Comerciante…" required>
-                <p class="form-hint">En el país de residencia del viajero. La actividad profesional ayuda a demostrar motivos para regresar después del viaje.</p>
-                <p class="form-error" id="err-v-ocupacion">Por favor ingresa la ocupación del viajero.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="v-email">Correo electrónico <span class="req">*</span></label>
-                <input type="email" id="v-email" name="v_email" class="form-input"
-                       placeholder="nombre@correo.com" required autocomplete="email"
-                       oninput="this.value=this.value.replace(/\s/g,'')"
-                       onblur="emailReq('v-email','err-v-email')">
-                                <p class="form-error" id="err-v-email">Por favor ingresa un correo electrónico válido (ej. nombre@correo.com).</p>
-              </div>
-
-            </div>
-
-            <div class="flex justify-end mt-8">
-              <button type="button" class="btn-gold" onclick="goNext(1)">
-                Continuar
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
-          </section>
-
-
-          <!-- ═════════════════════════════
-               STEP 2 — ACOMPAÑANTES
-          ═════════════════════════════ -->
-          <section id="step-2" class="form-step p-6 sm:p-8">
-
-            <div class="flex items-start gap-4 mb-7">
-              <div class="step-icon">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <circle cx="8" cy="7" r="3.5" stroke="#C9A84C" stroke-width="1.5"/>
-                  <path d="M2 19c0-3.5 2.7-6 6-6" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-                  <circle cx="15" cy="7" r="3.5" stroke="#C9A84C" stroke-width="1.5"/>
-                  <path d="M11 19c0-3.5 2.7-6 6-6" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div>
-                <span class="section-label mb-1">Paso 2 de 6</span>
-                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Acompañantes</h2>
-                <p class="text-sm mt-1" style="color:#6B7280;">Personas que viajan junto al invitado principal y quedarán incluidas en la misma carta.</p>
-              </div>
-            </div>
-
-            <!-- Gold callout -->
-            <div class="rounded-xl p-4 mb-6 text-sm flex gap-3" style="background:rgba(201,168,76,0.09);border:1px solid rgba(201,168,76,0.25);color:#7B5A24;line-height:1.65;">
-              <span style="font-size:1.1rem;flex-shrink:0;">⭐</span>
-              <span><strong>Exclusivo Plan Completo.</strong> Si el viajero viene solo, se puede omitir este paso y continuar.</span>
-            </div>
-
-            <!-- Container for companion cards -->
-            <div id="companions-container" class="space-y-4 mb-4"></div>
-
-            <!-- Empty state (shown when 0 companions) -->
-            <div id="companions-empty" class="empty-state mb-4">
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" class="mx-auto mb-3" aria-hidden="true">
-                <circle cx="18" cy="18" r="17" stroke="rgba(27,53,102,0.1)" stroke-width="1.5"/>
-                <circle cx="14" cy="14" r="4" stroke="#C9A84C" stroke-width="1.3"/>
-                <path d="M7 26c0-4 3.1-7 7-7" stroke="#C9A84C" stroke-width="1.3" stroke-linecap="round"/>
-                <circle cx="23" cy="14" r="4" stroke="rgba(201,168,76,0.4)" stroke-width="1.3"/>
-                <path d="M17 26c0-4 3.1-7 7-7" stroke="rgba(201,168,76,0.4)" stroke-width="1.3" stroke-linecap="round"/>
-              </svg>
-              <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">Sin acompañantes por ahora</p>
-              <p class="text-xs" style="color:#6B7280;">Si alguien viaja con el invitado principal, agrégalo aquí.</p>
-            </div>
-
-            <button type="button" class="btn-add" onclick="addCompanion()">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
-              </svg>
-              Agregar acompañante
-            </button>
-
-            <p class="form-error mt-3" id="err-companions">Por favor completa todos los campos del acompañante.</p>
-
-            <div class="flex items-center justify-between mt-8 gap-3">
-              <button type="button" class="btn-back" onclick="goPrev(2)">
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                  <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Volver
-              </button>
-              <button type="button" class="btn-gold" onclick="goNext(2)">
-                Continuar
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
-          </section>
-
-
-          <!-- ═══════════════════════
-               STEP 3 — EL ANFITRIÓN
-          ═══════════════════════ -->
-          <section id="step-3" class="form-step p-6 sm:p-8">
 
             <div class="flex items-start gap-4 mb-7">
               <div class="step-icon">
@@ -870,8 +522,8 @@
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 3 de 6</span>
-                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">El anfitrión</h2>
+                <span class="section-label mb-1">Paso 1 de 5</span>
+                <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">El anfitrión</h1>
                 <p class="text-sm mt-1" style="color:#6B7280;">Datos del mexicano o residente en México que firmará la carta.</p>
               </div>
             </div>
@@ -1033,111 +685,10 @@
                        placeholder="Ej. Pemex, Grupo Bimbo, Hospital Ángeles, Independiente…">
               </div>
 
-              <div>
-                <label class="form-label" for="a-perspectiva">¿Quién llena este formulario? <span class="req">*</span></label>
-                <select id="a-perspectiva" name="a_perspectiva" class="form-input" required>
-                  <option value="" disabled selected>Selecciona quién está describiendo</option>
-                  <option value="anfitrion">Yo soy el anfitrión</option>
-                  <option value="visitante">Yo soy el visitante</option>
-                </select>
-                <p class="form-hint">Esto nos ayuda a redactar correctamente la carta desde la perspectiva adecuada.</p>
-                <p class="form-error" id="err-a-perspectiva">Por favor indica quién llena el formulario.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="a-vinculo">Vínculo con el viajero <span class="req">*</span></label>
-                <select id="a-vinculo" name="a_vinculo" class="form-input" required>
-                  <option value="" disabled selected>Selecciona el vínculo</option>
-                  <option value="familiar">Familiar</option>
-                  <option value="pareja">Pareja</option>
-                  <option value="amistad">Amistad</option>
-                  <option value="laboral">Laboral</option>
-                  <option value="otro">Otro</option>
-                </select>
-                <p class="form-error" id="err-a-vinculo">Por favor indica el vínculo.</p>
-              </div>
-
-              <div id="parentesco-wrapper" style="display:none;">
-                <label class="form-label" id="parentesco-label">Tipo de parentesco <span class="req">*</span></label>
-                <select id="a-parentesco" name="a_parentesco" class="form-input">
-                  <option value="" disabled selected>Selecciona el parentesco</option>
-                  <option value="padre">Padre / Madre</option>
-                  <option value="hijo">Hijo(a)</option>
-                  <option value="hermano">Hermano(a)</option>
-                  <option value="abuelo">Abuelo(a)</option>
-                  <option value="nieto">Nieto(a)</option>
-                  <option value="bisabuelo">Bisabuelo(a)</option>
-                  <option value="tio">Tío(a)</option>
-                  <option value="sobrino">Sobrino(a)</option>
-                  <option value="primo">Primo(a)</option>
-                  <option value="suegro">Suegro(a)</option>
-                  <option value="yerno">Yerno / Nuera</option>
-                  <option value="cunado">Cuñado(a)</option>
-                  <option value="concuno">Concuño(a)</option>
-                  <option value="padrastro">Padrastro / Madrastra</option>
-                  <option value="hijastro">Hijastro(a)</option>
-                  <option value="hermanastro">Hermanastro(a)</option>
-                  <option value="otro_familiar">Otro familiar</option>
-                </select>
-                <p class="form-error" id="err-a-parentesco">Por favor selecciona el parentesco.</p>
-              </div>
-
-              <div id="parentesco-otro-wrapper" style="display:none;">
-                <label class="form-label" for="a-parentesco-otro">Especifica el parentesco <span class="req">*</span></label>
-                <input type="text" id="a-parentesco-otro" name="a_parentesco_otro" class="form-input"
-                       placeholder="Ej. primo segundo, bisnieto, tío abuelo…">
-                <p class="form-error" id="err-a-parentesco-otro">Por favor especifica el parentesco.</p>
-              </div>
-
-              <div>
-                <label class="form-label" for="a-vinculo-detalle">Describe brevemente el vínculo <span class="req">*</span></label>
-                <textarea id="a-vinculo-detalle" name="a_vinculo_detalle" class="form-input"
-                          placeholder="Ej. Somos amigos desde la universidad · Es sobrino de mi esposa · Trabajamos juntos en la misma empresa…"
-                          required rows="2"></textarea>
-                <p class="form-hint warn">⚠ Entre más detalle, más personalizada será la carta.</p>
-                <p class="form-error" id="err-a-vinculo-detalle">Por favor describe el vínculo entre ambas personas.</p>
-              </div>
-
-              <div id="tiempo-wrapper">
-                <label class="form-label">¿Desde hace cuánto se conocen? <span class="req">*</span></label>
-                <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;">
-                  <div>
-                    <select id="a-tiempo-anios" name="a_tiempo_anios" class="form-input" required>
-                      <option value="" disabled selected>Años</option>
-                    </select>
-                  </div>
-                  <span style="font-size:0.95rem;color:#64748b;">y</span>
-                  <div>
-                    <select id="a-tiempo-meses" name="a_tiempo_meses" class="form-input" required>
-                      <option value="" disabled selected>Meses</option>
-                      <option value="0">0 meses</option>
-                      <option value="1">1 mes</option>
-                      <option value="2">2 meses</option>
-                      <option value="3">3 meses</option>
-                      <option value="4">4 meses</option>
-                      <option value="5">5 meses</option>
-                      <option value="6">6 meses</option>
-                      <option value="7">7 meses</option>
-                      <option value="8">8 meses</option>
-                      <option value="9">9 meses</option>
-                      <option value="10">10 meses</option>
-                      <option value="11">11 meses</option>
-                    </select>
-                  </div>
-                </div>
-                <p class="form-error" id="err-a-tiempo">Por favor indica el tiempo aproximado de la relación.</p>
-              </div>
-
             </div>
 
-            <div class="flex items-center justify-between mt-8 gap-3">
-              <button type="button" class="btn-back" onclick="goPrev(3)">
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                  <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Volver
-              </button>
-              <button type="button" class="btn-gold" onclick="goNext(3)">
+            <div class="flex justify-end mt-8">
+              <button type="button" class="btn-gold" onclick="goNext(1)">
                 Continuar
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1146,130 +697,385 @@
             </div>
           </section>
 
-
-          <!-- ═══════════════════════
-               STEP 5 — GASTOS
-          ═══════════════════════ -->
-          <section id="step-5" class="form-step p-6 sm:p-8">
+          <!-- ═══════════════════════════════
+               STEP 2 — LOS VIAJEROS
+          ═══════════════════════════════ -->
+          <section id="step-2" class="form-step p-6 sm:p-8">
 
             <div class="flex items-start gap-4 mb-7">
               <div class="step-icon">
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <rect x="3" y="7" width="16" height="11" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
-                  <path d="M7 7V5a4 4 0 018 0v2" stroke="#C9A84C" stroke-width="1.5"/>
-                  <circle cx="11" cy="12.5" r="2" stroke="#C9A84C" stroke-width="1.4"/>
+                  <circle cx="11" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/>
+                  <path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 5 de 6</span>
-                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Gastos del viaje</h2>
-                <p class="text-sm mt-1" style="color:#6B7280;">¿Quién cubrirá los gastos durante la estancia en México?</p>
+                <span class="section-label mb-1">Paso 2 de 5</span>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Los viajeros</h2>
+                <p class="text-sm mt-1" style="color:#6B7280;">Datos de las personas que visitarán México.</p>
               </div>
             </div>
 
-            <div class="rounded-xl p-4 mb-6 text-sm" style="background:rgba(201,168,76,0.09);border:1px solid rgba(201,168,76,0.25);color:#7B5A24;line-height:1.65;">
-              <strong>💡 Nota:</strong> Si el visitante cubre total o parcialmente sus propios gastos, se recomienda que pueda comprobar el equivalente de al menos <strong>USD $50 por día</strong> con efectivo, estado de cuenta bancario o de tarjeta.
+            <!-- Viajero 1 card (mandatory, non-removable) -->
+            <div class="repeat-card mb-4" style="border-color:rgba(201,168,76,0.3);">
+              <div class="repeat-card-header" style="background:rgba(201,168,76,0.08);">
+                <span class="repeat-card-title" style="color:var(--c-gold);">Viajero 1 <span style="font-weight:400;color:#6B7280;">(principal)</span></span>
+              </div>
+              <div class="repeat-card-body space-y-4">
+
+                <div>
+                  <label class="form-label" for="v-nombre">Nombre completo del viajero <span class="req">*</span></label>
+                  <input type="text" id="v-nombre" name="v_nombre" class="form-input"
+                         placeholder="Ej. Juan Carlos Pérez López" required autocomplete="name"
+                         oninput="titleCase(this)">
+                  <p class="form-hint warn">⚠ Tal como aparece en el pasaporte.</p>
+                  <p class="form-error" id="err-v-nombre">Este campo es obligatorio.</p>
+                </div>
+
+                <div>
+                  <label class="form-label">Sexo del viajero <span class="req">*</span></label>
+                  <div style="display:flex;gap:24px;">
+                    <label class="radio-label"><input type="radio" name="v_genero" value="masculino" required> Masculino</label>
+                    <label class="radio-label"><input type="radio" name="v_genero" value="femenino" required> Femenino</label>
+                  </div>
+                  <p class="form-error" id="err-v-genero">Por favor selecciona el sexo.</p>
+                </div>
+
+                <div>
+                  <label class="form-label" for="v-nacimiento">Fecha de nacimiento <span class="req">*</span></label>
+                  <input type="date" id="v-nacimiento" name="v_nacimiento" class="form-input" required min="1900-01-01" data-dynamic-date="birth">
+                  <p class="form-error" id="err-v-nacimiento">Por favor ingresa la fecha de nacimiento.</p>
+                </div>
+
+                <div>
+                  <label class="form-label" for="v-nacionalidad">Nacionalidad <span class="req">*</span></label>
+                  <select id="v-nacionalidad" name="v_nacionalidad" class="form-input" required>
+                  <option value="" disabled selected>La que aparece en el pasaporte del viajero</option>
+                  <optgroup label="América Latina y el Caribe">
+                    <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option>
+                    <option>Barbados</option><option>Belice</option><option>Bolivia</option>
+                    <option>Brasil</option><option>Chile</option><option>Colombia</option>
+                    <option>Costa Rica</option><option>Cuba</option><option>Dominica</option>
+                    <option>Ecuador</option><option>El Salvador</option><option>Granada</option>
+                    <option>Guatemala</option><option>Guyana</option><option>Haití</option>
+                    <option>Honduras</option><option>Jamaica</option><option>Nicaragua</option>
+                    <option>Panamá</option><option>Paraguay</option><option>Perú</option>
+                    <option>República Dominicana</option><option>San Cristóbal y Nieves</option>
+                    <option>San Vicente y las Granadinas</option><option>Santa Lucía</option>
+                    <option>Surinam</option><option>Trinidad y Tobago</option>
+                    <option>Uruguay</option><option>Venezuela</option>
+                  </optgroup>
+                  <optgroup label="Norteamérica">
+                    <option>Canadá</option><option>Estados Unidos</option>
+                  </optgroup>
+                  <optgroup label="Europa">
+                    <option>Albania</option><option>Alemania</option><option>Andorra</option>
+                    <option>Austria</option><option>Bélgica</option><option>Bielorrusia</option>
+                    <option>Bosnia y Herzegovina</option><option>Bulgaria</option><option>Chipre</option>
+                    <option>Ciudad del Vaticano</option><option>Croacia</option><option>Dinamarca</option>
+                    <option>Eslovaquia</option><option>Eslovenia</option><option>España</option>
+                    <option>Estonia</option><option>Finlandia</option><option>Francia</option>
+                    <option>Grecia</option><option>Hungría</option><option>Irlanda</option>
+                    <option>Islandia</option><option>Italia</option><option>Kosovo</option>
+                    <option>Letonia</option><option>Liechtenstein</option><option>Lituania</option>
+                    <option>Luxemburgo</option><option>Malta</option><option>Moldavia</option>
+                    <option>Mónaco</option><option>Montenegro</option><option>Noruega</option>
+                    <option>Países Bajos</option><option>Polonia</option><option>Portugal</option>
+                    <option>Reino Unido</option><option>República Checa</option><option>Rumanía</option>
+                    <option>Rusia</option><option>San Marino</option><option>Serbia</option>
+                    <option>Suecia</option><option>Suiza</option><option>Ucrania</option>
+                  </optgroup>
+                  <optgroup label="África">
+                    <option>Argelia</option><option>Angola</option><option>Benín</option>
+                    <option>Botsuana</option><option>Burkina Faso</option><option>Burundi</option>
+                    <option>Cabo Verde</option><option>Camerún</option><option>Chad</option>
+                    <option>Comoras</option><option>Congo</option><option>Costa de Marfil</option>
+                    <option>Egipto</option><option>Eritrea</option><option>Etiopía</option>
+                    <option>Gabón</option><option>Gambia</option><option>Ghana</option>
+                    <option>Guinea</option><option>Guinea Ecuatorial</option><option>Guinea-Bisáu</option>
+                    <option>Kenia</option><option>Lesoto</option><option>Liberia</option>
+                    <option>Libia</option><option>Madagascar</option><option>Malaui</option>
+                    <option>Mali</option><option>Marruecos</option><option>Mauricio</option>
+                    <option>Mauritania</option><option>Mozambique</option><option>Namibia</option>
+                    <option>Níger</option><option>Nigeria</option><option>República Centroafricana</option>
+                    <option>República Democrática del Congo</option><option>Ruanda</option>
+                    <option>Santo Tomé y Príncipe</option><option>Senegal</option>
+                    <option>Seychelles</option><option>Sierra Leona</option><option>Somalia</option>
+                    <option>Sudáfrica</option><option>Sudán</option><option>Sudán del Sur</option>
+                    <option>Suazilandia</option><option>Tanzania</option><option>Togo</option>
+                    <option>Túnez</option><option>Uganda</option><option>Yibuti</option>
+                    <option>Zambia</option><option>Zimbabue</option>
+                  </optgroup>
+                  <optgroup label="Asia y Medio Oriente">
+                    <option>Afganistán</option><option>Arabia Saudita</option><option>Armenia</option>
+                    <option>Azerbaiyán</option><option>Bangladés</option><option>Brunéi</option>
+                    <option>Bután</option><option>Camboya</option><option>Catar</option>
+                    <option>China</option><option>Corea del Norte</option><option>Corea del Sur</option>
+                    <option>Emiratos Árabes Unidos</option><option>Filipinas</option><option>Georgia</option>
+                    <option>India</option><option>Indonesia</option><option>Irak</option>
+                    <option>Irán</option><option>Israel</option><option>Japón</option>
+                    <option>Jordania</option><option>Kazajistán</option><option>Kirguistán</option>
+                    <option>Kuwait</option><option>Laos</option><option>Líbano</option>
+                    <option>Malasia</option><option>Maldivas</option><option>Mongolia</option>
+                    <option>Myanmar</option><option>Nepal</option><option>Omán</option>
+                    <option>Pakistán</option><option>Palestina</option><option>Singapur</option>
+                    <option>Siria</option><option>Sri Lanka</option><option>Tailandia</option>
+                    <option>Tayikistán</option><option>Timor Oriental</option><option>Turkmenistán</option>
+                    <option>Turquía</option><option>Uzbekistán</option><option>Vietnam</option>
+                    <option>Yemen</option>
+                  </optgroup>
+                  <optgroup label="Oceanía">
+                    <option>Australia</option><option>Fiyi</option><option>Islas Marshall</option>
+                    <option>Islas Salomón</option><option>Kiribati</option><option>Micronesia</option>
+                    <option>Nauru</option><option>Nueva Zelanda</option><option>Palaos</option>
+                    <option>Papúa Nueva Guinea</option><option>Samoa</option><option>Tonga</option>
+                    <option>Tuvalu</option><option>Vanuatu</option>
+                  </optgroup>
+                </select>
+                  <p class="form-error" id="err-v-nacionalidad">Por favor selecciona una nacionalidad.</p>
+                </div>
+
+                <div>
+                  <label class="form-label" for="v-pasaporte">Número de pasaporte <span class="req">*</span></label>
+                  <input type="text" id="v-pasaporte" name="v_pasaporte" class="form-input"
+                         placeholder="Ej. AB123456" required autocomplete="off"
+                         oninput="upperAll(this)">
+                  <p class="form-hint warn">⚠ Verifica que el pasaporte tenga al menos <strong>6 meses de vigencia</strong> a partir de la fecha de entrada a México.</p>
+                  <p class="form-error" id="err-v-pasaporte">Por favor ingresa el número de pasaporte.</p>
+                </div>
+
+                <div>
+                  <label class="form-label" for="v-residencia">País de residencia <span class="req">*</span></label>
+                  <select id="v-residencia" name="v_residencia" class="form-input" required>
+                  <option value="" disabled selected>Donde reside el viajero actualmente</option>
+                  <optgroup label="América Latina y el Caribe">
+                    <option>Antigua y Barbuda</option><option>Argentina</option><option>Bahamas</option>
+                    <option>Barbados</option><option>Belice</option><option>Bolivia</option>
+                    <option>Brasil</option><option>Chile</option><option>Colombia</option>
+                    <option>Costa Rica</option><option>Cuba</option><option>Dominica</option>
+                    <option>Ecuador</option><option>El Salvador</option><option>Granada</option>
+                    <option>Guatemala</option><option>Guyana</option><option>Haití</option>
+                    <option>Honduras</option><option>Jamaica</option><option>Nicaragua</option>
+                    <option>Panamá</option><option>Paraguay</option><option>Perú</option>
+                    <option>República Dominicana</option><option>San Cristóbal y Nieves</option>
+                    <option>San Vicente y las Granadinas</option><option>Santa Lucía</option>
+                    <option>Surinam</option><option>Trinidad y Tobago</option>
+                    <option>Uruguay</option><option>Venezuela</option>
+                  </optgroup>
+                  <optgroup label="Norteamérica">
+                    <option>Canadá</option><option>Estados Unidos</option>
+                  </optgroup>
+                  <optgroup label="Europa">
+                    <option>Albania</option><option>Alemania</option><option>Andorra</option>
+                    <option>Austria</option><option>Bélgica</option><option>Bielorrusia</option>
+                    <option>Bosnia y Herzegovina</option><option>Bulgaria</option><option>Chipre</option>
+                    <option>Ciudad del Vaticano</option><option>Croacia</option><option>Dinamarca</option>
+                    <option>Eslovaquia</option><option>Eslovenia</option><option>España</option>
+                    <option>Estonia</option><option>Finlandia</option><option>Francia</option>
+                    <option>Grecia</option><option>Hungría</option><option>Irlanda</option>
+                    <option>Islandia</option><option>Italia</option><option>Kosovo</option>
+                    <option>Letonia</option><option>Liechtenstein</option><option>Lituania</option>
+                    <option>Luxemburgo</option><option>Malta</option><option>Moldavia</option>
+                    <option>Mónaco</option><option>Montenegro</option><option>Noruega</option>
+                    <option>Países Bajos</option><option>Polonia</option><option>Portugal</option>
+                    <option>Reino Unido</option><option>República Checa</option><option>Rumanía</option>
+                    <option>Rusia</option><option>San Marino</option><option>Serbia</option>
+                    <option>Suecia</option><option>Suiza</option><option>Ucrania</option>
+                  </optgroup>
+                  <optgroup label="África">
+                    <option>Argelia</option><option>Angola</option><option>Benín</option>
+                    <option>Botsuana</option><option>Burkina Faso</option><option>Burundi</option>
+                    <option>Cabo Verde</option><option>Camerún</option><option>Chad</option>
+                    <option>Comoras</option><option>Congo</option><option>Costa de Marfil</option>
+                    <option>Egipto</option><option>Eritrea</option><option>Etiopía</option>
+                    <option>Gabón</option><option>Gambia</option><option>Ghana</option>
+                    <option>Guinea</option><option>Guinea Ecuatorial</option><option>Guinea-Bisáu</option>
+                    <option>Kenia</option><option>Lesoto</option><option>Liberia</option>
+                    <option>Libia</option><option>Madagascar</option><option>Malaui</option>
+                    <option>Mali</option><option>Marruecos</option><option>Mauricio</option>
+                    <option>Mauritania</option><option>Mozambique</option><option>Namibia</option>
+                    <option>Níger</option><option>Nigeria</option><option>República Centroafricana</option>
+                    <option>República Democrática del Congo</option><option>Ruanda</option>
+                    <option>Santo Tomé y Príncipe</option><option>Senegal</option>
+                    <option>Seychelles</option><option>Sierra Leona</option><option>Somalia</option>
+                    <option>Sudáfrica</option><option>Sudán</option><option>Sudán del Sur</option>
+                    <option>Suazilandia</option><option>Tanzania</option><option>Togo</option>
+                    <option>Túnez</option><option>Uganda</option><option>Yibuti</option>
+                    <option>Zambia</option><option>Zimbabue</option>
+                  </optgroup>
+                  <optgroup label="Asia y Medio Oriente">
+                    <option>Afganistán</option><option>Arabia Saudita</option><option>Armenia</option>
+                    <option>Azerbaiyán</option><option>Bangladés</option><option>Brunéi</option>
+                    <option>Bután</option><option>Camboya</option><option>Catar</option>
+                    <option>China</option><option>Corea del Norte</option><option>Corea del Sur</option>
+                    <option>Emiratos Árabes Unidos</option><option>Filipinas</option><option>Georgia</option>
+                    <option>India</option><option>Indonesia</option><option>Irak</option>
+                    <option>Irán</option><option>Israel</option><option>Japón</option>
+                    <option>Jordania</option><option>Kazajistán</option><option>Kirguistán</option>
+                    <option>Kuwait</option><option>Laos</option><option>Líbano</option>
+                    <option>Malasia</option><option>Maldivas</option><option>Mongolia</option>
+                    <option>Myanmar</option><option>Nepal</option><option>Omán</option>
+                    <option>Pakistán</option><option>Palestina</option><option>Singapur</option>
+                    <option>Siria</option><option>Sri Lanka</option><option>Tailandia</option>
+                    <option>Tayikistán</option><option>Timor Oriental</option><option>Turkmenistán</option>
+                    <option>Turquía</option><option>Uzbekistán</option><option>Vietnam</option>
+                    <option>Yemen</option>
+                  </optgroup>
+                  <optgroup label="Oceanía">
+                    <option>Australia</option><option>Fiyi</option><option>Islas Marshall</option>
+                    <option>Islas Salomón</option><option>Kiribati</option><option>Micronesia</option>
+                    <option>Nauru</option><option>Nueva Zelanda</option><option>Palaos</option>
+                    <option>Papúa Nueva Guinea</option><option>Samoa</option><option>Tonga</option>
+                    <option>Tuvalu</option><option>Vanuatu</option>
+                  </optgroup>
+                </select>
+                  <p class="form-hint">Puede ser diferente a la nacionalidad.</p>
+                  <p class="form-error" id="err-v-residencia">Por favor ingresa el país de residencia del viajero.</p>
+                </div>
+
+                <div>
+                  <label class="form-label">Domicilio completo en país de residencia <span class="req">*</span></label>
+                  <div class="space-y-3">
+                    <input type="text" id="v-calle" name="v_calle" class="form-input"
+                           placeholder="Calle, número, e interior (si aplica)" autocomplete="off" required>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <input type="text" id="v-ciudad" name="v_ciudad" class="form-input" placeholder="Ciudad" autocomplete="off" required oninput="capFirst(this)">
+                      <input type="text" id="v-provincia" name="v_provincia" class="form-input" placeholder="Provincia / Estado / Región" autocomplete="off" required oninput="capFirst(this)">
+                    </div>
+                    <input type="text" id="v-cp" name="v_cp" class="form-input" placeholder="Código Postal" autocomplete="off" required oninput="upperAll(this)">
+                  </div>
+                  <p class="form-error" id="err-v-domicilio">Por favor completa los campos de domicilio.</p>
+                </div>
+
+                <div>
+                  <label class="form-label" for="v-ocupacion">Actividad profesional u ocupación <span class="req">*</span></label>
+                  <input type="text" id="v-ocupacion" name="v_ocupacion" class="form-input"
+                         placeholder="Ej. Ingeniero, Estudiante, Comerciante…" required>
+                  <p class="form-hint">En el país de residencia del viajero. La actividad profesional ayuda a demostrar motivos para regresar después del viaje.</p>
+                  <p class="form-error" id="err-v-ocupacion">Por favor ingresa la ocupación del viajero.</p>
+                </div>
+
+                <div>
+                  <label class="form-label" for="v-email">Correo electrónico <span class="req">*</span></label>
+                  <input type="email" id="v-email" name="v_email" class="form-input"
+                         placeholder="nombre@correo.com" required autocomplete="email"
+                         oninput="this.value=this.value.replace(/\s/g,'')"
+                         onblur="emailReq('v-email','err-v-email')">
+                  <p class="form-error" id="err-v-email">Por favor ingresa un correo electrónico válido (ej. nombre@correo.com).</p>
+                </div>
+
+                <!-- Vínculo con el anfitrión (for Viajero 1) -->
+                <div>
+                  <label class="form-label" for="a-vinculo">Vínculo con el anfitrión <span class="req">*</span></label>
+                  <select id="a-vinculo" name="a_vinculo" class="form-input" required>
+                    <option value="" disabled selected>Selecciona el vínculo</option>
+                    <option value="familiar">Familiar</option>
+                    <option value="pareja">Pareja</option>
+                    <option value="amistad">Amistad</option>
+                    <option value="laboral">Laboral</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                  <p class="form-error" id="err-a-vinculo">Por favor indica el vínculo.</p>
+                </div>
+
+                <div id="parentesco-wrapper" style="display:none;">
+                  <label class="form-label" id="parentesco-label">El viajero es mi… <span class="req">*</span></label>
+                  <select id="a-parentesco" name="a_parentesco" class="form-input">
+                    <option value="" disabled selected>Selecciona el parentesco</option>
+                    <option value="padre">Padre / Madre</option>
+                    <option value="hijo">Hijo(a)</option>
+                    <option value="hermano">Hermano(a)</option>
+                    <option value="abuelo">Abuelo(a)</option>
+                    <option value="nieto">Nieto(a)</option>
+                    <option value="bisabuelo">Bisabuelo(a)</option>
+                    <option value="tio">Tío(a)</option>
+                    <option value="sobrino">Sobrino(a)</option>
+                    <option value="primo">Primo(a)</option>
+                    <option value="suegro">Suegro(a)</option>
+                    <option value="yerno">Yerno / Nuera</option>
+                    <option value="cunado">Cuñado(a)</option>
+                    <option value="concuno">Concuño(a)</option>
+                    <option value="padrastro">Padrastro / Madrastra</option>
+                    <option value="hijastro">Hijastro(a)</option>
+                    <option value="hermanastro">Hermanastro(a)</option>
+                    <option value="otro_familiar">Otro familiar</option>
+                  </select>
+                  <p class="form-error" id="err-a-parentesco">Por favor selecciona el parentesco.</p>
+                </div>
+
+                <div id="parentesco-otro-wrapper" style="display:none;">
+                  <label class="form-label" for="a-parentesco-otro">Especifica el parentesco <span class="req">*</span></label>
+                  <input type="text" id="a-parentesco-otro" name="a_parentesco_otro" class="form-input"
+                         placeholder="Ej. primo segundo, bisnieto, tío abuelo…">
+                  <p class="form-error" id="err-a-parentesco-otro">Por favor especifica el parentesco.</p>
+                </div>
+
+                <div>
+                  <label class="form-label" for="a-vinculo-detalle">Describe brevemente el vínculo <span class="req">*</span></label>
+                  <textarea id="a-vinculo-detalle" name="a_vinculo_detalle" class="form-input"
+                            placeholder="Ej. Somos amigos desde la universidad · Es sobrino de mi esposa · Trabajamos juntos en la misma empresa…"
+                            required rows="2"></textarea>
+                  <p class="form-hint warn">⚠ Entre más detalle, más personalizada será la carta.</p>
+                  <p class="form-hint" style="color:#C53030;font-weight:500;">⚠ Describe la relación desde la perspectiva del anfitrión (quien firma la carta).</p>
+                  <p class="form-error" id="err-a-vinculo-detalle">Por favor describe el vínculo entre ambas personas.</p>
+                </div>
+
+                <div id="tiempo-wrapper">
+                  <label class="form-label">¿Desde hace cuánto se conocen? <span class="req">*</span></label>
+                  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;">
+                    <div>
+                      <select id="a-tiempo-anios" name="a_tiempo_anios" class="form-input" required>
+                        <option value="" disabled selected>Años</option>
+                      </select>
+                    </div>
+                    <span style="font-size:0.95rem;color:#64748b;">y</span>
+                    <div>
+                      <select id="a-tiempo-meses" name="a_tiempo_meses" class="form-input" required>
+                        <option value="" disabled selected>Meses</option>
+                        <option value="0">0 meses</option>
+                        <option value="1">1 mes</option>
+                        <option value="2">2 meses</option>
+                        <option value="3">3 meses</option>
+                        <option value="4">4 meses</option>
+                        <option value="5">5 meses</option>
+                        <option value="6">6 meses</option>
+                        <option value="7">7 meses</option>
+                        <option value="8">8 meses</option>
+                        <option value="9">9 meses</option>
+                        <option value="10">10 meses</option>
+                        <option value="11">11 meses</option>
+                      </select>
+                    </div>
+                  </div>
+                  <p class="form-error" id="err-a-tiempo">Por favor indica el tiempo aproximado de la relación.</p>
+                </div>
+
+              </div>
             </div>
 
-            <!-- Host expenses question -->
-            <div class="space-y-5">
-              <div>
-                <label class="form-label">¿Hay algún gasto que será a cargo del anfitrión (sin incluir alojamiento)? <span class="req">*</span></label>
-                <div class="grid grid-cols-2 gap-3" style="max-width:320px;">
-                  <label class="radio-card" id="gastos-host-si">
-                    <input type="radio" name="gastos_anfitrion" value="si" onchange="onGastosHostToggle()">
-                    <span>Sí</span>
-                  </label>
-                  <label class="radio-card" id="gastos-host-no">
-                    <input type="radio" name="gastos_anfitrion" value="no" onchange="onGastosHostToggle()">
-                    <span>No</span>
-                  </label>
-                </div>
-                <p class="form-error" id="err-gastos-host">Por favor indica si el anfitrión cubrirá algún gasto.</p>
-              </div>
-
-              <!-- Warning + checkboxes (only when Sí) -->
-              <div id="gastos-host-detail" class="cond-fields">
-                <div class="rounded-xl p-4 mb-5 text-sm" style="background:rgba(220,38,38,0.06);border:1.5px solid rgba(220,38,38,0.3);color:#991B1B;line-height:1.65;">
-                  <strong>⚠ Importante:</strong> Si el anfitrión asume alguno de los gastos, se debe anexar documentación adicional de solvencia económica del anfitrión, como <strong>estados de cuenta bancarios</strong> o <strong>recibos de nómina</strong>, para demostrar que cuenta con los recursos para cubrir la estancia.
-                </div>
-
-                <label class="form-label">¿Cuáles gastos serán cubiertos por el anfitrión? <span class="req">*</span></label>
-                <p class="text-xs mb-3" style="color:#6B7280;">Selecciona todos los que apliquen.</p>
-                <div class="space-y-2.5">
-                  <label class="radio-card" id="gasto-alojamiento-card" style="display:none;">
-                    <input type="checkbox" name="gastos_host_conceptos" value="alojamiento" onchange="toggleTransportCard(this)">
-                    <span>🏨 Alojamiento</span>
-                  </label>
-                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
-                    <input type="checkbox" name="gastos_host_conceptos" value="alimentos" onchange="toggleTransportCard(this)">
-                    <span>🍽️ Alimentos</span>
-                  </label>
-                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
-                    <input type="checkbox" name="gastos_host_conceptos" value="transporte" onchange="toggleTransportCard(this)">
-                    <span>🚌 Transporte</span>
-                  </label>
-                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
-                    <input type="checkbox" name="gastos_host_conceptos" value="actividades" onchange="toggleTransportCard(this)">
-                    <span>🗺️ Actividades turísticas</span>
-                  </label>
-                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
-                    <input type="checkbox" name="gastos_host_conceptos" value="medicos" onchange="toggleTransportCard(this)">
-                    <span>🏥 Gastos médicos o emergencia</span>
-                  </label>
-                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
-                    <input type="checkbox" name="gastos_host_conceptos" value="otro" onchange="onGastosOtroToggle()">
-                    <span>🔹 Otro</span>
-                  </label>
-                </div>
-                <div id="gastos-otro-container" class="cond-fields" style="margin-top:8px;">
-                  <input type="text" id="gastos-otro-texto" name="gastos_otro_texto" class="form-input"
-                         placeholder="Describe el gasto adicional…">
-                </div>
-                <p class="form-error" id="err-gastos-conceptos">Por favor selecciona al menos un concepto.</p>
-              </div>
+            <!-- Additional viajeros -->
+            <div id="companions-empty" class="text-center py-4" style="color:#9BAFD9;font-size:0.85rem;">
+              No has agregado viajeros adicionales.
             </div>
+            <div id="companions-container" class="space-y-4 mb-4"></div>
+            <button type="button" class="btn-add" onclick="addCompanion()">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+              </svg>
+              + Agregar otro viajero
+            </button>
 
-            <div class="gold-rule my-6"></div>
-
-            <!-- Transport modes -->
-            <div>
-              <label class="form-label">Medios de transporte del visitante en México <span class="req">*</span></label>
-              <p class="text-xs mb-3" style="color:#6B7280;">Selecciona todos los que apliquen.</p>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                <label class="radio-card" id="tc-avion">
-                  <input type="checkbox" name="transporte_mx" value="avion" onchange="toggleTransportCard(this)">
-                  <span>✈️ Avión interno</span>
-                </label>
-                <label class="radio-card" id="tc-autobus">
-                  <input type="checkbox" name="transporte_mx" value="autobus_foraneo" onchange="toggleTransportCard(this)">
-                  <span>🚌 Autobús Foráneo</span>
-                </label>
-                <label class="radio-card" id="tc-auto">
-                  <input type="checkbox" name="transporte_mx" value="auto_rentado" onchange="toggleTransportCard(this)">
-                  <span>🚗 Auto rentado</span>
-                </label>
-                <label class="radio-card" id="tc-anfitrion">
-                  <input type="checkbox" name="transporte_mx" value="anfitrion" onchange="toggleTransportCard(this)">
-                  <span>🏠 Transporte del anfitrión</span>
-                </label>
-                <label class="radio-card" id="tc-publico">
-                  <input type="checkbox" name="transporte_mx" value="transporte_publico" onchange="toggleTransportCard(this)">
-                  <span>🚇 Transporte público y/o taxis</span>
-                </label>
-              </div>
-              <p class="form-error" id="err-transporte">Por favor selecciona al menos un medio de transporte.</p>
-            </div>
+            <p class="form-error mt-3" id="err-companions">Por favor completa todos los campos del viajero.</p>
 
             <div class="flex items-center justify-between mt-8 gap-3">
-              <button type="button" class="btn-back" onclick="goPrev(5)">
+              <button type="button" class="btn-back" onclick="goPrev(2)">
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                   <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Volver
               </button>
-              <button type="button" class="btn-gold" onclick="goNext(5)" style="white-space:nowrap;font-size:0.9375rem;">
-                Revisar información
+              <button type="button" class="btn-gold" onclick="goNext(2)">
+                Continuar
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -1277,11 +1083,10 @@
             </div>
           </section>
 
-
           <!-- ══════════════════════════════
-               STEP 4 — ITINERARIO Y VUELOS
+               STEP 3 — ITINERARIO Y VUELOS
           ══════════════════════════════ -->
-          <section id="step-4" class="form-step p-6 sm:p-8">
+          <section id="step-3" class="form-step p-6 sm:p-8">
 
             <div class="flex items-start gap-4 mb-7">
               <div class="step-icon">
@@ -1291,7 +1096,7 @@
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 4 de 6</span>
+                <span class="section-label mb-1">Paso 3 de 5</span>
                 <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Itinerario, entrada y salida</h2>
                 <p class="text-sm mt-1" style="color:#6B7280;">Ingreso, destinos planeados y salida de México.</p>
               </div>
@@ -1465,13 +1270,13 @@
             </div>
 
             <div class="flex items-center justify-between mt-8 gap-3">
-              <button type="button" class="btn-back" onclick="goPrev(4)">
+              <button type="button" class="btn-back" onclick="goPrev(3)">
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                   <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Volver
               </button>
-              <button type="button" class="btn-gold" onclick="goNext(4)">
+              <button type="button" class="btn-gold" onclick="goNext(3)">
                 Continuar
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1482,9 +1287,139 @@
           </section>
 
           <!-- ═══════════════════════
-               STEP 6 — REVISIÓN
+               STEP 4 — GASTOS
           ═══════════════════════ -->
-          <section id="step-6" class="form-step p-6 sm:p-8">
+          <section id="step-4" class="form-step p-6 sm:p-8">
+
+            <div class="flex items-start gap-4 mb-7">
+              <div class="step-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <rect x="3" y="7" width="16" height="11" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+                  <path d="M7 7V5a4 4 0 018 0v2" stroke="#C9A84C" stroke-width="1.5"/>
+                  <circle cx="11" cy="12.5" r="2" stroke="#C9A84C" stroke-width="1.4"/>
+                </svg>
+              </div>
+              <div>
+                <span class="section-label mb-1">Paso 4 de 5</span>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Gastos del viaje</h2>
+                <p class="text-sm mt-1" style="color:#6B7280;">¿Quién cubrirá los gastos durante la estancia en México?</p>
+              </div>
+            </div>
+
+            <div class="rounded-xl p-4 mb-6 text-sm" style="background:rgba(201,168,76,0.09);border:1px solid rgba(201,168,76,0.25);color:#7B5A24;line-height:1.65;">
+              <strong>💡 Nota:</strong> Si el visitante cubre total o parcialmente sus propios gastos, se recomienda que pueda comprobar el equivalente de al menos <strong>USD $50 por día</strong> con efectivo, estado de cuenta bancario o de tarjeta.
+            </div>
+
+            <!-- Host expenses question -->
+            <div class="space-y-5">
+              <div>
+                <label class="form-label">¿Hay algún gasto que será a cargo del anfitrión (sin incluir alojamiento)? <span class="req">*</span></label>
+                <div class="grid grid-cols-2 gap-3" style="max-width:320px;">
+                  <label class="radio-card" id="gastos-host-si">
+                    <input type="radio" name="gastos_anfitrion" value="si" onchange="onGastosHostToggle()">
+                    <span>Sí</span>
+                  </label>
+                  <label class="radio-card" id="gastos-host-no">
+                    <input type="radio" name="gastos_anfitrion" value="no" onchange="onGastosHostToggle()">
+                    <span>No</span>
+                  </label>
+                </div>
+                <p class="form-error" id="err-gastos-host">Por favor indica si el anfitrión cubrirá algún gasto.</p>
+              </div>
+
+              <!-- Warning + checkboxes (only when Sí) -->
+              <div id="gastos-host-detail" class="cond-fields">
+                <div class="rounded-xl p-4 mb-5 text-sm" style="background:rgba(220,38,38,0.06);border:1.5px solid rgba(220,38,38,0.3);color:#991B1B;line-height:1.65;">
+                  <strong>⚠ Importante:</strong> Si el anfitrión asume alguno de los gastos, se debe anexar documentación adicional de solvencia económica del anfitrión, como <strong>estados de cuenta bancarios</strong> o <strong>recibos de nómina</strong>, para demostrar que cuenta con los recursos para cubrir la estancia.
+                </div>
+
+                <label class="form-label">¿Cuáles gastos serán cubiertos por el anfitrión? <span class="req">*</span></label>
+                <p class="text-xs mb-3" style="color:#6B7280;">Selecciona todos los que apliquen.</p>
+                <div class="space-y-2.5">
+                  <label class="radio-card" id="gasto-alojamiento-card" style="display:none;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="alojamiento" onchange="toggleTransportCard(this)">
+                    <span>🏨 Alojamiento</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="alimentos" onchange="toggleTransportCard(this)">
+                    <span>🍽️ Alimentos</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="transporte" onchange="toggleTransportCard(this)">
+                    <span>🚌 Transporte</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="actividades" onchange="toggleTransportCard(this)">
+                    <span>🗺️ Actividades turísticas</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="medicos" onchange="toggleTransportCard(this)">
+                    <span>🏥 Gastos médicos o emergencia</span>
+                  </label>
+                  <label class="radio-card" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" name="gastos_host_conceptos" value="otro" onchange="onGastosOtroToggle()">
+                    <span>🔹 Otro</span>
+                  </label>
+                </div>
+                <div id="gastos-otro-container" class="cond-fields" style="margin-top:8px;">
+                  <input type="text" id="gastos-otro-texto" name="gastos_otro_texto" class="form-input"
+                         placeholder="Describe el gasto adicional…">
+                </div>
+                <p class="form-error" id="err-gastos-conceptos">Por favor selecciona al menos un concepto.</p>
+              </div>
+            </div>
+
+            <div class="gold-rule my-6"></div>
+
+            <!-- Transport modes -->
+            <div>
+              <label class="form-label">Medios de transporte del visitante en México <span class="req">*</span></label>
+              <p class="text-xs mb-3" style="color:#6B7280;">Selecciona todos los que apliquen.</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <label class="radio-card" id="tc-avion">
+                  <input type="checkbox" name="transporte_mx" value="avion" onchange="toggleTransportCard(this)">
+                  <span>✈️ Avión interno</span>
+                </label>
+                <label class="radio-card" id="tc-autobus">
+                  <input type="checkbox" name="transporte_mx" value="autobus_foraneo" onchange="toggleTransportCard(this)">
+                  <span>🚌 Autobús Foráneo</span>
+                </label>
+                <label class="radio-card" id="tc-auto">
+                  <input type="checkbox" name="transporte_mx" value="auto_rentado" onchange="toggleTransportCard(this)">
+                  <span>🚗 Auto rentado</span>
+                </label>
+                <label class="radio-card" id="tc-anfitrion">
+                  <input type="checkbox" name="transporte_mx" value="anfitrion" onchange="toggleTransportCard(this)">
+                  <span>🏠 Transporte del anfitrión</span>
+                </label>
+                <label class="radio-card" id="tc-publico">
+                  <input type="checkbox" name="transporte_mx" value="transporte_publico" onchange="toggleTransportCard(this)">
+                  <span>🚇 Transporte público y/o taxis</span>
+                </label>
+              </div>
+              <p class="form-error" id="err-transporte">Por favor selecciona al menos un medio de transporte.</p>
+            </div>
+
+            <div class="flex items-center justify-between mt-8 gap-3">
+              <button type="button" class="btn-back" onclick="goPrev(4)">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Volver
+              </button>
+              <button type="button" class="btn-gold" onclick="goNext(4)" style="white-space:nowrap;font-size:0.9375rem;">
+                Revisar información
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </section>
+
+          <!-- ═══════════════════════
+               STEP 5 — REVISIÓN
+          ═══════════════════════ -->
+          <section id="step-5" class="form-step p-6 sm:p-8">
 
             <div class="flex items-start gap-4 mb-7">
               <div class="step-icon">
@@ -1495,13 +1430,13 @@
                 </svg>
               </div>
               <div>
-                <span class="section-label mb-1">Paso 6 de 6</span>
+                <span class="section-label mb-1">Paso 5 de 5</span>
                 <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.625rem;font-weight:600;color:var(--c-navy);line-height:1.2;margin:0;">Revisión final</h2>
                 <p class="text-sm mt-1" style="color:#6B7280;">Verifica que todos los datos sean correctos antes de proceder al pago.</p>
               </div>
             </div>
 
-            <!-- CTA box — visible immediately on arrival at step 6 -->
+            <!-- CTA box — visible immediately on arrival at step 5 -->
             <div class="rounded-2xl p-5 mb-6" style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);">
               <p class="text-sm font-semibold mb-1" style="color:var(--c-navy);">¿Todo correcto?</p>
               <p class="text-xs mb-4" style="color:#6B7280;line-height:1.6;">Revisa los datos abajo y confirma para proceder al pago seguro. La carta PDF llegará al correo del viajero y del anfitrión en minutos.</p>
@@ -1512,13 +1447,13 @@
                 </svg>Pago procesado por Stripe. No almacenamos datos de tarjeta.
               </p>
               <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                <button type="button" class="btn-back" onclick="goPrev(6)">
+                <button type="button" class="btn-back" onclick="goPrev(5)">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
                     <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   Volver y editar
                 </button>
-                <button type="button" class="btn-navy" onclick="goNext(6)" style="font-size:0.9375rem;">
+                <button type="button" class="btn-navy" onclick="goNext(5)" style="font-size:0.9375rem;">
                   Confirmar y pagar · $9 USD
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                     <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1551,13 +1486,13 @@
                 </svg>Pago procesado por Stripe. No almacenamos datos de tarjeta.
               </p>
               <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                <button type="button" class="btn-back" onclick="goPrev(6)">
+                <button type="button" class="btn-back" onclick="goPrev(5)">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
                     <path d="M12 7.5H3M6.5 4L3 7.5 6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   Volver y editar
                 </button>
-                <button type="button" class="btn-navy" onclick="goNext(6)" style="font-size:0.9375rem;">
+                <button type="button" class="btn-navy" onclick="goNext(5)" style="font-size:0.9375rem;">
                   Confirmar y pagar · $9 USD
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                     <path d="M3 8h10M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1615,7 +1550,7 @@
 <template id="companion-tpl">
   <div class="repeat-card" data-companion>
     <div class="repeat-card-header">
-      <span class="repeat-card-title">Acompañante <span class="card-num"></span></span>
+      <span class="repeat-card-title">Viajero <span class="card-num"></span></span>
       <button type="button" class="btn-remove" onclick="removeCompanion(this)">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
           <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -1625,10 +1560,11 @@
     </div>
     <div class="repeat-card-body space-y-4">
       <div>
-        <label class="form-label">Nombre completo del acompañante <span class="req">*</span></label>
+        <label class="form-label">Nombre completo del viajero <span class="req">*</span></label>
         <input type="text" name="comp_nombre[]" class="form-input companion-nombre"
                placeholder="Ej. Juan Carlos Pérez López" required oninput="titleCase(this)">
         <p class="form-hint warn">⚠ Tal como aparece en el pasaporte.</p>
+        <p class="form-error companion-nombre-err">Este campo es obligatorio.</p>
       </div>
       <div>
         <label class="form-label">Sexo <span class="req">*</span></label>
@@ -1641,14 +1577,8 @@
         <div>
           <label class="form-label">Fecha de nacimiento <span class="req">*</span></label>
           <input type="date" name="comp_nacimiento[]" class="form-input companion-nacimiento" required min="1900-01-01" data-dynamic-date="birth">
+          <p class="form-error companion-nacimiento-err">Por favor ingresa la fecha de nacimiento.</p>
         </div>
-        <div>
-          <label class="form-label">Relación con el viajero principal <span class="req">*</span></label>
-          <input type="text" name="comp_relacion[]" class="form-input companion-relacion"
-                 placeholder="Ej. Esposa, Hijo, Amigo de la infancia…" required>
-        </div>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label class="form-label">Nacionalidad <span class="req">*</span></label>
           <select name="comp_nacionalidad[]" class="form-input companion-nacionalidad" required>
@@ -1734,13 +1664,15 @@
               <option>Tuvalu</option><option>Vanuatu</option>
             </optgroup>
           </select>
+          <p class="form-error companion-nacionalidad-err">Por favor selecciona una nacionalidad.</p>
         </div>
-        <div>
-          <label class="form-label">Número de pasaporte <span class="req">*</span></label>
-          <input type="text" name="comp_pasaporte[]" class="form-input companion-pasaporte"
-                 placeholder="Ej. AB123456" required autocomplete="off" oninput="upperAll(this)">
-          <p class="form-hint warn">⚠ Mín. 6 meses de vigencia desde la entrada.</p>
-        </div>
+      </div>
+      <div>
+        <label class="form-label">Número de pasaporte <span class="req">*</span></label>
+        <input type="text" name="comp_pasaporte[]" class="form-input companion-pasaporte"
+               placeholder="Ej. AB123456" required autocomplete="off" oninput="upperAll(this)">
+        <p class="form-hint warn">⚠ Mín. 6 meses de vigencia desde la entrada.</p>
+        <p class="form-error companion-pasaporte-err">Por favor ingresa el número de pasaporte.</p>
       </div>
 
       <!-- Address section -->
@@ -1843,6 +1775,7 @@
               <option>Tuvalu</option><option>Vanuatu</option>
             </optgroup>
           </select>
+          <p class="form-error companion-residencia-err">Por favor selecciona el país de residencia.</p>
         </div>
         <div class="space-y-3" style="margin-top:12px;">
           <input type="text" name="comp_calle[]" class="form-input companion-calle"
@@ -1856,6 +1789,10 @@
           <input type="text" name="comp_cp[]" class="form-input companion-cp"
                  placeholder="Código Postal" autocomplete="off" required oninput="upperAll(this)">
         </div>
+        <p class="form-error companion-calle-err">Por favor completa los campos de domicilio.</p>
+        <p class="form-error companion-ciudad-err" style="display:none;"></p>
+        <p class="form-error companion-provincia-err" style="display:none;"></p>
+        <p class="form-error companion-cp-err" style="display:none;"></p>
       </div>
 
       <!-- Occupation -->
@@ -1863,6 +1800,90 @@
         <label class="form-label">Actividad profesional u ocupación <span class="req">*</span></label>
         <input type="text" name="comp_ocupacion[]" class="form-input companion-ocupacion"
                placeholder="Ej. Ingeniero, Estudiante, Comerciante…" required>
+        <p class="form-error companion-ocupacion-err">Por favor ingresa la ocupación.</p>
+      </div>
+
+      <!-- Vínculo con el anfitrión -->
+      <div>
+        <label class="form-label">Vínculo con el anfitrión <span class="req">*</span></label>
+        <select class="form-input companion-vinculo" required>
+          <option value="" disabled selected>Selecciona el vínculo</option>
+          <option value="familiar">Familiar</option>
+          <option value="pareja">Pareja</option>
+          <option value="amistad">Amistad</option>
+          <option value="laboral">Laboral</option>
+          <option value="otro">Otro</option>
+        </select>
+        <p class="form-error companion-vinculo-err">Por favor indica el vínculo.</p>
+      </div>
+
+      <div class="companion-parentesco-wrapper" style="display:none;">
+        <label class="form-label companion-parentesco-label">El viajero es mi… <span class="req">*</span></label>
+        <select class="form-input companion-parentesco">
+          <option value="" disabled selected>Selecciona el parentesco</option>
+          <option value="padre">Padre / Madre</option>
+          <option value="hijo">Hijo(a)</option>
+          <option value="hermano">Hermano(a)</option>
+          <option value="abuelo">Abuelo(a)</option>
+          <option value="nieto">Nieto(a)</option>
+          <option value="bisabuelo">Bisabuelo(a)</option>
+          <option value="tio">Tío(a)</option>
+          <option value="sobrino">Sobrino(a)</option>
+          <option value="primo">Primo(a)</option>
+          <option value="suegro">Suegro(a)</option>
+          <option value="yerno">Yerno / Nuera</option>
+          <option value="cunado">Cuñado(a)</option>
+          <option value="concuno">Concuño(a)</option>
+          <option value="padrastro">Padrastro / Madrastra</option>
+          <option value="hijastro">Hijastro(a)</option>
+          <option value="hermanastro">Hermanastro(a)</option>
+          <option value="otro_familiar">Otro familiar</option>
+        </select>
+        <p class="form-error companion-parentesco-err">Por favor selecciona el parentesco.</p>
+      </div>
+
+      <div class="companion-parentesco-otro-wrapper" style="display:none;">
+        <label class="form-label">Especifica el parentesco <span class="req">*</span></label>
+        <input type="text" class="form-input companion-parentesco-otro" placeholder="Ej. primo segundo, bisnieto, tío abuelo…">
+        <p class="form-error companion-parentesco-otro-err">Por favor especifica el parentesco.</p>
+      </div>
+
+      <div>
+        <label class="form-label">Describe brevemente el vínculo <span class="req">*</span></label>
+        <textarea class="form-input companion-vinculo-detalle" placeholder="Ej. Es sobrino de mi esposa · Es amigo de la infancia · Trabajamos juntos…" required rows="2"></textarea>
+        <p class="form-hint warn">⚠ Entre más detalle, más personalizada será la carta.</p>
+        <p class="form-hint" style="color:#C53030;font-weight:500;">⚠ Describe la relación desde la perspectiva del anfitrión (quien firma la carta).</p>
+        <p class="form-error companion-vinculo-detalle-err">Por favor describe el vínculo.</p>
+      </div>
+
+      <div class="companion-tiempo-wrapper">
+        <label class="form-label">¿Desde hace cuánto se conocen? <span class="req">*</span></label>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;">
+          <div>
+            <select class="form-input companion-tiempo-anios" required>
+              <option value="" disabled selected>Años</option>
+            </select>
+          </div>
+          <span style="font-size:0.95rem;color:#64748b;">y</span>
+          <div>
+            <select class="form-input companion-tiempo-meses" required>
+              <option value="" disabled selected>Meses</option>
+              <option value="0">0 meses</option>
+              <option value="1">1 mes</option>
+              <option value="2">2 meses</option>
+              <option value="3">3 meses</option>
+              <option value="4">4 meses</option>
+              <option value="5">5 meses</option>
+              <option value="6">6 meses</option>
+              <option value="7">7 meses</option>
+              <option value="8">8 meses</option>
+              <option value="9">9 meses</option>
+              <option value="10">10 meses</option>
+              <option value="11">11 meses</option>
+            </select>
+          </div>
+        </div>
+        <p class="form-error companion-tiempo-err">Por favor indica el tiempo aproximado.</p>
       </div>
     </div>
   </div>
@@ -1990,14 +2011,13 @@
 
 
 <script>
-  const TOTAL = 6;
+  const TOTAL = 5;
   const LABELS = [
-    'Paso 1 de 6 — El viajero',
-    'Paso 2 de 6 — Acompañantes',
-    'Paso 3 de 6 — El anfitrión',
-    'Paso 4 de 6 — Itinerario, entrada y salida',
-    'Paso 5 de 6 — Gastos',
-    'Paso 6 de 6 — Revisión',
+    'Paso 1 de 5 — El anfitrión',
+    'Paso 2 de 5 — Los viajeros',
+    'Paso 3 de 5 — Itinerario, entrada y salida',
+    'Paso 4 de 5 — Gastos',
+    'Paso 5 de 5 — Revisión',
   ];
   let current = 1;
   let companionCount = 0;
@@ -2130,7 +2150,6 @@
     companionCount++;
     const tpl = document.getElementById('companion-tpl');
     const clone = tpl.content.cloneNode(true);
-    clone.querySelector('.card-num').textContent = companionCount;
     // Make radio names unique per card to avoid cross-card interference
     clone.querySelectorAll('input[name="comp_mismo_domicilio[]"]').forEach(r => {
       r.setAttribute('name', `comp_mismo_domicilio_${companionCount}`);
@@ -2140,7 +2159,14 @@
     });
     document.getElementById('companions-container').appendChild(clone);
     document.getElementById('companions-empty').style.display = 'none';
-    renumberCards('companions-container', '[data-companion]', 'Acompañante');
+    // Renumber cards starting from 2
+    document.querySelectorAll('#companions-container [data-companion] .card-num').forEach((el, i) => {
+      el.textContent = i + 2;
+    });
+    document.querySelectorAll('#companions-container [data-companion]').forEach((card, i) => {
+      const titleEl = card.querySelector('.repeat-card-title');
+      if (titleEl) titleEl.firstChild.textContent = 'Viajero ';
+    });
     // Attach real-time validation to the newly added card
     const card = document.getElementById('companions-container').lastElementChild;
     card.querySelectorAll('.companion-nombre').forEach(el => {
@@ -2176,18 +2202,89 @@
         el.classList.toggle('error', el.value === '');
       });
     });
-    card.querySelectorAll('.companion-relacion,.companion-ocupacion').forEach(el => {
+    card.querySelectorAll('.companion-ocupacion').forEach(el => {
       el.addEventListener('blur', () => {
         el.classList.toggle('error', !el.value.trim());
       });
     });
+    // Populate años dropdown dynamically for companion
+    const tiempoAnios = card.querySelector('.companion-tiempo-anios');
+    if (tiempoAnios && !tiempoAnios.querySelector('option[value="0"]')) {
+      for (let i = 0; i <= 99; i++) {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = i === 1 ? '1 año' : `${i} años`;
+        tiempoAnios.appendChild(opt);
+      }
+    }
+    // Vínculo change handler per companion card
+    const CONSANGUINEOUS = ['padre','hijo','hermano','abuelo','nieto','bisabuelo','tio','sobrino','primo'];
+    const compVinculo = card.querySelector('.companion-vinculo');
+    const compParentescoWrap = card.querySelector('.companion-parentesco-wrapper');
+    const compParentescoSel = card.querySelector('.companion-parentesco');
+    const compParentescoOtroWrap = card.querySelector('.companion-parentesco-otro-wrapper');
+    const compParentescoOtroInput = card.querySelector('.companion-parentesco-otro');
+    const compTiempoWrap = card.querySelector('.companion-tiempo-wrapper');
+    const compTiempoAniosEl = card.querySelector('.companion-tiempo-anios');
+    const compTiempoMesesEl = card.querySelector('.companion-tiempo-meses');
+
+    function updateCompTiempo() {
+      const isFamiliar = compVinculo.value === 'familiar';
+      const isConsanguineous = isFamiliar && CONSANGUINEOUS.includes(compParentescoSel.value);
+      if (isConsanguineous) {
+        compTiempoWrap.style.display = 'none';
+        compTiempoAniosEl.removeAttribute('required');
+        compTiempoMesesEl.removeAttribute('required');
+        compTiempoAniosEl.value = '';
+        compTiempoMesesEl.value = '';
+      } else {
+        compTiempoWrap.style.display = '';
+        compTiempoAniosEl.setAttribute('required', '');
+        compTiempoMesesEl.setAttribute('required', '');
+      }
+    }
+
+    compVinculo.addEventListener('change', function() {
+      if (this.value === 'familiar') {
+        compParentescoWrap.style.display = '';
+        compParentescoSel.setAttribute('required', '');
+      } else {
+        compParentescoWrap.style.display = 'none';
+        compParentescoSel.removeAttribute('required');
+        compParentescoSel.value = '';
+        compParentescoOtroWrap.style.display = 'none';
+        compParentescoOtroInput.removeAttribute('required');
+        compParentescoOtroInput.value = '';
+      }
+      updateCompTiempo();
+    });
+
+    compParentescoSel.addEventListener('change', function() {
+      if (this.value === 'otro_familiar') {
+        compParentescoOtroWrap.style.display = '';
+        compParentescoOtroInput.setAttribute('required', '');
+      } else {
+        compParentescoOtroWrap.style.display = 'none';
+        compParentescoOtroInput.removeAttribute('required');
+        compParentescoOtroInput.value = '';
+      }
+      updateCompTiempo();
+    });
+
     // Convert date inputs for mobile picker
     if (window._dpConvert) card.querySelectorAll('input[type="date"]').forEach(window._dpConvert);
   }
 
   function removeCompanion(btn) {
     btn.closest('[data-companion]').remove();
-    renumberCards('companions-container', '[data-companion]', 'Acompañante');
+    // Renumber remaining companion cards starting from 2
+    document.querySelectorAll('#companions-container [data-companion] .card-num').forEach((el, i) => {
+      el.textContent = i + 2;
+    });
+    document.querySelectorAll('#companions-container [data-companion]').forEach((card, i) => {
+      const titleEl = card.querySelector('.repeat-card-title');
+      if (titleEl) titleEl.firstChild.textContent = 'Viajero ';
+    });
     if (!document.querySelector('[data-companion]')) {
       document.getElementById('companions-empty').style.display = '';
     }
@@ -2435,71 +2532,99 @@
     let ok = true;
 
     if (n === 1) {
-      ok &= nameReq('v-nombre',  'err-v-nombre');
-      ok &= dateReq('v-nacimiento', 'err-v-nacimiento', 1900, new Date().getFullYear());
-      ok &= selReq('v-nacionalidad', 'err-v-nacionalidad');
-      ok &= req('v-pasaporte',  'err-v-pasaporte');
-      ok &= selReq('v-residencia', 'err-v-residencia');
-      ok &= req('v-calle',      'err-v-domicilio');
-      ok &= req('v-ciudad',     'err-v-domicilio');
-      ok &= req('v-provincia',  'err-v-domicilio');
-      ok &= req('v-cp',         'err-v-domicilio');
-      ok &= req('v-ocupacion',  'err-v-ocupacion');
-      ok &= emailReq('v-email', 'err-v-email');
-
-    } else if (n === 2) {
-      // Validate each companion card if any exist
-      let compOk = true;
-      document.querySelectorAll('[data-companion]').forEach(card => {
-        const nombre = card.querySelector('.companion-nombre');
-        const nac    = card.querySelector('.companion-nacimiento');
-        const relac  = card.querySelector('.companion-relacion');
-        const nac2   = card.querySelector('.companion-nacionalidad');
-        const pas    = card.querySelector('.companion-pasaporte');
-        if (nombre && !nameElReq(nombre)) compOk = false;
-        [relac, nac2, pas].forEach(el => {
-          if (el && !el.value.trim()) { el.classList.add('error'); compOk = false; }
-        });
-        if (nac && !dateElReq(nac, 1900, new Date().getFullYear())) compOk = false;
-        // Companion address (if "No" selected for same domicilio)
-        const addrRadio = card.querySelector('input[name^="comp_mismo_domicilio"]:checked');
-        if (addrRadio && addrRadio.value === 'no') {
-          ['.companion-residencia', '.companion-calle', '.companion-ciudad', '.companion-provincia', '.companion-cp'].forEach(sel => {
-            const el = card.querySelector(sel);
-            if (el && !el.value.trim()) { el.classList.add('error'); compOk = false; }
-          });
-        }
-        // Companion occupation
-        const ocup = card.querySelector('.companion-ocupacion');
-        if (ocup && !ocup.value.trim()) { ocup.classList.add('error'); compOk = false; }
-      });
-      if (!compOk) {
-        document.getElementById('err-companions').classList.add('show');
-        ok = false;
-      }
-
-    } else if (n === 3) {
-      ok &= nameReq('a-nombre',  'err-a-nombre');
+      // Anfitrión personal data only
+      ok &= nameReq('a-nombre', 'err-a-nombre');
       ok &= selReq('a-nacionalidad', 'err-a-nacionalidad');
       ok &= dateReq('a-nacimiento', 'err-a-nacimiento', 1900, new Date().getFullYear());
       ok &= selReq('a-id-tipo', 'err-a-id-tipo');
-      ok &= req('a-id-num',     'err-a-id-num');
-      ok &= req('a-calle',        'err-a-domicilio');
-      ok &= req('a-colonia',      'err-a-domicilio');
-      ok &= req('a-delegacion',   'err-a-domicilio');
-      ok &= req('a-ciudad',       'err-a-domicilio');
-      ok &= selReq('a-estado',    'err-a-domicilio');
-      ok &= req('a-cp',           'err-a-domicilio');
+      ok &= req('a-id-num', 'err-a-id-num');
+      ok &= req('a-calle', 'err-a-domicilio');
+      ok &= req('a-colonia', 'err-a-domicilio');
+      ok &= req('a-delegacion', 'err-a-domicilio');
+      ok &= req('a-ciudad', 'err-a-domicilio');
+      ok &= selReq('a-estado', 'err-a-domicilio');
+      ok &= req('a-cp', 'err-a-domicilio');
       ok &= phoneReq('a-telefono', 'err-a-telefono');
       ok &= emailReq('a-email', 'err-a-email');
-      ok &= req('a-ocupacion',  'err-a-ocupacion');
-      ok &= selReq('a-vinculo',   'err-a-vinculo');
-      ok &= selReq('a-perspectiva', 'err-a-perspectiva');
-      ok &= req('a-vinculo-detalle', 'err-a-vinculo-detalle');
-      ok &= selReq('a-tiempo-anios', 'err-a-tiempo');
-      ok &= selReq('a-tiempo-meses', 'err-a-tiempo');
+      ok &= req('a-ocupacion', 'err-a-ocupacion');
 
-    } else if (n === 4) {
+    } else if (n === 2) {
+      // Viajero 1
+      ok &= nameReq('v-nombre', 'err-v-nombre');
+      ok &= dateReq('v-nacimiento', 'err-v-nacimiento', 1900, new Date().getFullYear());
+      ok &= selReq('v-nacionalidad', 'err-v-nacionalidad');
+      ok &= req('v-pasaporte', 'err-v-pasaporte');
+      ok &= selReq('v-residencia', 'err-v-residencia');
+      ok &= req('v-calle', 'err-v-domicilio');
+      ok &= req('v-ciudad', 'err-v-domicilio');
+      ok &= req('v-provincia', 'err-v-domicilio');
+      ok &= req('v-cp', 'err-v-domicilio');
+      ok &= req('v-ocupacion', 'err-v-ocupacion');
+      ok &= emailReq('v-email', 'err-v-email');
+      // Viajero 1 vínculo
+      ok &= selReq('a-vinculo', 'err-a-vinculo');
+      ok &= req('a-vinculo-detalle', 'err-a-vinculo-detalle');
+      const vinculoVal = document.getElementById('a-vinculo')?.value;
+      if (vinculoVal === 'familiar') {
+        ok &= selReq('a-parentesco', 'err-a-parentesco');
+        if (document.getElementById('a-parentesco')?.value === 'otro_familiar') {
+          ok &= req('a-parentesco-otro', 'err-a-parentesco-otro');
+        }
+      }
+      if (document.getElementById('tiempo-wrapper')?.style.display !== 'none') {
+        ok &= selReq('a-tiempo-anios', 'err-a-tiempo');
+        ok &= selReq('a-tiempo-meses', 'err-a-tiempo');
+      }
+      // Additional viajeros (companions)
+      let compOk = true;
+      document.querySelectorAll('[data-companion]').forEach(card => {
+        const showErr = (el, errClass) => { const e = card.querySelector('.' + errClass); if (e) e.classList.add('show'); if (el) el.classList.add('error'); compOk = false; };
+        const nombre = card.querySelector('.companion-nombre');
+        if (!nombre?.value.trim() || !nombre.value.trim().includes(' ')) showErr(nombre, 'companion-nombre-err');
+        const nac = card.querySelector('.companion-nacimiento');
+        if (!nac?.value) showErr(nac, 'companion-nacimiento-err');
+        const nac_sel = card.querySelector('.companion-nacionalidad');
+        if (!nac_sel?.value) showErr(nac_sel, 'companion-nacionalidad-err');
+        const pas = card.querySelector('.companion-pasaporte');
+        if (!pas?.value.trim()) showErr(pas, 'companion-pasaporte-err');
+        const ocu = card.querySelector('.companion-ocupacion');
+        if (!ocu?.value.trim()) showErr(ocu, 'companion-ocupacion-err');
+        // Address validation if mismo_domicilio === 'no'
+        const domRadio = card.querySelector('input[name^="comp_mismo_domicilio"]:checked');
+        if (domRadio?.value === 'no') {
+          const residencia = card.querySelector('.companion-residencia');
+          if (!residencia?.value) showErr(residencia, 'companion-residencia-err');
+          ['companion-calle','companion-ciudad','companion-provincia','companion-cp'].forEach(cls => {
+            const el = card.querySelector('.' + cls);
+            if (!el?.value.trim()) showErr(el, cls + '-err');
+          });
+        }
+        // Companion vínculo validation
+        const compVinculo = card.querySelector('.companion-vinculo');
+        if (!compVinculo?.value) showErr(compVinculo, 'companion-vinculo-err');
+        const compVinculoDetalle = card.querySelector('.companion-vinculo-detalle');
+        if (!compVinculoDetalle?.value.trim()) showErr(compVinculoDetalle, 'companion-vinculo-detalle-err');
+        if (compVinculo?.value === 'familiar') {
+          const compParentesco = card.querySelector('.companion-parentesco');
+          if (!compParentesco?.value) showErr(compParentesco, 'companion-parentesco-err');
+          if (compParentesco?.value === 'otro_familiar') {
+            const compParentescoOtro = card.querySelector('.companion-parentesco-otro');
+            if (!compParentescoOtro?.value.trim()) showErr(compParentescoOtro, 'companion-parentesco-otro-err');
+          }
+        }
+        // Companion tiempo validation (only if wrapper visible)
+        const compTiempoWrap = card.querySelector('.companion-tiempo-wrapper');
+        if (compTiempoWrap && compTiempoWrap.style.display !== 'none') {
+          const compTiempoAnios = card.querySelector('.companion-tiempo-anios');
+          const compTiempoMeses = card.querySelector('.companion-tiempo-meses');
+          if (!compTiempoAnios?.value && compTiempoAnios?.value !== '0') showErr(compTiempoAnios, 'companion-tiempo-err');
+          if (!compTiempoMeses?.value && compTiempoMeses?.value !== '0') showErr(compTiempoMeses, 'companion-tiempo-err');
+        }
+      });
+      ok = ok && compOk;
+
+    } else if (n === 3) {
+      // Itinerario (old step 4 validation)
       ok &= selReq('j-motivo', 'err-j-motivo');
       const ingreso = document.querySelector('input[name="ingreso_tipo"]:checked');
       const salida  = document.querySelector('input[name="salida_tipo"]:checked');
@@ -2535,7 +2660,6 @@
       }
       ok &= dateReq('ing-fecha', 'err-ing-fecha', new Date().getFullYear(), new Date().getFullYear() + 5);
       ok &= dateReq('sal-fecha', 'err-sal-fecha', new Date().getFullYear(), new Date().getFullYear() + 5);
-      // Validate departure date >= arrival date
       const ingFecha = document.getElementById('ing-fecha')?.value;
       const salFecha = document.getElementById('sal-fecha')?.value;
       if (ingFecha && salFecha && salFecha < ingFecha) {
@@ -2546,7 +2670,6 @@
         ok = false;
       }
 
-      // Validate at least one destino
       const destinos = document.querySelectorAll('[data-destino]');
       if (destinos.length === 0) {
         document.getElementById('err-destinos').classList.add('show');
@@ -2560,7 +2683,6 @@
             const el = card.querySelector(sel);
             if (el && !el.value.trim()) { el.classList.add('error'); cardOk = false; ok = false; }
           });
-          // Check accommodation toggle
           const alojRadio = card.querySelector('input[name^="dest_aloj_es_anfitrion"]:checked');
           if (!alojRadio) {
             card.querySelector('.dest-aloj-toggle-err')?.classList.add('show');
@@ -2572,7 +2694,6 @@
               if (el && !el.value.trim()) { el.classList.add('error'); cardOk = false; ok = false; }
             });
           }
-          // Validate destino dates with year-range check
           const desdeEl = card.querySelector('.dest-fecha-desde');
           const hastaEl = card.querySelector('.dest-fecha-hasta');
           const dateErr = card.querySelector('.dest-date-err');
@@ -2581,19 +2702,16 @@
             if (!el) return;
             if (!dateElReq(el, cy, cy + 5)) { cardOk = false; ok = false; if (!dateMsg) dateMsg = 'Por favor ingresa fechas válidas de estadía.'; }
           });
-          // Cross-validate: destino 1 desde >= ing-fecha
           if (idx === 0 && ingFecha && desdeEl?.value && desdeEl.value < ingFecha) {
             desdeEl.classList.add('error');
             cardOk = false; ok = false;
             dateMsg = 'La fecha de llegada al destino no puede ser anterior a la fecha de ingreso a México.';
           }
-          // Cross-validate: each destino desde >= previous destino hasta
           if (idx > 0 && prevHasta && desdeEl?.value && desdeEl.value < prevHasta) {
             desdeEl.classList.add('error');
             cardOk = false; ok = false;
             dateMsg = 'La fecha de llegada debe ser igual o posterior a la fecha de salida del destino anterior.';
           }
-          // Cross-validate: hasta >= desde within same destino
           if (desdeEl?.value && hastaEl?.value && hastaEl.value < desdeEl.value) {
             hastaEl.classList.add('error');
             cardOk = false; ok = false;
@@ -2604,7 +2722,6 @@
           const cardErr = card.querySelector('.dest-card-err');
           if (cardErr) cardErr.classList.toggle('show', !cardOk);
         });
-        // Cross-validate: sal-fecha must equal last destino hasta
         if (salFecha && prevHasta && salFecha !== prevHasta) {
           const salEl = document.getElementById('sal-fecha');
           salEl?.classList.add('error');
@@ -2614,7 +2731,6 @@
         }
       }
 
-      // 180-day warning (non-blocking)
       const warn180 = document.getElementById('warn-180');
       if (warn180) {
         if (ingFecha && salFecha && salFecha >= ingFecha) {
@@ -2625,8 +2741,8 @@
         }
       }
 
-    } else if (n === 5) {
-      // Host expenses question
+    } else if (n === 4) {
+      // Gastos (old step 5 validation)
       const gastosHost = document.querySelector('input[name="gastos_anfitrion"]:checked');
       if (!gastosHost) {
         document.getElementById('err-gastos-host')?.classList.add('show');
@@ -2646,7 +2762,6 @@
           }
         }
       }
-      // Transport checkboxes
       const checked = document.querySelectorAll('input[name="transporte_mx"]:checked');
       if (checked.length === 0) {
         document.getElementById('err-transporte').classList.add('show');
@@ -2679,11 +2794,16 @@
         nombre:      card.querySelector('.companion-nombre')?.value.trim() || '',
         genero:      card.querySelector('input[name^="comp_genero"]:checked')?.value || 'masculino',
         nacimiento:  card.querySelector('.companion-nacimiento')?.value || '',
-        relacion:    card.querySelector('.companion-relacion')?.value.trim() || '',
         nacionalidad:card.querySelector('.companion-nacionalidad')?.value || '',
         pasaporte:   card.querySelector('.companion-pasaporte')?.value.trim() || '',
         ocupacion:   card.querySelector('.companion-ocupacion')?.value.trim() || '',
         mismo_domicilio: card.querySelector('input[name^="comp_mismo_domicilio"]:checked')?.value || 'si',
+        vinculo:     card.querySelector('.companion-vinculo')?.value || '',
+        parentesco:  card.querySelector('.companion-parentesco')?.value || '',
+        parentesco_otro: card.querySelector('.companion-parentesco-otro')?.value.trim() || '',
+        vinculo_detalle: card.querySelector('.companion-vinculo-detalle')?.value.trim() || '',
+        tiempo_anios: card.querySelector('.companion-tiempo-anios')?.value || '',
+        tiempo_meses: card.querySelector('.companion-tiempo-meses')?.value || '',
       };
       if (comp.mismo_domicilio === 'no') {
         comp.residencia = card.querySelector('.companion-residencia')?.value || '';
@@ -2732,9 +2852,7 @@
 
     try {
       const formData = collectFormData();
-      const email = formData['a-perspectiva'] === 'visitante'
-        ? (formData['v-email'] || '')
-        : (formData['a-email'] || '');
+      const email = formData['a-email'] || '';
 
       const res = await fetch('/api/submit', {
         method: 'POST',
@@ -2753,10 +2871,7 @@
       }
 
       // Save form data to localStorage before redirecting to Stripe
-      localStorage.setItem('carta_form_completo', JSON.stringify({
-        formData,
-        step: current,
-      }));
+      localStorage.setItem('carta_form_completo', JSON.stringify({ version: 2, formData, step: current }));
 
       window.location.href = result.url;
 
@@ -2822,10 +2937,34 @@
             if (y && m && d) trigger.value = d + '/' + m + '/' + y;
           }
         }
-        if (comp.relacion) card.querySelector('.companion-relacion').value = comp.relacion;
-        if (comp.nacionalidad) card.querySelector('.companion-nacionalidad').value = comp.nacionalidad;
+                if (comp.nacionalidad) card.querySelector('.companion-nacionalidad').value = comp.nacionalidad;
         if (comp.pasaporte) card.querySelector('.companion-pasaporte').value = comp.pasaporte;
         if (comp.ocupacion) card.querySelector('.companion-ocupacion').value = comp.ocupacion;
+        // Restore vínculo fields
+        if (comp.vinculo) {
+          const compVinculoEl = card.querySelector('.companion-vinculo');
+          if (compVinculoEl) { compVinculoEl.value = comp.vinculo; compVinculoEl.dispatchEvent(new Event('change')); }
+        }
+        if (comp.parentesco) {
+          const compParentescoEl = card.querySelector('.companion-parentesco');
+          if (compParentescoEl) { compParentescoEl.value = comp.parentesco; compParentescoEl.dispatchEvent(new Event('change')); }
+        }
+        if (comp.parentesco_otro) {
+          const compParentescoOtroEl = card.querySelector('.companion-parentesco-otro');
+          if (compParentescoOtroEl) compParentescoOtroEl.value = comp.parentesco_otro;
+        }
+        if (comp.vinculo_detalle) {
+          const compVinculoDetalleEl = card.querySelector('.companion-vinculo-detalle');
+          if (compVinculoDetalleEl) compVinculoDetalleEl.value = comp.vinculo_detalle;
+        }
+        if (comp.tiempo_anios !== '' && comp.tiempo_anios !== undefined) {
+          const compTiempoAniosEl = card.querySelector('.companion-tiempo-anios');
+          if (compTiempoAniosEl) compTiempoAniosEl.value = comp.tiempo_anios;
+        }
+        if (comp.tiempo_meses !== '' && comp.tiempo_meses !== undefined) {
+          const compTiempoMesesEl = card.querySelector('.companion-tiempo-meses');
+          if (compTiempoMesesEl) compTiempoMesesEl.value = comp.tiempo_meses;
+        }
         if (comp.mismo_domicilio === 'no') {
           const noRadio = card.querySelector('input[name^="comp_mismo_domicilio"][value="no"]');
           if (noRadio) { noRadio.checked = true; onCompAddrToggle(noRadio); }
@@ -2878,7 +3017,7 @@
   function goNext(n) {
     if (!validateStep(n)) return;
     if (n < TOTAL) {
-      if (n === 5) buildReview();
+      if (n === 4) buildReview();
       current = n + 1;
       showStep(current);
     } else {
@@ -2918,9 +3057,27 @@
       `<dl style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px 16px;margin:0;">${items}</dl></div>`;
   }
   function buildReview() {
-    // Viajero
+    // Anfitrión (personal data only, no vínculo)
+    const anfiAddr = [rval('a-calle'), rval('a-colonia'), rval('a-delegacion'), rval('a-ciudad'), rval('a-estado'), rval('a-cp')].filter(v => v !== '—').join(', ');
+    const anfitrion = reviewCard('El anfitrión', [
+      ['Nombre completo', rval('a-nombre')],
+      ['Nacionalidad', rval('a-nacionalidad')],
+      ['Fecha de nacimiento', fmtDate(rval('a-nacimiento'))],
+      ['Tipo de ID', rtext('a-id-tipo')],
+      ['N.º de ID', rval('a-id-num')],
+      ['Domicilio en México', anfiAddr || '—'],
+      ['Teléfono', rval('a-telefono')],
+      ['Correo electrónico', rval('a-email')],
+      ['Ocupación / cargo', rval('a-ocupacion')],
+      ['Empresa', rval('a-empresa') !== '—' ? rval('a-empresa') : '—'],
+    ]);
+
+    // Viajero 1 (with vínculo)
     const addr = [rval('v-calle'), rval('v-ciudad'), rval('v-provincia'), rval('v-cp')].filter(v => v !== '—').join(', ');
-    const viajero = reviewCard('El viajero', [
+    const tiempoAnios = rtext('a-tiempo-anios');
+    const tiempoMeses = rtext('a-tiempo-meses');
+    const tiempoStr = (tiempoAnios !== '—' || tiempoMeses !== '—') ? `${tiempoAnios}${tiempoMeses !== '—' && tiempoMeses !== '0 meses' ? ', ' + tiempoMeses : ''}` : '—';
+    const viajeroRows = [
       ['Nombre completo', rval('v-nombre')],
       ['Fecha de nacimiento', fmtDate(rval('v-nacimiento'))],
       ['Nacionalidad', rval('v-nacionalidad')],
@@ -2929,22 +3086,20 @@
       ['Domicilio', addr || '—'],
       ['Ocupación', rval('v-ocupacion')],
       ['Correo electrónico', rval('v-email')],
-    ]);
+      ['Vínculo con el anfitrión', rtext('a-vinculo')],
+      ['Detalle del vínculo', rval('a-vinculo-detalle')],
+      ['Tiempo de conocerse', tiempoStr],
+    ];
+    const viajero = reviewCard('Viajero 1 (principal)', viajeroRows);
 
-    // Acompañantes
+    // Additional viajeros
     const compCards = document.querySelectorAll('[data-companion]');
-    let acomp;
-    if (compCards.length === 0) {
-      acomp = `<div style="background:var(--c-cream);border:1px solid rgba(27,53,102,0.08);border-radius:16px;padding:20px;">` +
-        `<p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--c-gold);margin:0 0 8px;">Acompañantes</p>` +
-        `<div class="gold-rule" style="margin-bottom:14px;"></div>` +
-        `<p style="font-size:0.875rem;color:#6B7280;margin:0;">Ninguno</p></div>`;
-    } else {
-      acomp = Array.from(compCards).map((card, i) => {
+    let compHTML = '';
+    if (compCards.length > 0) {
+      compHTML = Array.from(compCards).map((card, i) => {
         const rows = [
           ['Nombre', card.querySelector('.companion-nombre')?.value || '—'],
           ['Nacimiento', fmtDate(card.querySelector('.companion-nacimiento')?.value || '—')],
-          ['Relación', card.querySelector('.companion-relacion')?.value || '—'],
           ['Nacionalidad', card.querySelector('.companion-nacionalidad')?.value || '—'],
           ['Pasaporte', card.querySelector('.companion-pasaporte')?.value || '—'],
           ['Ocupación', card.querySelector('.companion-ocupacion')?.value || '—'],
@@ -2962,31 +3117,23 @@
         } else {
           rows.push(['Domicilio', 'Mismo que el viajero principal']);
         }
-        return reviewCard(`Acompañante ${i + 1}`, rows);
+        // Vínculo info
+        const compVinculo = card.querySelector('.companion-vinculo')?.value || '—';
+        const VINCULO_LABELS = { familiar: 'Familiar', pareja: 'Pareja', amistad: 'Amistad', laboral: 'Laboral', otro: 'Otro' };
+        rows.push(['Vínculo con el anfitrión', VINCULO_LABELS[compVinculo] || compVinculo]);
+        rows.push(['Detalle del vínculo', card.querySelector('.companion-vinculo-detalle')?.value || '—']);
+        const cTiempoA = card.querySelector('.companion-tiempo-anios')?.value;
+        const cTiempoM = card.querySelector('.companion-tiempo-meses')?.value;
+        let cTiempoStr = '—';
+        if (cTiempoA !== '' && cTiempoA !== undefined) {
+          const aText = cTiempoA == 1 ? '1 año' : `${cTiempoA} años`;
+          const mText = cTiempoM && cTiempoM !== '0' ? `, ${cTiempoM} ${cTiempoM == 1 ? 'mes' : 'meses'}` : '';
+          cTiempoStr = aText + mText;
+        }
+        rows.push(['Tiempo de conocerse', cTiempoStr]);
+        return reviewCard(`Viajero ${i + 2}`, rows);
       }).join('');
     }
-
-    // Anfitrión
-    const anfiAddr = [rval('a-calle'), rval('a-colonia'), rval('a-delegacion'), rval('a-ciudad'), rval('a-estado'), rval('a-cp')].filter(v => v !== '—').join(', ');
-    const tiempoAnios = rtext('a-tiempo-anios');
-    const tiempoMeses = rtext('a-tiempo-meses');
-    const tiempoStr = (tiempoAnios !== '—' || tiempoMeses !== '—') ? `${tiempoAnios}${tiempoMeses !== '—' && tiempoMeses !== '0 meses' ? ', ' + tiempoMeses : ''}` : '—';
-    const anfitrion = reviewCard('El anfitrión', [
-      ['Nombre completo', rval('a-nombre')],
-      ['Nacionalidad', rval('a-nacionalidad')],
-      ['Fecha de nacimiento', fmtDate(rval('a-nacimiento'))],
-      ['Tipo de ID', rtext('a-id-tipo')],
-      ['N.º de ID', rval('a-id-num')],
-      ['Domicilio en México', anfiAddr || '—'],
-      ['Teléfono', rval('a-telefono')],
-      ['Correo electrónico', rval('a-email')],
-      ['Ocupación / cargo', rval('a-ocupacion')],
-      ['Empresa', rval('a-empresa') !== '—' ? rval('a-empresa') : '—'],
-      ['Vínculo con el viajero', rtext('a-vinculo')],
-      ['¿Quién llena?', rtext('a-perspectiva')],
-      ['Detalle del vínculo', rval('a-vinculo-detalle')],
-      ['Tiempo de conocerse', tiempoStr],
-    ]);
 
     // Gastos
     const modos = Array.from(document.querySelectorAll('input[name="transporte_mx"]:checked')).map(i => TRANSPORTE_LABELS[i.value] || i.value).join(', ') || '—';
@@ -3060,7 +3207,7 @@
       ['Fecha de regreso', fmtDate(rval('sal-fecha'))],
     ]);
 
-    document.getElementById('review-content').innerHTML = viajero + acomp + anfitrion + gastos + destinosHTML + vuelos;
+    document.getElementById('review-content').innerHTML = anfitrion + viajero + compHTML + gastos + destinosHTML + vuelos;
   }
 
   /* ── Real-time field validation setup ── */
@@ -3125,7 +3272,6 @@
       ['a-nacionalidad','err-a-nacionalidad'],
       ['a-id-tipo','err-a-id-tipo'],
       ['a-vinculo','err-a-vinculo'],
-      ['a-perspectiva','err-a-perspectiva'],
       ['j-motivo','err-j-motivo'],
     ].forEach(([id, errId]) => {
       const el = document.getElementById(id);
@@ -3178,7 +3324,6 @@
   (function() {
     const CONSANGUINEOUS = ['padre','hijo','hermano','abuelo','nieto','bisabuelo','tio','sobrino','primo'];
     const vinculoSel = document.getElementById('a-vinculo');
-    const perspectivaSel = document.getElementById('a-perspectiva');
     const parentescoWrap = document.getElementById('parentesco-wrapper');
     const parentescoSel = document.getElementById('a-parentesco');
     const parentescoLabel = document.getElementById('parentesco-label');
@@ -3187,13 +3332,6 @@
     const tiempoWrap = document.getElementById('tiempo-wrapper');
     const tiempoAnios = document.getElementById('a-tiempo-anios');
     const tiempoMeses = document.getElementById('a-tiempo-meses');
-
-    function updateParentescoLabel() {
-      const p = perspectivaSel.value;
-      if (p === 'anfitrion') parentescoLabel.innerHTML = 'El viajero es mi… <span class="req">*</span>';
-      else if (p === 'visitante') parentescoLabel.innerHTML = 'El anfitrión es mi… <span class="req">*</span>';
-      else parentescoLabel.innerHTML = 'Tipo de parentesco <span class="req">*</span>';
-    }
 
     function updateTiempo() {
       const isFamiliar = vinculoSel.value === 'familiar';
@@ -3215,7 +3353,7 @@
       if (this.value === 'familiar') {
         parentescoWrap.style.display = '';
         parentescoSel.setAttribute('required', '');
-        updateParentescoLabel();
+        parentescoLabel.innerHTML = 'El viajero es mi… <span class="req">*</span>';
       } else {
         parentescoWrap.style.display = 'none';
         parentescoSel.removeAttribute('required');
@@ -3238,8 +3376,6 @@
       }
       updateTiempo();
     });
-
-    perspectivaSel.addEventListener('change', updateParentescoLabel);
   })();
 
   setupRealtimeValidation();
@@ -3458,6 +3594,7 @@
   if (_savedForm) {
     try {
       const _parsed = JSON.parse(_savedForm);
+      if (_parsed.version !== 2) { localStorage.removeItem('carta_form_completo'); throw new Error('version mismatch'); }
       if (_parsed.formData) {
         // Add default destino first (restore will replace it if saved data has destinos)
         if (!_parsed.formData.destinos?.length) addDestino();
