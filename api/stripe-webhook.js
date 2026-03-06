@@ -113,13 +113,16 @@ export default async function handler(req, res) {
           console.log('[webhook] PDF uploaded, URL:', pdfUrl);
         }
 
+        // Retrieve full session from Stripe (webhook payload may omit customer_details)
+        const fullSession = await stripe.checkout.sessions.retrieve(session.id);
+        console.log('[webhook] customer_details:', JSON.stringify(fullSession.customer_details));
+
         // Send PDF + recommendations email to viajero, anfitrión, and Stripe payer
         const viajeroEmail = submission.form_data['v-email'] || '';
         const anfitrionEmail = submission.form_data['a-email'] || '';
-        const stripeEmail = session.customer_details?.email || '';
+        const stripeEmail = fullSession.customer_details?.email || '';
         const recipients = [...new Set([viajeroEmail, anfitrionEmail, stripeEmail].filter(Boolean))];
 
-        console.log('[webhook] customer_details:', JSON.stringify(session.customer_details));
         console.log('[webhook] Sending PDF email to recipients:', recipients.join(', '));
         await Promise.all(
           recipients.map(addr => sendEmail(addr, pdfBuffer, submission.plan, guestName, session.amount_total, companionNames))
