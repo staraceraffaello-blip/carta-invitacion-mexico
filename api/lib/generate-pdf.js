@@ -145,8 +145,12 @@ export default function generatePDF(formData, plan) {
     const hostState = d['a-estado'] || '';
 
     doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
-      .text(`${hostCity}${hostState ? ', ' + hostState : ''}, a ${dateStr}.`, { align: 'right' });
+      .text(`${hostCity}${hostState && hostState !== hostCity ? ', ' + hostState : ''}, a ${dateStr}.`, { align: 'right' });
     doc.moveDown(0.8);
+
+    doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica-Bold')
+      .text('ASUNTO: Carta de invitación', { lineGap: LINE_GAP });
+    doc.moveDown(0.4);
 
     doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
       .text('A quien corresponda:', { lineGap: LINE_GAP });
@@ -158,7 +162,7 @@ export default function generatePDF(formData, plan) {
     const hostNacimiento = fmtDate(d['a-nacimiento']);
     const hostIdTipo = ID_LABELS[d['a-id-tipo']] || d['a-id-tipo'] || 'identificación oficial';
     const hostIdNum = d['a-id-num'] || '';
-    const hostAddr = [d['a-calle'], d['a-colonia'], d['a-delegacion'], d['a-ciudad'], d['a-estado'], 'C.P. ' + (d['a-cp'] || ''), 'México'].filter(Boolean).join(', ');
+    const hostAddr = [d['a-calle'], d['a-colonia'], d['a-delegacion'], d['a-ciudad'], d['a-estado'] !== d['a-ciudad'] ? d['a-estado'] : '', 'C.P. ' + (d['a-cp'] || ''), 'México'].filter(Boolean).join(', ');
     const hostOcupacion = d['a-ocupacion'] || '';
     const hostEmpresa = d['a-empresa'] || '';
     const hostTelefono = d['a-telefono'] || '';
@@ -286,34 +290,40 @@ export default function generatePDF(formData, plan) {
       doc.x = doc.page.margins.left;
     } else {
       /* ── Fluent paragraph: single traveler ── */
+      const singleConsanguineous = vinculo === 'familiar' && CONSANGUINEOUS.includes(parentescoRaw) && parentescoLabel;
+      const nameFragment = singleConsanguineous
+        ? `${visitorName}, mi ${parentescoLabel},`
+        : `${visitorName},`;
+      const singleVisitorText =
+        `${nameFragment} de nacionalidad ${visitorNacionalidad}, ` +
+        `nacid${visitorGenero === 'femenino' ? 'a' : 'o'} el ${visitorNacimiento}, ` +
+        `${visitorGenero === 'femenino' ? 'portadora' : 'portador'} de pasaporte N.º ${visitorPasaporte}, ` +
+        `de ocupación ${visitorOcupacion}, con domicilio en ${visitorAddr}.`;
       doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
-        .text(
-          `${visitorName}, de nacionalidad ${visitorNacionalidad}, ` +
-          `nacid${visitorGenero === 'femenino' ? 'a' : 'o'} el ${visitorNacimiento}, ` +
-          `${visitorGenero === 'femenino' ? 'portadora' : 'portador'} de pasaporte N.º ${visitorPasaporte}, ` +
-          `de ocupación ${visitorOcupacion}, con domicilio en ${visitorAddr}.`,
-          { lineGap: LINE_GAP, align: 'justify' }
-        );
+        .text(singleVisitorText, { lineGap: LINE_GAP, align: 'justify' });
       doc.moveDown(0.5);
     }
 
     /* ─── Vínculo paragraph (single traveler only — bullets already include this) ─── */
+    /* For consanguineous relatives the vínculo is already merged into the visitor paragraph above */
     if (!hasCompanions) {
-      let vinculoPara;
-      if ((vinculo === 'familiar' || vinculo === 'pareja') && parentescoLabel) {
-        vinculoPara = `${visitorName} es mi ${parentescoLabel}.`;
-      } else {
-        vinculoPara = `${visitorName} y quien suscribe mantenemos una relación de ${vinculo}.`;
-      }
-      if (vinculoDetalle) {
-        const detClean = vinculoDetalle.replace(/\.+$/, '');
-        vinculoPara += ` ${detClean}.`;
-      }
       const isConsanguineous = vinculo === 'familiar' && CONSANGUINEOUS.includes(parentescoRaw);
-      if (tiempoStr && !isConsanguineous) vinculoPara += ` Nos conocemos desde hace ${tiempoStr}.`;
+      if (!isConsanguineous) {
+        let vinculoPara;
+        if ((vinculo === 'familiar' || vinculo === 'pareja') && parentescoLabel) {
+          vinculoPara = `${visitorName} es mi ${parentescoLabel}.`;
+        } else {
+          vinculoPara = `${visitorName} y quien suscribe mantenemos una relación de ${vinculo}.`;
+        }
+        if (vinculoDetalle) {
+          const detClean = vinculoDetalle.replace(/\.+$/, '');
+          vinculoPara += ` ${detClean}.`;
+        }
+        if (tiempoStr) vinculoPara += ` Nos conocemos desde hace ${tiempoStr}.`;
 
-      doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
-        .text(vinculoPara, { lineGap: LINE_GAP, align: 'justify' });
+        doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
+          .text(vinculoPara, { lineGap: LINE_GAP, align: 'justify' });
+      }
     }
     doc.moveDown(0.4);
 
@@ -357,7 +367,7 @@ export default function generatePDF(formData, plan) {
         alojSentence = `${refInvitadosCap} se hospedará en mi domicilio ubicado en ${hostAddr}.`;
       } else {
         const alojNombre = d['j-aloj-nombre'] || '';
-        const alojAddr = [d['j-al-calle'], d['j-al-colonia'], d['j-al-delegacion'], d['j-al-ciudad'], d['j-al-estado'], 'C.P. ' + (d['j-al-cp'] || '')].filter(Boolean).join(', ');
+        const alojAddr = [d['j-al-calle'], d['j-al-colonia'], d['j-al-delegacion'], d['j-al-ciudad'], d['j-al-estado'] !== d['j-al-ciudad'] ? d['j-al-estado'] : '', 'C.P. ' + (d['j-al-cp'] || '')].filter(Boolean).join(', ');
         alojSentence = alojNombre
           ? `${refInvitadosCap} se hospedará en ${alojNombre}, ubicado en ${alojAddr}.`
           : `${refInvitadosCap} se hospedará en ${alojAddr}.`;
@@ -382,22 +392,36 @@ export default function generatePDF(formData, plan) {
 
     /* ─── Itinerary (Plan Completo only) ─── */
     if (plan === 'completo' && d.destinos && d.destinos.length) {
+      const singleDest = d.destinos.length === 1;
       doc.moveDown(0.1);
       doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
-        .text('El itinerario previsto para el viaje es el siguiente:', { lineGap: LINE_GAP, align: 'justify' });
+        .text(
+          singleDest
+            ? 'Los detalles de la estancia son los siguientes:'
+            : 'El itinerario previsto para el viaje es el siguiente:',
+          { lineGap: LINE_GAP, align: 'justify' }
+        );
       doc.moveDown(0.2);
 
+      const destIndent = singleDest ? 0 : 20;
+      const baseX = doc.page.margins.left;
+      const baseW = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+
       d.destinos.forEach((dest, i) => {
-        const alojAddr = [dest.aloj_calle, dest.aloj_colonia, dest.aloj_delegacion, dest.aloj_ciudad, dest.aloj_estado, 'C.P. ' + (dest.aloj_cp || '')].filter(Boolean).join(', ');
+        const alojAddr = [dest.aloj_calle, dest.aloj_colonia, dest.aloj_delegacion, dest.aloj_ciudad, dest.aloj_ciudad !== dest.aloj_estado ? dest.aloj_estado : '', 'C.P. ' + (dest.aloj_cp || '')].filter(Boolean).join(', ');
         const alojStr = dest.aloj_nombre ? `${dest.aloj_nombre}, ${alojAddr}` : alojAddr;
-        doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica-Bold')
-          .text(`Destino ${i + 1}: ${dest.ciudad}`, { lineGap: 1 });
+        const textX = baseX + destIndent;
+        const textW = baseW - destIndent;
+        doc.fontSize(BODY_SIZE).fillColor(BLACK).font(singleDest ? 'Helvetica' : 'Helvetica-Bold')
+          .text(singleDest ? `Destino: ${dest.ciudad}` : `Destino ${i + 1}: ${dest.ciudad}`, textX, doc.y, { lineGap: 1, width: textW });
         doc.font('Helvetica')
-          .text(`Fechas: ${fmtDate(dest.fecha_desde)} — ${fmtDate(dest.fecha_hasta)}`, { lineGap: 1 })
-          .text(`Actividades: ${dest.actividades}`, { lineGap: 1 })
-          .text(`Alojamiento: ${alojStr}`, { lineGap: 1 });
+          .text(`Fechas: ${fmtDate(dest.fecha_desde)} — ${fmtDate(dest.fecha_hasta)}`, textX, doc.y, { lineGap: 1, width: textW })
+          .text(`Actividades: ${dest.actividades}`, textX, doc.y, { lineGap: 1, width: textW })
+          .text(`Alojamiento: ${alojStr}`, textX, doc.y, { lineGap: 1, width: textW });
         doc.moveDown(0.25);
       });
+      // Reset X to left margin after indented block
+      doc.x = baseX;
       doc.moveDown(0.1);
     }
 
@@ -444,7 +468,7 @@ export default function generatePDF(formData, plan) {
       `Me comprometo a colaborar plenamente con las autoridades migratorias de ser necesario, ` +
       `y a garantizar que ${abandonara} el territorio nacional conforme a las fechas señaladas. ` +
       `Manifiesto que toda la información contenida en la presente carta es verídica y que estaré ` +
-      `disponible en el número de contacto señalado durante las fechas del viaje.`,
+      `disponible en el número de contacto indicado al calce durante las fechas del viaje.`,
       { lineGap: LINE_GAP, align: 'justify' }
     );
 

@@ -2,6 +2,7 @@
 
 ## Always Do First
 - **Invoke the `frontend-design` and `seo-optimization` skills** before writing any frontend code, every session, no exceptions.
+- **Off-topic check:** If the user sends a request that seems completely unrelated to what you are currently working on (e.g., switching from PDF tweaks to analytics, or from frontend to email), ask them to confirm before proceeding. They may have intended the message for a different agent.
 
 ## Reference Images
 - If a reference image is provided: match layout, spacing, typography, and color exactly. Swap in placeholder content (images via `https://placehold.co/`, generic copy). Do not improve or add to the design.
