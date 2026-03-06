@@ -321,7 +321,7 @@ export default function generatePDF(formData, plan) {
     const actividadesClean = actividades.replace(/\.+$/, '');
     const invitadosRef = hasCompanions
       ? 'las personas antes mencionadas visiten'
-      : `${visitorName} visite`;
+      : `${refInvitados} visite`;
     const realizara = hasCompanions ? 'realizarán' : 'realizará';
 
     let purposePara = `La presente invitación tiene como objeto que ${invitadosRef} México ${motivoPhrase}.`;
@@ -354,13 +354,13 @@ export default function generatePDF(formData, plan) {
       const alojAnfitrion = d['aloj_es_anfitrion'] === 'si';
       let alojSentence;
       if (alojAnfitrion) {
-        alojSentence = `${visitorName} se hospedará en mi domicilio ubicado en ${hostAddr}.`;
+        alojSentence = `${refInvitadosCap} se hospedará en mi domicilio ubicado en ${hostAddr}.`;
       } else {
         const alojNombre = d['j-aloj-nombre'] || '';
         const alojAddr = [d['j-al-calle'], d['j-al-colonia'], d['j-al-delegacion'], d['j-al-ciudad'], d['j-al-estado'], 'C.P. ' + (d['j-al-cp'] || '')].filter(Boolean).join(', ');
         alojSentence = alojNombre
-          ? `${visitorName} se hospedará en ${alojNombre}, ubicado en ${alojAddr}.`
-          : `${visitorName} se hospedará en ${alojAddr}.`;
+          ? `${refInvitadosCap} se hospedará en ${alojNombre}, ubicado en ${alojAddr}.`
+          : `${refInvitadosCap} se hospedará en ${alojAddr}.`;
       }
       let alojActPara = alojSentence;
       if (actividadesClean) {
@@ -383,8 +383,8 @@ export default function generatePDF(formData, plan) {
     /* ─── Itinerary (Plan Completo only) ─── */
     if (plan === 'completo' && d.destinos && d.destinos.length) {
       doc.moveDown(0.1);
-      doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica-Bold')
-        .text('Itinerario de viaje:', { lineGap: LINE_GAP });
+      doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
+        .text('El itinerario previsto para el viaje es el siguiente:', { lineGap: LINE_GAP, align: 'justify' });
       doc.moveDown(0.2);
 
       d.destinos.forEach((dest, i) => {
@@ -408,9 +408,8 @@ export default function generatePDF(formData, plan) {
 
     const transportArr = d['transporte_mx'] || [];
     const transportList = transportArr.length ? buildTransportList(transportArr) : '';
-    const desplazara = hasCompanions ? 'se desplazarán' : 'se desplazará';
     const transportSentence = transportList
-      ? ` ${refNombreOPlural} ${desplazara} utilizando ${transportList}.`
+      ? ` Para desplazarse utilizará${hasCompanions ? 'n' : ''} ${transportList}.`
       : '';
 
     if (gastosAnfitrion && gastosConceptos.length) {

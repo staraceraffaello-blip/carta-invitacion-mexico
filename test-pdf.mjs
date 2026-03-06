@@ -165,6 +165,93 @@ delete sampleCompleto['j-al-estado'];
 delete sampleCompleto['j-al-cp'];
 delete sampleCompleto['aloj_es_anfitrion'];
 
+// Variant: Plan Completo with a single destination
+const sampleCompletoUnDestino = {
+  ...sampleEsencial,
+  'j-motivo': 'turismo',
+  companions: [
+    {
+      nombre: 'Pedro Luis Rodríguez Pérez',
+      genero: 'masculino',
+      nacimiento: '1988-11-03',
+      nacionalidad: 'Venezolana',
+      pasaporte: 'CD7654321',
+      vinculo: 'familiar',
+      parentesco: 'sobrino',
+      parentesco_otro: '',
+      vinculo_detalle: '',
+      tiempo_anios: '30',
+      tiempo_meses: '0',
+    },
+  ],
+  destinos: [
+    {
+      ciudad: 'Ciudad de México, CDMX',
+      actividades: 'Visita al Zócalo, Museo Nacional de Antropología, Chapultepec, recorrido gastronómico.',
+      aloj_nombre: 'Hotel Histórico Central',
+      aloj_calle: 'Calle 5 de Mayo 12',
+      aloj_colonia: 'Centro Histórico',
+      aloj_delegacion: 'Cuauhtémoc',
+      aloj_ciudad: 'Ciudad de México',
+      aloj_estado: 'Ciudad de México',
+      aloj_cp: '06000',
+      fecha_desde: '2026-04-10',
+      fecha_hasta: '2026-04-24',
+    },
+  ],
+};
+delete sampleCompletoUnDestino['j-actividades'];
+delete sampleCompletoUnDestino['j-aloj-nombre'];
+delete sampleCompletoUnDestino['j-al-calle'];
+delete sampleCompletoUnDestino['j-al-colonia'];
+delete sampleCompletoUnDestino['j-al-ciudad'];
+delete sampleCompletoUnDestino['j-al-estado'];
+delete sampleCompletoUnDestino['j-al-cp'];
+delete sampleCompletoUnDestino['aloj_es_anfitrion'];
+
+// Variant: Plan Completo with a single traveler (no companions)
+const sampleCompletoUnViajero = {
+  ...sampleEsencial,
+  'j-motivo': 'negocios',
+  companions: [],
+  destinos: [
+    {
+      ciudad: 'Ciudad de México, CDMX',
+      actividades: 'Reuniones de trabajo en oficinas corporativas, visita a proveedores.',
+      aloj_nombre: 'Hotel Histórico Central',
+      aloj_calle: 'Calle 5 de Mayo 12',
+      aloj_colonia: 'Centro Histórico',
+      aloj_delegacion: 'Cuauhtémoc',
+      aloj_ciudad: 'Ciudad de México',
+      aloj_estado: 'Ciudad de México',
+      aloj_cp: '06000',
+      fecha_desde: '2026-04-10',
+      fecha_hasta: '2026-04-17',
+    },
+    {
+      ciudad: 'Guadalajara, Jalisco',
+      actividades: 'Conferencia tecnológica y networking profesional.',
+      aloj_nombre: '',
+      aloj_calle: 'Av. Vallarta 1500',
+      aloj_colonia: 'Americana',
+      aloj_delegacion: 'Guadalajara',
+      aloj_ciudad: 'Guadalajara',
+      aloj_estado: 'Jalisco',
+      aloj_cp: '44160',
+      fecha_desde: '2026-04-17',
+      fecha_hasta: '2026-04-24',
+    },
+  ],
+};
+delete sampleCompletoUnViajero['j-actividades'];
+delete sampleCompletoUnViajero['j-aloj-nombre'];
+delete sampleCompletoUnViajero['j-al-calle'];
+delete sampleCompletoUnViajero['j-al-colonia'];
+delete sampleCompletoUnViajero['j-al-ciudad'];
+delete sampleCompletoUnViajero['j-al-estado'];
+delete sampleCompletoUnViajero['j-al-cp'];
+delete sampleCompletoUnViajero['aloj_es_anfitrion'];
+
 async function main() {
   console.log('Generating Plan Esencial PDF (hotel, host pays some, air exit)...');
   const esencialBuf = await generatePDF(sampleEsencial, 'esencial');
@@ -180,6 +267,16 @@ async function main() {
   const completoBuf = await generatePDF(sampleCompleto, 'completo');
   writeFileSync(`${OUT_DIR}/test-carta-completo-v2.pdf`, completoBuf);
   console.log(`  → ${OUT_DIR}/test-carta-completo-v2.pdf (${(completoBuf.length / 1024).toFixed(1)} KB)`);
+
+  console.log('Generating Plan Completo — un destino...');
+  const completoUnDestBuf = await generatePDF(sampleCompletoUnDestino, 'completo');
+  writeFileSync(`${OUT_DIR}/test-carta-completo-un-destino.pdf`, completoUnDestBuf);
+  console.log(`  → ${OUT_DIR}/test-carta-completo-un-destino.pdf (${(completoUnDestBuf.length / 1024).toFixed(1)} KB)`);
+
+  console.log('Generating Plan Completo — un viajero...');
+  const completoUnViajBuf = await generatePDF(sampleCompletoUnViajero, 'completo');
+  writeFileSync(`${OUT_DIR}/test-carta-completo-un-viajero.pdf`, completoUnViajBuf);
+  console.log(`  → ${OUT_DIR}/test-carta-completo-un-viajero.pdf (${(completoUnViajBuf.length / 1024).toFixed(1)} KB)`);
 
   console.log('Done!');
 }

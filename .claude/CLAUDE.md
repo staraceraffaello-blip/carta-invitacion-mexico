@@ -93,6 +93,12 @@
 - **CURP:** Never mention CURP in articles. The service does not collect it. Use "número de identificación oficial (INE, pasaporte mexicano o tarjeta de residente)" instead.
 - **Consistency with the service:** Do not claim the carta includes data fields that the forms don't actually collect. When in doubt, check `formulario-esencial.html` and `formulario-completo.html`.
 
+## PDF Generation (`api/lib/generate-pdf.js`)
+- **Capitalization after periods:** When concatenating sentences into a single `doc.text()` call, never start a sentence with a lowercase variable (e.g., `${refInvitados} se desplazará`). Always use a construction that begins with a capital letter.
+- **Singular/plural:** Use `hasCompanions` to branch between singular (Plan Esencial) and plural (Plan Completo). Always verify both variants after any change.
+- **No redundant phrases:** Avoid repeating the same phrase (e.g., "Durante su estancia") across consecutive paragraphs.
+- **Test all variants:** Run `node test-pdf.mjs` after changes — it generates 3 test PDFs (esencial, esencial-b, completo) in `temporary pdf/`. Review ALL of them.
+
 ## Analytics
 - **GA4 Property ID:** `526320486` (cartadeinvitacionmexico.com)
 - When pulling analytics reports, invoke the `analytics-report` skill at `.claude/skills/analytics-report/skill.md`.
