@@ -119,6 +119,7 @@ export default async function handler(req, res) {
         const stripeEmail = session.customer_details?.email || '';
         const recipients = [...new Set([viajeroEmail, anfitrionEmail, stripeEmail].filter(Boolean))];
 
+        console.log('[webhook] customer_details:', JSON.stringify(session.customer_details));
         console.log('[webhook] Sending PDF email to recipients:', recipients.join(', '));
         await Promise.all(
           recipients.map(addr => sendEmail(addr, pdfBuffer, submission.plan, guestName, session.amount_total, companionNames))
