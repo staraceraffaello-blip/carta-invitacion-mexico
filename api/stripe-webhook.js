@@ -92,6 +92,7 @@ export default async function handler(req, res) {
 
         // Upload PDF to Supabase Storage
         const guestName = submission.form_data['v-nombre'] || '';
+        const companionNames = (submission.form_data.companions || []).map(c => c.nombre).filter(Boolean);
         const safeName = (guestName || 'visitante').replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '');
         const pdfPath = `${submissionId}/${safeName}.pdf`;
         console.log('[webhook] Uploading PDF to storage:', pdfPath);
@@ -112,14 +113,15 @@ export default async function handler(req, res) {
           console.log('[webhook] PDF uploaded, URL:', pdfUrl);
         }
 
-        // Send PDF + recommendations email to both viajero and anfitrión
+        // Send PDF + recommendations email to viajero, anfitrión, and Stripe payer
         const viajeroEmail = submission.form_data['v-email'] || '';
         const anfitrionEmail = submission.form_data['a-email'] || '';
-        const recipients = [...new Set([viajeroEmail, anfitrionEmail].filter(Boolean))];
+        const stripeEmail = session.customer_details?.email || '';
+        const recipients = [...new Set([viajeroEmail, anfitrionEmail, stripeEmail].filter(Boolean))];
 
         console.log('[webhook] Sending PDF email to recipients:', recipients.join(', '));
         await Promise.all(
-          recipients.map(addr => sendEmail(addr, pdfBuffer, submission.plan, guestName))
+          recipients.map(addr => sendEmail(addr, pdfBuffer, submission.plan, guestName, session.amount_total, companionNames))
         );
         console.log('[webhook] All emails sent successfully');
 

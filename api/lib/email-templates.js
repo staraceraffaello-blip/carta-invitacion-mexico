@@ -191,6 +191,39 @@ function calloutBox(title, bulletPoints) {
               </table>`;
 }
 
+function documentChecklist(title, subtitle, sections) {
+  const renderItems = (items) => items.map(item => `
+                        <tr>
+                          <td valign="top" style="padding: 3px 8px 3px 0; font-size: 13px; line-height: 1.7;">&#9744;</td>
+                          <td style="font-family: ${SANS}; font-size: 13px; line-height: 1.7; color: #374151; padding-bottom: 4px;">
+                            ${item}
+                          </td>
+                        </tr>`).join('');
+
+  const sectionHtml = sections.map(s => `
+                      <tr>
+                        <td colspan="2" style="font-family: ${SANS}; font-size: 13px; font-weight: 600; color: #1B3566; padding: 10px 0 4px;">
+                          ${s.heading}
+                        </td>
+                      </tr>
+                      ${renderItems(s.items)}`).join('');
+
+  return `
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+                <tr>
+                  <td style="background-color: #F0F4FF; border-left: 4px solid #1B3566; padding: 16px 20px; border-radius: 0 8px 8px 0;">
+                    <p style="margin: 0 0 4px; font-family: ${SANS}; font-size: 14px; color: #1B3566; font-weight: 600;">
+                      ${title}
+                    </p>
+                    ${subtitle ? `<p style="margin: 8px 0 10px; font-family: ${SANS}; font-size: 13px; color: #92400E; background-color: #FEF3C7; padding: 10px 12px; border-radius: 6px; line-height: 1.5;">${subtitle}</p>` : ''}
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      ${sectionHtml}
+                    </table>
+                  </td>
+                </tr>
+              </table>`;
+}
+
 function goldDivider() {
   return `
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -259,35 +292,63 @@ function wrap({ title, preheader, bodyRows }) {
 //  PUBLIC TEMPLATE:  Delivery Confirmation (PDF attached)
 // ═══════════════════════════════════════════════════════════════════════
 
-export function deliveryConfirmation({ guestName, planLabel, orderDate, orderId }) {
+export function deliveryConfirmation({ guestName, companionNames, planLabel, orderDate, orderId, amountLabel }) {
   const safeName = guestName || 'tu visitante';
+
+  // Build full list of traveler names
+  const allNames = [safeName, ...(companionNames || [])].filter(Boolean);
+  const namesHtml = allNames
+    .map(n => `<strong style="color: #1B3566;">${n}</strong>`)
+    .join(allNames.length > 2 ? ', ' : ' y ');
 
   const body = [
     paragraph(`\u00A1Hola!`),
-    paragraph(`Tu carta de invitaci\u00F3n para <strong style="color: #1B3566;">${safeName}</strong> ha sido generada exitosamente con el <strong style="color: #1B3566;">${planLabel}</strong>. Encontrar\u00E1s el documento en PDF adjunto a este correo.`),
+    paragraph(`La carta de invitaci\u00F3n para ${namesHtml} ha sido generada exitosamente con el <strong style="color: #1B3566;">${planLabel}</strong>. Encontrar\u00E1s el documento en PDF adjunto a este correo.`),
 
     summaryCard('Resumen del pedido', [
       summaryRow('Plan', planLabel),
-      summaryRow('Visitante', safeName),
       summaryRow('Fecha', orderDate || '\u2014'),
       summaryRow('Orden', orderId || '\u2014', { mono: true }),
+      ...(amountLabel ? [summaryRow('Total', amountLabel)] : []),
     ].join('')),
 
     calloutBox('Pasos importantes', [
-      '<strong>Imprime</strong> la carta y <strong>f\u00EDrmala con tinta azul</strong> (la firma es del anfitri\u00F3n).',
-      'Escanea el documento firmado y env\u00EDalo al viajero.',
-      'El viajero debe <strong>imprimir la carta firmada</strong> y llevarla al momento de su viaje.',
+      'El anfitri\u00F3n debe <strong>imprimir</strong> la carta y <strong>firmarla con tinta azul</strong>.',
+      'Una vez firmada, enviar una copia escaneada al viajero.',
+      'El viajero debe <strong>llevar la carta firmada impresa</strong> al momento de su viaje.',
     ]),
 
-    calloutBox('Documentos recomendados para acompa\u00F1ar la carta', [
-      '<strong>Del anfitri\u00F3n:</strong> Copia de identificaci\u00F3n oficial (INE o pasaporte), comprobante de domicilio reciente, comprobante de empleo o ingresos (opcional pero recomendado).',
-      '<strong>Del viajero:</strong> Pasaporte vigente, boletos de avi\u00F3n ida y vuelta, comprobante de empleo o negocio en su pa\u00EDs de origen, estados de cuenta bancarios o tarjetas de cr\u00E9dito.',
-    ]),
+    documentChecklist(
+      'Documentos a anexar a la carta',
+      'Todos los documentos deben presentarse <strong>impresos</strong> \u2014 el filtro migratorio no acepta documentos digitales.',
+      [
+        {
+          heading: 'Del anfitri\u00F3n',
+          items: [
+            'Copia de identificaci\u00F3n oficial (INE o pasaporte)',
+            'Comprobante de domicilio reciente (\u00FAltimos 3 meses)',
+            'Comprobante de empleo o ingresos (si se comprometi\u00F3 a cubrir gastos del viajero)',
+          ],
+        },
+        {
+          heading: 'Del viajero',
+          items: [
+            'Pasaporte con al menos 6 meses de vigencia',
+            'Boletos de avi\u00F3n ida y vuelta',
+            'Comprobante de empleo o negocio en su pa\u00EDs de origen',
+            'Estados de cuenta bancarios o tarjetas de cr\u00E9dito',
+            'Reservaciones de hotel que muestren pago al 100% (si aplica)',
+            'Reservaciones de transporte interno en M\u00E9xico que muestren pago al 100% (si aplica)',
+            'Documento que acredite el parentesco o relaci\u00F3n con el anfitri\u00F3n: acta de nacimiento, acta de matrimonio, etc. (si aplica)',
+          ],
+        },
+      ]
+    ),
 
-    calloutBox('Prep\u00E1rate para el filtro migratorio', [
-      '<strong>Memoriza</strong> los datos clave de la carta: direcci\u00F3n del anfitri\u00F3n, su ocupaci\u00F3n, las fechas exactas del viaje y las actividades planeadas.',
-      'El agente migratorio puede hacer preguntas para verificar que tus respuestas <strong>coincidan con la carta</strong>.',
-      'Mant\u00E9n la calma, s\u00E9 honesto y coherente con la informaci\u00F3n que presentas.',
+    calloutBox('En el filtro migratorio', [
+      'El viajero debe <strong>memorizar</strong> todos los datos clave de la carta.',
+      'El agente migratorio puede hacer preguntas para verificar que las respuestas <strong>coincidan con la carta</strong>.',
+      'Mantener la calma, ser honesto y coherente con la informaci\u00F3n presentada.',
     ]),
 
     goldButton('Visitar nuestro sitio', 'https://cartadeinvitacionmexico.com'),
@@ -299,7 +360,7 @@ export function deliveryConfirmation({ guestName, planLabel, orderDate, orderId 
 
   return wrap({
     title: `Tu Carta de Invitaci\u00F3n est\u00E1 lista \u2014 ${planLabel}`,
-    preheader: `Tu carta de invitaci\u00F3n para ${safeName} est\u00E1 lista. Encontrar\u00E1s el PDF adjunto.`,
+    preheader: `La carta de invitaci\u00F3n para ${allNames.join(', ')} est\u00E1 lista. Encontrar\u00E1s el PDF adjunto.`,
     bodyRows: body,
   });
 }

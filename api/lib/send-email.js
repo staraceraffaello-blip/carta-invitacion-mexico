@@ -21,14 +21,19 @@ function formatDate(dateStr) {
  * @param {'esencial'|'completo'} plan
  * @param {string} guestName — guest's full name for the subject line
  */
-export default async function sendEmail(to, pdfBuffer, plan, guestName) {
+export default async function sendEmail(to, pdfBuffer, plan, guestName, amountTotal, companionNames) {
   const planLabel = plan === 'completo' ? 'Plan Completo' : 'Plan Esencial';
   const orderDate = formatDate(mexicoNow());
 
+  // Stripe amount_total is in cents (USD)
+  const amountLabel = amountTotal ? `$${(amountTotal / 100).toFixed(2)} USD` : null;
+
   const html = deliveryConfirmation({
     guestName: guestName || 'tu visitante',
+    companionNames: companionNames || [],
     planLabel,
     orderDate,
+    amountLabel,
   });
 
   const { data, error } = await resend.emails.send({
