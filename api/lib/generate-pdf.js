@@ -505,8 +505,8 @@ export default function generatePDF(formData, plan) {
       `Manifiesto que toda la información contenida en la presente carta es verídica y que estaré ` +
       `disponible en el número de contacto indicado al calce durante las fechas del viaje.`;
     const commitH = doc.heightOfString(commitText, { width: contentW, lineGap: LINE_GAP, align: 'justify' });
-    // commitment + moveDown(1) + "Atentamente," + moveDown(2) + line + moveDown(0.3) + name + 3 contact lines
-    const sigBlockH = commitH + BODY_SIZE * (1 + 1 + 2 + 0.3 + 1 + 3) + 20;
+    // commitment + moveDown(1) + "Atentamente," + moveDown(4) + line + moveDown(0.3) + name + 3 contact lines
+    const sigBlockH = commitH + BODY_SIZE * (1 + 1 + 4 + 0.3 + 1 + 3) + 20;
     const remaining = doc.page.height - doc.page.margins.bottom - doc.y;
     if (sigBlockH > remaining) {
       doc.addPage();
@@ -519,7 +519,7 @@ export default function generatePDF(formData, plan) {
     doc.moveDown(1);
     doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
       .text('Atentamente,', { align: 'center' });
-    doc.moveDown(2);
+    doc.moveDown(4);
 
     const pageW = doc.page.width - doc.page.margins.left - doc.page.margins.right;
     const sigLineW = 220;
