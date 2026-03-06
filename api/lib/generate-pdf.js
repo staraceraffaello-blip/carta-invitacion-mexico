@@ -180,8 +180,8 @@ export default function generatePDF(formData, plan) {
     const visitorResidencia = d['v-residencia'] || '';
     const visitorAddr = [d['v-calle'], d['v-ciudad'], d['v-provincia'] !== d['v-ciudad'] ? d['v-provincia'] : '', 'C.P. ' + (d['v-cp'] || ''), visitorResidencia].filter(Boolean).join(', ');
 
-    const hostGenero = d['a-genero'] || 'masculino';
-    const visitorGenero = d['v-genero'] || 'masculino';
+    const hostGenero = d['a_genero'] || d['a-genero'] || 'masculino';
+    const visitorGenero = d['v_genero'] || d['v-genero'] || 'masculino';
 
     const vinculo = d['a-vinculo'] || 'conocido';
     const vinculoDetalle = d['a-vinculo-detalle'] || '';
