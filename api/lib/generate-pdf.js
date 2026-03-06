@@ -214,195 +214,170 @@ export default function generatePDF(formData, plan) {
     doc.moveDown(0.5);
 
     /* ─── Traveler data block ─── */
-    const dataLineGap = 1;
-    doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica-Bold')
-      .text(`Nombre completo: `, { continued: true, lineGap: dataLineGap });
-    doc.font('Helvetica').text(visitorName, { lineGap: dataLineGap });
+    const hasCompanions = plan === 'completo' && d.companions && d.companions.length;
 
-    doc.font('Helvetica-Bold')
-      .text(`Fecha de nacimiento: `, { continued: true, lineGap: dataLineGap });
-    doc.font('Helvetica').text(`${visitorNacimiento}   ·   `, { continued: true });
-    doc.font('Helvetica-Bold').text('Nacionalidad: ', { continued: true });
-    doc.font('Helvetica').text(`${visitorNacionalidad}   ·   `, { continued: true });
-    doc.font('Helvetica-Bold').text('Pasaporte N.º: ', { continued: true });
-    doc.font('Helvetica').text(visitorPasaporte, { lineGap: dataLineGap });
+    // Singular / plural references used across multiple paragraphs
+    const refInvitados = hasCompanions ? 'los invitados' : (visitorGenero === 'femenino' ? 'la invitada' : 'el invitado');
+    const refInvitadosCap = hasCompanions ? 'Los invitados' : (visitorGenero === 'femenino' ? 'La invitada' : 'El invitado');
+    const refNombreOPlural = hasCompanions ? refInvitados : visitorName;
 
-    doc.font('Helvetica-Bold')
-      .text('Ocupación: ', { continued: true, lineGap: dataLineGap });
-    doc.font('Helvetica').text(visitorOcupacion, { lineGap: dataLineGap });
+    /** Build vínculo phrase for a traveler bullet. */
+    function vinculoPhrase(vType, parLabel, parRaw, detalle, tiempo) {
+      let phrase;
+      if ((vType === 'familiar' || vType === 'pareja') && parLabel) {
+        phrase = `Es mi ${parLabel}.`;
+      } else {
+        phrase = `Mantenemos una relación de ${vType}.`;
+      }
+      if (detalle) {
+        const detClean = detalle.replace(/\.+$/, '');
+        phrase += ` ${detClean}.`;
+      }
+      const isCons = vType === 'familiar' && CONSANGUINEOUS.includes(parRaw);
+      if (tiempo && !isCons) phrase += ` Nos conocemos desde hace ${tiempo}.`;
+      return phrase;
+    }
 
-    doc.font('Helvetica-Bold')
-      .text('Domicilio en país de residencia: ', { continued: true, lineGap: dataLineGap });
-    doc.font('Helvetica').text(visitorAddr, { lineGap: dataLineGap });
-    doc.moveDown(0.5);
+    if (hasCompanions) {
+      /* ── Bullet-point format: multiple travelers ── */
+      const BULLET_INDENT = 14;
+      const textX = doc.page.margins.left + BULLET_INDENT;
+      const textW = doc.page.width - doc.page.margins.left - doc.page.margins.right - BULLET_INDENT;
 
-    /* ─── Companion data blocks (Plan Completo) ─── */
-    if (plan === 'completo' && d.companions && d.companions.length) {
-      d.companions.forEach((comp, i) => {
-        doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica-Bold')
-          .text(`Acompañante ${i + 1}:`, { lineGap: dataLineGap });
-
-        doc.font('Helvetica-Bold')
-          .text('Nombre completo: ', { continued: true, lineGap: dataLineGap });
-        doc.font('Helvetica').text(comp.nombre || '—', { lineGap: dataLineGap });
-
-        doc.font('Helvetica-Bold')
-          .text('Fecha de nacimiento: ', { continued: true, lineGap: dataLineGap });
-        doc.font('Helvetica').text(`${fmtDateShort(comp.nacimiento)}   ·   `, { continued: true });
-        doc.font('Helvetica-Bold').text('Nacionalidad: ', { continued: true });
-        doc.font('Helvetica').text(`${comp.nacionalidad || '—'}   ·   `, { continued: true });
-        doc.font('Helvetica-Bold').text('Pasaporte N.º: ', { continued: true });
-        doc.font('Helvetica').text(comp.pasaporte || '—', { lineGap: dataLineGap });
-
-        // Resolve companion's relationship label
-        const compVinculo = comp.vinculo || '';
-        const compParentescoRaw = comp.parentesco || '';
-        const compParentescoOtro = comp.parentesco_otro || '';
-        const compGKey = comp.genero === 'femenino' ? 'f' : 'm';
-        const compParentescoLabel = compParentescoRaw === 'otro_familiar'
-          ? compParentescoOtro
-          : (PARENTESCO_LABELS[compParentescoRaw]?.[compGKey] || '');
-        const compRelLabel = ((compVinculo === 'familiar' || compVinculo === 'pareja') && compParentescoLabel)
-          ? compParentescoLabel
-          : (compVinculo || '—');
-
-        doc.font('Helvetica-Bold')
-          .text('Relación con el anfitrión: ', { continued: true, lineGap: dataLineGap });
-        doc.font('Helvetica').text(compRelLabel, { lineGap: dataLineGap });
-
+      function writeBullet(text) {
+        const bulletY = doc.y;
+        doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
+          .text('\u2022', doc.page.margins.left, bulletY);
+        doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
+          .text(text, textX, bulletY, { width: textW, lineGap: LINE_GAP, align: 'justify' });
         doc.moveDown(0.3);
+      }
+
+      // Main traveler bullet
+      const mainVPhrase = vinculoPhrase(vinculo, parentescoLabel, parentescoRaw, vinculoDetalle, tiempoStr);
+      writeBullet(
+        `${visitorName}, de nacionalidad ${visitorNacionalidad}, ` +
+        `nacid${visitorGenero === 'femenino' ? 'a' : 'o'} el ${visitorNacimiento}, ` +
+        `${visitorGenero === 'femenino' ? 'portadora' : 'portador'} de pasaporte N.º ${visitorPasaporte}, ` +
+        `de ocupación ${visitorOcupacion}, con domicilio en ${visitorAddr}. ${mainVPhrase}`
+      );
+
+      // Companion bullets
+      d.companions.forEach((comp) => {
+        const compGenero = comp.genero || 'masculino';
+        const cVinculo = comp.vinculo || 'conocido';
+        const cParRaw = comp.parentesco || '';
+        const cParOtro = comp.parentesco_otro || '';
+        const cGKey = compGenero === 'femenino' ? 'f' : 'm';
+        const cParLabel = cParRaw === 'otro_familiar'
+          ? cParOtro
+          : (PARENTESCO_LABELS[cParRaw]?.[cGKey] || '');
+        const cDetalle = comp.vinculo_detalle || '';
+        const cTiempo = buildTiempoStr(comp.tiempo_anios, comp.tiempo_meses);
+        const cVPhrase = vinculoPhrase(cVinculo, cParLabel, cParRaw, cDetalle, cTiempo);
+        writeBullet(
+          `${comp.nombre || '—'}, de nacionalidad ${comp.nacionalidad || '—'}, ` +
+          `nacid${compGenero === 'femenino' ? 'a' : 'o'} el ${fmtDateShort(comp.nacimiento)}, ` +
+          `${compGenero === 'femenino' ? 'portadora' : 'portador'} de pasaporte N.º ${comp.pasaporte || '—'}. ${cVPhrase}`
+        );
       });
       doc.moveDown(0.2);
-    }
-
-    /* ─── Vínculo paragraph ─── */
-    let vinculoPara;
-    if ((vinculo === 'familiar' || vinculo === 'pareja') && parentescoLabel) {
-      vinculoPara = `${visitorName} es mi ${parentescoLabel}.`;
+      // Reset X to left margin for subsequent paragraphs
+      doc.x = doc.page.margins.left;
     } else {
-      vinculoPara = `${visitorName} y quien suscribe mantenemos una relación de ${vinculo}.`;
-    }
-    if (vinculoDetalle) {
-      const detClean = vinculoDetalle.replace(/\.+$/, '');
-      vinculoPara += ` ${detClean}.`;
-    }
-    const isConsanguineous = vinculo === 'familiar' && CONSANGUINEOUS.includes(parentescoRaw);
-    if (tiempoStr && !isConsanguineous) vinculoPara += ` Nos conocemos desde hace ${tiempoStr}.`;
-
-    doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
-      .text(vinculoPara, { lineGap: LINE_GAP, align: 'justify' });
-
-    /* ─── Companion vínculo paragraphs (Plan Completo) ─── */
-    if (plan === 'completo' && d.companions && d.companions.length) {
-      d.companions.forEach(comp => {
-        const compName = comp.nombre || '';
-        const compVinculo = comp.vinculo || 'conocido';
-        const compParentescoRaw = comp.parentesco || '';
-        const compParentescoOtro = comp.parentesco_otro || '';
-        const compGKey = comp.genero === 'femenino' ? 'f' : 'm';
-        const compParentescoLabel = compParentescoRaw === 'otro_familiar'
-          ? compParentescoOtro
-          : (PARENTESCO_LABELS[compParentescoRaw]?.[compGKey] || '');
-
-        let compVinculoPara;
-        if ((compVinculo === 'familiar' || compVinculo === 'pareja') && compParentescoLabel) {
-          compVinculoPara = `${compName} es mi ${compParentescoLabel}.`;
-        } else {
-          compVinculoPara = `${compName} y quien suscribe mantenemos una relación de ${compVinculo}.`;
-        }
-        const compDetalle = comp.vinculo_detalle || '';
-        if (compDetalle) {
-          const detClean = compDetalle.replace(/\.+$/, '');
-          compVinculoPara += ` ${detClean}.`;
-        }
-        const compTiempoStr = buildTiempoStr(comp.tiempo_anios, comp.tiempo_meses);
-        const compIsConsanguineous = compVinculo === 'familiar' && CONSANGUINEOUS.includes(compParentescoRaw);
-        if (compTiempoStr && !compIsConsanguineous) compVinculoPara += ` Nos conocemos desde hace ${compTiempoStr}.`;
-
-        doc.text(compVinculoPara, { lineGap: LINE_GAP, align: 'justify' });
-      });
-    }
-    doc.moveDown(0.4);
-
-    /* ─── Invitation purpose paragraph ─── */
-    // Strip trailing period from activities to avoid double punctuation
-    const actividadesClean = actividades.replace(/\.+$/, '');
-    const actividadesSuffix = actividadesClean
-      ? ` Durante su estancia, realizará las siguientes actividades: ${actividadesClean}.`
-      : '';
-    doc.text(
-      `La presente invitación tiene como objeto que ${visitorName} visite México ` +
-      `${motivoPhrase}, del ${fechaLlegada} al ${fechaSalida}, por un total de ${diasStr}.` +
-      actividadesSuffix,
-      { lineGap: LINE_GAP, align: 'justify' }
-    );
-    doc.moveDown(0.4);
-
-    /* ─── Entry paragraph ─── */
-    if (ingresoTipo === 'aereo') {
-      doc.text(
-        `El ingreso a México se realizará el ${fechaLlegada} vía aérea por ${d['ing-aeropuerto'] || '—'}, ` +
-        `aerolínea ${d['ing-aerolinea'] || '—'}, vuelo número ${d['ing-vuelo'] || '—'}.`,
-        { lineGap: LINE_GAP, align: 'justify' }
-      );
-    } else if (ingresoTipo === 'terrestre') {
-      doc.text(
-        `El ingreso a México se realizará el ${fechaLlegada} vía terrestre por ${d['ing-cruce'] || '—'}.`,
-        { lineGap: LINE_GAP, align: 'justify' }
-      );
-    } else if (ingresoTipo === 'maritimo') {
-      doc.text(
-        `El ingreso a México se realizará el ${fechaLlegada} vía marítima por ${d['ing-puerto'] || '—'}.`,
-        { lineGap: LINE_GAP, align: 'justify' }
-      );
-    }
-
-    /* ─── Exit paragraph ─── */
-    if (salidaTipo === 'aereo') {
-      doc.text(
-        `La salida del país se realizará el ${fechaSalida} vía aérea por ${d['sal-aeropuerto'] || '—'}, ` +
-        `aerolínea ${d['sal-aerolinea'] || '—'}, vuelo número ${d['sal-vuelo'] || '—'}.`,
-        { lineGap: LINE_GAP, align: 'justify' }
-      );
-    } else if (salidaTipo === 'terrestre') {
-      doc.text(
-        `La salida del país se realizará el ${fechaSalida} vía terrestre por ${d['sal-cruce'] || '—'}.`,
-        { lineGap: LINE_GAP, align: 'justify' }
-      );
-    } else if (salidaTipo === 'maritimo') {
-      doc.text(
-        `La salida del país se realizará el ${fechaSalida} vía marítima por ${d['sal-puerto'] || '—'}.`,
-        { lineGap: LINE_GAP, align: 'justify' }
-      );
-    }
-
-    doc.moveDown(0.4);
-
-    /* ─── Accommodation paragraph ─── */
-    if (plan === 'esencial') {
-      const alojAnfitrion = d['aloj_es_anfitrion'] === 'si';
-      if (alojAnfitrion) {
-        doc.text(
-          `Durante su estancia en México, ${visitorName} se hospedará en mi domicilio ubicado en ${hostAddr}.`,
+      /* ── Fluent paragraph: single traveler ── */
+      doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
+        .text(
+          `${visitorName}, de nacionalidad ${visitorNacionalidad}, ` +
+          `nacid${visitorGenero === 'femenino' ? 'a' : 'o'} el ${visitorNacimiento}, ` +
+          `${visitorGenero === 'femenino' ? 'portadora' : 'portador'} de pasaporte N.º ${visitorPasaporte}, ` +
+          `de ocupación ${visitorOcupacion}, con domicilio en ${visitorAddr}.`,
           { lineGap: LINE_GAP, align: 'justify' }
         );
+      doc.moveDown(0.5);
+    }
+
+    /* ─── Vínculo paragraph (single traveler only — bullets already include this) ─── */
+    if (!hasCompanions) {
+      let vinculoPara;
+      if ((vinculo === 'familiar' || vinculo === 'pareja') && parentescoLabel) {
+        vinculoPara = `${visitorName} es mi ${parentescoLabel}.`;
+      } else {
+        vinculoPara = `${visitorName} y quien suscribe mantenemos una relación de ${vinculo}.`;
+      }
+      if (vinculoDetalle) {
+        const detClean = vinculoDetalle.replace(/\.+$/, '');
+        vinculoPara += ` ${detClean}.`;
+      }
+      const isConsanguineous = vinculo === 'familiar' && CONSANGUINEOUS.includes(parentescoRaw);
+      if (tiempoStr && !isConsanguineous) vinculoPara += ` Nos conocemos desde hace ${tiempoStr}.`;
+
+      doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
+        .text(vinculoPara, { lineGap: LINE_GAP, align: 'justify' });
+    }
+    doc.moveDown(0.4);
+
+    /* ─── Invitation purpose + entry/exit (combined paragraph) ─── */
+    const actividadesClean = actividades.replace(/\.+$/, '');
+    const invitadosRef = hasCompanions
+      ? 'las personas antes mencionadas visiten'
+      : `${visitorName} visite`;
+    const realizara = hasCompanions ? 'realizarán' : 'realizará';
+
+    let purposePara = `La presente invitación tiene como objeto que ${invitadosRef} México ${motivoPhrase}.`;
+
+    // Entry
+    if (ingresoTipo === 'aereo') {
+      purposePara += ` El ingreso a México se realizará el ${fechaLlegada} vía aérea por ${d['ing-aeropuerto'] || '—'}, aerolínea ${d['ing-aerolinea'] || '—'}, vuelo número ${d['ing-vuelo'] || '—'}.`;
+    } else if (ingresoTipo === 'terrestre') {
+      purposePara += ` El ingreso a México se realizará el ${fechaLlegada} vía terrestre por ${d['ing-cruce'] || '—'}.`;
+    } else if (ingresoTipo === 'maritimo') {
+      purposePara += ` El ingreso a México se realizará el ${fechaLlegada} vía marítima por ${d['ing-puerto'] || '—'}.`;
+    }
+
+    // Exit
+    if (salidaTipo === 'aereo') {
+      purposePara += ` La salida del país se realizará el ${fechaSalida} vía aérea por ${d['sal-aeropuerto'] || '—'}, aerolínea ${d['sal-aerolinea'] || '—'}, vuelo número ${d['sal-vuelo'] || '—'}.`;
+    } else if (salidaTipo === 'terrestre') {
+      purposePara += ` La salida del país se realizará el ${fechaSalida} vía terrestre por ${d['sal-cruce'] || '—'}.`;
+    } else if (salidaTipo === 'maritimo') {
+      purposePara += ` La salida del país se realizará el ${fechaSalida} vía marítima por ${d['sal-puerto'] || '—'}.`;
+    }
+
+    // Duration after exit
+    purposePara += ` La duración total del viaje será de ${diasStr}.`;
+
+    doc.text(purposePara, { lineGap: LINE_GAP, align: 'justify' });
+
+    /* ─── Accommodation + Activities paragraph (Plan Esencial) ─── */
+    if (plan === 'esencial') {
+      const alojAnfitrion = d['aloj_es_anfitrion'] === 'si';
+      let alojSentence;
+      if (alojAnfitrion) {
+        alojSentence = `${visitorName} se hospedará en mi domicilio ubicado en ${hostAddr}.`;
       } else {
         const alojNombre = d['j-aloj-nombre'] || '';
         const alojAddr = [d['j-al-calle'], d['j-al-colonia'], d['j-al-delegacion'], d['j-al-ciudad'], d['j-al-estado'], 'C.P. ' + (d['j-al-cp'] || '')].filter(Boolean).join(', ');
-        if (alojNombre) {
-          doc.text(
-            `Durante su estancia en México, ${visitorName} se hospedará en ${alojNombre}, ` +
-            `ubicado en ${alojAddr}.`,
-            { lineGap: LINE_GAP, align: 'justify' }
-          );
-        } else {
-          doc.text(
-            `Durante su estancia en México, ${visitorName} se hospedará en ${alojAddr}.`,
-            { lineGap: LINE_GAP, align: 'justify' }
-          );
-        }
+        alojSentence = alojNombre
+          ? `${visitorName} se hospedará en ${alojNombre}, ubicado en ${alojAddr}.`
+          : `${visitorName} se hospedará en ${alojAddr}.`;
       }
+      let alojActPara = alojSentence;
+      if (actividadesClean) {
+        alojActPara += ` Durante su estancia, ${realizara} las siguientes actividades: ${actividadesClean}.`;
+      }
+      doc.moveDown(0.4);
+      doc.text(alojActPara, { lineGap: LINE_GAP, align: 'justify' });
       doc.moveDown(0.3);
+    } else if (actividadesClean) {
+      doc.moveDown(0.4);
+      doc.text(
+        `Durante su estancia, ${realizara} las siguientes actividades: ${actividadesClean}.`,
+        { lineGap: LINE_GAP, align: 'justify' }
+      );
+      doc.moveDown(0.4);
+    } else {
+      doc.moveDown(0.4);
     }
 
     /* ─── Itinerary (Plan Completo only) ─── */
@@ -431,41 +406,44 @@ export default function generatePDF(formData, plan) {
     const gastosConceptos = d['gastos_host_conceptos'] || [];
     const gastosOtroTexto = d['gastos-otro-texto'] || d['gastos_otro_texto'] || '';
 
+    const transportArr = d['transporte_mx'] || [];
+    const transportList = transportArr.length ? buildTransportList(transportArr) : '';
+    const desplazara = hasCompanions ? 'se desplazarán' : 'se desplazará';
+    const transportSentence = transportList
+      ? ` ${refNombreOPlural} ${desplazara} utilizando ${transportList}.`
+      : '';
+
     if (gastosAnfitrion && gastosConceptos.length) {
       const listaGastos = buildGastosList(gastosConceptos, gastosOtroTexto);
+      const deInvitado = hasCompanions ? 'de los invitados' : (visitorGenero === 'femenino' ? 'de la invitada' : 'del invitado');
+      const propioInvitado = hasCompanions ? 'los propios invitados, quienes cuentan' : (visitorGenero === 'femenino' ? 'la propia invitada, quien cuenta' : 'el propio invitado, quien cuenta');
       doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
         .text(
           `Me comprometo a sufragar los gastos de ${listaGastos} durante la estancia ` +
-          `${visitorGenero === 'femenino' ? 'de la invitada' : 'del invitado'}. ` +
-          `Los demás gastos serán cubiertos por ${visitorGenero === 'femenino' ? 'la propia invitada' : 'el propio invitado'}, ` +
-          `quien cuenta con los medios económicos suficientes para ello.`,
+          `${deInvitado}. ` +
+          `Los demás gastos serán cubiertos por ${propioInvitado} con los medios económicos suficientes para ello.` +
+          transportSentence,
           { lineGap: LINE_GAP, align: 'justify' }
         );
     } else {
+      const cubrira = hasCompanions ? `${refInvitadosCap} cubrirán` : `${refInvitadosCap} cubrirá`;
       doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
         .text(
-          `${visitorGenero === 'femenino' ? 'La invitada' : 'El invitado'} cubrirá sus propios gastos durante la visita, ` +
-          `contando con los medios económicos suficientes para ello.`,
+          `${cubrira} sus propios gastos durante la visita, ` +
+          `contando con los medios económicos suficientes para ello.` +
+          transportSentence,
           { lineGap: LINE_GAP, align: 'justify' }
         );
     }
     doc.moveDown(0.3);
 
-    /* ─── Transport in Mexico paragraph ─── */
-    const transportArr = d['transporte_mx'] || [];
-    if (transportArr.length) {
-      const transportList = buildTransportList(transportArr);
-      doc.text(
-        `Durante su estancia, ${visitorName} se desplazará utilizando ${transportList}.`,
-        { lineGap: LINE_GAP, align: 'justify' }
-      );
-      doc.moveDown(0.3);
-    }
-
     /* ─── Commitment paragraph ─── */
+    const abandonara = hasCompanions
+      ? `${refInvitados} abandonarán`
+      : `${visitorName} abandonará`;
     doc.text(
       `Me comprometo a colaborar plenamente con las autoridades migratorias de ser necesario, ` +
-      `y a garantizar que ${visitorName} abandonará el territorio nacional conforme a las fechas señaladas. ` +
+      `y a garantizar que ${abandonara} el territorio nacional conforme a las fechas señaladas. ` +
       `Manifiesto que toda la información contenida en la presente carta es verídica y que estaré ` +
       `disponible en el número de contacto señalado durante las fechas del viaje.`,
       { lineGap: LINE_GAP, align: 'justify' }
