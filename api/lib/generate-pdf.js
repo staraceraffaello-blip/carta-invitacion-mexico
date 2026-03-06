@@ -15,6 +15,8 @@ const ID_LABELS = {
 };
 
 const TRANSPORTE_LABELS = {
+  avion: 'avión',
+  autobus_foraneo: 'autobús foráneo',
   auto_rentado: 'auto rentado',
   anfitrion: 'transporte del anfitrión',
   transporte_publico: 'transporte público y/o taxis',
