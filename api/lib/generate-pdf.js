@@ -162,21 +162,21 @@ export default function generatePDF(formData, plan) {
 
     /* ─── Extract all data ─── */
     const hostName = d['a-nombre'] || '';
-    const hostNacionalidad = d['a-nacionalidad'] || '';
+    const hostNacionalidad = (d['a-nacionalidad'] || '').toLowerCase();
     const hostNacimiento = fmtDate(d['a-nacimiento']);
     const hostIdTipo = ID_LABELS[d['a-id-tipo']] || d['a-id-tipo'] || 'identificación oficial';
     const hostIdNum = d['a-id-num'] || '';
     const hostAddr = [d['a-calle'], d['a-colonia'] !== d['a-delegacion'] ? d['a-colonia'] : '', d['a-delegacion'] !== d['a-ciudad'] ? d['a-delegacion'] : '', d['a-ciudad'], d['a-estado'] !== d['a-ciudad'] ? d['a-estado'] : '', 'C.P. ' + (d['a-cp'] || ''), 'México'].filter(Boolean).join(', ');
-    const hostOcupacion = d['a-ocupacion'] || '';
+    const hostOcupacion = (d['a-ocupacion'] || '').toLowerCase();
     const hostEmpresa = d['a-empresa'] || '';
     const hostTelefono = d['a-telefono'] || '';
     const hostEmail = d['a-email'] || '';
 
     const visitorName = d['v-nombre'] || '';
     const visitorNacimiento = fmtDateShort(d['v-nacimiento']);
-    const visitorNacionalidad = d['v-nacionalidad'] || '';
+    const visitorNacionalidad = (d['v-nacionalidad'] || '').toLowerCase();
     const visitorPasaporte = d['v-pasaporte'] || '';
-    const visitorOcupacion = d['v-ocupacion'] || '';
+    const visitorOcupacion = (d['v-ocupacion'] || '').toLowerCase();
     const visitorResidencia = d['v-residencia'] || '';
     const visitorAddr = [d['v-calle'], d['v-ciudad'], d['v-provincia'] !== d['v-ciudad'] ? d['v-provincia'] : '', 'C.P. ' + (d['v-cp'] || ''), visitorResidencia].filter(Boolean).join(', ');
 
@@ -284,7 +284,7 @@ export default function generatePDF(formData, plan) {
         const cTiempo = buildTiempoStr(comp.tiempo_anios, comp.tiempo_meses);
         const cVPhrase = vinculoPhrase(cVinculo, cParLabel, cParRaw, cDetalle, cTiempo);
         // Occupation
-        const cOcupacion = comp.ocupacion ? `de ocupación ${comp.ocupacion}, ` : '';
+        const cOcupacion = comp.ocupacion ? `de ocupación ${comp.ocupacion.toLowerCase()}, ` : '';
         // Address: own address if mismo_domicilio === 'no', otherwise main visitor's
         let cAddr;
         if (comp.mismo_domicilio === 'no' && comp.calle) {
@@ -293,7 +293,7 @@ export default function generatePDF(formData, plan) {
           cAddr = visitorAddr;
         }
         writeBullet(
-          `${comp.nombre || '—'}, de nacionalidad ${comp.nacionalidad || '—'}, ` +
+          `${comp.nombre || '—'}, de nacionalidad ${(comp.nacionalidad || '—').toLowerCase()}, ` +
           `nacid${compGenero === 'femenino' ? 'a' : 'o'} el ${fmtDateShort(comp.nacimiento)}, ` +
           `${compGenero === 'femenino' ? 'portadora' : 'portador'} de pasaporte N.º ${comp.pasaporte || '—'}, ` +
           `${cOcupacion}con domicilio en ${cAddr}. ${cVPhrase}`
@@ -422,8 +422,13 @@ export default function generatePDF(formData, plan) {
       const baseW = doc.page.width - doc.page.margins.left - doc.page.margins.right;
 
       d.destinos.forEach((dest, i) => {
-        const alojAddr = [dest.aloj_calle, dest.aloj_colonia !== dest.aloj_delegacion ? dest.aloj_colonia : '', dest.aloj_delegacion !== dest.aloj_ciudad ? dest.aloj_delegacion : '', dest.aloj_ciudad, dest.aloj_ciudad !== dest.aloj_estado ? dest.aloj_estado : '', 'C.P. ' + (dest.aloj_cp || '')].filter(Boolean).join(', ');
-        const alojStr = dest.aloj_nombre ? `${dest.aloj_nombre}, ${alojAddr}` : alojAddr;
+        let alojStr;
+        if (dest.aloj_es_anfitrion === 'si') {
+          alojStr = `Domicilio del anfitrión — ${hostAddr}`;
+        } else {
+          const alojAddr = [dest.aloj_calle, dest.aloj_colonia !== dest.aloj_delegacion ? dest.aloj_colonia : '', dest.aloj_delegacion !== dest.aloj_ciudad ? dest.aloj_delegacion : '', dest.aloj_ciudad, dest.aloj_ciudad !== dest.aloj_estado ? dest.aloj_estado : '', 'C.P. ' + (dest.aloj_cp || '')].filter(Boolean).join(', ');
+          alojStr = dest.aloj_nombre ? `${dest.aloj_nombre}, ${alojAddr}` : alojAddr;
+        }
         const textX = baseX + destIndent;
         const textW = baseW - destIndent;
 

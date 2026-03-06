@@ -327,7 +327,7 @@ const esenciales = [
       'v-nombre': 'David Alejandro Torres Ríos',
       'v-genero': 'masculino',
       'v-nacimiento': '1987-03-18',
-      'v-nacionalidad': 'Argentino',
+      'v-nacionalidad': 'Argentina',
       'v-residencia': 'Argentina',
       'v-calle': 'Av. Corrientes 1234',
       'v-ciudad': 'Buenos Aires',
