@@ -136,7 +136,7 @@ export default function generatePDF(formData, plan) {
     doc.on('error', reject);
 
     const LINE_GAP = 2;
-    const BODY_SIZE = 9.5;
+    const BODY_SIZE = 12;
 
     /* ─── Date & Addressee ─── */
     const now = new Date();
@@ -162,7 +162,7 @@ export default function generatePDF(formData, plan) {
     const hostNacimiento = fmtDate(d['a-nacimiento']);
     const hostIdTipo = ID_LABELS[d['a-id-tipo']] || d['a-id-tipo'] || 'identificación oficial';
     const hostIdNum = d['a-id-num'] || '';
-    const hostAddr = [d['a-calle'], d['a-colonia'], d['a-delegacion'], d['a-ciudad'], d['a-estado'] !== d['a-ciudad'] ? d['a-estado'] : '', 'C.P. ' + (d['a-cp'] || ''), 'México'].filter(Boolean).join(', ');
+    const hostAddr = [d['a-calle'], d['a-colonia'], d['a-delegacion'] !== d['a-ciudad'] ? d['a-delegacion'] : '', d['a-ciudad'], d['a-estado'] !== d['a-ciudad'] ? d['a-estado'] : '', 'C.P. ' + (d['a-cp'] || ''), 'México'].filter(Boolean).join(', ');
     const hostOcupacion = d['a-ocupacion'] || '';
     const hostEmpresa = d['a-empresa'] || '';
     const hostTelefono = d['a-telefono'] || '';
@@ -367,7 +367,7 @@ export default function generatePDF(formData, plan) {
         alojSentence = `${refInvitadosCap} se hospedará en mi domicilio ubicado en ${hostAddr}.`;
       } else {
         const alojNombre = d['j-aloj-nombre'] || '';
-        const alojAddr = [d['j-al-calle'], d['j-al-colonia'], d['j-al-delegacion'], d['j-al-ciudad'], d['j-al-estado'] !== d['j-al-ciudad'] ? d['j-al-estado'] : '', 'C.P. ' + (d['j-al-cp'] || '')].filter(Boolean).join(', ');
+        const alojAddr = [d['j-al-calle'], d['j-al-colonia'], d['j-al-delegacion'] !== d['j-al-ciudad'] ? d['j-al-delegacion'] : '', d['j-al-ciudad'], d['j-al-estado'] !== d['j-al-ciudad'] ? d['j-al-estado'] : '', 'C.P. ' + (d['j-al-cp'] || '')].filter(Boolean).join(', ');
         alojSentence = alojNombre
           ? `${refInvitadosCap} se hospedará en ${alojNombre}, ubicado en ${alojAddr}.`
           : `${refInvitadosCap} se hospedará en ${alojAddr}.`;
@@ -408,7 +408,7 @@ export default function generatePDF(formData, plan) {
       const baseW = doc.page.width - doc.page.margins.left - doc.page.margins.right;
 
       d.destinos.forEach((dest, i) => {
-        const alojAddr = [dest.aloj_calle, dest.aloj_colonia, dest.aloj_delegacion, dest.aloj_ciudad, dest.aloj_ciudad !== dest.aloj_estado ? dest.aloj_estado : '', 'C.P. ' + (dest.aloj_cp || '')].filter(Boolean).join(', ');
+        const alojAddr = [dest.aloj_calle, dest.aloj_colonia, dest.aloj_delegacion !== dest.aloj_ciudad ? dest.aloj_delegacion : '', dest.aloj_ciudad, dest.aloj_ciudad !== dest.aloj_estado ? dest.aloj_estado : '', 'C.P. ' + (dest.aloj_cp || '')].filter(Boolean).join(', ');
         const alojStr = dest.aloj_nombre ? `${dest.aloj_nombre}, ${alojAddr}` : alojAddr;
         const textX = baseX + destIndent;
         const textW = baseW - destIndent;
@@ -442,8 +442,7 @@ export default function generatePDF(formData, plan) {
       const propioInvitado = hasCompanions ? 'los propios invitados, quienes cuentan' : (visitorGenero === 'femenino' ? 'la propia invitada, quien cuenta' : 'el propio invitado, quien cuenta');
       doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
         .text(
-          `Me comprometo a sufragar los gastos de ${listaGastos} durante la estancia ` +
-          `${deInvitado}. ` +
+          `Durante la estancia ${deInvitado}, sufragaré los gastos de ${listaGastos}. ` +
           `Los demás gastos serán cubiertos por ${propioInvitado} con los medios económicos suficientes para ello.` +
           transportSentence,
           { lineGap: LINE_GAP, align: 'justify' }
@@ -459,6 +458,24 @@ export default function generatePDF(formData, plan) {
         );
     }
     doc.moveDown(0.3);
+
+    /* ─── Page-break protection: keep commitment + signature together ─── */
+    const contentW = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+    const abandonaraPreview = hasCompanions
+      ? `${refInvitados} abandonarán`
+      : `${visitorName} abandonará`;
+    const commitText =
+      `Me comprometo a colaborar plenamente con las autoridades migratorias de ser necesario, ` +
+      `y a garantizar que ${abandonaraPreview} el territorio nacional conforme a las fechas señaladas. ` +
+      `Manifiesto que toda la información contenida en la presente carta es verídica y que estaré ` +
+      `disponible en el número de contacto indicado al calce durante las fechas del viaje.`;
+    const commitH = doc.heightOfString(commitText, { width: contentW, lineGap: LINE_GAP, align: 'justify' });
+    // commitment paragraph + moveDown(1.5) + "Atentamente," + moveDown(3) + sig line + 4 sig lines + buffer
+    const sigBlockH = commitH + BODY_SIZE * (1.5 + 1 + 3 + 0.3 + 5) + 20;
+    const remaining = doc.page.height - doc.page.margins.bottom - doc.y;
+    if (sigBlockH > remaining) {
+      doc.addPage();
+    }
 
     /* ─── Commitment paragraph ─── */
     const abandonara = hasCompanions

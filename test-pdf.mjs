@@ -252,6 +252,89 @@ delete sampleCompletoUnViajero['j-al-estado'];
 delete sampleCompletoUnViajero['j-al-cp'];
 delete sampleCompletoUnViajero['aloj_es_anfitrion'];
 
+// Variant: Plan Completo with 4 destinations
+const sampleCompleto4Destinos = {
+  ...sampleEsencial,
+  'j-motivo': 'turismo',
+  companions: [
+    {
+      nombre: 'Pedro Luis Rodríguez Pérez',
+      genero: 'masculino',
+      nacimiento: '1988-11-03',
+      nacionalidad: 'Venezolana',
+      pasaporte: 'CD7654321',
+      vinculo: 'familiar',
+      parentesco: 'sobrino',
+      parentesco_otro: '',
+      vinculo_detalle: '',
+      tiempo_anios: '30',
+      tiempo_meses: '0',
+    },
+  ],
+  destinos: [
+    {
+      ciudad: 'Ciudad de México, CDMX',
+      actividades: 'Visita al Zócalo, Museo Nacional de Antropología, Chapultepec, recorrido gastronómico.',
+      aloj_nombre: 'Hotel Histórico Central',
+      aloj_calle: 'Calle 5 de Mayo 12',
+      aloj_colonia: 'Centro Histórico',
+      aloj_delegacion: 'Cuauhtémoc',
+      aloj_ciudad: 'Ciudad de México',
+      aloj_estado: 'Ciudad de México',
+      aloj_cp: '06000',
+      fecha_desde: '2026-04-10',
+      fecha_hasta: '2026-04-15',
+    },
+    {
+      ciudad: 'Oaxaca de Juárez, Oaxaca',
+      actividades: 'Visita a Monte Albán, mercado de artesanías, degustación de mezcal, Hierve el Agua.',
+      aloj_nombre: '',
+      aloj_calle: 'Calle Macedonio Alcalá 305',
+      aloj_colonia: 'Centro',
+      aloj_delegacion: 'Oaxaca de Juárez',
+      aloj_ciudad: 'Oaxaca de Juárez',
+      aloj_estado: 'Oaxaca',
+      aloj_cp: '68000',
+      fecha_desde: '2026-04-15',
+      fecha_hasta: '2026-04-18',
+    },
+    {
+      ciudad: 'San Cristóbal de las Casas, Chiapas',
+      actividades: 'Visita al Cañón del Sumidero, pueblo mágico, mercados indígenas, iglesia de Santo Domingo.',
+      aloj_nombre: 'Posada del Abuelito',
+      aloj_calle: 'Real de Guadalupe 18',
+      aloj_colonia: 'Centro',
+      aloj_delegacion: 'San Cristóbal de las Casas',
+      aloj_ciudad: 'San Cristóbal de las Casas',
+      aloj_estado: 'Chiapas',
+      aloj_cp: '29200',
+      fecha_desde: '2026-04-18',
+      fecha_hasta: '2026-04-21',
+    },
+    {
+      ciudad: 'Cancún, Quintana Roo',
+      actividades: 'Playa, snorkel en arrecifes, visita a Chichén Itzá, parque Xcaret.',
+      aloj_nombre: 'Hotel Zona Hotelera',
+      aloj_calle: 'Blvd. Kukulcán Km 9.5',
+      aloj_colonia: 'Zona Hotelera',
+      aloj_delegacion: 'Benito Juárez',
+      aloj_ciudad: 'Cancún',
+      aloj_estado: 'Quintana Roo',
+      aloj_cp: '77500',
+      fecha_desde: '2026-04-21',
+      fecha_hasta: '2026-04-26',
+    },
+  ],
+};
+delete sampleCompleto4Destinos['j-actividades'];
+delete sampleCompleto4Destinos['j-aloj-nombre'];
+delete sampleCompleto4Destinos['j-al-calle'];
+delete sampleCompleto4Destinos['j-al-colonia'];
+delete sampleCompleto4Destinos['j-al-ciudad'];
+delete sampleCompleto4Destinos['j-al-estado'];
+delete sampleCompleto4Destinos['j-al-cp'];
+delete sampleCompleto4Destinos['aloj_es_anfitrion'];
+
 async function main() {
   console.log('Generating Plan Esencial PDF (hotel, host pays some, air exit)...');
   const esencialBuf = await generatePDF(sampleEsencial, 'esencial');
@@ -277,6 +360,11 @@ async function main() {
   const completoUnViajBuf = await generatePDF(sampleCompletoUnViajero, 'completo');
   writeFileSync(`${OUT_DIR}/test-carta-completo-un-viajero.pdf`, completoUnViajBuf);
   console.log(`  → ${OUT_DIR}/test-carta-completo-un-viajero.pdf (${(completoUnViajBuf.length / 1024).toFixed(1)} KB)`);
+
+  console.log('Generating Plan Completo — 4 destinos...');
+  const completo4Buf = await generatePDF(sampleCompleto4Destinos, 'completo');
+  writeFileSync(`${OUT_DIR}/test-carta-completo-4-destinos.pdf`, completo4Buf);
+  console.log(`  → ${OUT_DIR}/test-carta-completo-4-destinos.pdf (${(completo4Buf.length / 1024).toFixed(1)} KB)`);
 
   console.log('Done!');
 }
