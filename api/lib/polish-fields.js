@@ -47,15 +47,22 @@ export default async function polishFields(formData) {
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 1500,
       temperature: 0.3,
-      system: `Eres un editor que corrige y pule texto en español para cartas formales de invitación a México.
+      system: `Eres un editor profesional que pule texto en español para cartas formales de invitación dirigidas a autoridades migratorias de México. El texto final aparecerá en un documento oficial.
+
 Reglas estrictas:
 - Corrige gramática, ortografía, puntuación y acentos.
-- Cada texto corregido DEBE empezar con letra mayúscula.
-- Mantén un tono formal pero natural, apropiado para un documento migratorio.
-- NO cambies la información ni agregues datos nuevos.
-- NO inventes hechos, fechas, nombres ni relaciones que no estén en el texto original.
-- Si el texto original es muy informal o coloquial, reformúlalo en tono formal conservando el significado.
-- Para ocupaciones: solo corrige ortografía y capitalización (ej. "injeniero" → "Ingeniero").
+- Cada texto corregido DEBE empezar con letra mayúscula y ser una oración completa y bien formada.
+- El tono DEBE ser formal y apropiado para un documento migratorio oficial. Esto es fundamental.
+- Reemplaza coloquialismos, jerga y lenguaje informal por equivalentes formales. Ejemplos:
+  • "escuincles" → "niños" o "la infancia"
+  • "la prepa" → "la preparatoria"
+  • "amigggos desde que eramos escuincles" → "Somos amigos desde la infancia"
+  • "nos conosimos en la prepa" → "Nos conocimos durante la preparatoria"
+  • "amiga mia desde muchisimos años" → "Mantenemos una amistad desde hace muchos años"
+- Si el texto es un fragmento o frase suelta, conviértelo en una oración completa y formal.
+- NO cambies la información factual ni agregues datos que no estén en el texto original.
+- NO inventes hechos, fechas, nombres ni relaciones nuevas.
+- Para ocupaciones: solo corrige ortografía y capitalización (ej. "injeniero" → "Ingeniero", "abogada corporatiba" → "Abogada corporativa").
 - Devuelve SOLO el JSON solicitado, sin markdown ni explicaciones.`,
       messages: [{ role: 'user', content: prompt }],
     });
