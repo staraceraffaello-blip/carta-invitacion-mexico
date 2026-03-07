@@ -109,13 +109,13 @@ function buildPrompt(f) {
   // --- Prose fields ---
   if (f.vinculoDetalle) {
     parts.push(
-      `VÍNCULO PRINCIPAL:\n"${f.vinculoDetalle}"\nDescripción de la relación entre anfitrión y viajero principal. Corrige gramática, ortografía y puntuación. La primera letra debe ser mayúscula.`
+      `VÍNCULO PRINCIPAL:\n"${f.vinculoDetalle}"\nDescripción de la relación entre anfitrión y viajero principal. Reescríbelo como una oración completa con sujeto y verbo (ej. "Somos amigos desde...", "Nos conocemos desde..."). Corrige gramática, ortografía y puntuación.`
     );
   }
 
   if (f.actividades) {
     parts.push(
-      `ACTIVIDADES:\n"${f.actividades}"\nCorrige gramática y ortografía. Mantén todo el contenido original. No agregues ni quites actividades.`
+      `ACTIVIDADES:\n"${f.actividades}"\nCorrige gramática y ortografía. Mantén todo el contenido original. No agregues ni quites actividades. Devuelve UN SOLO STRING con las actividades separadas por comas.`
     );
   }
 
@@ -151,7 +151,7 @@ function buildPrompt(f) {
       t ? `  Acompañante ${i + 1}: "${t}"` : `  Acompañante ${i + 1}: (vacío)`
     ).join('\n');
     parts.push(
-      `VÍNCULOS DE ACOMPAÑANTES:\n${list}\nCorrige gramática, ortografía y puntuación de cada uno. La primera letra de cada texto debe ser mayúscula. Devuelve un array en el mismo orden (usa null para los vacíos).`
+      `VÍNCULOS DE ACOMPAÑANTES:\n${list}\nReescribe cada uno como una oración completa con sujeto y verbo (ej. "Es hermana del viajero y amiga mía desde..."). Corrige gramática, ortografía y puntuación. Devuelve un array en el mismo orden (usa null para los vacíos).`
     );
   }
 
@@ -161,7 +161,7 @@ function buildPrompt(f) {
       t ? `  Destino ${i + 1}: "${t}"` : `  Destino ${i + 1}: (vacío)`
     ).join('\n');
     parts.push(
-      `ACTIVIDADES POR DESTINO:\n${list}\nCorrige gramática y ortografía de cada uno. Mantén todo el contenido original. No agregues ni quites actividades. Devuelve un array en el mismo orden (usa null para los vacíos).`
+      `ACTIVIDADES POR DESTINO:\n${list}\nCorrige gramática y ortografía de cada uno. Mantén todo el contenido original. No agregues ni quites actividades. IMPORTANTE: cada destino debe ser UN SOLO STRING con todas sus actividades separadas por comas (no separes en múltiples strings). Devuelve un array en el mismo orden (usa null para los vacíos).`
     );
   }
 
