@@ -1,7 +1,6 @@
 import PDFDocument from 'pdfkit';
 
 const BLACK = '#000000';
-const GRAY_SIG = '#333333';
 
 const MONTHS_ES = [
   'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
@@ -538,7 +537,7 @@ export default function generatePDF(formData, plan) {
 
     doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica-Bold')
       .text(hostName, { align: 'center' });
-    doc.fontSize(BODY_SIZE).fillColor(GRAY_SIG).font('Helvetica')
+    doc.fontSize(BODY_SIZE).fillColor(BLACK).font('Helvetica')
       .text(`${hostIdTipo}: ${hostIdNum}`, { align: 'center', lineGap: 1 })
       .text(`Tel.: ${hostTelefono}`, { align: 'center', lineGap: 1 })
       .text(`Correo: ${hostEmail}`, { align: 'center' });
