@@ -4,6 +4,7 @@
  */
 import { writeFileSync, mkdirSync } from 'fs';
 import generatePDF from './api/lib/generate-pdf.js';
+import polishFields from './api/lib/polish-fields.js';
 
 const OUT_DIR = './temporary pdf';
 mkdirSync(OUT_DIR, { recursive: true });
@@ -41,7 +42,7 @@ const sampleEsencial = {
   'a-ocupacion': 'Ingeniero en Sistemas',
   'a-empresa': 'Grupo Bimbo',
   'a-vinculo': 'amistad',
-  'a-vinculo-detalle': 'Somos amigos desde la universidad. Estudiamos juntos la carrera de ingeniería en el ITESM campus Monterrey y hemos mantenido contacto desde entonces',
+  'a-vinculo-detalle': 'amigggos desde que eramos escuincles',
   'a-tiempo-anios': '8',
   'a-tiempo-meses': '0',
   // Viaje
@@ -107,7 +108,7 @@ const sampleCompleto = {
       vinculo: 'familiar',
       parentesco: 'sobrino',
       parentesco_otro: '',
-      vinculo_detalle: '', // familiar — detalle hidden
+      vinculo_detalle: 'herrrmana de carlos y amiga mia desde muchisimos años',
       tiempo_anios: '30',
       tiempo_meses: '0',
     },
@@ -346,8 +347,15 @@ async function main() {
   writeFileSync(`${OUT_DIR}/test-carta-esencial-b-v2.pdf`, esencialBBuf);
   console.log(`  → ${OUT_DIR}/test-carta-esencial-b-v2.pdf (${(esencialBBuf.length / 1024).toFixed(1)} KB)`);
 
-  console.log('Generating Plan Completo PDF...');
-  const completoBuf = await generatePDF(sampleCompleto, 'completo');
+  // Test polishFields with messy text
+  console.log('\nTesting polishFields...');
+  const polished = await polishFields(sampleCompleto);
+  console.log('  vínculo principal:', polished['a-vinculo-detalle']);
+  console.log('  companion[0] vínculo:', polished.companions?.[0]?.vinculo_detalle);
+  console.log('');
+
+  console.log('Generating Plan Completo PDF (with polished data)...');
+  const completoBuf = await generatePDF(polished, 'completo');
   writeFileSync(`${OUT_DIR}/test-carta-completo-v2.pdf`, completoBuf);
   console.log(`  → ${OUT_DIR}/test-carta-completo-v2.pdf (${(completoBuf.length / 1024).toFixed(1)} KB)`);
 
