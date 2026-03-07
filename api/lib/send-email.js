@@ -16,7 +16,7 @@ function formatDate(dateStr) {
 
 /**
  * Send the invitation letter PDF to the customer via email.
- * @param {string} to — recipient email
+ * @param {string|string[]} to — recipient email(s)
  * @param {Buffer} pdfBuffer — the generated PDF
  * @param {'esencial'|'completo'} plan
  * @param {string} guestName — guest's full name for the subject line

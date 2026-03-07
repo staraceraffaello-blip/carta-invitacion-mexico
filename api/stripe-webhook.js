@@ -124,9 +124,7 @@ export default async function handler(req, res) {
         const recipients = [...new Set([viajeroEmail, anfitrionEmail, stripeEmail].filter(Boolean))];
 
         console.log('[webhook] Sending PDF email to recipients:', recipients.join(', '));
-        for (const addr of recipients) {
-          await sendEmail(addr, pdfBuffer, submission.plan, guestName, session.amount_total, companionNames);
-        }
+        await sendEmail(recipients, pdfBuffer, submission.plan, guestName, session.amount_total, companionNames);
         console.log('[webhook] All emails sent successfully');
 
         const { error: deliverErr } = await supabase
