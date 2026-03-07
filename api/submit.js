@@ -51,7 +51,6 @@ export default async function handler(req, res) {
 
     // 2. Crear Stripe Checkout Session (email field left empty so user can enter freely)
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
       line_items: [
         {
           price_data: {
