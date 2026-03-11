@@ -94,6 +94,20 @@
 - **CURP:** Never mention CURP in articles. The service does not collect it. Use "número de identificación oficial (INE, pasaporte mexicano o tarjeta de residente)" instead.
 - **Consistency with the service:** Do not claim the carta includes data fields that the forms don't actually collect. When in doubt, check `formulario-esencial.html` and `formulario-completo.html`.
 
+### New Article Checklist
+Every time a new article is created, complete ALL of the following before considering it done:
+
+1. **Fact-check thoroughly:** Verify all legal requirements, visa policies, dates, and immigration rules against official sources (gob.mx, INM, SRE). Do not guess or fabricate immigration data.
+2. **Cross-check with existing content:** Read at least 3 existing articles to ensure the new article does not contradict information already published on the site (e.g., visa-exempt countries, document requirements, fee amounts).
+3. **Add article card to `articulos.html`:** The article must appear on the articles listing page with correct title, description, thumbnail, and link.
+4. **Verify article is accessible:** Start the local server and use Puppeteer to navigate to `http://localhost:3000/articulos/[slug].html` — confirm the page loads without errors.
+5. **Screenshot the article card on `articulos.html`:** Use Puppeteer to screenshot the articles page and verify the new card image renders correctly, is not broken, and matches the existing card layout.
+6. **Update `sitemap.xml`:** Add a `<url>` entry with the full URL, today's date as `<lastmod>`, `monthly` changefreq, and `0.7` priority.
+7. **Internal linking:** Ensure the new article links to at least 2 related existing articles, and add a link to the new article from at least 1 existing related article.
+8. **Meta tags & schema:** Verify the article has `<title>`, `<meta description>`, Open Graph tags, and FAQPage schema markup where appropriate.
+9. **Mid-article CTA:** Confirm both mid-article and bottom CTAs are present per the rules above.
+10. **Commit & push:** Stage the new article, updated `articulos.html`, updated `sitemap.xml`, and any modified existing articles. Push to remote.
+
 ## PDF Generation (`api/lib/generate-pdf.js`)
 - **Capitalization after periods:** When concatenating sentences into a single `doc.text()` call, never start a sentence with a lowercase variable (e.g., `${refInvitados} se desplazará`). Always use a construction that begins with a capital letter.
 - **Singular/plural:** Use `hasCompanions` to branch between singular (Plan Esencial) and plural (Plan Completo). Always verify both variants after any change.
