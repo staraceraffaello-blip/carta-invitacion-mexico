@@ -18,6 +18,18 @@ dist/
 # MCP config (contains tokens)
 .mcp.json
 
+# Temporary test files
+test-*.pdf
+test-*.mjs
+temporary pdf/
+autofill-temp.mjs
+nul
+
+# Draft/planning docs
+borrador_*.docx
+backlink-targets.md
+manus-backlink-brief.md
+
 # OS files
 .DS_Store
 Thumbs.db
