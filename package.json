@@ -30,6 +30,7 @@
     "stripe": "^20.4.0"
   },
   "devDependencies": {
+    "@google-analytics/data": "^5.2.1",
     "tailwindcss": "^3.4.19"
   }
 }

@@ -187,6 +187,14 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Guía pilar -->
+  <url>
+    <loc>https://cartadeinvitacionmexico.com/guia-carta-invitacion-mexico</loc>
+    <lastmod>2026-03-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- Páginas legales -->
   <url>
     <loc>https://cartadeinvitacionmexico.com/privacidad</loc>
