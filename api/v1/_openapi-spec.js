@@ -315,6 +315,113 @@ export function buildOpenApiSpec() {
           },
         },
       },
+      '/api/v1/documents/{id}/stream': {
+        get: {
+          operationId: 'streamDocumentStatus',
+          summary: 'Stream document status via SSE',
+          description:
+            'Opens a Server-Sent Events (SSE) stream that delivers real-time status updates for a document. ' +
+            'The server polls for changes every 3 seconds and emits `status` events when the document status changes. ' +
+            'A `heartbeat` event is sent every 15 seconds to keep the connection alive. ' +
+            'The stream closes automatically when the document reaches a terminal state (`completed` or `failed`) ' +
+            'or when the server timeout approaches (approximately 55 seconds). ' +
+            'Clients should handle the `reconnect` event and use the `retry` directive (3000ms) for automatic reconnection. ' +
+            'The `Last-Event-ID` header is supported for resuming after disconnection.',
+          tags: ['Documents'],
+          parameters: [
+            {
+              name: 'id',
+              in: 'path',
+              required: true,
+              description: 'Document UUID',
+              schema: { type: 'string', format: 'uuid' },
+            },
+            {
+              name: 'Last-Event-ID',
+              in: 'header',
+              required: false,
+              description: 'Event ID from the last received SSE event. Used for reconnection to resume from the last known status.',
+              schema: { type: 'string' },
+            },
+          ],
+          responses: {
+            '200': {
+              description:
+                'SSE stream opened. Events are sent as `text/event-stream`. ' +
+                'Event types: `status` (document status change), `heartbeat` (keep-alive), ' +
+                '`reconnect` (server timeout approaching), `error` (non-fatal poll error).',
+              headers: rateLimitHeaders(),
+              content: {
+                'text/event-stream': {
+                  schema: {
+                    type: 'string',
+                    description: 'Server-Sent Events stream. Each event has an `id`, `event` type, and JSON `data` field.',
+                  },
+                  examples: {
+                    statusEvent: {
+                      summary: 'Status change event',
+                      value:
+                        'id: 550e8400-e29b-41d4-a716-446655440000:processing:1711555200000\n' +
+                        'event: status\n' +
+                        'data: {"document_id":"550e8400-e29b-41d4-a716-446655440000","status":"processing","plan":"esencial","created_at":"2026-03-27T12:00:00.000Z","updated_at":"2026-03-27T12:01:00.000Z"}\n\n',
+                    },
+                    completedEvent: {
+                      summary: 'Completed status with download URL',
+                      value:
+                        'id: 550e8400-e29b-41d4-a716-446655440000:completed:1711555260000\n' +
+                        'event: status\n' +
+                        'data: {"document_id":"550e8400-e29b-41d4-a716-446655440000","status":"completed","plan":"esencial","created_at":"2026-03-27T12:00:00.000Z","updated_at":"2026-03-27T12:02:00.000Z","download_url":"https://..."}\n\n',
+                    },
+                    heartbeatEvent: {
+                      summary: 'Heartbeat keep-alive',
+                      value:
+                        'event: heartbeat\n' +
+                        'data: {"timestamp":"2026-03-27T12:00:15.000Z"}\n\n',
+                    },
+                    reconnectEvent: {
+                      summary: 'Server timeout — client should reconnect',
+                      value:
+                        'event: reconnect\n' +
+                        'data: {"reason":"server_timeout","message":"Connection approaching server timeout. Please reconnect.","last_status":"processing"}\n\n',
+                    },
+                  },
+                },
+              },
+            },
+            '404': {
+              description: 'Document not found (returned as JSON before SSE mode starts)',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/ErrorResponse' },
+                },
+              },
+            },
+            '405': {
+              description: 'Method not allowed',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/ErrorResponse' },
+                },
+              },
+            },
+            '429': {
+              description: 'Rate limit exceeded (max 10 stream connections per minute per IP)',
+              headers: {
+                ...rateLimitHeaders(),
+                'Retry-After': {
+                  description: 'Seconds until the rate limit window resets',
+                  schema: { type: 'integer' },
+                },
+              },
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/ErrorResponse' },
+                },
+              },
+            },
+          },
+        },
+      },
       '/api/v1/webhooks': {
         post: {
           operationId: 'createWebhook',
@@ -517,6 +624,119 @@ export function buildOpenApiSpec() {
                     type: 'object',
                     description: 'OpenAPI 3.0 specification document',
                   },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/api/v1/mcp': {
+        post: {
+          operationId: 'mcpEndpoint',
+          summary: 'Model Context Protocol (MCP) server',
+          description: 'JSON-RPC 2.0 endpoint implementing the Model Context Protocol (MCP). Allows AI agents to discover and invoke tools for listing document types, creating invitation letters, and checking document status. Supports methods: initialize, tools/list, tools/call.',
+          tags: ['MCP'],
+          parameters: [
+            {
+              name: 'Authorization',
+              in: 'header',
+              required: false,
+              description: 'API key (Bearer token) — required only for the create_document tool.',
+              schema: { type: 'string' },
+            },
+          ],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/JsonRpcRequest' },
+                examples: {
+                  initialize: {
+                    summary: 'Initialize MCP session',
+                    value: {
+                      jsonrpc: '2.0',
+                      id: 1,
+                      method: 'initialize',
+                      params: {},
+                    },
+                  },
+                  tools_list: {
+                    summary: 'List available tools',
+                    value: {
+                      jsonrpc: '2.0',
+                      id: 2,
+                      method: 'tools/list',
+                      params: {},
+                    },
+                  },
+                  tools_call_list_types: {
+                    summary: 'Call list_document_types tool',
+                    value: {
+                      jsonrpc: '2.0',
+                      id: 3,
+                      method: 'tools/call',
+                      params: {
+                        name: 'list_document_types',
+                        arguments: {},
+                      },
+                    },
+                  },
+                  tools_call_check_status: {
+                    summary: 'Call check_document_status tool',
+                    value: {
+                      jsonrpc: '2.0',
+                      id: 4,
+                      method: 'tools/call',
+                      params: {
+                        name: 'check_document_status',
+                        arguments: {
+                          document_id: '550e8400-e29b-41d4-a716-446655440000',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            '200': {
+              description: 'JSON-RPC 2.0 response (success or error)',
+              headers: rateLimitHeaders(),
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/JsonRpcResponse' },
+                },
+              },
+            },
+            '400': {
+              description: 'Invalid JSON-RPC request',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/JsonRpcResponse' },
+                },
+              },
+            },
+            '405': {
+              description: 'Method not allowed (only POST accepted)',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/JsonRpcResponse' },
+                },
+              },
+            },
+            '429': {
+              description: 'Rate limit exceeded',
+              headers: {
+                ...rateLimitHeaders(),
+                'Retry-After': {
+                  description: 'Seconds until the rate limit window resets',
+                  schema: { type: 'integer' },
+                },
+              },
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/JsonRpcResponse' },
                 },
               },
             },
@@ -909,6 +1129,49 @@ export function buildOpenApiSpec() {
           },
           required: ['event', 'timestamp', 'data'],
         },
+        SSEStatusEvent: {
+          type: 'object',
+          description: 'Data payload for SSE `status` events',
+          properties: {
+            document_id: { type: 'string', format: 'uuid' },
+            status: { type: 'string', enum: ['pending_payment', 'processing', 'completed', 'failed'] },
+            plan: { type: 'string', enum: ['esencial', 'completo'] },
+            created_at: { type: 'string', format: 'date-time' },
+            updated_at: { type: 'string', format: 'date-time' },
+            download_url: {
+              type: 'string',
+              format: 'uri',
+              description: 'PDF download URL (only when status is completed)',
+            },
+            error: {
+              type: 'object',
+              properties: {
+                code: { type: 'string' },
+                message: { type: 'string' },
+              },
+              description: 'Error details (only when status is failed)',
+            },
+          },
+          required: ['document_id', 'status', 'plan', 'created_at', 'updated_at'],
+        },
+        SSEHeartbeatEvent: {
+          type: 'object',
+          description: 'Data payload for SSE `heartbeat` events',
+          properties: {
+            timestamp: { type: 'string', format: 'date-time', description: 'Current server timestamp' },
+          },
+          required: ['timestamp'],
+        },
+        SSEReconnectEvent: {
+          type: 'object',
+          description: 'Data payload for SSE `reconnect` events (sent before server timeout)',
+          properties: {
+            reason: { type: 'string', enum: ['server_timeout'], description: 'Why the reconnect is needed' },
+            message: { type: 'string', description: 'Human-readable explanation' },
+            last_status: { type: 'string', description: 'Last known document status' },
+          },
+          required: ['reason', 'message', 'last_status'],
+        },
         ValidationErrorResponse: {
           type: 'object',
           properties: {
@@ -926,6 +1189,61 @@ export function buildOpenApiSpec() {
             },
           },
           required: ['errors'],
+        },
+        JsonRpcRequest: {
+          type: 'object',
+          required: ['jsonrpc', 'method'],
+          properties: {
+            jsonrpc: {
+              type: 'string',
+              enum: ['2.0'],
+              description: 'JSON-RPC version (must be "2.0")',
+            },
+            id: {
+              oneOf: [{ type: 'string' }, { type: 'integer' }],
+              description: 'Request identifier',
+            },
+            method: {
+              type: 'string',
+              enum: ['initialize', 'tools/list', 'tools/call'],
+              description: 'MCP method to invoke',
+            },
+            params: {
+              type: 'object',
+              description: 'Method parameters. For tools/call, must include "name" (tool name) and "arguments" (tool input).',
+              properties: {
+                name: { type: 'string', description: 'Tool name (for tools/call)' },
+                arguments: { type: 'object', description: 'Tool arguments (for tools/call)' },
+              },
+            },
+          },
+        },
+        JsonRpcResponse: {
+          type: 'object',
+          required: ['jsonrpc', 'id'],
+          properties: {
+            jsonrpc: {
+              type: 'string',
+              enum: ['2.0'],
+            },
+            id: {
+              oneOf: [{ type: 'string' }, { type: 'integer' }, { type: 'null' }],
+            },
+            result: {
+              type: 'object',
+              description: 'Success result (present on success, absent on error)',
+            },
+            error: {
+              type: 'object',
+              description: 'Error object (present on error, absent on success)',
+              properties: {
+                code: { type: 'integer', description: 'JSON-RPC error code' },
+                message: { type: 'string', description: 'Error message' },
+                data: { type: 'object', description: 'Additional error data' },
+              },
+              required: ['code', 'message'],
+            },
+          },
         },
       },
       securitySchemes: {
@@ -958,6 +1276,10 @@ export function buildOpenApiSpec() {
       {
         name: 'Webhooks',
         description: 'Register callback URLs to receive notifications when document events occur. Note: Webhook registrations are stored in-memory and do not persist across Vercel serverless cold starts.',
+      },
+      {
+        name: 'MCP',
+        description: 'Model Context Protocol (MCP) server endpoint for AI agent integration. Uses JSON-RPC 2.0 over HTTP to expose tools for document type discovery, document creation, and status checking.',
       },
     ],
   };

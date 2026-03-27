@@ -5,6 +5,9 @@
   "functions": {
     "api/stripe-webhook.js": {
       "maxDuration": 30
+    },
+    "api/v1/documents/[id]/stream.js": {
+      "maxDuration": 60
     }
   },
   "rewrites": [

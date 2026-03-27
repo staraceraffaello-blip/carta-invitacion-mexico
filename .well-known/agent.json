@@ -8,8 +8,10 @@
     "url": "https://cartadeinvitacionmexico.com",
     "contact_email": "soporte@cartadeinvitacionmexico.com"
   },
+  "protocols": ["rest", "mcp"],
   "capabilities": {
     "document_generation": true,
+    "mcp_endpoint": "https://cartadeinvitacionmexico.com/api/v1/mcp",
     "supported_document_types": [
       "carta_invitacion_turismo",
       "carta_invitacion_negocios"
