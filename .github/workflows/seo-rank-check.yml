@@ -1,0 +1,47 @@
+name: Daily SEO Rank Check
+
+on:
+  schedule:
+    - cron: '3 14 * * *' # 8:03 AM Mexico City (UTC-6)
+  workflow_dispatch: {} # Manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  rank-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run SEO rank check
+        env:
+          GSC_SERVICE_ACCOUNT: ${{ secrets.GSC_SERVICE_ACCOUNT }}
+          GSC_SITE_URL: ${{ vars.GSC_SITE_URL }}
+        run: |
+          node scripts/seo-rank-check.mjs
+          echo "REPORT_DATE=$(date +%Y-%m-%d)" >> "$GITHUB_ENV"
+
+      - name: Send email via Resend
+        if: success()
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          REPORT_DATE: ${{ env.REPORT_DATE }}
+        run: node scripts/send-rank-report-email.mjs
+
+      - name: Commit and push report
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add seo-rankings/
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: daily SEO rank check ${REPORT_DATE}"
+            git push
+          fi

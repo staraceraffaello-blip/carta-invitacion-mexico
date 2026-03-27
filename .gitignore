@@ -30,6 +30,9 @@ borrador_*.docx
 backlink-targets.md
 manus-backlink-brief.md
 
+# Session state (local working memory)
+STATE.md
+
 # OS files
 .DS_Store
 Thumbs.db

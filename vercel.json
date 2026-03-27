@@ -9,6 +9,10 @@
   },
   "rewrites": [
     {
+      "source": "/api/v1/openapi.json",
+      "destination": "/api/v1/openapi.js"
+    },
+    {
       "source": "/api/submit",
       "destination": "/api/submit.js"
     },
@@ -19,6 +23,28 @@
     {
       "source": "/checkout",
       "destination": "/checkout.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/.well-known/agent.json",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/llms.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" }
+      ]
+    },
+    {
+      "source": "/openapi.json",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
     }
   ],
   "redirects": [

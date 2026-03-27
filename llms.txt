@@ -6,6 +6,7 @@
 
 - [Home](https://cartadeinvitacionmexico.com/): Pagina principal del servicio. Genera tu carta de invitacion Mexico online en minutos. Descarga inmediata.
 - [Articulos](https://cartadeinvitacionmexico.com/articulos): Indice de guias y articulos sobre migracion y cartas de invitacion para Mexico.
+- [Documentacion del servicio](https://cartadeinvitacionmexico.com/docs): Descripcion estructurada del servicio, tipos de documento, campos requeridos, precios y capacidades.
 
 ## Articulos
 
@@ -28,3 +29,148 @@
 - [Preguntas de migracion Mexico a turistas](https://cartadeinvitacionmexico.com/articulos/preguntas-migracion-mexico): Las preguntas mas frecuentes en el filtro migratorio de Mexico y que tipo de respuestas generan menos friccion.
 - [Peruanos visa Mexico 2025](https://cartadeinvitacionmexico.com/articulos/peruanos-visa-mexico-2025): Desde abril de 2024, los peruanos necesitan visa para entrar a Mexico. Quienes estan exentos y que documentos llevar.
 - [Preregistro INM para colombianos](https://cartadeinvitacionmexico.com/articulos/preregistro-inm-colombianos): Los colombianos que viajan a Mexico deben completar un preregistro obligatorio en el portal del INM. Proceso completo y documentos necesarios.
+
+---
+
+## Service Description (Machine-Readable)
+
+### Overview
+
+- **Service name:** Carta de Invitacion Mexico
+- **URL:** https://cartadeinvitacionmexico.com
+- **Type:** Automated document generation (PDF)
+- **Language:** Spanish (es-MX)
+- **Output format:** Formal PDF invitation letter for Mexican immigration (INM)
+- **Use case:** Supporting documentation for entry to Mexico — presented at immigration checkpoints, consulates, and visa applications
+- **Turnaround:** Instant (automated generation after payment)
+- **Delivery:** Immediate PDF download + email delivery
+
+### Document Types
+
+#### carta_invitacion_turismo
+Tourism invitation letter. Used for personal visits: family reunions, tourism, visiting a partner, cultural events, medical travel.
+
+#### carta_invitacion_negocios
+Business invitation letter. Used for professional visits: conferences, trade fairs, business meetings, non-remunerated professional activities.
+
+### Pricing
+
+| Plan | Price (USD) | Description |
+|------|------------|-------------|
+| Plan Esencial | $5 | Single traveler, basic itinerary. Includes host details, traveler details, relationship, travel purpose, accommodation, and travel dates. |
+| Plan Completo | $9 | Supports multiple travelers (companions), detailed multi-destination itinerary with per-destination accommodation, entry/exit transport details (flights, land crossings, maritime), financial responsibility breakdown, and in-Mexico transportation modes. |
+
+### Required Inputs — Plan Esencial ($5 USD)
+
+#### Host (Anfitrion) Information
+- `a_nombre` — Full name (required)
+- `a_genero` — Sex: masculino | femenino (required)
+- `a_nacionalidad` — Nationality (required)
+- `a_nacimiento` — Date of birth (required)
+- `a_id_tipo` — Official ID type: pasaporte | ine | residente (required)
+- `a_id_num` — ID number (required)
+- `a_calle` — Street address in Mexico (required)
+- `a_colonia` — Neighborhood (required)
+- `a_delegacion` — Municipality (required)
+- `a_ciudad` — City (required)
+- `a_estado` — State (required, Mexican state)
+- `a_cp` — Postal code (required)
+- `a_telefono` — Phone number (required)
+- `a_email` — Email address (required)
+- `a_ocupacion` — Occupation or position (required)
+- `a_empresa` — Company or workplace (optional)
+
+#### Traveler (Viajero) Information
+- `v_nombre` — Full name (required)
+- `v_genero` — Sex: masculino | femenino (required)
+- `v_nacimiento` — Date of birth (required)
+- `v_nacionalidad` — Nationality as shown on passport (required)
+- `v_pasaporte` — Passport number (required)
+- `v_residencia` — Country of residence (required)
+- `v_calle` — Street address in country of residence (required)
+- `v_ciudad` — City of residence (required)
+- `v_provincia` — Province / state / region (required)
+- `v_cp` — Postal code (required)
+- `v_ocupacion` — Professional activity or occupation (required)
+- `v_email` — Email address (required)
+
+#### Relationship (Vinculo)
+- `a_vinculo` — Relationship type: familiar | pareja | amistad | laboral | otro (required)
+- `a_parentesco` — Specific family relationship, if familiar (conditional)
+- `a_parentesco_otro` — Custom relationship, if "otro" (conditional)
+- `a_vinculo_detalle` — Brief description of the relationship (required)
+- `a_tiempo_anios` — Years known (required)
+- `a_tiempo_meses` — Months known (required)
+
+#### Trip Details (Viaje)
+- `j_motivo` — Trip purpose: turismo | negocios | estudios | actividades_no_remuneradas | transito | tratamientos_medicos (required)
+- `j_actividades` — Planned activities in Mexico, free text (required)
+- `aloj_es_anfitrion` — Staying at host address: si | no (required)
+- `j_aloj_nombre` — Accommodation name if not at host (conditional)
+- `j_al_calle`, `j_al_colonia`, `j_al_delegacion`, `j_al_ciudad`, `j_al_estado`, `j_al_cp` — Accommodation address fields (conditional)
+- `j_fecha_llegada` — Arrival date (required)
+- `j_fecha_regreso` — Departure date (required)
+
+### Required Inputs — Plan Completo ($9 USD)
+
+Includes all Plan Esencial fields, plus:
+
+#### Entry Transport (Ingreso)
+- `ingreso_tipo` — Entry mode: aereo | terrestre | maritimo (required)
+- `ing_aeropuerto` — Entry airport (conditional, if aereo)
+- `ing_aerolinea` — Arrival airline (conditional)
+- `ing_vuelo` — Flight number (conditional)
+- `ing_cruce` — Border crossing point (conditional, if terrestre)
+- `ing_puerto` — Entry port (conditional, if maritimo)
+- `ing_fecha` — Arrival date (required)
+
+#### Exit Transport (Salida)
+- `salida_tipo` — Exit mode: aereo | terrestre | maritimo (required)
+- `sal_aeropuerto` — Departure airport (conditional)
+- `sal_aerolinea` — Return airline (conditional)
+- `sal_vuelo` — Flight number (conditional)
+- `sal_cruce` — Border crossing point (conditional)
+- `sal_puerto` — Departure port (conditional)
+- `sal_fecha` — Return date (required)
+
+#### Multi-Destination Itinerary (repeatable)
+- `dest_ciudad[]` — Destination city (required per destination)
+- `dest_actividades[]` — Activities at destination (required)
+- `dest_aloj_es_anfitrion[]` — Staying at host address: si | no (required)
+- `dest_aloj_nombre[]` — Accommodation name (conditional)
+- `dest_aloj_calle[]`, `dest_aloj_colonia[]`, `dest_aloj_delegacion[]`, `dest_aloj_ciudad[]`, `dest_aloj_estado[]`, `dest_aloj_cp[]` — Accommodation address (conditional)
+- `dest_fecha_desde[]` — Stay start date (required)
+- `dest_fecha_hasta[]` — Stay end date (required)
+
+#### Companions (repeatable)
+- `comp_nombre[]` — Full name (required per companion)
+- `comp_genero_N` — Sex: masculino | femenino (required)
+- `comp_nacimiento[]` — Date of birth (required)
+- `comp_nacionalidad[]` — Nationality (required)
+- `comp_pasaporte[]` — Passport number (required)
+- `comp_mismo_domicilio[]` — Same address as main traveler: si | no (required)
+- `comp_residencia[]` — Country of residence (conditional)
+- `comp_calle[]`, `comp_ciudad[]`, `comp_provincia[]`, `comp_cp[]` — Address fields (conditional)
+- `comp_ocupacion[]` — Occupation (required)
+
+#### Financial Responsibility (Gastos)
+- `gastos_anfitrion` — Host covers expenses: si | no (required)
+- `gastos_host_conceptos` — Expense categories covered by host: alojamiento | alimentos | transporte | actividades | medicos | otro (conditional, multiple)
+- `gastos_otro_texto` — Custom expense description (conditional)
+
+#### In-Mexico Transportation
+- `transporte_mx` — Transport modes: avion | autobus_foraneo | auto_rentado | anfitrion | transporte_publico (required, multiple)
+
+### Payment
+
+- **Provider:** Stripe
+- **Currencies accepted:** USD (displayed), processed via Stripe in applicable currencies
+- **Flow:** Form submission → Stripe checkout → PDF generated → immediate download + email delivery
+
+### Machine-Readable Endpoints
+
+- `/.well-known/agent.json` — A2A Agent Card (JSON)
+- `/llms.txt` — This file (structured markdown for LLMs)
+- `/docs` — Machine-readable service documentation page with JSON-LD structured data
+- `/sitemap.xml` — XML sitemap
+- `/robots.txt` — Robots directives

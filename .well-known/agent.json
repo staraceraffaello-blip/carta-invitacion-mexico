@@ -1,0 +1,53 @@
+{
+  "name": "Carta de Invitación México",
+  "description": "Generates formal PDF invitation letters (carta de invitación) for Mexican immigration. Used as supporting documentation for visa applications, immigration checkpoints, and consulate appointments. Letters are personalized with host and traveler data, relationship details, itinerary, and accommodation information.",
+  "url": "https://cartadeinvitacionmexico.com",
+  "version": "1.0",
+  "provider": {
+    "organization": "Carta de Invitación México",
+    "url": "https://cartadeinvitacionmexico.com",
+    "contact_email": "soporte@cartadeinvitacionmexico.com"
+  },
+  "capabilities": {
+    "document_generation": true,
+    "supported_document_types": [
+      "carta_invitacion_turismo",
+      "carta_invitacion_negocios"
+    ],
+    "supported_purposes": [
+      "turismo",
+      "negocios",
+      "estudios",
+      "actividades_no_remuneradas",
+      "transito",
+      "tratamientos_medicos"
+    ],
+    "output_format": "application/pdf",
+    "language": "es-MX",
+    "delivery": "instant_download",
+    "payment_required": true
+  },
+  "pricing": {
+    "currency": "USD",
+    "plans": [
+      {
+        "id": "esencial",
+        "name": "Plan Esencial",
+        "price": 5,
+        "description": "Single traveler with basic itinerary. Includes host and traveler details, relationship, travel purpose, accommodation, and dates."
+      },
+      {
+        "id": "completo",
+        "name": "Plan Completo",
+        "price": 9,
+        "description": "Supports multiple travelers (companions), multi-destination itinerary with per-destination accommodation, entry/exit transport details, financial responsibility breakdown, and in-Mexico transportation modes."
+      }
+    ]
+  },
+  "documentation": {
+    "llms_txt": "https://cartadeinvitacionmexico.com/llms.txt",
+    "docs_page": "https://cartadeinvitacionmexico.com/docs",
+    "sitemap": "https://cartadeinvitacionmexico.com/sitemap.xml"
+  },
+  "contact": "soporte@cartadeinvitacionmexico.com"
+}
