@@ -11,7 +11,7 @@ import {
   handleCors,
   authenticateApiKey,
 } from '../_helpers.js';
-import { webhookStore } from './index.js';
+import { webhookStore } from './webhooks.js';
 
 export default async function handler(req, res) {
   // CORS preflight

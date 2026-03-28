@@ -1,4 +1,4 @@
-import { jsonResponse, errorResponse, rateLimit, handleCors } from './_helpers.js';
+import { jsonResponse, errorResponse, rateLimit, handleCors } from '../_helpers.js';
 
 export default function handler(req, res) {
   // Handle CORS preflight

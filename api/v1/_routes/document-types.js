@@ -1,5 +1,5 @@
-import { jsonResponse, errorResponse, rateLimit, handleCors } from './_helpers.js';
-import { buildOpenApiSpec } from './_openapi-spec.js';
+import { jsonResponse, errorResponse, rateLimit, handleCors } from '../_helpers.js';
+import DOCUMENT_TYPES from '../_document-types-data.js';
 
 export default function handler(req, res) {
   // Handle CORS preflight
@@ -21,10 +21,9 @@ export default function handler(req, res) {
   }
 
   try {
-    const spec = buildOpenApiSpec();
-    return jsonResponse(res, spec, 200, rl);
+    return jsonResponse(res, { document_types: DOCUMENT_TYPES }, 200, rl);
   } catch (err) {
-    console.error('[api/v1/openapi] Error:', err);
+    console.error('[api/v1/document-types] Error:', err);
     return errorResponse(res, 'INTERNAL_ERROR', 'An unexpected error occurred.', { status: 500, rateLimitInfo: rl });
   }
 }

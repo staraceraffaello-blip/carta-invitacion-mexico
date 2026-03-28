@@ -18,7 +18,7 @@ import {
   handleCors,
   corsHeaders,
   authenticateApiKey,
-} from '../../_helpers.js';
+} from '../_helpers.js';
 
 export const config = { maxDuration: 60 };
 

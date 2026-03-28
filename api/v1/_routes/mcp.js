@@ -19,9 +19,9 @@ import {
   handleCors,
   authenticateApiKey,
   corsHeaders,
-} from './_helpers.js';
-import DOCUMENT_TYPES from './_document-types-data.js';
-import mexicoNow from '../lib/mexico-now.js';
+} from '../_helpers.js';
+import DOCUMENT_TYPES from '../_document-types-data.js';
+import mexicoNow from '../../lib/mexico-now.js';
 
 /* ─── Lazy-init external clients (only when needed) ─── */
 let _supabase;
