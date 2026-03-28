@@ -4,6 +4,7 @@
  * Deletes a registered webhook. Requires API key authentication.
  * Only the API key that created the webhook can delete it.
  */
+import { createClient } from '@supabase/supabase-js';
 import {
   jsonResponse,
   errorResponse,
@@ -11,18 +12,20 @@ import {
   handleCors,
   authenticateApiKey,
 } from '../_helpers.js';
-import { webhookStore } from './webhooks.js';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
 export default async function handler(req, res) {
   // CORS preflight
   if (handleCors(req, res)) return;
 
-  // Only DELETE
   if (req.method !== 'DELETE') {
     return errorResponse(res, 'METHOD_NOT_ALLOWED', 'Only DELETE is allowed on this endpoint.', { status: 405 });
   }
 
-  // Rate limiting
   const rl = rateLimit(req, { maxRequests: 20, windowMs: 60000 });
   if (!rl.allowed) {
     res.setHeader('Retry-After', rl.retryAfter);
@@ -32,39 +35,36 @@ export default async function handler(req, res) {
     });
   }
 
-  // Authentication
   const auth = authenticateApiKey(req);
   if (!auth.valid) {
     return errorResponse(res, 'UNAUTHORIZED', auth.reason, { status: 401, rateLimitInfo: rl });
   }
 
   try {
-    // Extract webhook ID from the URL
     const webhookId = req.query.id;
 
     if (!webhookId) {
       return errorResponse(res, 'MISSING_FIELD', 'Webhook ID is required.', { field: 'id', rateLimitInfo: rl });
     }
 
-    // Validate webhook ID format (wh_ prefix + hex)
     if (!/^wh_[0-9a-f]{32}$/.test(webhookId)) {
       return errorResponse(res, 'INVALID_FIELD', 'Webhook ID must be a valid wh_ identifier.', { field: 'id', rateLimitInfo: rl });
     }
 
-    // Look up the webhook
-    const webhook = webhookStore.get(webhookId);
-    if (!webhook) {
-      return errorResponse(res, 'NOT_FOUND', 'Webhook not found.', { status: 404, rateLimitInfo: rl });
-    }
-
-    // Verify ownership — only the API key that created the webhook can delete it
     const apiKeyHash = hashApiKey(req);
-    if (webhook.api_key_hash !== apiKeyHash) {
+
+    // Delete only if it belongs to this API key
+    const { data, error: dbError } = await supabase
+      .from('webhooks')
+      .delete()
+      .eq('id', webhookId)
+      .eq('api_key_hash', apiKeyHash)
+      .select('id')
+      .single();
+
+    if (dbError || !data) {
       return errorResponse(res, 'NOT_FOUND', 'Webhook not found.', { status: 404, rateLimitInfo: rl });
     }
-
-    // Delete
-    webhookStore.delete(webhookId);
 
     return jsonResponse(res, { deleted: true, webhook_id: webhookId }, 200, rl);
 

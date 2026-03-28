@@ -5,11 +5,10 @@
  * Webhooks allow AI agents to receive callbacks when documents are
  * completed or fail. Requires API key authentication.
  *
- * NOTE: Webhook registrations are stored in-memory and will NOT persist
- * across Vercel cold starts. For production durability, migrate storage
- * to Supabase (see inline comments).
+ * Storage: Supabase `webhooks` table (persistent across cold starts).
  */
 import { randomUUID } from 'node:crypto';
+import { createClient } from '@supabase/supabase-js';
 import {
   jsonResponse,
   errorResponse,
@@ -21,14 +20,13 @@ import {
 /* ─── Valid webhook event types ─── */
 const VALID_EVENTS = ['document.completed', 'document.failed'];
 
-/* ─── In-memory webhook store (keyed by webhook ID) ─── */
-// Each entry: { id, url, events, secret?, api_key_hash, created_at }
-// WARNING: This map resets on every Vercel cold start.
-// To persist, replace with Supabase table `webhooks`.
-const webhookStore = new Map();
+export { VALID_EVENTS };
 
-// Export for use by other modules (e.g., the Stripe webhook dispatcher)
-export { webhookStore, VALID_EVENTS };
+/* ─── Supabase client ─── */
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
 export default async function handler(req, res) {
   // CORS preflight
@@ -47,7 +45,6 @@ export default async function handler(req, res) {
 
 /* ─── POST: Register a webhook ─── */
 async function handlePost(req, res) {
-  // Rate limiting
   const rl = rateLimit(req, { maxRequests: 20, windowMs: 60000 });
   if (!rl.allowed) {
     res.setHeader('Retry-After', rl.retryAfter);
@@ -57,7 +54,6 @@ async function handlePost(req, res) {
     });
   }
 
-  // Authentication
   const auth = authenticateApiKey(req);
   if (!auth.valid) {
     return errorResponse(res, 'UNAUTHORIZED', auth.reason, { status: 401, rateLimitInfo: rl });
@@ -73,7 +69,6 @@ async function handlePost(req, res) {
     // ── Validate fields ──
     const errors = [];
 
-    // URL — required, must be HTTPS
     if (!body.url || typeof body.url !== 'string') {
       errors.push({ code: 'MISSING_FIELD', message: 'url is required.', field: 'url' });
     } else {
@@ -87,7 +82,6 @@ async function handlePost(req, res) {
       }
     }
 
-    // Events — required, non-empty array of valid event types
     if (!body.events || !Array.isArray(body.events) || body.events.length === 0) {
       errors.push({ code: 'MISSING_FIELD', message: 'events must be a non-empty array.', field: 'events' });
     } else {
@@ -101,7 +95,6 @@ async function handlePost(req, res) {
       }
     }
 
-    // Secret — optional, but must be a string if provided
     if (body.secret !== undefined && typeof body.secret !== 'string') {
       errors.push({ code: 'INVALID_FIELD', message: 'secret must be a string.', field: 'secret' });
     }
@@ -110,37 +103,34 @@ async function handlePost(req, res) {
       return jsonResponse(res, { errors }, 400, rl);
     }
 
-    // ── Deduplicate events ──
-    const events = [...new Set(body.events)];
-
     // ── Create webhook record ──
+    const events = [...new Set(body.events)];
     const webhookId = `wh_${randomUUID().replace(/-/g, '')}`;
-    const now = new Date().toISOString();
-
-    // Hash the API key to associate webhooks with the caller
-    // (constant-length digest so we can filter by owner later)
     const apiKeyHash = hashApiKey(req);
 
-    const webhook = {
-      id: webhookId,
-      url: body.url,
-      events,
-      ...(body.secret && { secret: body.secret }),
-      api_key_hash: apiKeyHash,
-      created_at: now,
-    };
+    const { data, error: dbError } = await supabase
+      .from('webhooks')
+      .insert({
+        id: webhookId,
+        url: body.url,
+        events,
+        secret: body.secret || null,
+        api_key_hash: apiKeyHash,
+      })
+      .select('id, url, events, created_at')
+      .single();
 
-    webhookStore.set(webhookId, webhook);
+    if (dbError) {
+      console.error('[api/v1/webhooks] Supabase insert error:', dbError);
+      return errorResponse(res, 'INTERNAL_ERROR', 'Failed to register webhook.', { status: 500, rateLimitInfo: rl });
+    }
 
-    // ── Response (exclude internal fields) ──
-    const responseBody = {
-      webhook_id: webhook.id,
-      url: webhook.url,
-      events: webhook.events,
-      created_at: webhook.created_at,
-    };
-
-    return jsonResponse(res, responseBody, 201, rl);
+    return jsonResponse(res, {
+      webhook_id: data.id,
+      url: data.url,
+      events: data.events,
+      created_at: data.created_at,
+    }, 201, rl);
 
   } catch (err) {
     console.error('[api/v1/webhooks] POST error:', err);
@@ -150,7 +140,6 @@ async function handlePost(req, res) {
 
 /* ─── GET: List webhooks for the authenticated API key ─── */
 async function handleGet(req, res) {
-  // Rate limiting
   const rl = rateLimit(req, { maxRequests: 60, windowMs: 60000 });
   if (!rl.allowed) {
     res.setHeader('Retry-After', rl.retryAfter);
@@ -160,7 +149,6 @@ async function handleGet(req, res) {
     });
   }
 
-  // Authentication
   const auth = authenticateApiKey(req);
   if (!auth.valid) {
     return errorResponse(res, 'UNAUTHORIZED', auth.reason, { status: 401, rateLimitInfo: rl });
@@ -169,20 +157,25 @@ async function handleGet(req, res) {
   try {
     const apiKeyHash = hashApiKey(req);
 
-    // Filter webhooks belonging to this API key
-    const webhooks = [];
-    for (const wh of webhookStore.values()) {
-      if (wh.api_key_hash === apiKeyHash) {
-        webhooks.push({
-          webhook_id: wh.id,
-          url: wh.url,
-          events: wh.events,
-          created_at: wh.created_at,
-        });
-      }
+    const { data: webhooks, error: dbError } = await supabase
+      .from('webhooks')
+      .select('id, url, events, created_at')
+      .eq('api_key_hash', apiKeyHash)
+      .order('created_at', { ascending: false });
+
+    if (dbError) {
+      console.error('[api/v1/webhooks] Supabase select error:', dbError);
+      return errorResponse(res, 'INTERNAL_ERROR', 'Failed to list webhooks.', { status: 500, rateLimitInfo: rl });
     }
 
-    return jsonResponse(res, { webhooks }, 200, rl);
+    return jsonResponse(res, {
+      webhooks: (webhooks || []).map(wh => ({
+        webhook_id: wh.id,
+        url: wh.url,
+        events: wh.events,
+        created_at: wh.created_at,
+      })),
+    }, 200, rl);
 
   } catch (err) {
     console.error('[api/v1/webhooks] GET error:', err);
@@ -192,16 +185,11 @@ async function handleGet(req, res) {
 
 /* ─── Helpers ─── */
 
-/**
- * Derive a simple hash from the API key in the request.
- * Used to associate webhooks with their owner without storing the raw key.
- */
 function hashApiKey(req) {
   const authHeader = req.headers['authorization'] || '';
   const xApiKey = req.headers['x-api-key'] || '';
   const key = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : xApiKey.trim();
 
-  // Simple FNV-1a 32-bit hash — sufficient for in-memory association
   let hash = 0x811c9dc5;
   for (let i = 0; i < key.length; i++) {
     hash ^= key.charCodeAt(i);
