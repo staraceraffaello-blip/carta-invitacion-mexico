@@ -21,7 +21,15 @@ export const config = {
 };
 
 export default function handler(req, res) {
-  const segments = req.query.path || [];
+  // Vercel passes catch-all segments via req.query.path
+  // Fallback: parse from req.url if query is empty
+  let segments = req.query.path;
+  if (!segments || (Array.isArray(segments) && segments.length === 0)) {
+    const url = new URL(req.url, `https://${req.headers.host || 'localhost'}`);
+    const match = url.pathname.match(/^\/api\/v1\/(.+)/);
+    segments = match ? match[1].split('/').filter(Boolean) : [];
+  }
+  if (typeof segments === 'string') segments = [segments];
   const route = segments.join('/');
 
   // Inject parsed path params into req.query for handlers that expect them
