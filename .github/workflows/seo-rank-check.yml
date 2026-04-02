@@ -29,6 +29,7 @@ jobs:
           echo "REPORT_DATE=$(date +%Y-%m-%d)" >> "$GITHUB_ENV"
 
       - name: Send email via Resend
+        continue-on-error: true
         if: success()
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}

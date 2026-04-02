@@ -142,19 +142,10 @@ async function sendEmail(from, to) {
 
 try {
   await sendEmail(
-    'hola@cartadeinvitacionmexico.com',
-    'hola@cartadeinvitacionmexico.com'
+    'onboarding@resend.dev',
+    'starace.raffaello@gmail.com'
   );
 } catch (err) {
-  console.warn('Primary send failed:', err.message);
-  console.log('Trying fallback...');
-  try {
-    await sendEmail(
-      'onboarding@resend.dev',
-      'starace.raffaello@gmail.com'
-    );
-  } catch (err2) {
-    console.error('Fallback also failed:', err2.message);
-    process.exit(1);
-  }
+  console.error('Email send failed:', err.message);
+  process.exit(1);
 }

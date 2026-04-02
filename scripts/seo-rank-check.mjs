@@ -12,7 +12,7 @@ import { createSign } from 'crypto';
 
 // --- Config ---
 
-const SITE_URL = process.env.GSC_SITE_URL || 'https://cartadeinvitacionmexico.com/';
+const SITE_URL = process.env.GSC_SITE_URL || 'sc-domain:cartadeinvitacionmexico.com';
 
 const KEYWORDS = [
   'carta de invitación méxico',
