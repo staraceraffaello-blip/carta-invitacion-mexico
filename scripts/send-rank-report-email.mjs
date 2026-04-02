@@ -142,7 +142,7 @@ async function sendEmail(from, to) {
 
 try {
   await sendEmail(
-    'onboarding@resend.dev',
+    'seo@raffaellostarace.com',
     'starace.raffaello@gmail.com'
   );
 } catch (err) {
