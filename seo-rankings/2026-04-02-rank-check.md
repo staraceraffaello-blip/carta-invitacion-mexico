@@ -26,7 +26,7 @@
 - **Total clicks (7d):** 0
 - **Total impressions (7d):** 44
 - **Changes since last check:**
-First check (no previous data)
+No significant changes
 
 ## Recommendations
 - Create or improve content targeting: "requisitos entrar a méxico como turista"
