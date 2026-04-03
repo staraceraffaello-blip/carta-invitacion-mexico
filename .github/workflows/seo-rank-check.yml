@@ -20,6 +20,16 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Keep Supabase alive
+        continue-on-error: true
+        run: |
+          curl -sf -o /dev/null \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/?limit=0" \
+            && echo "Supabase pinged OK" \
+            || echo "Supabase ping failed (non-blocking)"
+
       - name: Run SEO rank check
         env:
           GSC_SERVICE_ACCOUNT: ${{ secrets.GSC_SERVICE_ACCOUNT }}
