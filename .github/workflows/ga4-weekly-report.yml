@@ -1,0 +1,27 @@
+name: Weekly GA4 Report
+
+on:
+  schedule:
+    - cron: '7 14 * * 1' # Monday 8:07 AM Mexico City (UTC-6)
+  workflow_dispatch: {} # Manual trigger
+
+jobs:
+  ga4-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate and email GA4 report
+        env:
+          GA4_SERVICE_ACCOUNT: ${{ secrets.GA4_SERVICE_ACCOUNT }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: node scripts/send-ga4-report-email.mjs

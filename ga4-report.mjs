@@ -17,9 +17,6 @@ import { readFileSync } from "fs";
 
 // --- Config ---
 const PROPERTY_ID = "526320486";
-const CREDENTIALS_PATH =
-  process.env.GOOGLE_APPLICATION_CREDENTIALS ||
-  "C:/Users/laura.rodriguez/.claude/ga4-credentials.json";
 
 // --- CLI args ---
 const args = process.argv.slice(2);
@@ -31,7 +28,17 @@ const days = parseInt(getArg("days", "7"), 10);
 const format = getArg("format", "json"); // json | text | html
 
 // --- Auth ---
-const credentials = JSON.parse(readFileSync(CREDENTIALS_PATH, "utf8"));
+// Accepts credentials from: GA4_SERVICE_ACCOUNT env var (JSON string),
+// GOOGLE_APPLICATION_CREDENTIALS env var (file path), or local fallback
+let credentials;
+if (process.env.GA4_SERVICE_ACCOUNT) {
+  credentials = JSON.parse(process.env.GA4_SERVICE_ACCOUNT);
+} else {
+  const credPath =
+    process.env.GOOGLE_APPLICATION_CREDENTIALS ||
+    "C:/Users/laura.rodriguez/.claude/ga4-credentials.json";
+  credentials = JSON.parse(readFileSync(credPath, "utf8"));
+}
 const client = new BetaAnalyticsDataClient({
   credentials: {
     client_email: credentials.client_email,
