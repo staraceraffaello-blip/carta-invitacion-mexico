@@ -4,6 +4,7 @@
  *
  * Calls the GA4 Data API directly using service account credentials.
  * No MCP dependency. Outputs JSON or formatted text.
+ * Includes week-over-week comparison with the previous period.
  *
  * Usage:
  *   node ga4-report.mjs                  # last 7 days, JSON output
@@ -28,8 +29,6 @@ const days = parseInt(getArg("days", "7"), 10);
 const format = getArg("format", "json"); // json | text | html
 
 // --- Auth ---
-// Accepts credentials from: GA4_SERVICE_ACCOUNT env var (JSON string),
-// GOOGLE_APPLICATION_CREDENTIALS env var (file path), or local fallback
 let credentials;
 if (process.env.GA4_SERVICE_ACCOUNT) {
   credentials = JSON.parse(process.env.GA4_SERVICE_ACCOUNT);
@@ -49,11 +48,51 @@ const client = new BetaAnalyticsDataClient({
 
 const property = `properties/${PROPERTY_ID}`;
 
-// --- Report: ALL Sessions ---
+// Both date ranges for comparison
+const dateRanges = [
+  { startDate: `${days}daysAgo`, endDate: "yesterday" },
+  { startDate: `${days * 2}daysAgo`, endDate: `${days + 1}daysAgo` },
+];
+
+// --- Comparison helpers ---
+function delta(current, previous) {
+  const c = parseFloat(current) || 0;
+  const p = parseFloat(previous) || 0;
+  if (p === 0) return c > 0 ? { abs: c, pct: null, dir: "up" } : { abs: 0, pct: 0, dir: "flat" };
+  const pct = ((c - p) / p) * 100;
+  const dir = pct > 1 ? "up" : pct < -1 ? "down" : "flat";
+  return { abs: c - p, pct, dir };
+}
+
+function formatDelta(d, opts = {}) {
+  if (d.dir === "flat") return "—";
+  const arrow = d.dir === "up" ? "+" : "";
+  if (d.pct === null) return `${arrow}${Math.round(d.abs)} (new)`;
+  return `${arrow}${Math.round(d.abs)} (${arrow}${d.pct.toFixed(0)}%)`;
+}
+
+function htmlDelta(d) {
+  if (d.dir === "flat") return `<span style="color:#8B7D6B;font-size:11px;">—</span>`;
+  const color = d.dir === "up" ? "#2D6A4F" : "#DC2626";
+  const arrow = d.dir === "up" ? "&#9650;" : "&#9660;";
+  const pctStr = d.pct !== null ? ` ${d.pct > 0 ? "+" : ""}${d.pct.toFixed(0)}%` : " new";
+  return `<span style="color:${color};font-size:11px;">${arrow}${pctStr}</span>`;
+}
+
+// For bounce rate, down is good
+function htmlDeltaBounce(d) {
+  if (d.dir === "flat") return `<span style="color:#8B7D6B;font-size:11px;">—</span>`;
+  const color = d.dir === "down" ? "#2D6A4F" : "#DC2626"; // inverted
+  const arrow = d.dir === "up" ? "&#9650;" : "&#9660;";
+  const pctStr = d.pct !== null ? ` ${d.pct > 0 ? "+" : ""}${d.pct.toFixed(0)}%` : "";
+  return `<span style="color:${color};font-size:11px;">${arrow}${pctStr}</span>`;
+}
+
+// --- Report: ALL Sessions (with previous period) ---
 async function fetchAllSessions() {
   const [response] = await client.runReport({
     property,
-    dateRanges: [{ startDate: `${days}daysAgo`, endDate: "yesterday" }],
+    dateRanges,
     dimensions: [{ name: "pagePath" }],
     metrics: [
       { name: "sessions" },
@@ -66,22 +105,14 @@ async function fetchAllSessions() {
     orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
     limit: 15,
   });
-  return parseRows(response, [
-    "pagePath",
-    "sessions",
-    "activeUsers",
-    "screenPageViews",
-    "engagedSessions",
-    "userEngagementDuration",
-    "bounceRate",
-  ]);
+  return parseDualRows(response, ["sessions", "activeUsers", "screenPageViews", "engagedSessions", "userEngagementDuration", "bounceRate"]);
 }
 
-// --- Report: Engaged Sessions Only (Humans) ---
+// --- Report: Engaged Sessions Only (with previous period) ---
 async function fetchEngagedSessions() {
   const [response] = await client.runReport({
     property,
-    dateRanges: [{ startDate: `${days}daysAgo`, endDate: "yesterday" }],
+    dateRanges,
     dimensions: [{ name: "pagePath" }],
     metrics: [
       { name: "sessions" },
@@ -101,20 +132,14 @@ async function fetchEngagedSessions() {
     orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
     limit: 15,
   });
-  return parseRows(response, [
-    "pagePath",
-    "sessions",
-    "activeUsers",
-    "screenPageViews",
-    "userEngagementDuration",
-  ]);
+  return parseDualRows(response, ["sessions", "activeUsers", "screenPageViews", "userEngagementDuration"]);
 }
 
-// --- Totals row ---
+// --- Totals row (with previous period) ---
 async function fetchTotals() {
   const [all] = await client.runReport({
     property,
-    dateRanges: [{ startDate: `${days}daysAgo`, endDate: "yesterday" }],
+    dateRanges,
     metrics: [
       { name: "sessions" },
       { name: "activeUsers" },
@@ -125,7 +150,7 @@ async function fetchTotals() {
   });
   const [engaged] = await client.runReport({
     property,
-    dateRanges: [{ startDate: `${days}daysAgo`, endDate: "yesterday" }],
+    dateRanges,
     metrics: [
       { name: "sessions" },
       { name: "activeUsers" },
@@ -143,88 +168,159 @@ async function fetchTotals() {
     },
   });
 
-  const allRow = all.rows?.[0]?.metricValues?.map((v) => v.value) || [];
-  const engRow =
-    engaged.rows?.[0]?.metricValues?.map((v) => v.value) || [];
+  // With 2 date ranges and no dimensions, GA4 returns 2 rows (one per range)
+  const allCur = all.rows?.[0]?.metricValues?.map((v) => v.value) || [];
+  const allPrev = all.rows?.[1]?.metricValues?.map((v) => v.value) || [];
+  const engCur = engaged.rows?.[0]?.metricValues?.map((v) => v.value) || [];
+  const engPrev = engaged.rows?.[1]?.metricValues?.map((v) => v.value) || [];
 
   return {
     all: {
-      sessions: allRow[0] || "0",
-      activeUsers: allRow[1] || "0",
-      pageViews: allRow[2] || "0",
-      engagedSessions: allRow[3] || "0",
-      bounceRate: allRow[4] || "0",
+      sessions: allCur[0] || "0",
+      activeUsers: allCur[1] || "0",
+      pageViews: allCur[2] || "0",
+      engagedSessions: allCur[3] || "0",
+      bounceRate: allCur[4] || "0",
+    },
+    allPrev: {
+      sessions: allPrev[0] || "0",
+      activeUsers: allPrev[1] || "0",
+      pageViews: allPrev[2] || "0",
+      engagedSessions: allPrev[3] || "0",
+      bounceRate: allPrev[4] || "0",
     },
     engaged: {
-      sessions: engRow[0] || "0",
-      activeUsers: engRow[1] || "0",
-      pageViews: engRow[2] || "0",
-      engagedSessions: engRow[3] || "0",
+      sessions: engCur[0] || "0",
+      activeUsers: engCur[1] || "0",
+      pageViews: engCur[2] || "0",
+      engagedSessions: engCur[3] || "0",
+    },
+    engagedPrev: {
+      sessions: engPrev[0] || "0",
+      activeUsers: engPrev[1] || "0",
+      pageViews: engPrev[2] || "0",
+      engagedSessions: engPrev[3] || "0",
     },
   };
 }
 
-function parseRows(response, columns) {
+/**
+ * Parse GA4 response with dual date ranges.
+ * With dimensions + 2 date ranges, GA4 returns rows grouped by dimension,
+ * with a "dateRange" dimension: "date_range_0" or "date_range_1".
+ * We merge them into objects with current + prev values.
+ */
+function parseDualRows(response, metricNames) {
   if (!response.rows || response.rows.length === 0) return [];
-  return response.rows.map((row) => {
-    const obj = {};
-    row.dimensionValues?.forEach((d, i) => {
-      obj[columns[i]] = d.value;
+
+  const byPage = new Map();
+
+  for (const row of response.rows) {
+    const pagePath = row.dimensionValues[0].value;
+    const metrics = row.metricValues.map((v) => v.value);
+
+    if (!byPage.has(pagePath)) {
+      byPage.set(pagePath, { pagePath, cur: {}, prev: {} });
+    }
+    const entry = byPage.get(pagePath);
+
+    // With 2 date ranges and dimensions, GA4 duplicates rows with an implicit
+    // date range index. The first occurrence is range 0 (current), determined
+    // by the response ordering. We detect via the dateRange dimension if present,
+    // otherwise use insertion order.
+    const dateRangeDim = row.dimensionValues.find(
+      (d) => d.value === "date_range_0" || d.value === "date_range_1"
+    );
+
+    let target;
+    if (dateRangeDim) {
+      target = dateRangeDim.value === "date_range_0" ? "cur" : "prev";
+    } else {
+      // Fallback: first seen = current
+      target = Object.keys(entry.cur).length === 0 ? "cur" : "prev";
+    }
+
+    metricNames.forEach((name, i) => {
+      entry[target][name] = metrics[i];
     });
-    const metricOffset = row.dimensionValues?.length || 0;
-    row.metricValues?.forEach((m, i) => {
-      obj[columns[metricOffset + i]] = m.value;
-    });
-    return obj;
-  });
+  }
+
+  // Sort by current sessions descending, return top entries
+  return Array.from(byPage.values())
+    .sort((a, b) => (parseInt(b.cur.sessions) || 0) - (parseInt(a.cur.sessions) || 0))
+    .slice(0, 15);
 }
 
 function formatDuration(seconds) {
-  const s = Math.round(parseFloat(seconds));
+  const s = Math.round(parseFloat(seconds) || 0);
   if (s < 60) return `${s}s`;
   const m = Math.floor(s / 60);
   return `${m}m ${s % 60}s`;
 }
 
 function formatBounce(rate) {
-  return `${(parseFloat(rate) * 100).toFixed(1)}%`;
+  return `${(parseFloat(rate || 0) * 100).toFixed(1)}%`;
 }
 
-function truncatePath(p, max = 45) {
+function truncatePath(p, max = 40) {
   return p.length > max ? p.slice(0, max - 1) + "…" : p;
 }
 
-// --- Formatters ---
+// --- Text Formatter ---
 function toText(allRows, engRows, totals, dateRange) {
+  const dSess = delta(totals.all.sessions, totals.allPrev.sessions);
+  const dHuman = delta(totals.engaged.sessions, totals.engagedPrev.sessions);
+  const dViews = delta(totals.all.pageViews, totals.allPrev.pageViews);
+  const dBounce = delta(totals.all.bounceRate, totals.allPrev.bounceRate);
+
   let out = `GA4 Analytics Report — cartadeinvitacionmexico.com\n`;
-  out += `Date range: ${dateRange}\n`;
+  out += `Date range: ${dateRange} (vs previous ${days} days)\n`;
   out += `Generated: ${new Date().toISOString()}\n\n`;
 
-  out += `═══ TOTALS ═══\n`;
-  out += `ALL:     ${totals.all.sessions} sessions | ${totals.all.activeUsers} users | ${totals.all.pageViews} pageviews | Bounce: ${formatBounce(totals.all.bounceRate)}\n`;
-  out += `HUMANS:  ${totals.engaged.sessions} sessions | ${totals.engaged.activeUsers} users | ${totals.engaged.pageViews} pageviews\n\n`;
+  out += `═══ TOTALS (vs previous period) ═══\n`;
+  out += `ALL:     ${totals.all.sessions} sessions (${formatDelta(dSess)}) | ${totals.all.activeUsers} users | ${totals.all.pageViews} pageviews (${formatDelta(dViews)}) | Bounce: ${formatBounce(totals.all.bounceRate)}\n`;
+  out += `HUMANS:  ${totals.engaged.sessions} sessions (${formatDelta(dHuman)}) | ${totals.engaged.activeUsers} users | ${totals.engaged.pageViews} pageviews\n\n`;
 
   out += `═══ ALL SESSIONS (Top 15 pages) ═══\n`;
-  out += `${"Page".padEnd(47)} ${"Sess".padStart(6)} ${"Users".padStart(6)} ${"Views".padStart(6)} ${"Eng".padStart(6)} ${"Time".padStart(8)} ${"Bounce".padStart(8)}\n`;
-  out += "─".repeat(90) + "\n";
+  out += `${"Page".padEnd(42)} ${"Sess".padStart(6)} ${"Δ".padStart(8)} ${"Users".padStart(6)} ${"Views".padStart(6)} ${"Eng".padStart(5)} ${"Time".padStart(7)} ${"Bounce".padStart(7)}\n`;
+  out += "─".repeat(95) + "\n";
   for (const r of allRows) {
-    out += `${truncatePath(r.pagePath).padEnd(47)} ${r.sessions.padStart(6)} ${r.activeUsers.padStart(6)} ${r.screenPageViews.padStart(6)} ${r.engagedSessions.padStart(6)} ${formatDuration(r.userEngagementDuration).padStart(8)} ${formatBounce(r.bounceRate).padStart(8)}\n`;
+    const d = delta(r.cur.sessions, r.prev.sessions || "0");
+    out += `${truncatePath(r.pagePath).padEnd(42)} ${(r.cur.sessions || "0").padStart(6)} ${formatDelta(d).padStart(8)} ${(r.cur.activeUsers || "0").padStart(6)} ${(r.cur.screenPageViews || "0").padStart(6)} ${(r.cur.engagedSessions || "0").padStart(5)} ${formatDuration(r.cur.userEngagementDuration).padStart(7)} ${formatBounce(r.cur.bounceRate).padStart(7)}\n`;
   }
 
   out += `\n═══ ENGAGED SESSIONS ONLY — Humans (Top 15 pages) ═══\n`;
-  out += `${"Page".padEnd(47)} ${"Sess".padStart(6)} ${"Users".padStart(6)} ${"Views".padStart(6)} ${"Time".padStart(8)}\n`;
-  out += "─".repeat(75) + "\n";
+  out += `${"Page".padEnd(42)} ${"Sess".padStart(6)} ${"Δ".padStart(8)} ${"Users".padStart(6)} ${"Views".padStart(6)} ${"Time".padStart(7)}\n`;
+  out += "─".repeat(80) + "\n";
   for (const r of engRows) {
-    out += `${truncatePath(r.pagePath).padEnd(47)} ${r.sessions.padStart(6)} ${r.activeUsers.padStart(6)} ${r.screenPageViews.padStart(6)} ${formatDuration(r.userEngagementDuration).padStart(8)}\n`;
+    const d = delta(r.cur.sessions, r.prev.sessions || "0");
+    out += `${truncatePath(r.pagePath).padEnd(42)} ${(r.cur.sessions || "0").padStart(6)} ${formatDelta(d).padStart(8)} ${(r.cur.activeUsers || "0").padStart(6)} ${(r.cur.screenPageViews || "0").padStart(6)} ${formatDuration(r.cur.userEngagementDuration).padStart(7)}\n`;
   }
 
   return out;
 }
 
+// --- HTML Formatter ---
 function toHtml(allRows, engRows, totals, dateRange) {
   const cellStyle = `padding:8px 12px;border-bottom:1px solid #E8E0D0;font-size:13px;`;
   const headerCell = `${cellStyle}background:#1B2A4A;color:#D4A853;font-weight:600;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;`;
   const numCell = `${cellStyle}text-align:right;font-variant-numeric:tabular-nums;`;
+
+  // Totals deltas
+  const dSess = delta(totals.all.sessions, totals.allPrev.sessions);
+  const dHuman = delta(totals.engaged.sessions, totals.engagedPrev.sessions);
+  const dViews = delta(totals.all.pageViews, totals.allPrev.pageViews);
+  const dBounce = delta(totals.all.bounceRate, totals.allPrev.bounceRate);
+
+  function totalsCard(value, label, d, invertColor = false) {
+    const color = label === "Human Sessions" ? "#2D6A4F" : label === "Bounce Rate" ? "#B45309" : "#1B2A4A";
+    const deltaHtml = invertColor ? htmlDeltaBounce(d) : htmlDelta(d);
+    return `<div style="flex:1;min-width:140px;background:#F5F0E8;border-radius:8px;padding:16px;text-align:center;">
+        <div style="font-size:28px;font-weight:700;color:${color};">${value}</div>
+        <div style="font-size:12px;color:#8B7D6B;margin-top:4px;">${label}</div>
+        <div style="margin-top:6px;">${deltaHtml}</div>
+      </div>`;
+  }
 
   function tableRows(rows, cols) {
     return rows
@@ -233,14 +329,18 @@ function toHtml(allRows, engRows, totals, dateRange) {
           `<tr style="background:${i % 2 === 0 ? "#FFFDF7" : "#FAF6EE"}">` +
           cols
             .map((c) => {
-              const val = r[c.key];
+              const val = r.cur[c.key];
               if (c.key === "pagePath")
-                return `<td style="${cellStyle}max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#1B2A4A;">${val}</td>`;
+                return `<td style="${cellStyle}max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#1B2A4A;">${r.pagePath}</td>`;
+              if (c.key === "sessions") {
+                const d = delta(r.cur.sessions, r.prev.sessions || "0");
+                return `<td style="${numCell}color:#4A5568;">${parseInt(val || 0).toLocaleString()} ${htmlDelta(d)}</td>`;
+              }
               if (c.key === "bounceRate")
                 return `<td style="${numCell}color:#4A5568;">${formatBounce(val)}</td>`;
               if (c.key === "userEngagementDuration")
                 return `<td style="${numCell}color:#4A5568;">${formatDuration(val)}</td>`;
-              return `<td style="${numCell}color:#4A5568;">${parseInt(val).toLocaleString()}</td>`;
+              return `<td style="${numCell}color:#4A5568;">${parseInt(val || 0).toLocaleString()}</td>`;
             })
             .join("") +
           `</tr>`
@@ -270,25 +370,14 @@ function toHtml(allRows, engRows, totals, dateRange) {
   <div style="background:#1B2A4A;padding:24px 32px;">
     <h1 style="color:#D4A853;margin:0;font-size:20px;font-weight:600;">GA4 Weekly Report</h1>
     <p style="color:#B8C4D8;margin:4px 0 0;font-size:14px;">cartadeinvitacionmexico.com — ${dateRange}</p>
+    <p style="color:#7B8DA8;margin:2px 0 0;font-size:12px;">vs previous ${days} days</p>
   </div>
   <div style="padding:24px 32px;">
     <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
-      <div style="flex:1;min-width:140px;background:#F5F0E8;border-radius:8px;padding:16px;text-align:center;">
-        <div style="font-size:28px;font-weight:700;color:#1B2A4A;">${parseInt(totals.all.sessions).toLocaleString()}</div>
-        <div style="font-size:12px;color:#8B7D6B;margin-top:4px;">Total Sessions</div>
-      </div>
-      <div style="flex:1;min-width:140px;background:#F5F0E8;border-radius:8px;padding:16px;text-align:center;">
-        <div style="font-size:28px;font-weight:700;color:#2D6A4F;">${parseInt(totals.engaged.sessions).toLocaleString()}</div>
-        <div style="font-size:12px;color:#8B7D6B;margin-top:4px;">Human Sessions</div>
-      </div>
-      <div style="flex:1;min-width:140px;background:#F5F0E8;border-radius:8px;padding:16px;text-align:center;">
-        <div style="font-size:28px;font-weight:700;color:#1B2A4A;">${parseInt(totals.all.pageViews).toLocaleString()}</div>
-        <div style="font-size:12px;color:#8B7D6B;margin-top:4px;">Page Views</div>
-      </div>
-      <div style="flex:1;min-width:140px;background:#F5F0E8;border-radius:8px;padding:16px;text-align:center;">
-        <div style="font-size:28px;font-weight:700;color:#B45309;">${formatBounce(totals.all.bounceRate)}</div>
-        <div style="font-size:12px;color:#8B7D6B;margin-top:4px;">Bounce Rate</div>
-      </div>
+      ${totalsCard(parseInt(totals.all.sessions).toLocaleString(), "Total Sessions", dSess)}
+      ${totalsCard(parseInt(totals.engaged.sessions).toLocaleString(), "Human Sessions", dHuman)}
+      ${totalsCard(parseInt(totals.all.pageViews).toLocaleString(), "Page Views", dViews)}
+      ${totalsCard(formatBounce(totals.all.bounceRate), "Bounce Rate", dBounce, true)}
     </div>
 
     <h2 style="color:#1B2A4A;font-size:16px;margin:24px 0 12px;border-bottom:2px solid #D4A853;padding-bottom:8px;">All Sessions (Top 15)</h2>
@@ -304,7 +393,7 @@ function toHtml(allRows, engRows, totals, dateRange) {
     </table>
   </div>
   <div style="background:#F5F0E8;padding:16px 32px;text-align:center;">
-    <p style="margin:0;color:#8B7D6B;font-size:12px;">Automated weekly report · Carta de Invitación México</p>
+    <p style="margin:0;color:#8B7D6B;font-size:12px;">Automated weekly report · Carta de Invitaci&oacute;n M&eacute;xico</p>
   </div>
 </div>`;
 }
