@@ -14,7 +14,8 @@ import { createSign } from 'crypto';
 
 const SITE_URL = process.env.GSC_SITE_URL || 'sc-domain:cartadeinvitacionmexico.com';
 
-const KEYWORDS = [
+// Core 10 — always reported in the main table
+const CORE_KEYWORDS = [
   'carta de invitación méxico',
   'carta de invitación para extranjeros méxico',
   'carta de invitación para entrar a méxico',
@@ -25,6 +26,37 @@ const KEYWORDS = [
   'requisitos entrar a méxico como turista',
   'generar carta de invitación méxico online',
   'formato carta de invitación méxico',
+];
+
+// Expanded — nationality + process/situation keywords (tracked in JSON sidecar)
+const EXPANDED_KEYWORDS = [
+  ...CORE_KEYWORDS,
+  // Nationality expansion
+  'carta de invitación colombianos méxico',
+  'carta de invitación peruanos méxico',
+  'carta de invitación argentinos méxico',
+  'carta de invitación ecuatorianos méxico',
+  'carta de invitación dominicanos méxico',
+  'carta de invitación brasileños méxico',
+  'carta de invitación bolivianos méxico',
+  'carta de invitación hondureños méxico',
+  'carta de invitación guatemaltecos méxico',
+  'carta de invitación chilenos méxico',
+  'carta de invitación nicaragüenses méxico',
+  'carta de invitación salvadoreños méxico',
+  'carta de invitación haitianos méxico',
+  'carta de invitación paraguayos méxico',
+  // Process & situation
+  'carta de invitación para menor de edad méxico',
+  'carta de invitación para pareja extranjera méxico',
+  'carta de invitación para visa mexicana consulado',
+  'carta de invitación vs reserva de hotel méxico',
+  'carta de invitación para tratamiento médico méxico',
+  'qué pasa si no tengo carta de invitación méxico',
+  'carta de invitación para eventos y negocios méxico',
+  'carta responsiva migración méxico',
+  'preregistro inm colombia méxico',
+  'documentos para entrar a méxico como turista',
 ];
 
 // --- Auth (JWT → access token, no SDK needed) ---
@@ -235,9 +267,9 @@ async function main() {
   const rows = await queryGSC(token, fmt(startDate), fmt(endDate));
   console.log(`Got ${rows.length} rows from GSC`);
 
-  // Match each target keyword
+  // Match core keywords (for the main report table)
   const previous = loadPreviousData();
-  const results = KEYWORDS.map((keyword, i) => {
+  const results = CORE_KEYWORDS.map((keyword, i) => {
     const match = matchKeyword(rows, keyword);
     return {
       num: i + 1,
@@ -250,6 +282,46 @@ async function main() {
     };
   });
 
+  // Match expanded keywords (for JSON sidecar — used by article generator)
+  const expandedResults = EXPANDED_KEYWORDS.map((keyword, i) => {
+    const match = matchKeyword(rows, keyword);
+    return {
+      num: i + 1,
+      keyword,
+      position: match ? match.position : null,
+      url: match ? new URL(match.keys[1]).pathname : null,
+      clicks: match ? match.clicks : 0,
+      impressions: match ? match.impressions : 0,
+      ctr: match ? match.ctr * 100 : 0,
+    };
+  });
+
+  // Build keyword discovery: all GSC queries sorted by impressions (desc)
+  // Aggregates across pages for the same query
+  const queryMap = new Map();
+  for (const row of rows) {
+    const query = row.keys[0];
+    const existing = queryMap.get(query);
+    if (existing) {
+      existing.clicks += row.clicks;
+      existing.impressions += row.impressions;
+      if (row.position < existing.bestPosition) {
+        existing.bestPosition = row.position;
+        existing.bestUrl = new URL(row.keys[1]).pathname;
+      }
+    } else {
+      queryMap.set(query, {
+        query,
+        clicks: row.clicks,
+        impressions: row.impressions,
+        bestPosition: row.position,
+        bestUrl: new URL(row.keys[1]).pathname,
+      });
+    }
+  }
+  const discovery = Array.from(queryMap.values())
+    .sort((a, b) => b.impressions - a.impressions || a.bestPosition - b.bestPosition);
+
   // Generate report
   const markdown = generateReport(date, fmt(startDate), fmt(endDate), results, previous);
 
@@ -257,11 +329,26 @@ async function main() {
   mkdirSync('seo-rankings', { recursive: true });
   const mdPath = `seo-rankings/${date}-rank-check.md`;
   const jsonPath = `seo-rankings/${date}-rank-check.json`;
+  const discoveryPath = `seo-rankings/${date}-keyword-discovery.json`;
   writeFileSync(mdPath, markdown);
-  writeFileSync(jsonPath, JSON.stringify({ date, startDate: fmt(startDate), endDate: fmt(endDate), results }, null, 2));
+  writeFileSync(jsonPath, JSON.stringify({
+    date,
+    startDate: fmt(startDate),
+    endDate: fmt(endDate),
+    results,
+    expandedResults,
+  }, null, 2));
+  writeFileSync(discoveryPath, JSON.stringify({
+    date,
+    startDate: fmt(startDate),
+    endDate: fmt(endDate),
+    totalQueries: discovery.length,
+    queries: discovery,
+  }, null, 2));
 
   console.log(`Report saved: ${mdPath}`);
   console.log(`Data saved: ${jsonPath}`);
+  console.log(`Discovery saved: ${discoveryPath} (${discovery.length} unique queries)`);
 }
 
 main().catch(err => {

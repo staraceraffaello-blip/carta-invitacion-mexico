@@ -49,17 +49,23 @@ Read these files before doing anything else:
 
 ## Step 2: Choose Topic
 
-1. Read the **most recent** report in `seo-rankings/` — identify keywords where the site is NOT ranking or ranking below position 10
-2. List existing articles: `ls articulos/` — count them. Do NOT duplicate an existing topic.
-3. Pick a topic that:
-   - Targets a keyword gap from the SEO report
+1. **Rank check report:** Find the latest: `ls -t seo-rankings/*rank-check.md | head -1` — read **only that file**. Identify keywords where the site is NOT ranking or ranking below position 10.
+
+2. **Keyword discovery data:** Find the latest: `ls -t seo-rankings/*keyword-discovery.json | head -1` — read **only that file**. This contains ALL queries GSC has seen, sorted by impressions. Look for high-impression queries where we rank poorly (position >10) or not at all — these are proven search demand signals.
+
+3. **Expanded keyword tracking:** Also check the latest JSON sidecar: `ls -t seo-rankings/*rank-check.json | head -1` — the `expandedResults` array tracks 34 keywords (core + nationality + process). Look for unranked expanded keywords.
+
+4. List existing articles: `ls articulos/` — count them. Do NOT duplicate an existing topic.
+
+5. Pick a topic that:
+   - Targets a keyword gap from the reports above (prioritize: high-impression discovery queries > unranked expanded keywords > core keyword gaps)
    - Is relevant to carta de invitacion / immigration to Mexico
-   - Has search demand (verify with WebSearch — search the candidate keyword and check if competitors have content)
+   - Has search demand (verify with WebSearch if the keyword came from discovery data)
    - Is NOT already covered by any existing article
 
-4. **If all 10 target keywords are adequately covered:** expand to long-tail variations, including:
+6. **If all tracked keywords are adequately covered:** expand to long-tail variations, including:
    - Nationality-specific queries not yet covered (check which nationalities already have articles)
-   - Process-specific queries: "carta de invitacion para menor de edad", "carta de invitacion trabajo temporal Mexico", "carta de invitacion multiple entries"
+   - Process-specific queries: "carta de invitacion para menor de edad", "carta de invitacion trabajo temporal Mexico"
    - Seasonal/situational: holiday travel to Mexico, Semana Santa travel, digital nomad stays
    - Complementary topics: "seguro de viaje para Mexico", "FMM forma migratoria multiple"
    - Use WebSearch to validate demand before committing to any long-tail topic.
