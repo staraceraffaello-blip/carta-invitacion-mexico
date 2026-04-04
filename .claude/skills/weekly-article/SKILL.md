@@ -168,7 +168,20 @@ git push origin main
 
 ---
 
-## Step 8: Send Notification Email
+## Step 8: Submit to Google Index
+
+After pushing, submit the new article URL to Google's Indexing API for faster crawling:
+
+```bash
+export GSC_SERVICE_ACCOUNT=$(grep "^GSC_SERVICE_ACCOUNT=" .env.local | cut -d= -f2-)
+node scripts/submit-to-google-index.mjs "https://cartadeinvitacionmexico.com/articulos/[slug]"
+```
+
+If the script fails (missing credentials, API not enabled), log the error but continue to Step 9 — indexing will happen naturally via sitemap within a few days.
+
+---
+
+## Step 9: Send Notification Email
 
 Send a notification email with the results.
 
